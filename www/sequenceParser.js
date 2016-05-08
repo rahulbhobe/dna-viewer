@@ -1,37 +1,6 @@
 
 
 var SequenceParser = function(seq, dbn) {
-  function assert(condition, message) {
-    if (!condition) {
-        message = message || "Assertion failed";
-        if (typeof Error !== "undefined") {
-            throw new Error(message);
-        }
-        throw message;
-    }
-  };
-
-  var errorObject = function(msg) {
-    return {
-      hasErrors: function() {
-        return msg;
-      },
-
-      getError: function() {
-        return msg;
-      }
-    };
-  };
-
-  var getSubstructureName = function (level) {
-    var name = 'root';
-    // Iterate to length - 1. We want the parent level.
-    for (var ii=0; ii<level.length-1; ii++) {
-      name += '_' + level[ii];
-    }
-    return name;
-  };
-
   assert(seq.length===dbn.length, "Sequence has invalid length");
 
   var errorMsg = null;
@@ -73,6 +42,39 @@ var SequenceParser = function(seq, dbn) {
   if (curStructureLevel.length !== 1) {
     return errorObject("Missing closing brackets.");
   }
+
+  // Helper functions:
+  function assert(condition, message) {
+    if (!condition) {
+        message = message || "Assertion failed";
+        if (typeof Error !== "undefined") {
+            throw new Error(message);
+        }
+        throw message;
+    }
+  };
+
+  var errorObject = function(msg) {
+    return {
+      hasErrors: function() {
+        return msg;
+      },
+
+      getError: function() {
+        return msg;
+      }
+    };
+  };
+
+  var getSubstructureName = function (level) {
+    var name = 'root';
+    // Iterate to length - 1. We want the parent level.
+    for (var ii=0; ii<level.length-1; ii++) {
+      name += '_' + level[ii];
+    }
+    return name;
+  };
+
 
   return {
     getSubstructure : function() {
