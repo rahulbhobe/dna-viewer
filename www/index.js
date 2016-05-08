@@ -1,7 +1,6 @@
 
 
-var generateChart = function(graph, radius) {
-
+var generateChart = function(graph, dist) {
   var width  = $(window).width() * 0.8,
       height = $(window).height() * 0.8;
 
@@ -10,11 +9,11 @@ var generateChart = function(graph, radius) {
   var force = d3.layout.force()
       .charge(-120)
       .linkDistance(function(d) {
-          if (d.value === 0) {
-            return radius * Math.sin(Math.PI / 10);
-          }
-          return radius * d.value;
-        })
+        return dist * d.value;
+      })
+      .linkStrength(function(d){
+        return Math.sqrt(d.value);
+      })
       .size([width, height]);
 
  var svg = d3.select("body").append("svg")
@@ -30,7 +29,7 @@ var generateChart = function(graph, radius) {
       .data(graph.links)
     .enter().append("line")
       .attr("class", "link")
-      .style("stroke-width", function(d) { return d.value ? 0 : 1; });
+      .style("stroke-width", function(d) { return d.stroke ? 1 : 0; });
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
@@ -40,7 +39,7 @@ var generateChart = function(graph, radius) {
 
     node.append("circle")
       .attr("class", "node")
-      .attr("r", 20)
+      .attr("r", 15)
       .style("fill", function(d) { return color(d.group); })
 
   node.append("title")
@@ -75,32 +74,48 @@ var doStuff = function() {
   _(names).each(function (name, ii) {
     links.push({
       source: ii,
-      target: (ii>=names.length-1 ? 0 : ii+1),
-      value: 0
+      target: (ii+1)%names.length,
+      value: 1,
+      stroke: true
     });
   });
 
-  nodes.push({name: 'M', group: 2});
-  _(names).each(function (name, ii) {
-    links.push({
-      source: ii,
-      target: 10,
-      value: 1
+  var theta = (2.0 * Math.PI) / names.length;
+  if (names.length%2 === 0) {
+    _(names).each(function (name, ii) {
+      if (ii >= (names.length/2))
+        return;
+
+      // diameter = chord / sin(theta/2)
+      links.push({
+        source: ii,
+        target: ii + (names.length/2),
+        value:  1.0 / Math.sin(0.5*theta),
+        stroke: false
+      });
     });
-  });
 
-  _(names).each(function (name, ii) {
-    if (ii >= (names.length/2))
-      return;
-
-    links.push({
-      source: ii,
-      target: ii + (names.length/2) ,
-      value: 2
+    // _(names).each(function (name, ii) {
+    //   links.push({
+    //     source: ii,
+    //     target: (ii -1 + (names.length/2)) % names.length,
+    //     value:  Math.cos((2.0*Math.PI)/names.length) / Math.sin(Math.PI/names.length),
+    //     stroke: false
+    //   });
+    // });
+  } else {
+    _(names).each(function (name, ii) {
+      // longchord = chord / 2 sin(theta/4)
+      links.push({
+        source: ii,
+        target: (ii + (names.length-1)/2) % names.length,
+        value:  0.5 / Math.sin(0.25*theta),
+        stroke: false
+      });
     });
-  });
+  }
 
-  generateChart({nodes: nodes, links: links}, 100);
+  generateChart({nodes: nodes, links: links}, 50);
 };
 
 doStuff();
