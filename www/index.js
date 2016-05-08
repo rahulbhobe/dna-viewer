@@ -63,9 +63,7 @@ var generateChart = function(graph, dist) {
   });
 };
 
-var doStuff = function() {
-
-  var names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+var doStuff = function(names) {
   var nodes = _(names).map(function (name) {
     return {name: name, group: 0};
   });
@@ -105,6 +103,9 @@ var doStuff = function() {
     // });
   } else {
     _(names).each(function (name, ii) {
+      if (ii >= (names.length/2))
+        return;
+
       // longchord = chord / 2 sin(theta/4)
       links.push({
         source: ii,
@@ -118,4 +119,4 @@ var doStuff = function() {
   generateChart({nodes: nodes, links: links}, 50);
 };
 
-doStuff();
+doStuff(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
