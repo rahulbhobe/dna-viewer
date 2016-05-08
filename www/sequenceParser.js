@@ -118,6 +118,7 @@ var SequenceParser = function(seq, dbn) {
 };
 
 setTimeout(function() {
+  // Debug code.
   console.log(SequenceParser('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).').getSubstructure());
   console.log(SequenceParser('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).').getBases());
   console.log(SequenceParser('TTGGGCTTGGGGAATTT', '.((((((...)))))).').getSubstructure());
