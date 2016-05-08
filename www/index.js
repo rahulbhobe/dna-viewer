@@ -120,3 +120,71 @@ var doStuff = function(names) {
 };
 
 doStuff(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
+
+function assert(condition, message) {
+    if (!condition) {
+        message = message || "Assertion failed";
+        if (typeof Error !== "undefined") {
+            throw new Error(message);
+        }
+        throw message; // Fallback
+    }
+}
+
+var getSubstructureName = function (level) {
+  var name = 'root';
+  for (var ii=0; ii<level.length-1; ii++) {
+    name += '_' + level[ii];
+  }
+  return name;
+}
+
+var getSubStructuresFromSequence = function(seq, dbn) {
+  assert(seq.length===dbn.length, "Sequence has invalid length");
+
+  var trackNodesInSubStructure = {'root': []}; // Keeps track of which nodes can 'possibly' go to a structure.
+  var curStructureLevel = [-1]; // Keeps track of nesting.
+  for (var ii=0; ii<seq.length; ii++) {
+    var dnaType = seq.charAt(ii);
+    var dbnType = dbn.charAt(ii);
+
+    assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
+    assert(['.', '(', ')'].indexOf(dbnType)!==-1);
+
+    // Add one
+    curStructureLevel[curStructureLevel.length-1]++;
+
+    // Add current node to possibl
+    trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii);
+    if (dbnType === '(') {
+      // Add another level.
+      curStructureLevel.push(0);
+
+      // Since it is connected to the next structure:
+      trackNodesInSubStructure[getSubstructureName(curStructureLevel)] = []; // Created after creating new level.
+      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node
+    } else if (dbnType === ')') {
+      // Remove current level.
+      curStructureLevel.pop();
+      curStructureLevel[curStructureLevel.length-1]++;
+
+      // Since it is connected to the next structure:
+      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node
+    }
+  }
+
+  var validSubStructures = {};
+
+  _(trackNodesInSubStructure).each(function (val, name) {
+    var hasAtleast = 5;
+    if (name === 'root') {
+      hasAtleast = 3;
+    }
+    if (val.length >= hasAtleast){
+      validSubStructures[name] = val;
+    }
+  });
+  return validSubStructures;
+};
+
+console.log(getSubStructuresFromSequence('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).'));
