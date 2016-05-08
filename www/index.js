@@ -127,12 +127,13 @@ function assert(condition, message) {
         if (typeof Error !== "undefined") {
             throw new Error(message);
         }
-        throw message; // Fallback
+        throw message;
     }
 }
 
 var getSubstructureName = function (level) {
   var name = 'root';
+  // Iterate to length - 1. We want the parent level.
   for (var ii=0; ii<level.length-1; ii++) {
     name += '_' + level[ii];
   }
@@ -154,22 +155,22 @@ var getSubStructuresFromSequence = function(seq, dbn) {
     // Add one
     curStructureLevel[curStructureLevel.length-1]++;
 
-    // Add current node to possibl
-    trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii);
+    // Add current node to current parent substructure.
+    trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node.
     if (dbnType === '(') {
       // Add another level.
       curStructureLevel.push(0);
 
       // Since it is connected to the next structure:
       trackNodesInSubStructure[getSubstructureName(curStructureLevel)] = []; // Created after creating new level.
-      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node
+      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node (again).
     } else if (dbnType === ')') {
       // Remove current level.
       curStructureLevel.pop();
       curStructureLevel[curStructureLevel.length-1]++;
 
       // Since it is connected to the next structure:
-      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node
+      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node (again).
     }
   }
 
@@ -188,3 +189,4 @@ var getSubStructuresFromSequence = function(seq, dbn) {
 };
 
 console.log(getSubStructuresFromSequence('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).'));
+console.log(getSubStructuresFromSequence('TTGGGCTTGGGGAATTT', '.((((((...)))))).'));
