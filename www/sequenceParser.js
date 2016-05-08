@@ -123,15 +123,37 @@ setTimeout(function() {
     {
       seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
       dbn: '.((((((...))((...)))))).',
+      res: {
+        root:               [0, 1, 22, 23],
+        root_1_1_1_1:       [4, 5, 11, 12, 18, 19],
+        root_1_1_1_1_1_1:   [6, 7, 8, 9, 10],
+        root_1_1_1_1_3_1:   [13, 14, 15, 16, 17],
+      },
     },
     {
       seq: 'TTGGGCTTGGGGAATTT',
       dbn: '.((((((...)))))).',
+      res: {
+        root:               [0, 1, 15, 16],
+        root_1_1_1_1_1_1:   [6, 7, 8, 9, 10],
+      },
     },
   ];
 
+  function assert(condition, message) {
+    if (!condition) {
+        message = message || "Assertion failed";
+        if (typeof Error !== "undefined") {
+            throw new Error(message);
+        }
+        throw message;
+    }
+  };
+
   _(pairs).each(function (pair) {
-    console.log(SequenceParser(pair.seq, pair.dbn).getSubstructure());
+    var subStructure = SequenceParser(pair.seq, pair.dbn).getSubstructure();
+    assert(_.isEqual(subStructure, pair.res), "Output no longer matches");
+    console.log(subStructure);
     console.log(SequenceParser(pair.seq, pair.dbn).getBases());
   });
 }, 2000);
