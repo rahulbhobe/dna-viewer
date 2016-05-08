@@ -29,7 +29,7 @@ var generateChart = function(graph, dist) {
       .data(graph.links)
     .enter().append("line")
       .attr("class", "link")
-      .style("stroke-width", function(d) { return d.stroke ? 1 : 0; });
+      .style("stroke-width", function(d) { return d.stroke; });
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
@@ -74,7 +74,7 @@ var doStuff = function(names) {
       source: ii,
       target: (ii+1)%names.length,
       value: 1,
-      stroke: true
+      stroke: 1.0
     });
   });
 
@@ -89,7 +89,7 @@ var doStuff = function(names) {
         source: ii,
         target: ii + (names.length/2),
         value:  1.0 / Math.sin(0.5*theta),
-        stroke: false
+        stroke: 0.0
       });
     });
 
@@ -98,7 +98,7 @@ var doStuff = function(names) {
     //     source: ii,
     //     target: (ii -1 + (names.length/2)) % names.length,
     //     value:  Math.cos((2.0*Math.PI)/names.length) / Math.sin(Math.PI/names.length),
-    //     stroke: false
+    //     stroke: 0.0
     //   });
     // });
   } else {
@@ -111,7 +111,7 @@ var doStuff = function(names) {
         source: ii,
         target: (ii + (names.length-1)/2) % names.length,
         value:  0.5 / Math.sin(0.25*theta),
-        stroke: false
+        stroke: 0.0
       });
     });
   }
@@ -119,4 +119,4 @@ var doStuff = function(names) {
   generateChart({nodes: nodes, links: links}, 50);
 };
 
-doStuff(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
+// doStuff(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);

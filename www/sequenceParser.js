@@ -119,7 +119,19 @@ var SequenceParser = function(seq, dbn) {
 
 setTimeout(function() {
   // Debug code.
-  console.log(SequenceParser('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).').getSubstructure());
-  console.log(SequenceParser('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).').getBases());
-  console.log(SequenceParser('TTGGGCTTGGGGAATTT', '.((((((...)))))).').getSubstructure());
+  var pairs = [
+    {
+      seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
+      dbn: '.((((((...))((...)))))).',
+    },
+    {
+      seq: 'TTGGGCTTGGGGAATTT',
+      dbn: '.((((((...)))))).',
+    },
+  ];
+
+  _(pairs).each(function (pair) {
+    console.log(SequenceParser(pair.seq, pair.dbn).getSubstructure());
+    console.log(SequenceParser(pair.seq, pair.dbn).getBases());
+  });
 }, 2000);
