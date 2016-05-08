@@ -38,6 +38,7 @@ var SequenceParser = function(seq, dbn) {
 
 
   var errorMsg = null;
+  var bases = [];
   var trackNodesInSubStructure = {'root': []}; // Keeps track of which nodes can 'possibly' go to a structure.
   var curStructureLevel = [-1]; // Keeps track of nesting.
   for (var ii=0; ii<seq.length; ii++) {
@@ -67,7 +68,7 @@ var SequenceParser = function(seq, dbn) {
     } else if (dbnType === ')') {
       if (curStructureLevel <= 1) {
         // Can't be root.
-        return errorObject("Tried to close to early at index " + ii);
+        return errorObject("Tried to close too early at index " + ii);
       }
       // Remove current level.
       curStructureLevel.pop();
@@ -78,6 +79,8 @@ var SequenceParser = function(seq, dbn) {
       subStructures.push(sub);
       trackNodesInSubStructure[sub].push(ii); // Add current node (again).
     }
+
+    bases.push(new DnaBase(dnaType, dbnType, subStructures));
   }
 
   if (curStructureLevel.length !== 1) {
@@ -99,6 +102,10 @@ var SequenceParser = function(seq, dbn) {
       return validSubStructures;
     },
 
+    getBases : function() {
+      return bases;
+    },
+
     hasErrors : function() {
       return false;
     },
@@ -108,8 +115,10 @@ var SequenceParser = function(seq, dbn) {
     },
 
   };
-
 };
 
-console.log(SequenceParser('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).').getSubstructure());
-console.log(SequenceParser('TTGGGCTTGGGGAATTT', '.((((((...)))))).').getSubstructure());
+setTimeout(function() {
+  console.log(SequenceParser('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).').getSubstructure());
+  console.log(SequenceParser('TTGGGCTTGGGGCTCCCAGAATTT', '.((((((...))((...)))))).').getBases());
+  console.log(SequenceParser('TTGGGCTTGGGGAATTT', '.((((((...)))))).').getSubstructure());
+}, 2000);
