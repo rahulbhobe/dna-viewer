@@ -65,57 +65,42 @@ var generateChart = function(graph, radius) {
 };
 
 var doStuff = function() {
-  var graph = {
-    "nodes":[
-      {"name":"A","group":0},
-      {"name":"B","group":1},
-      {"name":"C","group":1},
-      {"name":"D","group":1},
-      {"name":"E","group":1},
-      {"name":"F","group":1},
-      {"name":"G","group":1},
-      {"name":"H","group":1},
-      {"name":"I","group":1},
-      {"name":"J","group":1},
 
-      {"name":"M","group":2},
-    ],
+  var names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  var nodes = _(names).map(function (name) {
+    return {name: name, group: 0};
+  });
 
-    "links":[
-      {"source":0,"target":1,"value":0},
-      {"source":1,"target":2,"value":0},
-      {"source":2,"target":3,"value":0},
-      {"source":3,"target":4,"value":0},
-      {"source":4,"target":5,"value":0},
-      {"source":5,"target":6,"value":0},
-      {"source":6,"target":7,"value":0},
-      {"source":7,"target":8,"value":0},
-      {"source":8,"target":9,"value":0},
-      {"source":9,"target":0,"value":0},
+  var links = [];
+  _(names).each(function (name, ii) {
+    links.push({
+      source: ii,
+      target: (ii>=names.length-1 ? 0 : ii+1),
+      value: 0
+    });
+  });
 
-  /*
-      {"source":0,"target":10,"value":1},
-      {"source":1,"target":10,"value":1},
-      {"source":2,"target":10,"value":1},
-      {"source":3,"target":10,"value":1},
-      {"source":4,"target":10,"value":1},
-      {"source":5,"target":10,"value":1},
-      {"source":6,"target":10,"value":1},
-      {"source":7,"target":10,"value":1},
-      {"source":8,"target":10,"value":1},
-      {"source":9,"target":10,"value":1},
-  */
+  nodes.push({name: 'M', group: 2});
+  _(names).each(function (name, ii) {
+    links.push({
+      source: ii,
+      target: 10,
+      value: 1
+    });
+  });
 
+  _(names).each(function (name, ii) {
+    if (ii >= (names.length/2))
+      return;
 
-      {"source":0,"target":5,"value":2},
-      {"source":1,"target":6,"value":2},
-      {"source":2,"target":7,"value":2},
-      {"source":3,"target":8,"value":2},
-      {"source":4,"target":9,"value":2},
-    ]
-  };
+    links.push({
+      source: ii,
+      target: ii + (names.length/2) ,
+      value: 2
+    });
+  });
 
-  generateChart(graph, 100);
+  generateChart({nodes: nodes, links: links}, 100);
 };
 
 doStuff();
