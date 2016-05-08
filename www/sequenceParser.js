@@ -1,47 +1,6 @@
 
 
 var SequenceParser = function(seq, dbn) {
-  assert(seq.length===dbn.length, "Sequence has invalid length");
-
-  var errorMsg = null;
-  var trackNodesInSubStructure = {'root': []}; // Keeps track of which nodes can 'possibly' go to a structure.
-  var curStructureLevel = [-1]; // Keeps track of nesting.
-  for (var ii=0; ii<seq.length; ii++) {
-    var dnaType = seq.charAt(ii);
-    var dbnType = dbn.charAt(ii);
-
-    assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
-    assert(['.', '(', ')'].indexOf(dbnType)!==-1);
-
-    // Add one
-    curStructureLevel[curStructureLevel.length-1]++;
-
-    // Add current node to current parent substructure.
-    trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node.
-    if (dbnType === '(') {
-      // Add another level.
-      curStructureLevel.push(0);
-
-      // Since it is connected to the next structure:
-      trackNodesInSubStructure[getSubstructureName(curStructureLevel)] = []; // Created after creating new level.
-      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node (again).
-    } else if (dbnType === ')') {
-      if (curStructureLevel <= 1) {
-        // Can't be root.
-        return errorObject("Tried to close to early at index " + ii);
-      }
-      // Remove current level.
-      curStructureLevel.pop();
-      curStructureLevel[curStructureLevel.length-1]++;
-
-      // Since it is connected to the next structure:
-      trackNodesInSubStructure[getSubstructureName(curStructureLevel)].push(ii); // Add current node (again).
-    }
-  }
-
-  if (curStructureLevel.length !== 1) {
-    return errorObject("Missing closing brackets.");
-  }
 
   // Helper functions:
   function assert(condition, message) {
@@ -75,6 +34,55 @@ var SequenceParser = function(seq, dbn) {
     return name;
   };
 
+  assert(seq.length===dbn.length, "Sequence has invalid length");
+
+
+  var errorMsg = null;
+  var trackNodesInSubStructure = {'root': []}; // Keeps track of which nodes can 'possibly' go to a structure.
+  var curStructureLevel = [-1]; // Keeps track of nesting.
+  for (var ii=0; ii<seq.length; ii++) {
+    var dnaType = seq.charAt(ii);
+    var dbnType = dbn.charAt(ii);
+
+    assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
+    assert(['.', '(', ')'].indexOf(dbnType)!==-1);
+
+    // Add one
+    curStructureLevel[curStructureLevel.length-1]++;
+
+    // Add current node to current parent substructure.
+    var subStructures = [];
+    var sub = getSubstructureName(curStructureLevel);
+    subStructures.push(sub);
+    trackNodesInSubStructure[sub].push(ii); // Add current node.
+    if (dbnType === '(') {
+      // Add another level.
+      curStructureLevel.push(0);
+
+      // Since it is connected to the next structure:
+      var sub = getSubstructureName(curStructureLevel);
+      subStructures.push(sub);
+      trackNodesInSubStructure[sub] = [];      // Created after creating new level.
+      trackNodesInSubStructure[sub].push(ii); // Add current node (again).
+    } else if (dbnType === ')') {
+      if (curStructureLevel <= 1) {
+        // Can't be root.
+        return errorObject("Tried to close to early at index " + ii);
+      }
+      // Remove current level.
+      curStructureLevel.pop();
+      curStructureLevel[curStructureLevel.length-1]++;
+
+      // Since it is connected to the next structure:
+      var sub = getSubstructureName(curStructureLevel);
+      subStructures.push(sub);
+      trackNodesInSubStructure[sub].push(ii); // Add current node (again).
+    }
+  }
+
+  if (curStructureLevel.length !== 1) {
+    return errorObject("Missing closing brackets.");
+  }
 
   return {
     getSubstructure : function() {
