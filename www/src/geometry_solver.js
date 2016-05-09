@@ -25,7 +25,6 @@ var GeometrySolver = function(sequenceParser) {
 
   var prevBase = null;
   var coordinates = [];
-  var centers = [];
   var bases  = sequenceParser.getBases();
   _(bases).each(function (base) {
     var thisSubStructure = sequenceParser.getSubStructureAtIndex(base.getIndex());
@@ -49,7 +48,6 @@ var GeometrySolver = function(sequenceParser) {
 
     var thisPoint = previousPoint.rotate(getThetaFromStructure(thisSubStructure), centerPosition);
     coordinates.push(thisPoint);
-    centers.push(centerPosition);
     previousPoint = thisPoint; // For next iteration.
     prevSubStructure = thisSubStructure;
     prevBase = base;
@@ -58,10 +56,6 @@ var GeometrySolver = function(sequenceParser) {
   return {
     getCoordinates : function() {
       return coordinates;
-    },
-
-    getCenters : function() {
-      return centers;
     }
   };
 };

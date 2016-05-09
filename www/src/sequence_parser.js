@@ -53,14 +53,6 @@ var SequenceParser = function(seq, dbn) {
       return new GeometrySolver(this).getCoordinates();
     },
 
-
-
-    // To be removed
-    getCenters: function() {
-      return new GeometrySolver(this).getCenters();
-    },
-
-
     hasErrors : function() {
       return false;
     },

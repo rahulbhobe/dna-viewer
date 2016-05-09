@@ -6,24 +6,16 @@ var Canvas = React.createClass({
 
 
     var coordinates = sequenceParser.getCoordinates();
-    var centers = sequenceParser.getCenters();
 
     var circles = _(coordinates).map(function (point) {
       return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
-                <circle cx={0} cy={0} r={5} fill="brown" />
-              </g>);
-    });
-
-    var centers = _(centers).map(function (point) {
-      return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
-                <circle cx={0} cy={0} r={5} fill="white" />
+                <circle cx={0} cy={0} r={5} fill="red" />
               </g>);
     });
 
     return (
       <svg width='1500' height='900'>
         {circles}
-        {centers}
       </svg>);
   }
 });
