@@ -29,7 +29,7 @@ var SequenceParser = function(seq, dbn) {
 
   var errorMsg = null;
   var bases = [];
-  var helper = new NestedStructureHelper();
+  var secondary = new SecondaryStructure();
   for (var ii=0; ii<seq.length; ii++) {
     var dnaType = seq.charAt(ii);
     var dbnType = dbn.charAt(ii);
@@ -38,15 +38,15 @@ var SequenceParser = function(seq, dbn) {
     assert(['.', '(', ')'].indexOf(dbnType)!==-1);
 
     if (dbnType === '(') {
-      helper.onOpen(ii);
+      secondary.onOpen(ii);
     } else if (dbnType === ')') {
       // if (curStructureLevel <= 1) {
       //   // Can't be root.
       //   return errorObject("Tried to close too early at index " + ii);
       // }
-      helper.onClose(ii);
+      secondary.onClose(ii);
     } else {
-      helper.onVisitNode(ii);
+      secondary.onVisitNode(ii);
     }
 
     bases.push(new DnaBase(ii, dnaType, dbnType));
@@ -63,15 +63,15 @@ var SequenceParser = function(seq, dbn) {
     },
 
     getStructuresForBranching : function() {
-      return helper.getStructuresForBranching();
+      return secondary.getStructuresForBranching();
     },
 
     getConnections : function() {
-      return helper.getConnections();
+      return secondary.getConnections();
     },
 
     getSubStructureAtIndex: function (index) {
-      helper.getSubStructureAtIndex(index);
+      secondary.getSubStructureAtIndex(index);
     },
 
     hasErrors : function() {
