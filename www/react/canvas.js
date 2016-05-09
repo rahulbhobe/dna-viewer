@@ -17,6 +17,20 @@ var Canvas = React.createClass({
     var blue   = green.rotate(theta/2, red);
     var yellow = blue.rotate(theta, red);
     var orange = yellow.rotate(theta, red);
+    var coordinates = sequenceParser.getCoordinates();
+    var centers = sequenceParser.getCenters();
+
+    var circles = _(coordinates).map(function (point) {
+      return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
+                <circle cx={0} cy={0} r={8} fill="brown" />
+              </g>);
+    });
+
+    var centers = _(centers).map(function (point) {
+      return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
+                <circle cx={0} cy={0} r={8} fill="white" />
+              </g>);
+    });
 
     return (
       <svg width='1500' height='900'>
@@ -52,6 +66,8 @@ var Canvas = React.createClass({
           <circle cx={0} cy={0} r={8} fill="orange" />
         </g>
 
+        {circles}
+        {centers}
       </svg>);
   }
 });

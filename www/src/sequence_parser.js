@@ -49,13 +49,24 @@ var SequenceParser = function(seq, dbn) {
       return secondary.getSubStructureAtIndex(index);
     },
 
+    getCoordinates: function() {
+      return new GeometrySolver(this).getCoordinates();
+    },
+
+
+
+    // To be removed
+    getCenters: function() {
+      return new GeometrySolver(this).getCenters();
+    },
+
+
     hasErrors : function() {
       return false;
     },
 
     getError : function() {
       return null;
-    },
-
+    }
   };
 };

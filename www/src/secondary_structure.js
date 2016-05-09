@@ -17,7 +17,9 @@ SecondaryStructure.prototype.newStructure = function(isRoot) {
 };
 
 SecondaryStructure.prototype.onOpen = function(nodeIndex) {
-  this.onVisitNode(nodeIndex);
+  this._curStructures[this._curStructures.length-1].append(nodeIndex);
+  this._indexToSubStruct[nodeIndex] = this._curStructures[this._curStructures.length-1];
+
   this._curStructures.push(this.newStructure(false));
   this._curStructures[this._curStructures.length-1].openedAt(nodeIndex);
 };
@@ -28,9 +30,11 @@ SecondaryStructure.prototype.onVisitNode = function(nodeIndex) {
 };
 
 SecondaryStructure.prototype.onClose = function(nodeIndex) {
+  this._indexToSubStruct[nodeIndex] = this._curStructures[this._curStructures.length-1];
+
   var structure = this._curStructures.pop();
   structure.closedAt(nodeIndex);
-  this.onVisitNode(nodeIndex);
+  this._curStructures[this._curStructures.length-1].append(nodeIndex);
 };
 
 SecondaryStructure.prototype.getStructures = function() {

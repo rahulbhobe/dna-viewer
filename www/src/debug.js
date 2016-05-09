@@ -60,7 +60,8 @@ $(document).ready(function () {
   };
 
   _(pairs).each(function (pair) {
-    var subStructure = _(SequenceParser(pair.seq, pair.dbn).getStructuresForBranching()).map(function(structure) {
+    var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
+    var subStructure = _(sequenceParser.getStructuresForBranching()).map(function(structure) {
       return {
         openedAt : structure.openedAt(),
         contains : structure.getNodes(),
@@ -69,7 +70,8 @@ $(document).ready(function () {
     });
     assert(_.isEqual(subStructure, pair.res), "Output no longer matches");
     console.log(subStructure);
-    console.log('Bases', SequenceParser(pair.seq, pair.dbn).getBases());
-    console.log('Connections', SequenceParser(pair.seq, pair.dbn).getConnections());
+    console.log('Bases', sequenceParser.getBases());
+    console.log('Connections', sequenceParser.getConnections());
+    console.log('Coordinates', sequenceParser.getCoordinates());
   });
 });
