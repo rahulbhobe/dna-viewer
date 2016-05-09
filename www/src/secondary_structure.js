@@ -41,12 +41,6 @@ SecondaryStructure.prototype.getStructures = function() {
   return this._subStructures;
 };
 
-SecondaryStructure.prototype.getStructuresForBranching = function() {
-  return _(this._subStructures).filter(function (structure) {
-    return structure.hasBranches();
-  });
-};
-
 SecondaryStructure.prototype.getConnections = function() {
   var structures = this._subStructures.slice(1); // Don't need root;
   return _(structures).map(function (structure) {

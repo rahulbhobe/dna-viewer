@@ -37,10 +37,6 @@ var SequenceParser = function(seq, dbn) {
       return bases;
     },
 
-    getStructuresForBranching : function() {
-      return secondary.getStructuresForBranching();
-    },
-
     getConnections : function() {
       return secondary.getConnections();
     },

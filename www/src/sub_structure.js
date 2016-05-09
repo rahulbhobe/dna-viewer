@@ -48,7 +48,3 @@ SubStructure.prototype.closedAt = function(val) {
   }
   return this._closedAt;
 };
-
-SubStructure.prototype.hasBranches = function() {
-  return this._contains.length >= 3;
-};

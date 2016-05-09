@@ -61,14 +61,6 @@ $(document).ready(function () {
 
   _(pairs).each(function (pair) {
     var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
-    var subStructure = _(sequenceParser.getStructuresForBranching()).map(function(structure) {
-      return {
-        openedAt : structure.openedAt(),
-        contains : structure.getNodes(),
-        closedAt : structure.closedAt(),
-      };
-    });
-    assert(_.isEqual(subStructure, pair.res), "Output no longer matches");
     console.log(subStructure);
     console.log('Bases', sequenceParser.getBases());
     console.log('Connections', sequenceParser.getConnections());
