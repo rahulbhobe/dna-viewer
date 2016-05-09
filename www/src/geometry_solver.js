@@ -24,7 +24,6 @@ var GeometrySolver = function (sequenceParser) {
   var coordinates = [];
   _(sequenceParser.getBases()).each(function (base) {
     var thisTheta = getThetaFromBase(base);
-    prevPoint = prevPoint || centerPosition.add(Vector.create([0, -1]).multiply(getRadiusFromTheta(thisTheta)));
 
     if (moveCenter) {
       // Two intersecting circles with common chord length "distance".
@@ -34,7 +33,14 @@ var GeometrySolver = function (sequenceParser) {
       centerPosition = centerPosition.add(vec);
     }
 
-    var thisPoint = prevPoint.rotate(thisTheta, centerPosition);
+    var thisPoint = null;
+    if (prevPoint) {
+      thisPoint = prevPoint.rotate(thisTheta, centerPosition);
+    } else {
+      // Start point. Center is chosen (see above). Radius is known. Create a point at a chosen angle.
+      thisPoint = centerPosition.add(Vector.create([0, -1]).multiply(getRadiusFromTheta(thisTheta)));
+    }
+
     coordinates.push(thisPoint);
     prevPoint = thisPoint; // For next iteration.
     prevTheta = thisTheta;
