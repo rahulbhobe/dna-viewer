@@ -1,5 +1,6 @@
 var GeometrySolver = function (sequenceParser) {
   var distance     = 35; // Distance between nodes.
+                         // Common chord length on all circles.
 
   var getThetaFromBase = function (base) {
     var subStructure = sequenceParser.getSubStructureAtIndex(base.getIndex());
@@ -11,6 +12,7 @@ var GeometrySolver = function (sequenceParser) {
   };
 
   var getDistanceToChord = function (theta) {
+    // Chord length is "distance" and "theta" is the angle at the center.
     return 0.5 * distance / Math.tan(theta/2);
   };
 
@@ -25,8 +27,9 @@ var GeometrySolver = function (sequenceParser) {
     prevPoint = prevPoint || centerPosition.add(Vector.create([0, -1]).multiply(getRadiusFromTheta(thisTheta)));
 
     if (moveCenter) {
+      // Two intersecting circles with common chord length "distance".
       var distanceBetweenCenters = getDistanceToChord(thisTheta) + getDistanceToChord(prevTheta);
-      var point = prevPoint.rotate(prevTheta/2, centerPosition);
+      var point = prevPoint.rotate(prevTheta/2, centerPosition); // Rotate previous point to center of the chord.
       var vec   = point.subtract(centerPosition).toUnitVector().multiply(distanceBetweenCenters);
       centerPosition = centerPosition.add(vec);
     }
