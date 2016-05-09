@@ -61,7 +61,6 @@ $(document).ready(function () {
 
   _(pairs).each(function (pair) {
     var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
-    console.log(subStructure);
     console.log('Bases', sequenceParser.getBases());
     console.log('Connections', sequenceParser.getConnections());
     console.log('Coordinates', sequenceParser.getCoordinates());
