@@ -1,5 +1,3 @@
-
-
 var SequenceParser = function(seq, dbn) {
 
   // Helper functions:
