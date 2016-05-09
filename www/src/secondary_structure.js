@@ -54,5 +54,5 @@ SecondaryStructure.prototype.getConnections = function() {
 };
 
 SecondaryStructure.prototype.getSubStructureAtIndex = function(index) {
-  return this_._indexToSubStruct[index];
+  return this._indexToSubStruct[index];
 }

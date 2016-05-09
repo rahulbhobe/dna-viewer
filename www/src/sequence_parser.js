@@ -69,7 +69,7 @@ var SequenceParser = function(seq, dbn) {
     },
 
     getSubStructureAtIndex: function (index) {
-      secondary.getSubStructureAtIndex(index);
+      return secondary.getSubStructureAtIndex(index);
     },
 
     hasErrors : function() {

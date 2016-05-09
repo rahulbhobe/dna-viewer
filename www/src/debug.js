@@ -1,6 +1,5 @@
-
-setTimeout(function() {
-  // Debug code.
+// Debug code.
+$(document).ready(function () {
   var pairs = [
     {
       seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
@@ -73,4 +72,4 @@ setTimeout(function() {
     console.log('Bases', SequenceParser(pair.seq, pair.dbn).getBases());
     console.log('Connections', SequenceParser(pair.seq, pair.dbn).getConnections());
   });
-}, 2000);
+});
