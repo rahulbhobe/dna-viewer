@@ -52,19 +52,26 @@ var SequenceParser = function(seq, dbn) {
     bases.push(new DnaBase(dnaType, dbnType));
   }
 
-  console.log(helper.getStructuresForBranching());
 
   // if (curStructureLevel.length !== 1) {
   //   return errorObject("Missing closing brackets.");
   // }
 
   return {
+    getBases : function() {
+      return bases;
+    },
+
     getStructuresForBranching : function() {
       return helper.getStructuresForBranching();
     },
 
-    getBases : function() {
-      return bases;
+    getConnections : function() {
+      return helper.getConnections();
+    },
+
+    getSubStructureAtIndex: function (index) {
+      helper.getSubStructureAtIndex(index);
     },
 
     hasErrors : function() {
@@ -149,6 +156,7 @@ setTimeout(function() {
     });
     assert(_.isEqual(subStructure, pair.res), "Output no longer matches");
     console.log(subStructure);
-    console.log(SequenceParser(pair.seq, pair.dbn).getBases());
+    console.log('Bases', SequenceParser(pair.seq, pair.dbn).getBases());
+    console.log('Connections', SequenceParser(pair.seq, pair.dbn).getConnections());
   });
 }, 2000);
