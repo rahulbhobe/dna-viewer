@@ -10,8 +10,25 @@ SubStructure.prototype.isRoot = function() {
   return this._isRoot; 
 };
 
-SubStructure.prototype.getNodes = function() {
-  return this._contains; 
+SubStructure.prototype.getNodes = function(includeEnds) {
+  var ret = this._contains.slice();
+
+  if (!includeEnds) {
+    return ret;
+  }
+
+  if (this.openedAt() !== null) {
+    ret.unshift(this.openedAt())
+  }
+  if (this.closedAt() !== null) {
+    ret.push(this.closedAt())
+  }
+
+  return ret; 
+};
+
+SubStructure.prototype.getNumNodes = function(includeEnds) {
+  return this.getNodes(includeEnds).length;
 };
 
 SubStructure.prototype.append = function(val) {

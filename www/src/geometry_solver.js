@@ -2,14 +2,7 @@ var GeometrySolver = function(sequenceParser) {
   var distance     = 35; // Distance between nodes.
 
   var getThetaFromStructure = function(subStructure) {
-    var length = subStructure.getNodes().length;
-    if (subStructure.openedAt() !== null) {
-      length++;
-    }
-    if (subStructure.closedAt() !== null) {
-      length++;
-    }
-    return (2 * Math.PI) / length;
+    return (2 * Math.PI) / subStructure.getNumNodes(true);
   };
 
   var getDistanceToMoveCenter = function(subStructure) {
@@ -25,15 +18,9 @@ var GeometrySolver = function(sequenceParser) {
 
   var prevBase = null;
   var coordinates = [];
-  var bases  = sequenceParser.getBases();
-  _(bases).each(function (base) {
+  _(sequenceParser.getBases()).each(function (base) {
     var thisSubStructure = sequenceParser.getSubStructureAtIndex(base.getIndex());
 
-    if (base._dbnType === ')') {
-      var junk = 000;
-    }
-
-    var dddTest = centerPosition.distanceFrom(previousPoint);
     if (prevBase && !prevBase.isUnpaired()) {
       var kkk = getDistanceToMoveCenter(thisSubStructure) + getDistanceToMoveCenter(prevSubStructure);
       angle = getThetaFromStructure(prevSubStructure) / 2;
@@ -43,8 +30,6 @@ var GeometrySolver = function(sequenceParser) {
     } else {
       var ddddd = 11111;
     }
-    var dddTest = centerPosition.distanceFrom(previousPoint);
-
 
     var thisPoint = previousPoint.rotate(getThetaFromStructure(thisSubStructure), centerPosition);
     coordinates.push(thisPoint);
