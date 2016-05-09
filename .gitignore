@@ -34,3 +34,5 @@ www/bower_components
 .DS_store
 Thumbs.db
 *.bak
+
+www/babel
