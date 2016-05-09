@@ -1,5 +1,5 @@
 var GeometrySolver = function(sequenceParser) {
-  var distance     = 100; // Distance between nodes.
+  var distance     = 35; // Distance between nodes.
 
   var getThetaFromStructure = function(subStructure) {
     var length = subStructure.getNodes().length;
@@ -17,7 +17,7 @@ var GeometrySolver = function(sequenceParser) {
     return 0.5 * distance / Math.tan(theta/2);
   };
 
-  var centerPosition = Vector.create([800, 200]); // Start position for the center.
+  var centerPosition = Vector.create([700, 400]); // Start position for the center.
 
   var prevSubStructure = sequenceParser.getSubStructureAtIndex(0);
   // Dummy start point (will end up being the last point in the entire traversal - by design).
