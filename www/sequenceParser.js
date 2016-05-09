@@ -25,22 +25,11 @@ var SequenceParser = function(seq, dbn) {
     };
   };
 
-  var getSubstructureName = function (level) {
-    var name = 'root';
-    // Iterate to length - 1. We want the parent level.
-    for (var ii=0; ii<level.length-1; ii++) {
-      name += '_' + level[ii];
-    }
-    return name;
-  };
-
   assert(seq.length===dbn.length, "Sequence has invalid length");
-
 
   var errorMsg = null;
   var bases = [];
-  var trackNodesInSubStructure = {'root': []}; // Keeps track of which nodes can 'possibly' go to a structure.
-  var curStructureLevel = [-1]; // Keeps track of nesting.
+  var helper = new NestedStructureHelper();
   for (var ii=0; ii<seq.length; ii++) {
     var dnaType = seq.charAt(ii);
     var dbnType = dbn.charAt(ii);
@@ -48,58 +37,30 @@ var SequenceParser = function(seq, dbn) {
     assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
     assert(['.', '(', ')'].indexOf(dbnType)!==-1);
 
-    // Add one
-    curStructureLevel[curStructureLevel.length-1]++;
-
-    // Add current node to current parent substructure.
-    var subStructures = [];
-    var sub = getSubstructureName(curStructureLevel);
-    subStructures.push(sub);
-    trackNodesInSubStructure[sub].push(ii); // Add current node.
     if (dbnType === '(') {
-      // Add another level.
-      curStructureLevel.push(0);
-
-      // Since it is connected to the next structure:
-      var sub = getSubstructureName(curStructureLevel);
-      subStructures.push(sub);
-      trackNodesInSubStructure[sub] = [];      // Created after creating new level.
-      trackNodesInSubStructure[sub].push(ii); // Add current node (again).
+      helper.onOpen(ii);
     } else if (dbnType === ')') {
-      if (curStructureLevel <= 1) {
-        // Can't be root.
-        return errorObject("Tried to close too early at index " + ii);
-      }
-      // Remove current level.
-      curStructureLevel.pop();
-      curStructureLevel[curStructureLevel.length-1]++;
-
-      // Since it is connected to the next structure:
-      var sub = getSubstructureName(curStructureLevel);
-      subStructures.push(sub);
-      trackNodesInSubStructure[sub].push(ii); // Add current node (again).
+      // if (curStructureLevel <= 1) {
+      //   // Can't be root.
+      //   return errorObject("Tried to close too early at index " + ii);
+      // }
+      helper.onClose(ii);
+    } else {
+      helper.onVisitNode(ii);
     }
 
-    bases.push(new DnaBase(dnaType, dbnType, subStructures));
+    bases.push(new DnaBase(dnaType, dbnType));
   }
 
-  if (curStructureLevel.length !== 1) {
-    return errorObject("Missing closing brackets.");
-  }
+  console.log(helper.getStructuresForBranching());
+
+  // if (curStructureLevel.length !== 1) {
+  //   return errorObject("Missing closing brackets.");
+  // }
 
   return {
-    getSubstructure : function() {
-      var validSubStructures = {};
-      _(trackNodesInSubStructure).each(function (val, name) {
-        var hasAtleast = 5;
-        if (name === 'root') {
-          hasAtleast = 3;
-        }
-        if (val.length >= hasAtleast){
-          validSubStructures[name] = val;
-        }
-      });
-      return validSubStructures;
+    getStructuresForBranching : function() {
+      return helper.getStructuresForBranching();
     },
 
     getBases : function() {
@@ -123,20 +84,48 @@ setTimeout(function() {
     {
       seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
       dbn: '.((((((...))((...)))))).',
-      res: {
-        root:               [0, 1, 22, 23],
-        root_1_1_1_1:       [4, 5, 11, 12, 18, 19],
-        root_1_1_1_1_1_1:   [6, 7, 8, 9, 10],
-        root_1_1_1_1_3_1:   [13, 14, 15, 16, 17],
-      },
+      res: [
+        {
+          openedAt : null,
+          contains : [0, 1, 22, 23],
+          closedAt : null,
+        },
+
+        {
+          openedAt : 4,
+          contains : [5, 11, 12, 18],
+          closedAt : 19,
+        },
+
+        {
+          openedAt : 6,
+          contains : [7, 8, 9],
+          closedAt : 10,
+        },
+
+        {
+          openedAt : 13,
+          contains : [14, 15, 16],
+          closedAt : 17,
+        },
+      ],
     },
     {
       seq: 'TTGGGCTTGGGGAATTT',
       dbn: '.((((((...)))))).',
-      res: {
-        root:               [0, 1, 15, 16],
-        root_1_1_1_1_1_1:   [6, 7, 8, 9, 10],
-      },
+      res: [
+        {
+          openedAt : null,
+          contains : [0, 1, 15, 16],
+          closedAt : null,
+        },
+
+        {
+          openedAt : 6,
+          contains : [7, 8, 9],
+          closedAt : 10,
+        },
+      ],
     },
   ];
 
@@ -151,7 +140,13 @@ setTimeout(function() {
   };
 
   _(pairs).each(function (pair) {
-    var subStructure = SequenceParser(pair.seq, pair.dbn).getSubstructure();
+    var subStructure = _(SequenceParser(pair.seq, pair.dbn).getStructuresForBranching()).map(function(structure) {
+      return {
+        openedAt : structure.openedAt(),
+        contains : structure.getNodes(),
+        closedAt : structure.closedAt(),
+      };
+    });
     assert(_.isEqual(subStructure, pair.res), "Output no longer matches");
     console.log(subStructure);
     console.log(SequenceParser(pair.seq, pair.dbn).getBases());

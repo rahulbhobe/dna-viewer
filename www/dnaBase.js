@@ -1,13 +1,10 @@
 
 
-var DnaBase = function(type, dbnType, subStructures) {
+var DnaBase = function(type, dbnType) {
   this._type = type.toUpperCase();
   this._dbnType = dbnType;
-  this._subStructures = subStructures;
-
   return this;
 };
-
 
 DnaBase.prototype.getType = function() {
   return this._type;
