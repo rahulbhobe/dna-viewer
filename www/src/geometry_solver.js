@@ -10,7 +10,7 @@ var GeometrySolver = function (sequenceParser) {
     return (distance*0.5) / Math.sin(theta/2);
   };
 
-  var getDistanceToMoveCenter = function (theta) {
+  var getDistanceToChord = function (theta) {
     return 0.5 * distance / Math.tan(theta/2);
   };
 
@@ -25,9 +25,9 @@ var GeometrySolver = function (sequenceParser) {
     prevPoint = prevPoint || centerPosition.add(Vector.create([0, -1]).multiply(getRadiusFromTheta(thisTheta)));
 
     if (moveCenter) {
-      var kkk = getDistanceToMoveCenter(thisTheta) + getDistanceToMoveCenter(prevTheta);
+      var distanceBetweenCenters = getDistanceToChord(thisTheta) + getDistanceToChord(prevTheta);
       var point = prevPoint.rotate(prevTheta/2, centerPosition);
-      var vec   = point.subtract(centerPosition).toUnitVector().multiply(kkk);
+      var vec   = point.subtract(centerPosition).toUnitVector().multiply(distanceBetweenCenters);
       centerPosition = centerPosition.add(vec);
     }
 
