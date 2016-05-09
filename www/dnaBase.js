@@ -1,10 +1,15 @@
 
 
-var DnaBase = function(type, dbnType) {
+var DnaBase = function(index, type, dbnType) {
+  this._index = index; // Index in the sequence. (This is like id. Everything is index based.)
   this._type = type.toUpperCase();
   this._dbnType = dbnType;
   return this;
 };
+
+DnaBase.prototype.getIndex = function() {
+  return this._index;
+}
 
 DnaBase.prototype.getType = function() {
   return this._type;

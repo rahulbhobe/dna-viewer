@@ -49,7 +49,7 @@ var SequenceParser = function(seq, dbn) {
       helper.onVisitNode(ii);
     }
 
-    bases.push(new DnaBase(dnaType, dbnType));
+    bases.push(new DnaBase(ii, dnaType, dbnType));
   }
 
 
