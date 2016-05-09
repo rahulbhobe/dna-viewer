@@ -9,12 +9,14 @@ var Canvas = React.createClass({
     var subStructure = sequenceParser.getSubStructureAtIndex(base0.getIndex());
     var numNodes = subStructure.getNodes().length;
 
+    var theta  = Math.PI /2;
+
     var red    = Vector.create([800, 100]);
     var vec    = Vector.create([0, -1]);
     var green  = red.add(vec.multiply(50));
-    var blue   = green.rotate(Math.PI/4, red);
-    var yellow = green.rotate((3*Math.PI)/4, red);
-    var orange = green.rotate((5*Math.PI)/4, red);
+    var blue   = green.rotate(theta/2, red);
+    var yellow = blue.rotate(theta, red);
+    var orange = yellow.rotate(theta, red);
 
     return (
       <svg width='1500' height='900'>
