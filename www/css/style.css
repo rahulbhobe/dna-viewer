@@ -1,5 +1,7 @@
-#body_div {
-  background: #bbbbbb;
+#canvas-div {
+   height: 100%;
+   width: 100%;
+  background: #dddddd;
 }
 
 .node {
