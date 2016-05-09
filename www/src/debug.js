@@ -3,49 +3,11 @@ $(document).ready(function () {
   var pairs = [
     {
       seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
-      dbn: '.((((((...))((...)))))).',
-      res: [
-        {
-          openedAt : null,
-          contains : [0, 1, 22, 23],
-          closedAt : null,
-        },
-
-        {
-          openedAt : 4,
-          contains : [5, 11, 12, 18],
-          closedAt : 19,
-        },
-
-        {
-          openedAt : 6,
-          contains : [7, 8, 9],
-          closedAt : 10,
-        },
-
-        {
-          openedAt : 13,
-          contains : [14, 15, 16],
-          closedAt : 17,
-        },
-      ],
+      dbn: '.((((((...))((...)))))).'
     },
     {
       seq: 'TTGGGCTTGGGGAATTT',
-      dbn: '.((((((...)))))).',
-      res: [
-        {
-          openedAt : null,
-          contains : [0, 1, 15, 16],
-          closedAt : null,
-        },
-
-        {
-          openedAt : 6,
-          contains : [7, 8, 9],
-          closedAt : 10,
-        },
-      ],
+      dbn: '.((((((...)))))).'
     },
   ];
 
