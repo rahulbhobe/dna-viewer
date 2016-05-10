@@ -9,12 +9,14 @@ var GeometrySolver = function (sequenceParser) {
 
   var getRadiusFromTheta = function (theta) {
     // Chord length is "distance" and "theta" is the angle at the center.
+    // (distance/2) / sin(theta/2)
     return (distance*0.5) / Math.sin(theta/2);
   };
 
   var getDistanceToChord = function (theta) {
     // Chord length is "distance" and "theta" is the angle at the center.
     // Need the distance to chord from center.
+    // (radius) * cos(theta/2)
     return getRadiusFromTheta(theta) * Math.cos(theta/2);
   };
 
