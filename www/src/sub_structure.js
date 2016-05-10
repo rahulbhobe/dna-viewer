@@ -1,13 +1,9 @@
-var SubStructure = function(isRoot) {
-  this._isRoot    = isRoot || false;
+var SubStructure = function() {
   this._openedAt  = null;
   this._closedAt  = null;
-  this._contains  = []; // Indices of the nested nodes.
+  this._contains  = []; // Indices of the nodes in the current level only.
+                        // Does not contain list of recursively nested ones.
   return this;
-};
-
-SubStructure.prototype.isRoot = function() {
-  return this._isRoot; 
 };
 
 SubStructure.prototype.getNodes = function(includeEnds) {

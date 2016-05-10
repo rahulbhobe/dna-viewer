@@ -3,15 +3,15 @@ var SecondaryStructure = function() {
   this._subStructures     = [];
 
   // Keeps track of nesting.
-  this._curStructures  = [this.newStructure(true)];
+  this._curStructures  = [this.newStructure()];
 
   // Index of the node in the sequence to its SubStructure.
   this._indexToSubStruct = {};
   return this;
 };
 
-SecondaryStructure.prototype.newStructure = function(isRoot) {
-  var structure = new SubStructure(isRoot);
+SecondaryStructure.prototype.newStructure = function() {
+  var structure = new SubStructure();
   this._subStructures.push(structure);
   return structure;
 };
@@ -20,7 +20,7 @@ SecondaryStructure.prototype.onOpen = function(nodeIndex) {
   this._curStructures[this._curStructures.length-1].append(nodeIndex);
   this._indexToSubStruct[nodeIndex] = this._curStructures[this._curStructures.length-1];
 
-  this._curStructures.push(this.newStructure(false));
+  this._curStructures.push(this.newStructure());
   this._curStructures[this._curStructures.length-1].openedAt(nodeIndex);
 };
 

@@ -8,12 +8,14 @@ var GeometrySolver = function (sequenceParser) {
   };
 
   var getRadiusFromTheta = function (theta) {
+    // Chord length is "distance" and "theta" is the angle at the center.
     return (distance*0.5) / Math.sin(theta/2);
   };
 
   var getDistanceToChord = function (theta) {
     // Chord length is "distance" and "theta" is the angle at the center.
-    return 0.5 * distance / Math.tan(theta/2);
+    // Need the distance to chord from center.
+    return getRadiusFromTheta(theta) * Math.cos(theta/2);
   };
 
   var centerPosition = Vector.create([700, 400]); // Start position for the center.
@@ -28,7 +30,7 @@ var GeometrySolver = function (sequenceParser) {
     if (moveCenter) {
       // Two intersecting circles with common chord length "distance".
       var distanceBetweenCenters = getDistanceToChord(thisTheta) + getDistanceToChord(prevTheta);
-      var point = prevPoint.rotate(prevTheta/2, centerPosition); // Rotate previous point to center of the chord.
+      var point = prevPoint.rotate(prevTheta/2, centerPosition); // Rotate to align with the "other" circle.
       var vec   = point.subtract(centerPosition).toUnitVector().multiply(distanceBetweenCenters);
       centerPosition = centerPosition.add(vec);
     }
@@ -44,7 +46,7 @@ var GeometrySolver = function (sequenceParser) {
     coordinates.push(thisPoint);
     prevPoint = thisPoint; // For next iteration.
     prevTheta = thisTheta;
-    moveCenter = !base.isUnpaired();
+    moveCenter = !base.isUnpaired(); // Done with current "structure". May visit back after completing "inner" structures.
   });
 
   return {
