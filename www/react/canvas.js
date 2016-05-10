@@ -21,11 +21,26 @@ var Canvas = React.createClass({
 });
 
 $(document).ready(function () {
-  var pair = {
-    seq: 'TTGGGGGGACTGGGGCTCCCATTCGTTGCCTTTATAAATCCTTGCAAGCCAATTAACAGGTTGGTGAGGGGCTTGGGTGAAAAGGTGCTTAAGACTCCGT',
-    dbn: '...(((((.(...).)))))........(((((.....((..(.((((((..(((.((...)).)))..)))))).).)))))))...............'
-  };
+  var pairs = [
+    {
+      seq: 'TTGGGGGGACTGGGGCTCCCATTCGTTGCCTTTATAAATCCTTGCAAGCCAATTAACAGGTTGGTGAGGGGCTTGGGTGAAAAGGTGCTTAAGACTCCGT',
+      dbn: '...(((((.(...).)))))........(((((.....((..(.((((((..(((.((...)).)))..)))))).).)))))))...............'
+    },
+    {
+      seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
+      dbn: '.((((((...))((...)))))).'
+    },
+    {
+      seq: 'TTGGGCTTGGGGAATTT',
+      dbn: '.((((((...)))))).'
+    },
+    {
+      seq: 'AAGGTTTCAAGGAACCGGGGGCCACGGGAAAAATTTTTTTTTAAAA',
+      dbn: '.(...((....(...(((.....)))..((((...)))))...)))'
+    }
+  ];
 
+  var pair = pairs[0];
   var sequenceParser = SequenceParser(pair.seq, pair.dbn);
 
   ReactDOM.render(
