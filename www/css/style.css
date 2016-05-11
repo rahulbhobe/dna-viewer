@@ -15,9 +15,29 @@
 }
 
 .dna-base {
+  stroke: #000000;
+  stroke-width: 0.5px;
+  r: 10;
+}
 
+.dna-base-a {
+  fill: #64dd17;
+}
+.dna-base-c {
+  fill: #00b0ff;
+}
+.dna-base-g {
+  fill: #1d2120
+}
+.dna-base-t {
+  fill: #e62739;
+}
+.dna-base-n {
+  fill: #b0a18e;
 }
 
 .dna-text {
   font: 10px sans-serif;
+  fill: #ffffff;
+  mix-blend-mode: difference;
 }

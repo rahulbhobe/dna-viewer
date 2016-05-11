@@ -1,10 +1,11 @@
 
 var DnaBaseView = React.createClass({
   render: function () {
-    var point = this.props.point;
-    var base  = this.props.base;
+    var point   = this.props.point;
+    var base    = this.props.base;
+    var classes = "dna-base dna-base-" + base.getType().toLowerCase();
     return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
-              <circle r={12} fill="red" />
+              <circle className={classes} />
               <text className="dna-text" textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
   }
