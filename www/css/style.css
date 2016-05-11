@@ -1,7 +1,7 @@
 #canvas-div {
-   height: 100%;
-   width: 100%;
-  background: #dddddd;
+  height: 100%;
+  width: 100%;
+  background: #eeeeee;
 }
 
 .node {
@@ -40,4 +40,14 @@
   font: 10px sans-serif;
   fill: #ffffff;
   mix-blend-mode: difference;
+}
+
+.dna-backbone {
+  stroke: #ffffff;
+  stroke-width: 1.5px;
+}
+
+.dna-pair {
+  stroke: #ee11cc;
+  stroke-width: 4px;
 }
