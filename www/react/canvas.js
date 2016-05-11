@@ -11,6 +11,21 @@ var DnaBaseView = React.createClass({
   }
 });
 
+var DnaBackbone = React.createClass({
+  render: function () {
+    var point1 = this.props.point1;
+    var point2 = this.props.point2;
+    return (<line x1={point1.elements[0]} y1={point1.elements[1]} x2={point2.elements[0]} y2={point2.elements[1]} className="dna-backbone" />);
+  }
+});
+
+var DnaPair = React.createClass({
+  render: function () {
+    var source = this.props.source;
+    var target = this.props.target;
+    return (<line x1={source.elements[0]} y1={source.elements[1]} x2={target.elements[0]} y2={target.elements[1]} className="dna-pair" />);
+  }
+});
 
 var Canvas = React.createClass({
   render: function () {
@@ -25,12 +40,12 @@ var Canvas = React.createClass({
             if (ii >= coordinates.length-1) {
               return;
             }
-            return (<line x1={point.elements[0]} y1={point.elements[1]} x2={coordinates[ii+1].elements[0]} y2={coordinates[ii+1].elements[1]} className="dna-backbone" />);
+            return (<DnaBackbone point1={point} point2={coordinates[ii+1]}/>);
           })}
         {_(connections).map(function (connection) {
             var source = coordinates[connection.source];
             var target = coordinates[connection.target];
-            return (<line x1={source.elements[0]} y1={source.elements[1]} x2={target.elements[0]} y2={target.elements[1]} className="dna-pair"/>);
+            return (<DnaPair source={source} target={target}/>);
           })}
 
         {_(coordinates).map(function (point, ii) {
