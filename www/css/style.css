@@ -43,11 +43,11 @@
 }
 
 .dna-backbone {
-  stroke: #ffffff;
+  stroke: #666666;
   stroke-width: 1.5px;
 }
 
 .dna-pair {
-  stroke: #ee11cc;
+  stroke: #6688bb;
   stroke-width: 4px;
 }

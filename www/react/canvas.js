@@ -25,12 +25,12 @@ var Canvas = React.createClass({
             if (ii >= coordinates.length-1) {
               return;
             }
-            return (<line x1={point.elements[0]} y1={point.elements[1]} x2={coordinates[ii+1].elements[0]} y2={coordinates[ii+1].elements[1] className="dna-backbone"} />);
+            return (<line x1={point.elements[0]} y1={point.elements[1]} x2={coordinates[ii+1].elements[0]} y2={coordinates[ii+1].elements[1]} className="dna-backbone" />);
           })}
         {_(connections).map(function (connection) {
             var source = coordinates[connection.source];
             var target = coordinates[connection.target];
-            return (<line x1={source.elements[0]} y1={source.elements[1]} x2={target.elements[0]} y2={target.elements[1]} stroke="lightblue" className="dna-pair"/>);
+            return (<line x1={source.elements[0]} y1={source.elements[1]} x2={target.elements[0]} y2={target.elements[1]} className="dna-pair"/>);
           })}
 
         {_(coordinates).map(function (point, ii) {
