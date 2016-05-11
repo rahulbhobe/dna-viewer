@@ -4,16 +4,6 @@
   background: #eeeeee;
 }
 
-.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}
-
 .dna-base {
   stroke: #000000;
   stroke-width: 0.5px;
