@@ -33,9 +33,11 @@ var Canvas = React.createClass({
     var coordinates = sequenceParser.getCoordinates();
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();
+    var width       = $(window).width() * 0.8;
+    var height      = $(window).height() * 0.8;
 
     return (
-      <svg width='1500' height='900'>
+      <svg width={width} height={height}>
         {_(coordinates).map(function (point, ii) {
             if (ii >= coordinates.length-1) {
               return;
@@ -55,12 +57,19 @@ var Canvas = React.createClass({
   }
 });
 
+var GATTACA = React.createClass({
+  render: function () {
+    return (<Canvas sequenceParser={this.props.sequenceParser} />);
+  }
+});
+
+
 $(document).ready(function () {
   var pair = debug_examples[0];
   var sequenceParser = SequenceParser(pair.seq, pair.dbn);
 
   ReactDOM.render(
     <Canvas sequenceParser={sequenceParser}/>,
-    document.getElementById('canvas-div')
+    document.getElementById('body-div')
   );
 });
