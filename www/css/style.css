@@ -57,8 +57,17 @@ svg text::selection {
   font-family: monospace;
   font-size: x-large;
   padding: 10px;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .hidden {
   display: none;
+}
+
+.higlight-sequence-text {
+  background-color: #99aa00;
 }
