@@ -70,6 +70,19 @@ svg text::selection {
   -ms-user-select: none;
 }
 
+.sequence-form-div {
+  border-style: groove;
+  width: 80%;
+}
+
+.sequence-form-div:hover {
+  border-top-width: 5px;
+  border-left-width: 5px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+}
+
+
 .hidden {
   display: none;
 }

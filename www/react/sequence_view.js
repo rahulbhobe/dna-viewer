@@ -52,6 +52,7 @@ var SequenceFormView = React.createClass({
 
     var inpClass   =  this.state.editMode ? "" : "hidden";
     var divClass   = !this.state.editMode ? "" : "hidden";
+    divClass += " sequence-form-div";
 
     var str = this.state.value;
     var letterDivs = [];
@@ -63,7 +64,7 @@ var SequenceFormView = React.createClass({
     return (<div>
               <form className={formClass}>
                 <input type="text" className={inpClass} defaultValue={this.props.value} onChange={this.onChange} onBlur={this.onBlur} ref="inp" placeholder={this.props.placeholder} style={{width: '80%'}} ></input>
-                <div className={divClass} onClick={this.onClick}>
+                <div className={divClass} onClick={this.onClick} >
                   {letterDivs}
                 </div>
               </form>
