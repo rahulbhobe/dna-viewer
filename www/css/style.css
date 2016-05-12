@@ -58,3 +58,7 @@ svg text::selection {
   font-size: x-large;
   padding: 10px;
 }
+
+.hidden {
+  display: none;
+}

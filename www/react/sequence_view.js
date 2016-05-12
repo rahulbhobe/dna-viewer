@@ -1,45 +1,55 @@
-var SequenceView = React.createClass({
+var SequenceFormView = React.createClass({
   getInitialState: function () {
     return {
-      hasError: false,
-      seq: debug_examples[0].seq,
-      dbn: debug_examples[0].dbn,
-      selected: 50
+      value: this.props.value,
+      editMode: false
     };
   },
 
-  componentDidMount: function () {
-    this.refs.seq.selectionStart = this.state.selected;
-    this.refs.seq.selectionEnd   = this.state.selected+1;
+  componentDidUpdate: function() {
+    if (this.state.editMode) {
+      var inputBox = ReactDOM.findDOMNode(this.refs.inp);
+      inputBox.focus();
+      inputBox.select();
+    }
   },
 
-  sequenceChange: function (evt) {
-    this.setState({ seq: evt.target.value.toUpperCase()});
-  },
-
-  dbnChange: function (evt) {
-    this.setState({ dbn: evt.target.value});
+  onChange: function (evt) {
+    this.setState({ value: evt.target.value.toUpperCase()});
   },
 
   onBlur: function () {
-    ReactDOM.findDOMNode(this.refs.seq).value = this.state.seq;
-    ReactDOM.findDOMNode(this.refs.dbn).value = this.state.dbn;
+    ReactDOM.findDOMNode(this.refs.inp).value = this.state.value;
+    this.setState({editMode: false});
+  },
+
+  onClick: function () {
+    this.setState({editMode: true});
   },
 
   render: function () {
-
     var formClass = "sequence-form";
     if (this.state.hasError) {
-      formClass += " has-error-local";
+      formClass += " sequence-has-error-local";
     }
+
+    var inpClass =  this.state.editMode ? "" : "hidden";
+    var divClass = !this.state.editMode ? "" : "hidden";
 
     return (<div>
               <form className={formClass}>
-                <input type="text" defaultValue={this.state.seq} onChange={this.sequenceChange} onBlur={this.onBlur} ref="seq" placeholder="Enter DNA Sequence" size="120" ></input>
+                <input type="text" className={inpClass} defaultValue={this.props.value} onChange={this.onChange} onBlur={this.onBlur} ref="inp" placeholder={this.props.placeholder} style={{width: '80%'}} ></input>
+                <div className={divClass} onClick={this.onClick}>{this.state.value}</div>
               </form>
-              <form className={formClass}>
-                <input type="text" defaultValue={this.state.dbn} onChange={this.dbnChange} onBlur={this.onBlur} ref="dbn" placeholder="Enter DBN" size="120" ></input>
-              </form>
+            </div>);
+  }
+});
+
+var SequenceView = React.createClass({
+  render: function () {
+    return (<div>
+              <SequenceFormView value={debug_examples[0].seq} placeholder="Enter DNA sequence" />
+              <SequenceFormView value={debug_examples[0].dbn} placeholder="Enter DBN" />
             </div>);
   }
 });
