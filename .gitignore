@@ -35,4 +35,4 @@ www/bower_components
 Thumbs.db
 *.bak
 
-www/babel
+www/babel/gattaca_react.js
