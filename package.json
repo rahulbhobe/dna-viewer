@@ -4,7 +4,7 @@
   "description": "",
   "main": " ",
   "scripts": {
-    "babel": "babel www/react --out-file www/babel/canvas.js"
+    "babel": "babel www/react --out-file www/babel/gattaca_react.js"
   },
   "repository": {
     "type": "git",
