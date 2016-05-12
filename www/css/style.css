@@ -52,3 +52,9 @@ svg text::selection {
   stroke: #6688bb;
   stroke-width: 4px;
 }
+
+.sequence-form {
+  font-family: monospace;
+  font-size: x-large;
+  padding: 10px;
+}

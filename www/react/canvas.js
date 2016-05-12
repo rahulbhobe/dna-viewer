@@ -57,9 +57,56 @@ var Canvas = React.createClass({
   }
 });
 
+var SequenceView = React.createClass({
+  getInitialState: function () {
+    return {
+      hasError: false,
+      seq: debug_examples[0].seq,
+      dbn: debug_examples[0].dbn
+    };
+  },
+
+  render: function () {
+
+    var formClass = "sequence-form";
+    if (this.state.hasError) {
+      formClass += " has-error-local";
+    }
+
+    return (<div>
+              <form className={formClass}>
+                <input type="text" onChange={this.sequenceChange} placeholder="Enter DNA Sequence" value={this.state.seq} size="120" maxlength="80%"></input>
+              </form>
+              <form className={formClass}>
+                <input type="text" onChange={this.dbnChange} placeholder="Enter DBN" value={this.state.dbn} size="120" maxlength="80%"></input>
+              </form>
+            </div>);
+  }
+});
+
+
 var GATTACA = React.createClass({
   render: function () {
-    return (<Canvas sequenceParser={this.props.sequenceParser} />);
+    return (<div>
+              <Canvas sequenceParser={this.props.sequenceParser} />
+              <SequenceView />
+            </div>);
+  },
+
+  getInitialState: function() {
+    return {windowWidth: window.innerWidth};
+  },
+
+  handleResize: function(e) {
+    this.setState({windowWidth: window.innerWidth});
+  },
+
+  componentDidMount: function() {
+    window.addEventListener('resize', this.handleResize);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize);
   }
 });
 
@@ -69,7 +116,7 @@ $(document).ready(function () {
   var sequenceParser = SequenceParser(pair.seq, pair.dbn);
 
   ReactDOM.render(
-    <Canvas sequenceParser={sequenceParser}/>,
+    <GATTACA sequenceParser={sequenceParser}/>,
     document.getElementById('body-div')
   );
 });
