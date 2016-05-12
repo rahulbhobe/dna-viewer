@@ -27,7 +27,6 @@ var SequenceFormView = React.createClass({
     if (this.state.editMode) {
       var inputBox = ReactDOM.findDOMNode(this.refs.inp);
       inputBox.focus();
-      inputBox.select();
     }
   },
 
@@ -42,6 +41,9 @@ var SequenceFormView = React.createClass({
 
   onClick: function () {
     this.setState({editMode: true});
+    var inputBox = ReactDOM.findDOMNode(this.refs.inp);
+    inputBox.focus();
+    inputBox.select();
   },
 
   render: function () {
