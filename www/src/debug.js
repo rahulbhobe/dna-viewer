@@ -10,12 +10,12 @@ $(document).ready(function () {
     }
   };
 
-  _(debug_examples).each(function (pair) {
-    var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
-    console.log('Bases', sequenceParser.getBases());
-    console.log('Connections', sequenceParser.getConnections());
-    console.log('Coordinates', sequenceParser.getCoordinates());
-  });
+  // _(debug_examples).each(function (pair) {
+  //   var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
+  //   console.log('Bases', sequenceParser.getBases());
+  //   console.log('Connections', sequenceParser.getConnections());
+  //   console.log('Coordinates', sequenceParser.getCoordinates());
+  // });
 });
 
 var debug_examples = [
