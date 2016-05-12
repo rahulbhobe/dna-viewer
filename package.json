@@ -4,7 +4,7 @@
   "description": "",
   "main": " ",
   "scripts": {
-    "babel": "babel www/react -d www/babel"
+    "babel": "babel www/react --out-file www/babel/canvas.js"
   },
   "repository": {
     "type": "git",
