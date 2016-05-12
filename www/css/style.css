@@ -4,6 +4,17 @@
   background: #eeeeee;
 }
 
+svg text {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+svg text::selection {
+  background: none;
+}
+
 .dna-base {
   stroke: #000000;
   stroke-width: 0.5px;
