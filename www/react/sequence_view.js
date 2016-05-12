@@ -1,3 +1,16 @@
+var SequenceLetter = React.createClass({
+  render: function () {
+    var clsName = this.props.selected ? "higlight-sequence-text" : "";
+    return (<span className={clsName} onMouseOver={this.onMouseOver}>
+              {this.props.letter}
+            </span>);
+  },
+
+  onMouseOver: function () {
+    this.props.onSelected(this.props.index);
+  }
+});
+
 var SequenceFormView = React.createClass({
   getInitialState: function () {
     return {
@@ -27,15 +40,6 @@ var SequenceFormView = React.createClass({
     this.setState({editMode: true});
   },
 
-  getDivTextArr: function () {
-    var str = this.state.value;
-    var sel = this.props.selected;
-    if (sel === -1) {
-      return [str, "", ""];
-    }
-    return [str.substring(0, sel), str.substring(sel, sel+1), str.substring(sel+1)];
-  },
-
   render: function () {
     var formClass = "sequence-form";
     if (this.state.hasError) {
@@ -44,17 +48,19 @@ var SequenceFormView = React.createClass({
 
     var inpClass   =  this.state.editMode ? "" : "hidden";
     var divClass   = !this.state.editMode ? "" : "hidden";
-    var divTextArr = this.getDivTextArr();
+
+    var str = this.state.value;
+    var letterDivs = [];
+    for (var ii=0; ii<str.length; ii++) {
+      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii} selected={this.props.selected===ii} onSelected={this.props.onSelected}/>));
+    }
+
 
     return (<div>
               <form className={formClass}>
                 <input type="text" className={inpClass} defaultValue={this.props.value} onChange={this.onChange} onBlur={this.onBlur} ref="inp" placeholder={this.props.placeholder} style={{width: '80%'}} ></input>
                 <div className={divClass} onClick={this.onClick}>
-                  {divTextArr[0]}
-                  <span className="higlight-sequence-text">
-                    {divTextArr[1]}
-                  </span>
-                  {divTextArr[2]}
+                  {letterDivs}
                 </div>
               </form>
             </div>);
@@ -64,8 +70,8 @@ var SequenceFormView = React.createClass({
 var SequenceView = React.createClass({
   render: function () {
     return (<div>
-              <SequenceFormView value={debug_examples[0].seq} selected={this.props.selected} placeholder="Enter DNA sequence" />
-              <SequenceFormView value={debug_examples[0].dbn} selected={this.props.selected} placeholder="Enter DBN" />
+              <SequenceFormView value={debug_examples[0].seq} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DNA sequence" />
+              <SequenceFormView value={debug_examples[0].dbn} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DBN" />
             </div>);
   }
 });

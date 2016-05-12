@@ -21,6 +21,12 @@ svg text::selection {
   r: 10;
 }
 
+.dna-base-selected {
+  fill: #ffffff;
+  mix-blend-mode: difference;
+  stroke-width: 2px;
+}
+
 .dna-base-a {
   fill: #64dd17;
 }

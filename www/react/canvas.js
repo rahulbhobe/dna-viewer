@@ -3,11 +3,18 @@ var DnaBaseView = React.createClass({
   render: function () {
     var point   = this.props.point;
     var base    = this.props.base;
-    var classes = "dna-base dna-base-" + base.getType().toLowerCase();
-    return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
+    var classes = " dna-base";
+
+    classes += " dna-base-" + base.getType().toLowerCase() + "";
+    classes += this.props.selected ? " dna-base-selected" : "";
+    return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver}>
               <circle className={classes} />
               <text className="dna-text" textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
+  },
+
+  onMouseOver: function() {
+    this.props.onSelected(this.props.base.getIndex());
   }
 });
 
@@ -35,6 +42,7 @@ var Canvas = React.createClass({
     var connections = sequenceParser.getConnections();
     var width       = $(window).width() * 0.8;
     var height      = $(window).height() * 0.8;
+    var self        = this;
 
     return (
       <svg width={width} height={height}>
@@ -51,7 +59,7 @@ var Canvas = React.createClass({
           })}
 
         {_(coordinates).map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]}/>);
+            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} onSelected={self.props.onSelected}/>);
           })}
       </svg>);
   }

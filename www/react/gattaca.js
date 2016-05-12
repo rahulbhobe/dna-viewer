@@ -1,8 +1,14 @@
 var GATTACA = React.createClass({
+  getInitialState: function() {
+    return {
+      selected: null,
+    };
+  },
+
   render: function () {
     return (<div>
-              <Canvas sequenceParser={this.props.sequenceParser} />
-              <SequenceView onSequenceChanged={this.onSequenceChanged} selected={10}/>
+              <Canvas sequenceParser={this.props.sequenceParser} selected={this.state.selected} onSelected={this.onSelected}/>
+              <SequenceView onSequenceChanged={this.onSequenceChanged} selected={this.state.selected} onSelected={this.onSelected}/>
             </div>);
   },
 
@@ -24,6 +30,10 @@ var GATTACA = React.createClass({
 
   onSequenceChanged: function() {
     this.forceUpdate();
+  },
+
+  onSelected: function(selected) {
+    this.setState({selected: selected});
   }
 });
 
