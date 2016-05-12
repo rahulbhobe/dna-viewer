@@ -1,13 +1,17 @@
 var SequenceLetter = React.createClass({
   render: function () {
     var clsName = this.props.selected ? "higlight-sequence-text" : "";
-    return (<span className={clsName} onMouseOver={this.onMouseOver}>
+    return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               {this.props.letter}
             </span>);
   },
 
   onMouseOver: function () {
     this.props.onSelected(this.props.index);
+  },
+
+  onMouseLeave: function() {
+    this.props.onSelected(-1);
   }
 });
 

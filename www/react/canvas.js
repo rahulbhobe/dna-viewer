@@ -7,7 +7,7 @@ var DnaBaseView = React.createClass({
 
     classes += " dna-base-" + base.getType().toLowerCase() + "";
     classes += this.props.selected ? " dna-base-selected" : "";
-    return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver}>
+    return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               <circle className={classes} />
               <text className="dna-text" textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
@@ -15,6 +15,10 @@ var DnaBaseView = React.createClass({
 
   onMouseOver: function() {
     this.props.onSelected(this.props.base.getIndex());
+  },
+
+  onMouseLeave: function() {
+    this.props.onSelected(-1);
   }
 });
 
