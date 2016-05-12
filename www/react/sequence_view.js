@@ -63,7 +63,7 @@ var SequenceFormView = React.createClass({
 
     return (<div>
               <form className={formClass}>
-                <input type="text" className={inpClass} defaultValue={this.props.value} onChange={this.onChange} onBlur={this.onBlur} ref="inp" placeholder={this.props.placeholder} style={{width: '80%'}} ></input>
+                <input type="text" className={inpClass} defaultValue={this.props.value} onChange={this.onChange} onBlur={this.onBlur} ref="inp" placeholder={this.props.placeholder} style={{width: '100%'}} ></input>
                 <div className={divClass} onClick={this.onClick} >
                   {letterDivs}
                 </div>

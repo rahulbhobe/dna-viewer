@@ -63,6 +63,7 @@ svg text::selection {
   font-family: monospace;
   font-size: x-large;
   padding: 10px;
+  width: 80%;
 
   user-select: none;
   -webkit-user-select: none;
@@ -72,7 +73,6 @@ svg text::selection {
 
 .sequence-form-div {
   border-style: groove;
-  width: 80%;
 }
 
 .sequence-form-div:hover {
