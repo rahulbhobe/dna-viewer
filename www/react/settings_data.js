@@ -11,11 +11,9 @@ var SettingsData = function() {
 
   var fonts = [
     'Andale Mono',
-    'Consolas',
     'Courier',
-    'DejaVu Sans Mono',
-    'Lucida Console',
-    'Monaco'
+    'Monaco',
+    'Courier New',
   ];
 
   var getStylesClass = function(type) {
@@ -53,15 +51,19 @@ var SettingsData = function() {
       return fontClass;
     },
 
+    getAllFonts: function() {
+      return fonts;
+    },
+
     getFont: function() {
       var clsName = '.' + fontClass;
       var font = jss.get(clsName);
-      return font.font_family;
+      return font["font-family"];
     },
 
     setFont: function(font) {
       var clsName = '.' + fontClass;
-      jss.set(clsName, {font_family: font})
+      jss.set(clsName, {"font-family": font})
     },
 
 

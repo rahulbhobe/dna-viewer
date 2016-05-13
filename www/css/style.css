@@ -90,3 +90,9 @@ svg text::selection {
   width: 35px;
   height: 40px;
 }
+
+.settings-font-div {
+  float: left;
+  text-align: center;
+  margin-top: 40px;
+}

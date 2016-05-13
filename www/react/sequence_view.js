@@ -64,7 +64,7 @@ var SequenceFormView = React.createClass({
     var str = this.state.value;
     var letterDivs = [];
     for (var ii=0; ii<str.length; ii++) {
-      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii} selected={this.props.selected===ii} onSelected={this.props.onSelected}/>));
+      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii} selected={this.props.selected===ii} onSelected={this.props.onSelected} key={"letter_" + ii}/>));
     }
 
     return (<div>

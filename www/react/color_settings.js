@@ -11,7 +11,7 @@ var ColorsButton =  React.createClass({
   render: function () {
     var type = this.props.type;
     return (<div className="settings-color-div" >
-              <div>
+              <div className={SettingsData.getFontClass()}>
                 {type}
               </div>
               <button type="button" className="settings-color-button" onClick={this.onClick} style={{backgroundColor:SettingsData.getColorForType(type)}} />
@@ -49,7 +49,7 @@ var ColorSettings =  React.createClass({
   },
 
   render: function () {
-    return (<div>
+    return (<div className="settings-color-wrap-div">
               <ColorsButton type='A' onSelected={this.onSelected} />
               <ColorsButton type='C' onSelected={this.onSelected} />
               <ColorsButton type='G' onSelected={this.onSelected} />
