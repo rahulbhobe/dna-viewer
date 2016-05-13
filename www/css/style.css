@@ -22,6 +22,7 @@ svg text::selection {
 .dna-base {
   stroke: #000000;
   stroke-width: 0.5px;
+  cursor: -webkit-grab;
 }
 
 .dna-base-selected {
@@ -29,7 +30,6 @@ svg text::selection {
   mix-blend-mode: difference;
   stroke-width: 2px;
   stroke: #ff0000;
-  cursor: -webkit-grab;
 }
 
 .dna-base-moving {

@@ -14,7 +14,7 @@ var DnaBaseView = React.createClass({
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
     classes += this.props.selected ? " dna-base-selected" : "";
     classes += this.props.moving ? " dna-base-moving" : "";
-    classes += this.props.bannedCursorWithMoving ? " dna-base-banned-pairing " : "";
+    clsName += this.props.bannedCursorWithMoving ? " dna-base-banned-pairing " : "";
     return (<g className={clsName} onMouseDown={this.onMouseClick} transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               <circle className={classes} />
               <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
