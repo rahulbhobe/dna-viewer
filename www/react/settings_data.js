@@ -16,15 +16,15 @@ var SettingsData = function() {
     'Courier New',
   ];
 
-  var getStylesClass = function(type) {
+  var getColorClass = function(type) {
     return 'dna-base-' + type.toLowerCase();
   };
 
-  var fontClass ='dna-base-font';
+  var fontClass         = 'dna-base-font';
 
   // initialize jss:
   _(defaultColors).each(function (hex, type) {
-    var clsName = '.' + getStylesClass(type);
+    var clsName = '.' + getColorClass(type);
     jss.set(clsName, {fill: hex})
   });
 
@@ -32,18 +32,18 @@ var SettingsData = function() {
 
 
   return {
-    getStylesClassForType: function(type) {
-      return getStylesClass(type);
+    getColorClassForType: function(type) {
+      return getColorClass(type);
     },
 
     getColorForType: function(type) {
-      var clsName = '.' + getStylesClass(type);
+      var clsName = '.' + getColorClass(type);
       var color = jss.get(clsName);
       return color.fill;
     },
 
     setColorForType: function(type, hex) {
-      var clsName = '.' + getStylesClass(type);
+      var clsName = '.' + getColorClass(type);
       jss.set(clsName, {fill: hex})
     },
 
