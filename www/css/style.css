@@ -25,11 +25,13 @@ svg text::selection {
   mix-blend-mode: difference;
   stroke-width: 2px;
   stroke: #ff0000;
+  cursor: pointer;
 }
 
 .dna-text {
   fill: #ffffff;
   mix-blend-mode: difference;
+  cursor: pointer;
 }
 
 .dna-backbone {
@@ -83,7 +85,7 @@ svg text::selection {
   position: absolute;
   right: 10px;
   top: 10px;
-  background: #ffffff;
+  background: #eeeeee;
 }
 
 .settings-color-div {
@@ -99,9 +101,8 @@ svg text::selection {
 
 .settings-font-div {
   position: relative;
-  float: left;
+  float: right;
   text-align: left;
-  margin-top: 40px;
 }
 
 .settings-appearance-div {
