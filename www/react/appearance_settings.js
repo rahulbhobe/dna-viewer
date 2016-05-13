@@ -14,12 +14,18 @@ var AppearanceConfig = React.createClass({
     return (<div>
               {this.props.name}
               <br/>
-              <input type="text" ref="inp" defaultValue={this.state.value} onChange={this.onChange} onBlur={this.onBlur} size="5"/>
+              <input type="text" ref="inp" defaultValue={this.state.value} onChange={this.onChange} onBlur={this.onBlur} size="4"/>
+              <span style={{"font-size": "10px"}}>
+                {"(" + this.props.min + "-" + this.props.max + ")"}
+              </span>
             </div>);
   },
 
   onChange: function (evt) {
     val = parseInt(evt.target.value);
+    if (isNaN(val)) {
+      return;
+    }
     if (val<this.props.min) {
       return;
     }
