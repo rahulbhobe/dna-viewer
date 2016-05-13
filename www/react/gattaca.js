@@ -11,19 +11,19 @@ var GATTACA = React.createClass({
   getInitialState: function() {
     return {
       selected: null,
+      seq: this.props.seq,
+      dbn: this.props.dbn,
+      sequenceParser: this.props.sequenceParser,
+      windowWidth: window.innerWidth
     };
   },
 
   render: function () {
     return (<div>
-              <Canvas sequenceParser={this.props.sequenceParser} selected={this.state.selected} onSelected={this.onSelected}/>
-              <SequenceView onSequenceChanged={this.onSequenceChanged} selected={this.state.selected} onSelected={this.onSelected}/>
+              <Canvas sequenceParser={this.state.sequenceParser} selected={this.state.selected} onSelected={this.onSelected}/>
+              <SequenceView onSequenceChanged={this.onSequenceChanged} seq={this.state.seq} dbn={this.state.dbn} selected={this.state.selected} onSelected={this.onSelected}/>
               <SettingsView />
             </div>);
-  },
-
-  getInitialState: function() {
-    return {windowWidth: window.innerWidth};
   },
 
   handleResize: function(e) {
@@ -38,8 +38,12 @@ var GATTACA = React.createClass({
     window.removeEventListener('resize', this.handleResize);
   },
 
-  onSequenceChanged: function() {
-    this.forceUpdate();
+  onSequenceChanged: function(seq, dbn) {
+    this.setState({
+      sequenceParser: new SequenceParser(seq, dbn),
+      seq: seq,
+      dbn: dbn
+    });
   },
 
   onSelected: function(selected) {
@@ -50,10 +54,10 @@ var GATTACA = React.createClass({
 
 $(document).ready(function () {
   var pair = DebugUtils.debug_examples[0];
-  var sequenceParser = SequenceParser(pair.seq, pair.dbn);
+  var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
 
   ReactDOM.render(
-    <GATTACA sequenceParser={sequenceParser}/>,
+    <GATTACA sequenceParser={sequenceParser} seq={pair.seq} dbn={pair.dbn}/>,
     document.getElementById('body-div')
   );
 });

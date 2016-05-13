@@ -63,6 +63,10 @@ svg text::selection {
   border-bottom-width: 2px;
 }
 
+.sequence-has-error {
+  background-color: #ff0000
+}
+
 .apply-changes-hidden {
   display: none;
 }

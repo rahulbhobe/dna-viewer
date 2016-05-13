@@ -72,6 +72,10 @@ var DnaAnnotation = React.createClass({
 var Canvas = React.createClass({
   render: function () {
     var sequenceParser = this.props.sequenceParser;
+    if (sequenceParser.hasErrors()) {
+      return null;
+    }
+
     var coordinates = sequenceParser.getCoordinates();
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();

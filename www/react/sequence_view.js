@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var DebugUtils = require('../src/debug');
 var SettingsData = require('./settings_data');
+var SequenceParser = require('../src/sequence_parser');
 
 var SequenceLetter = React.createClass({
   render: function () {
@@ -55,8 +56,8 @@ var SequenceFormView = React.createClass({
 
   render: function () {
     var formClass = "sequence-form dna-base-font ";
-    if (this.state.hasError) {
-      formClass += " sequence-has-error-local";
+    if (this.props.error) {
+      formClass += " sequence-has-error";
     }
 
     var inpClass   =  this.state.editMode ? "" : "hidden";
@@ -95,9 +96,10 @@ var ApplyChanges = React.createClass({
 var SequenceView = React.createClass({
   getInitialState: function () {
     return {
-      seq: DebugUtils.debug_examples[0].seq,
-      dbn: DebugUtils.debug_examples[0].dbn,
-      dirty: false
+      seq: this.props.seq,
+      dbn: this.props.dbn,
+      dirty: false,
+      error: false
     };
   },
 
@@ -110,13 +112,22 @@ var SequenceView = React.createClass({
   },
 
   onApply: function () {
-    alert('DDD');
+    var sequenceParser = new SequenceParser(this.state.seq, this.state.dbn);
+    if (sequenceParser.hasErrors()) {
+      this.setState({error: true});
+      return;
+    }
+    this.props.onSequenceChanged(this.state.seq, this.state.dbn);
+    this.setState({
+      error: false,
+      dirty: false
+    });
   },
 
   render: function () {
     return (<div className="sequence-form-wrapper-div">
-              <SequenceFormView value={this.state.seq} type="seq" selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DNA sequence" />
-              <SequenceFormView value={this.state.dbn} type="dbn" selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DBN" />
+              <SequenceFormView value={this.state.seq} type="seq" error={this.state.error} selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DNA sequence" />
+              <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error} selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DBN" />
               <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
             </div>);
   }

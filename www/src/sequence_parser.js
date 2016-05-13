@@ -20,10 +20,11 @@ var SequenceParser = function(seq, dbn) {
     if (dbnType === '(') {
       secondary.onOpen(ii);
     } else if (dbnType === ')') {
-      // if (curStructureLevel <= 1) {
-      //   // Can't be root.
-      //   return errorObject("Tried to close too early at index " + ii);
-      // }
+      if (secondary.onStack()<=1) {
+        // Error handling
+        return Utils.errorObject("Tried to close too early at index", [ii]);
+      }
+
       secondary.onClose(ii);
     } else {
       secondary.onVisitNode(ii);
@@ -32,10 +33,12 @@ var SequenceParser = function(seq, dbn) {
     bases.push(new DnaBase(ii, dnaType, dbnType));
   }
 
-
-  // if (curStructureLevel.length !== 1) {
-  //   return errorObject("Missing closing brackets.");
-  // }
+  {
+    // Error handling.
+    if (secondary.onStack()!==1) {
+      return Utils.errorObject("Missing closing brackets ", [secondary.__curStructures[1].openedAt()]);
+    }
+  }
 
   return {
     getBases : function() {
@@ -58,8 +61,8 @@ var SequenceParser = function(seq, dbn) {
       return false;
     },
 
-    getError : function() {
-      return null;
+    getErrorIndices: function() {
+      return indices;
     }
   };
 };

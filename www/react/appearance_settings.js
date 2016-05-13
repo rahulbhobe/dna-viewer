@@ -15,7 +15,7 @@ var AppearanceConfig = React.createClass({
               {this.props.name}
               <br/>
               <input type="text" ref="inp" defaultValue={this.state.value} onChange={this.onChange} onBlur={this.onBlur} size="4"/>
-              <span style={{"font-size": "10px"}}>
+              <span style={{fontSize: "10px"}}>
                 {"(" + this.props.min + "-" + this.props.max + ")"}
               </span>
             </div>);
