@@ -90,8 +90,6 @@ var Canvas = React.createClass({
     var width       = $(window).width() * 0.8;
     var height      = $(window).height() * 0.8;
     var self        = this;
-    var begin       = coordinates[0];
-    var end         = coordinates[1];
 
     if (this.props.moving) {
       wrapperCls = 'dna-canvas-div-grabbing ';

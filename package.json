@@ -4,16 +4,17 @@
   "description": "",
   "main": " ",
   "scripts": {
+    "start": "node server.js",
     "build": "browserify -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/bundle/gattaca_bundle.js"
   },
   "repository": {
-    "type": "git",
-    "url": "https://git.autodesk.com/bhober/GATTACA.git"
+    "type": "git"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.6",
+    "express": "^4.13.4",
     "jquery": "^2.2.3",
     "jss": "^3.11.1",
     "react": "^15.0.2",
