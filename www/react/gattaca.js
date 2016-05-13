@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Canvas = require('./canvas');
-var SettingsView = require('./settings_view');
+var SettingsView = require('./settings_view').View;
 var SequenceView = require('./sequence_view');
 var DebugUtils = require('../src/debug');
 var SequenceParser = require('../src/sequence_parser');
@@ -18,6 +18,7 @@ var GATTACA = React.createClass({
     return (<div>
               <Canvas sequenceParser={this.props.sequenceParser} selected={this.state.selected} onSelected={this.onSelected}/>
               <SequenceView onSequenceChanged={this.onSequenceChanged} selected={this.state.selected} onSelected={this.onSelected}/>
+              <SettingsView />
             </div>);
   },
 

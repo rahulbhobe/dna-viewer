@@ -28,22 +28,6 @@ svg text::selection {
   stroke: #aaaaaa;
 }
 
-.dna-base-a {
-  fill: #64dd17;
-}
-.dna-base-c {
-  fill: #00b0ff;
-}
-.dna-base-g {
-  fill: #1d2120
-}
-.dna-base-t {
-  fill: #e62739;
-}
-.dna-base-n {
-  fill: #b0a18e;
-}
-
 .dna-text {
   font: 10px sans-serif;
   fill: #ffffff;
@@ -95,4 +79,5 @@ svg text::selection {
   position: absolute;
   right: 0px;
   top: 0px;
+  background: #cccccc;
 }

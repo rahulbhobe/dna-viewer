@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('underscore');
 var $ = require('jquery');
+var SettingsData = require('./settings_view').Data;
 
 var DnaBaseView = React.createClass({
   render: function () {
@@ -9,7 +10,7 @@ var DnaBaseView = React.createClass({
     var base    = this.props.base;
     var classes = " dna-base";
 
-    classes += " dna-base-" + base.getType().toLowerCase() + "";
+    classes += " " + SettingsData.getStylesClassForType(base.getType());
     classes += this.props.selected ? " dna-base-selected" : "";
     return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               <circle className={classes} />

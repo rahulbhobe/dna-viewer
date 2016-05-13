@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var GeometrySolver = function (sequenceParser) {
   var distance     = 35; // Distance between nodes.
                          // Common chord length on all circles.
