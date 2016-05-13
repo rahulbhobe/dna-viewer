@@ -9,19 +9,29 @@ var SettingsData = function() {
     'N': '#b0a18e'
   };
 
+  var fonts = [
+    'Andale Mono',
+    'Consolas',
+    'Courier',
+    'DejaVu Sans Mono',
+    'Lucida Console',
+    'Monaco'
+  ];
+
   var getStylesClass = function(type) {
     return 'dna-base-' + type.toLowerCase();
   };
 
-  var setColorForType = function(type, hex) {
-    var clsName = '.' + getStylesClass(type);
-    jss.set(clsName, {fill: hex})
-  };
+  var fontClass ='dna-base-font';
 
   // initialize jss:
   _(defaultColors).each(function (hex, type) {
-    setColorForType(type, hex);
+    var clsName = '.' + getStylesClass(type);
+    jss.set(clsName, {fill: hex})
   });
+
+  jss.set('.' + fontClass, {"font-family": fonts[0]});
+
 
   return {
     getStylesClassForType: function(type) {
@@ -35,8 +45,26 @@ var SettingsData = function() {
     },
 
     setColorForType: function(type, hex) {
-      setColorForType(type, hex);
-    }
+      var clsName = '.' + getStylesClass(type);
+      jss.set(clsName, {fill: hex})
+    },
+
+    getFontClass: function() {
+      return fontClass;
+    },
+
+    getFont: function() {
+      var clsName = '.' + fontClass;
+      var font = jss.get(clsName);
+      return font.font_family;
+    },
+
+    setFont: function(font) {
+      var clsName = '.' + fontClass;
+      jss.set(clsName, {font_family: font})
+    },
+
+
   };
 };
 

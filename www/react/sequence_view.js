@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var DebugUtils = require('../src/debug');
+var SettingsData = require('./settings_data');
 
 var SequenceLetter = React.createClass({
   render: function () {
@@ -51,7 +52,7 @@ var SequenceFormView = React.createClass({
   },
 
   render: function () {
-    var formClass = "sequence-form";
+    var formClass = "sequence-form " + SettingsData.getFontClass() + " ";
     if (this.state.hasError) {
       formClass += " sequence-has-error-local";
     }
@@ -65,7 +66,6 @@ var SequenceFormView = React.createClass({
     for (var ii=0; ii<str.length; ii++) {
       letterDivs.push((<SequenceLetter letter={str[ii]} index={ii} selected={this.props.selected===ii} onSelected={this.props.onSelected}/>));
     }
-
 
     return (<div>
               <form className={formClass}>
