@@ -16,10 +16,14 @@ var SettingsData = function() {
     return 'dna-base-' + type.toLowerCase();
   };
 
-  // initialize jss:
-  _(defaultColors).each(function (color, type) {
+  var setColorForType = function(type, hex) {
     var clsName = '.' + getStylesClass(type);
-    jss.set(clsName, {fill: color});
+    jss.set(clsName, {fill: hex})
+  };
+
+  // initialize jss:
+  _(defaultColors).each(function (hex, type) {
+    setColorForType(type, hex);
   });
 
   return {
@@ -28,8 +32,13 @@ var SettingsData = function() {
     },
 
     getColorForType: function(type) {
+      var clsName = '.' + getStylesClass(type);
       var color = jss.get(clsName);
       return color.fill;
+    },
+
+    setColorForType: function(type, hex) {
+      setColorForType(type, hex);
     }
   };
 }
@@ -40,8 +49,12 @@ var ColorsButton =  React.createClass({
   },
 
   render: function () {
-    return (<div>
-              <button type="button" onClick={this.onClick}>{this.props.type}</button>
+    var type = this.props.type;
+    return (<div className="settings-color-div" >
+              <div>
+                {type}
+              </div>
+              <button type="button" className="settings-color-button" onClick={this.onClick} style={{backgroundColor:Settings.Data.getColorForType(type)}} />
             </div>);
   },
 });
@@ -54,28 +67,25 @@ var ColorsPallete =  React.createClass({
   },
 
   onSelected: function(type) {
+    if (this.state.selected === type) {
+      this.setState({selected: null});
+      return;
+    }
     this.setState({selected: type});
   },
 
   onChangeComplete: function(color) {
     var type = this.state.selected; 
-    var clsName = ".dna-base-" + type.toLowerCase();
-    jss.set(clsName, {fill: color.hex})
+    Settings.Data.setColorForType(type, color.hex)
     this.setState({selected: null});
-  },
-
-  getColorForType: function(type) {
-    var clsName = ".dna-base-" + type.toLowerCase();
-    var color = jss.get(clsName);
   },
 
   colorPalleteForSelection: function() {
     if (!this.state.selected) {
       return;
     }
-
-    this.getColorForType(this.state.selected);
-    return (<ColorPicker type="sketch" onChangeComplete={this.onChangeComplete} />);
+    var color = Settings.Data.getColorForType(this.state.selected);
+    return (<ColorPicker type="sketch" onChangeComplete={this.onChangeComplete} color={color}/>);
   },
 
   render: function () {
@@ -100,6 +110,6 @@ var SettingsView = React.createClass({
 
 var Settings = {};
 Settings.View = SettingsView;
-Settings.Data = new SettingsData;
+Settings.Data = new SettingsData();
 
 module.exports = Settings;
