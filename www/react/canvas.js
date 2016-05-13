@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('underscore');
 var $ = require('jquery');
-var SettingsData = require('./settings_view').Data;
+var SettingsData = require('./settings_data');
 
 var DnaBaseView = React.createClass({
   render: function () {
