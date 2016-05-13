@@ -4,8 +4,7 @@
   "description": "",
   "main": " ",
   "scripts": {
-    "babel": "babel www/react --out-file www/babel/gattaca_react.js",
-    "browserify": "browserify -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/babel/gattaca_bundle.js"
+    "build": "browserify -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/bundle/gattaca_bundle.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,6 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.8.0",
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.3.0"
   }
