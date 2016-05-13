@@ -45,16 +45,26 @@ var DnaPair = React.createClass({
 
 var DnaAnnotation = React.createClass({
   render: function () {
-    var point   = Vector.create(this.props.point);
-    var text    = this.props.text;
-    var classes = "dna-base-annotation";
-    var textCls = "dna-text dna-base-font";
+    var text     = this.props.text;
+    var classes  = "dna-base-annotation";
+    var textCls  = "dna-text dna-base-font";
+    var location = this.getLocation();
 
-    point.elements[1] -= 20;
-
-    return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} >
+    return (<g transform={"translate(" + location.elements[0] + ", " + location.elements[1] + ")"} >
               <text className={textCls} textAnchor="middle" dominantBaseline="central">{text}</text>
             </g>);
+  },
+
+  getLocation: function () {
+    var point   = Vector.create(this.props.point);
+    var other1  = Vector.create(this.props.other1);
+    var other2  = Vector.create(this.props.other2);
+    var vec1    = point.subtract(other1);
+    var vec2    = point.subtract(other2);
+    var bisect  = vec1.add(vec2);
+    var drawAt  = point.add(bisect.toUnitVector().multiply(20));
+
+    return drawAt;
   }
 });
 
@@ -89,8 +99,8 @@ var Canvas = React.createClass({
             return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} onSelected={self.props.onSelected} key={"base" + ii}/>);
         })}
 
-        <DnaAnnotation point={coordinates[0]} text="5'"/>
-        <DnaAnnotation point={coordinates[coordinates.length-1]} text="3'"/>
+        <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
+        <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
       </svg>);
   }
 });
