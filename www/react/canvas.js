@@ -7,15 +7,20 @@ var DnaBaseView = React.createClass({
   render: function () {
     var point   = this.props.point;
     var base    = this.props.base;
-    var classes = " dna-base dna-base-size";
-    var textCls = "dna-text dna-base-font";
+    var clsName = " dna-target-spot-" + base.getIndex() + " ";
+    var classes = " dna-base dna-base-size " + clsName;
+    var textCls = "dna-text dna-base-font " + clsName;
 
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
     classes += this.props.selected ? " dna-base-selected" : "";
-    return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
+    return (<g className={clsName} onMouseDown={this.onMouseClick} transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               <circle className={classes} />
               <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
+  },
+
+  onMouseClick: function() {
+    this.props.onMouseClick(this.props.base.getIndex());
   },
 
   onMouseOver: function() {
@@ -76,6 +81,7 @@ var Canvas = React.createClass({
       return null;
     }
 
+    var wrapperCls  = null;
     var coordinates = sequenceParser.getCoordinates();
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();
@@ -85,7 +91,12 @@ var Canvas = React.createClass({
     var begin       = coordinates[0];
     var end         = coordinates[1];
 
+    if (this.props.moving) {
+      wrapperCls = 'dna-canvas-div-grabbing ';
+    }
+
     return (
+      <div className={wrapperCls}>
       <svg width={width} height={height}>
         {_(coordinates).map(function (point, ii) {
             if (ii >= coordinates.length-1) {
@@ -100,13 +111,14 @@ var Canvas = React.createClass({
         })}
 
         {_(coordinates).map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} onSelected={self.props.onSelected} key={"base" + ii}/>);
+            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} moving={self.props.moving===ii} onMouseClick={self.props.onMouseClick} onSelected={self.props.onSelected} key={"base" + ii}/>);
         })}
 
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
-      </svg>);
-  }
+      </svg>
+      </div>);
+  },
 });
 
 module.exports = Canvas;

@@ -15,6 +15,10 @@ svg text::selection {
   background: none;
 }
 
+.dna-canvas-div-grabbing {
+  cursor: -webkit-grabbing;
+}
+
 .dna-base {
   stroke: #000000;
   stroke-width: 0.5px;
@@ -25,13 +29,13 @@ svg text::selection {
   mix-blend-mode: difference;
   stroke-width: 2px;
   stroke: #ff0000;
-  cursor: pointer;
+  cursor: -webkit-grab;
 }
 
 .dna-text {
   fill: #ffffff;
   mix-blend-mode: difference;
-  cursor: pointer;
+  cursor: -webkit-grab;
 }
 
 .dna-backbone {
