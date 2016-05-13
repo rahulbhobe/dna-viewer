@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var DebugUtils = require('../src/debug');
+
 var SequenceLetter = React.createClass({
   render: function () {
     var clsName = this.props.selected ? "higlight-sequence-text" : "";
@@ -77,8 +81,10 @@ var SequenceFormView = React.createClass({
 var SequenceView = React.createClass({
   render: function () {
     return (<div>
-              <SequenceFormView value={debug_examples[0].seq} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DNA sequence" />
-              <SequenceFormView value={debug_examples[0].dbn} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DBN" />
+              <SequenceFormView value={DebugUtils.debug_examples[0].seq} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DNA sequence" />
+              <SequenceFormView value={DebugUtils.debug_examples[0].dbn} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DBN" />
             </div>);
   }
 });
+
+module.exports = SequenceView;

@@ -1,3 +1,7 @@
+
+var React = require('react');
+var SketchPicker = require('react-color').SketchPicker;
+
 var ColorPallete =  React.createClass({
   render: function () {
     return (<div className="settings-view" >
@@ -12,7 +16,9 @@ var update = function() {
 var SettingsView = React.createClass({
   render: function () {
     return (<div className="settings-view" >
-              <ColorPallete />
+              <SketchPicker />
             </div>);
   }
 });
+
+module.exports = SettingsView;

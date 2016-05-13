@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var _ = require('underscore');
+var $ = require('jquery');
 
 var DnaBaseView = React.createClass({
   render: function () {
@@ -54,18 +58,19 @@ var Canvas = React.createClass({
             if (ii >= coordinates.length-1) {
               return;
             }
-            return (<DnaBackbone point1={point} point2={coordinates[ii+1]}/>);
-          })}
-        {_(connections).map(function (connection) {
+            return (<DnaBackbone point1={point} point2={coordinates[ii+1]} key={"backbone" + ii}/>);
+        })}
+        {_(connections).map(function (connection, ii) {
             var source = coordinates[connection.source];
             var target = coordinates[connection.target];
-            return (<DnaPair source={source} target={target}/>);
-          })}
+            return (<DnaPair source={source} target={target} key={"pair" + ii}/>);
+        })}
 
         {_(coordinates).map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} onSelected={self.props.onSelected}/>);
-          })}
+            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} onSelected={self.props.onSelected} key={"base" + ii}/>);
+        })}
       </svg>);
   }
 });
 
+module.exports = Canvas;

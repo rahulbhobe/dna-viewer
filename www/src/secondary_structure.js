@@ -1,3 +1,6 @@
+var SubStructure = require('./sub_structure');
+var _ = require('underscore');
+
 var SecondaryStructure = function() {
   // All structures created by the helper.
   this._subStructures     = [];
@@ -54,3 +57,5 @@ SecondaryStructure.prototype.getConnections = function() {
 SecondaryStructure.prototype.getSubStructureAtIndex = function(index) {
   return this._indexToSubStruct[index];
 }
+
+module.exports = SecondaryStructure;

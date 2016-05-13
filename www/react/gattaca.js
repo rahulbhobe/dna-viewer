@@ -1,3 +1,12 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var $ = require('jquery');
+var Canvas = require('./canvas');
+var SettingsView = require('./settings_view');
+var SequenceView = require('./sequence_view');
+var DebugUtils = require('../src/debug');
+var SequenceParser = require('../src/sequence_parser');
+
 var GATTACA = React.createClass({
   getInitialState: function() {
     return {
@@ -8,7 +17,6 @@ var GATTACA = React.createClass({
   render: function () {
     return (<div>
               <Canvas sequenceParser={this.props.sequenceParser} selected={this.state.selected} onSelected={this.onSelected}/>
-              <SettingsView />
               <SequenceView onSequenceChanged={this.onSequenceChanged} selected={this.state.selected} onSelected={this.onSelected}/>
             </div>);
   },
@@ -40,7 +48,7 @@ var GATTACA = React.createClass({
 
 
 $(document).ready(function () {
-  var pair = debug_examples[0];
+  var pair = DebugUtils.debug_examples[0];
   var sequenceParser = SequenceParser(pair.seq, pair.dbn);
 
   ReactDOM.render(
@@ -48,3 +56,5 @@ $(document).ready(function () {
     document.getElementById('body-div')
   );
 });
+
+module.exports = GATTACA;

@@ -41,3 +41,5 @@ DnaBase.prototype.canPairWith = function(other) {
   }
   return (this.isUnpaired() && other.isUnpaired());
 }
+
+module.exports = DnaBase;

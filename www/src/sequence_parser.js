@@ -1,6 +1,11 @@
+var SecondaryStructure = require('./secondary_structure');
+var DnaBase = require('./dna_base');
+var GeometrySolver = require('./geometry_solver');
+var Utils = require('./utils');
+
 var SequenceParser = function(seq, dbn) {
 
-  assert(seq.length===dbn.length, "Sequence has invalid length");
+  Utils.assert(seq.length===dbn.length, "Sequence has invalid length");
 
   var errorMsg = null;
   var bases = [];
@@ -9,8 +14,8 @@ var SequenceParser = function(seq, dbn) {
     var dnaType = seq.charAt(ii);
     var dbnType = dbn.charAt(ii);
 
-    assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
-    assert(['.', '(', ')'].indexOf(dbnType)!==-1);
+    Utils.assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
+    Utils.assert(['.', '(', ')'].indexOf(dbnType)!==-1);
 
     if (dbnType === '(') {
       secondary.onOpen(ii);
@@ -58,3 +63,5 @@ var SequenceParser = function(seq, dbn) {
     }
   };
 };
+
+module.exports = SequenceParser;

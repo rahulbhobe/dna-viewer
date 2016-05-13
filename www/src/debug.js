@@ -1,4 +1,5 @@
-// Debug code.
+var $ = require('jquery');
+
 $(document).ready(function () {
   function assert(condition, message) {
     if (!condition) {
@@ -18,7 +19,9 @@ $(document).ready(function () {
   // });
 });
 
-var debug_examples = [
+var DebugUtils = {};
+
+DebugUtils.debug_examples = [
   {
     seq: 'TTGGGGGGACTGGGGCTCCCATTCGTTGCCTTTATAAATCCTTGCAAGCCAATTAACAGGTTGGTGAGGGGCTTGGGTGAAAAGGTGCTTAAGACTCCGT',
     dbn: '...(((((.(...).)))))........(((((.....((..(.((((((..(((.((...)).)))..)))))).).)))))))...............'
@@ -36,3 +39,5 @@ var debug_examples = [
     dbn: '.(...((....(...(((.....)))..((((...)))))...)))'
   }
 ];
+
+module.exports = DebugUtils;

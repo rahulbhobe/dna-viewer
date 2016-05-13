@@ -57,3 +57,5 @@ var GeometrySolver = function (sequenceParser) {
     }
   };
 };
+
+module.exports = GeometrySolver;
