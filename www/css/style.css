@@ -18,7 +18,6 @@ svg text::selection {
 .dna-base {
   stroke: #000000;
   stroke-width: 0.5px;
-  r: 10;
 }
 
 .dna-base-selected {
@@ -92,7 +91,14 @@ svg text::selection {
 }
 
 .settings-font-div {
+  position: relative;
   float: left;
-  text-align: center;
+  text-align: left;
   margin-top: 40px;
+}
+
+.settings-appearance-div {
+  text-align: left;
+  margin-top: 40px;
+  width: 100px;
 }

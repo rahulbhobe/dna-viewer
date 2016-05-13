@@ -15,6 +15,9 @@ var SettingsInit = function() {
     jss.set(clsName, {fill: hex})
   });
   jss.set('.dna-base-font', {"font-family": 'Courier'});
+  jss.set('.dna-base-size', {"r": "10px"});
+  jss.set('.dna-base-backbone', {"stroke-width": "1px"});
+  jss.set('.dna-base-pair', {"stroke-width": "4px"});
 };
 
 module.exports = SettingsInit();

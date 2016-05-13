@@ -7,7 +7,7 @@ var DnaBaseView = React.createClass({
   render: function () {
     var point   = this.props.point;
     var base    = this.props.base;
-    var classes = " dna-base";
+    var classes = " dna-base dna-base-size";
     var textCls = "dna-text dna-base-font";
 
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
