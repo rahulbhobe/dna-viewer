@@ -83,11 +83,16 @@ svg text::selection {
   border-bottom-width: 2px;
 }
 
-
 .hidden {
   display: none;
 }
 
 .higlight-sequence-text {
   background-color: #bb5533;
+}
+
+.settings-view {
+  position: absolute;
+  right: 0px;
+  top: 0px;
 }

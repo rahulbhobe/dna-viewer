@@ -8,6 +8,7 @@ var GATTACA = React.createClass({
   render: function () {
     return (<div>
               <Canvas sequenceParser={this.props.sequenceParser} selected={this.state.selected} onSelected={this.onSelected}/>
+              <SettingsView />
               <SequenceView onSequenceChanged={this.onSequenceChanged} selected={this.state.selected} onSelected={this.onSelected}/>
             </div>);
   },
