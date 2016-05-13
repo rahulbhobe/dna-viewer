@@ -77,8 +77,8 @@ svg text::selection {
 
 .settings-view {
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 10px;
+  top: 10px;
   background: #ffffff;
 }
 
@@ -89,6 +89,6 @@ svg text::selection {
 }
 
 .settings-color-button {
-  width: 40px;
+  width: 35px;
   height: 40px;
 }
