@@ -34,12 +34,10 @@ svg text::selection {
 
 .dna-backbone {
   stroke: #666666;
-  stroke-width: 1.5px;
 }
 
 .dna-pair {
   stroke: #6688bb;
-  stroke-width: 4px;
 }
 
 .sequence-form {

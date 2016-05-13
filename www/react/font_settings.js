@@ -8,6 +8,7 @@ var FontSettings =  React.createClass({
 
     return (<div className="settings-font-div dna-base-font">
               Font:
+              <br/>
               <select onChange={this.onChange} selected={this.getSelected()}>
               {_(fonts).map(function (font, ii) {
                 return (<option value={font} style={{fontFamily: font}} key={"fonts_" + ii}>{font}</option>);

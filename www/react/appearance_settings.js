@@ -13,6 +13,7 @@ var AppearanceConfig = React.createClass({
   render: function () {
     return (<div>
               {this.props.name}
+              <br/>
               <input type="text" ref="inp" defaultValue={this.state.value} onChange={this.onChange} onBlur={this.onBlur} size="5"/>
             </div>);
   },
@@ -38,13 +39,12 @@ var AppearanceConfig = React.createClass({
 
 });
 
-              // Backbone:
-              // Base-pair:
-
 var AppearanceSettings =  React.createClass({
   render: function () {
     return (<div className="settings-appearance-div dna-base-font">
               <AppearanceConfig  name="Size:" jssCls='.dna-base-size' jssKey='r' min={5} max={20} size="5"/>
+              <AppearanceConfig  name="Backbone:" jssCls='.dna-base-backbone' jssKey='stroke-width' min={1} max={6} size="5"/>
+              <AppearanceConfig  name="Base-pair:" jssCls='.dna-base-pair' jssKey='stroke-width' min={1} max={6} size="5"/>
             </div>);
   },
 
