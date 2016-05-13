@@ -1,7 +1,6 @@
 var React = require('react');
 var ColorPicker = require('react-color').SketchPicker;
 var _ = require('underscore');
-var SettingsData = require('./settings_data');
 
 var ColorsButton =  React.createClass({
   onClick: function() {
@@ -11,10 +10,10 @@ var ColorsButton =  React.createClass({
   render: function () {
     var type = this.props.type;
     return (<div className="settings-color-div" >
-              <div className={SettingsData.getFontClass()}>
+              <div className={'dna-base-font'}>
                 {type}
               </div>
-              <button type="button" className="settings-color-button" onClick={this.onClick} style={{backgroundColor:SettingsData.getColorForType(type)}} />
+              <button type="button" className="settings-color-button" onClick={this.onClick} style={{backgroundColor:this.props.color}} />
             </div>);
   },
 });
@@ -24,6 +23,16 @@ var ColorSettings =  React.createClass({
     return {
       selected: null
     };
+  },
+
+  getColorForType: function(type) {
+    var type = type.toLowerCase();
+    var color = jss.get('.dna-base-' + type);
+    return color.fill;
+  },
+
+  setColorForType: function(type, val) {
+    jss.set('.dna-base-' + type.toLowerCase(), {fill: val});
   },
 
   onSelected: function(type) {
@@ -36,7 +45,7 @@ var ColorSettings =  React.createClass({
 
   onChangeComplete: function(color) {
     var type = this.state.selected; 
-    SettingsData.setColorForType(type, color.hex)
+    this.setColorForType(type, color.hex)
     this.setState({selected: null});
   },
 
@@ -44,17 +53,18 @@ var ColorSettings =  React.createClass({
     if (!this.state.selected) {
       return;
     }
-    var color = SettingsData.getColorForType(this.state.selected);
+    var color = this.getColorForType(this.state.selected);
     return (<ColorPicker type="sketch" onChangeComplete={this.onChangeComplete} color={color}/>);
   },
 
   render: function () {
+    var self = this;
     return (<div className="settings-color-wrap-div">
-              <ColorsButton type='A' onSelected={this.onSelected} />
-              <ColorsButton type='C' onSelected={this.onSelected} />
-              <ColorsButton type='G' onSelected={this.onSelected} />
-              <ColorsButton type='T' onSelected={this.onSelected} />
-              <ColorsButton type='N' onSelected={this.onSelected} />
+              <ColorsButton type='A' color={self.getColorForType('A')} onSelected={self.onSelected}/>
+              <ColorsButton type='C' color={self.getColorForType('C')} onSelected={self.onSelected}/>
+              <ColorsButton type='G' color={self.getColorForType('G')} onSelected={self.onSelected}/>
+              <ColorsButton type='T' color={self.getColorForType('T')} onSelected={self.onSelected}/>
+              <ColorsButton type='N' color={self.getColorForType('N')} onSelected={self.onSelected}/>
               {this.colorPalleteForSelection()}
             </div>);
   },

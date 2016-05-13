@@ -52,7 +52,7 @@ var SequenceFormView = React.createClass({
   },
 
   render: function () {
-    var formClass = "sequence-form " + SettingsData.getFontClass() + " ";
+    var formClass = "sequence-form dna-base-font ";
     if (this.state.hasError) {
       formClass += " sequence-has-error-local";
     }

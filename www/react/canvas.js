@@ -2,16 +2,15 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('underscore');
 var $ = require('jquery');
-var SettingsData = require('./settings_data');
 
 var DnaBaseView = React.createClass({
   render: function () {
     var point   = this.props.point;
     var base    = this.props.base;
     var classes = " dna-base";
-    var textCls = "dna-text " + SettingsData.getFontClass() + " ";
+    var textCls = "dna-text dna-base-font";
 
-    classes += " " + SettingsData.getColorClassForType(base.getType());
+    classes += " " + 'dna-base-' + base.getType().toLowerCase();
     classes += this.props.selected ? " dna-base-selected" : "";
     return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               <circle className={classes} />

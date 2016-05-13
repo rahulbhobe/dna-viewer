@@ -1,21 +1,28 @@
 var React = require('react');
-var SettingsData = require('./settings_data');
 var _ = require('underscore');
 
 var FontSettings =  React.createClass({
+
   render: function () {
-    return (<div className="settings-font-div" style={{fontFamily: SettingsData.getFontClass()}}>
+    var fonts = [ 'Andale Mono', 'Courier', 'Monaco', 'Courier New'];
+
+    return (<div className="settings-font-div dna-base-font">
               Font:
-              <select onChange={this.onChange}>
-              {_(SettingsData.getAllFonts()).map(function (font, ii) {
+              <select onChange={this.onChange} selected={this.getSelected()}>
+              {_(fonts).map(function (font, ii) {
                 return (<option value={font} style={{fontFamily: font}} key={"fonts_" + ii}>{font}</option>);
               })}
               </select>
             </div>);
   },
 
+  getSelected: function() {
+    var font = jss.get(".dna-base-font");
+    return font["font-family"];
+  },
+
   onChange: function(event) {
-    SettingsData.setFont(event.target.value);
+    jss.set(".dna-base-font", {"font-family": event.target.value})
   }
 });
 
