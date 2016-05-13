@@ -9,12 +9,13 @@ var DnaBaseView = React.createClass({
     var point   = this.props.point;
     var base    = this.props.base;
     var classes = " dna-base";
+    var textCls = "dna-text " + SettingsData.getFontClass() + " ";
 
     classes += " " + SettingsData.getStylesClassForType(base.getType());
     classes += this.props.selected ? " dna-base-selected" : "";
     return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               <circle className={classes} />
-              <text className="dna-text" textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
+              <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
   },
 

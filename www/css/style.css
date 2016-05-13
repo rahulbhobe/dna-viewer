@@ -29,7 +29,6 @@ svg text::selection {
 }
 
 .dna-text {
-  font: 10px sans-serif;
   fill: #ffffff;
   mix-blend-mode: difference;
 }
