@@ -51,6 +51,7 @@ svg text::selection {
   -ms-user-select: none;
 }
 
+
 .sequence-form-div {
   border-style: groove;
 }
@@ -60,6 +61,10 @@ svg text::selection {
   border-left-width: 5px;
   border-right-width: 2px;
   border-bottom-width: 2px;
+}
+
+.apply-changes-hidden {
+  display: none;
 }
 
 .hidden {

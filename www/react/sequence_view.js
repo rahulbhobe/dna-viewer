@@ -36,7 +36,9 @@ var SequenceFormView = React.createClass({
   },
 
   onChange: function (evt) {
-    this.setState({ value: evt.target.value.toUpperCase()});
+    var value = evt.target.value.toUpperCase();
+    this.setState({value: value});
+    this.props.onChange(this.props.type, value);
   },
 
   onBlur: function () {
@@ -78,11 +80,44 @@ var SequenceFormView = React.createClass({
   }
 });
 
+var ApplyChanges = React.createClass({
+    render: function () {
+      var clsNames = "apply-changes-button sequence-form sequence-form-div";
+      if (!this.props.dirty) {
+        clsNames += " apply-changes-hidden ";
+      }
+      return (<div>
+                <button type="button" className={clsNames} onClick={this.props.onApply}>Apply</button>
+              </div>);
+  }
+});
+
 var SequenceView = React.createClass({
+  getInitialState: function () {
+    return {
+      seq: DebugUtils.debug_examples[0].seq,
+      dbn: DebugUtils.debug_examples[0].dbn,
+      dirty: false
+    };
+  },
+
+  onChange: function (type, value) {
+    var obj = {
+      dirty: true
+    };
+    obj[type] = value;
+    this.setState(obj);
+  },
+
+  onApply: function () {
+    alert('DDD');
+  },
+
   render: function () {
-    return (<div>
-              <SequenceFormView value={DebugUtils.debug_examples[0].seq} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DNA sequence" />
-              <SequenceFormView value={DebugUtils.debug_examples[0].dbn} selected={this.props.selected} onSelected={this.props.onSelected} placeholder="Enter DBN" />
+    return (<div className="sequence-form-wrapper-div">
+              <SequenceFormView value={this.state.seq} type="seq" selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DNA sequence" />
+              <SequenceFormView value={this.state.dbn} type="dbn" selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DBN" />
+              <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
             </div>);
   }
 });

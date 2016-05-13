@@ -40,6 +40,11 @@ SecondaryStructure.prototype.onClose = function(nodeIndex) {
   this._curStructures[this._curStructures.length-1].append(nodeIndex);
 };
 
+SecondaryStructure.prototype.onStack = function() {
+  return this._curStructures.length;
+};
+
+
 SecondaryStructure.prototype.getStructures = function() {
   return this._subStructures;
 };
