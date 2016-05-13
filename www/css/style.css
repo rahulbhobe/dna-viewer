@@ -24,7 +24,7 @@ svg text::selection {
   fill: #ffffff;
   mix-blend-mode: difference;
   stroke-width: 2px;
-  stroke: #aaaaaa;
+  stroke: #ff0000;
 }
 
 .dna-text {

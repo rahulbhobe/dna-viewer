@@ -43,6 +43,22 @@ var DnaPair = React.createClass({
   }
 });
 
+var DnaAnnotation = React.createClass({
+  render: function () {
+    var point   = Vector.create(this.props.point);
+    var text    = this.props.text;
+    var classes = "dna-base-annotation";
+    var textCls = "dna-text dna-base-font";
+
+    point.elements[1] -= 20;
+
+    return (<g transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} >
+              <text className={textCls} textAnchor="middle" dominantBaseline="central">{text}</text>
+            </g>);
+  }
+});
+
+
 var Canvas = React.createClass({
   render: function () {
     var sequenceParser = this.props.sequenceParser;
@@ -52,6 +68,8 @@ var Canvas = React.createClass({
     var width       = $(window).width() * 0.8;
     var height      = $(window).height() * 0.8;
     var self        = this;
+    var begin       = coordinates[0];
+    var end         = coordinates[1];
 
     return (
       <svg width={width} height={height}>
@@ -70,6 +88,9 @@ var Canvas = React.createClass({
         {_(coordinates).map(function (point, ii) {
             return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} onSelected={self.props.onSelected} key={"base" + ii}/>);
         })}
+
+        <DnaAnnotation point={coordinates[0]} text="5'"/>
+        <DnaAnnotation point={coordinates[coordinates.length-1]} text="3'"/>
       </svg>);
   }
 });
