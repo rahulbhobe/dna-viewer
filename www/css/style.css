@@ -32,10 +32,21 @@ svg text::selection {
   cursor: -webkit-grab;
 }
 
+.dna-base-moving {
+  fill: #ffffff;
+  mix-blend-mode: difference;
+  stroke-width: 2px;
+  stroke: #ff0000;
+}
+
+.dna-base-banned-pairing {
+  cursor: not-allowed;
+}
+
 .dna-text {
   fill: #ffffff;
   mix-blend-mode: difference;
-  cursor: -webkit-grab;
+  cursor: inherit;
 }
 
 .dna-backbone {

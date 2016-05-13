@@ -6,7 +6,7 @@ var SequenceParser = require('../src/sequence_parser');
 
 var SequenceLetter = React.createClass({
   render: function () {
-    var clsName = this.props.selected ? "higlight-sequence-text" : "";
+    var clsName = this.props.selected || this.props.moving ? "higlight-sequence-text" : "";
     return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               {this.props.letter}
             </span>);
@@ -67,7 +67,7 @@ var SequenceFormView = React.createClass({
     var str = this.state.value;
     var letterDivs = [];
     for (var ii=0; ii<str.length; ii++) {
-      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii} selected={this.props.selected===ii} onSelected={this.props.onSelected} key={"letter_" + ii}/>));
+      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii} selected={this.props.selected===ii} moving={this.props.moving==ii} onSelected={this.props.onSelected} key={"letter_" + ii}/>));
     }
 
     return (<div>
@@ -126,8 +126,8 @@ var SequenceView = React.createClass({
 
   render: function () {
     return (<div className="sequence-form-wrapper-div">
-              <SequenceFormView value={this.state.seq} type="seq" error={this.state.error} selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DNA sequence" />
-              <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error} selected={this.props.selected} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DBN" />
+              <SequenceFormView value={this.state.seq} type="seq" error={this.state.error} selected={this.props.selected} moving={this.props.moving} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DNA sequence" />
+              <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error} selected={this.props.selected} moving={this.props.moving} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DBN" />
               <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
             </div>);
   }

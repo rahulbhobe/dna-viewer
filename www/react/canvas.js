@@ -13,6 +13,8 @@ var DnaBaseView = React.createClass({
 
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
     classes += this.props.selected ? " dna-base-selected" : "";
+    classes += this.props.moving ? " dna-base-moving" : "";
+    classes += this.props.bannedCursorWithMoving ? " dna-base-banned-pairing " : "";
     return (<g className={clsName} onMouseDown={this.onMouseClick} transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               <circle className={classes} />
               <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
@@ -95,6 +97,21 @@ var Canvas = React.createClass({
       wrapperCls = 'dna-canvas-div-grabbing ';
     }
 
+    var self = this;
+    var bannedCursorWithMoving = function(index) {
+      var moving = self.props.moving;
+      if (!moving||moving<0) {
+        return false;
+      }
+      if (moving === index) {
+        return false;
+      }
+
+      var movingBase = bases[moving];
+      var thisBase = bases[index];
+      return !thisBase.canPairWith(movingBase);
+    }
+
     return (
       <div className={wrapperCls}>
       <svg width={width} height={height}>
@@ -111,7 +128,7 @@ var Canvas = React.createClass({
         })}
 
         {_(coordinates).map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} moving={self.props.moving===ii} onMouseClick={self.props.onMouseClick} onSelected={self.props.onSelected} key={"base" + ii}/>);
+            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} moving={self.props.moving===ii} bannedCursorWithMoving={bannedCursorWithMoving(ii)} onMouseClick={self.props.onMouseClick} onSelected={self.props.onSelected} key={"base" + ii}/>);
         })}
 
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
