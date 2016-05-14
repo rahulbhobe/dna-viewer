@@ -88,11 +88,11 @@ var Canvas = React.createClass({
     }
 
     var wrapperCls  = null;
-    var coordinates = sequenceParser.getCoordinates();
-    var bases       = sequenceParser.getBases();
-    var connections = sequenceParser.getConnections();
     var width       = $(window).width() * 0.8;
     var height      = $(window).height() * 0.8;
+    var coordinates = this.getCoordinatesForScreen([width, height]);
+    var bases       = sequenceParser.getBases();
+    var connections = sequenceParser.getConnections();
     var self        = this;
 
     if (this.props.moving) {
@@ -142,6 +142,41 @@ var Canvas = React.createClass({
     var movingBase = bases[moving];
     var thisBase = bases[index];
     return !thisBase.canPairWith(movingBase);
+  },
+
+  getCoordinatesForScreen: function(screenDimensions) {
+    var sequenceParser = this.props.sequenceParser;
+    var coordinates = sequenceParser.getCoordinates();
+
+    var screenDiagonal = Math.sqrt((screenDimensions[0]*screenDimensions[0]) + (screenDimensions[1]*screenDimensions[1]));
+
+    var min = Vector.create(coordinates[0].elements);
+    var max = Vector.create(coordinates[0].elements);
+
+    _(coordinates).each(function (vec) {
+      min.elements[0] = Math.min(min.elements[0], vec.elements[0]);
+      min.elements[1] = Math.min(min.elements[1], vec.elements[1]);
+      max.elements[0] = Math.max(max.elements[0], vec.elements[0]);
+      max.elements[1] = Math.max(max.elements[1], vec.elements[1]);
+    });
+
+    var currentDiagonal = min.distanceFrom(max);
+    // Scale by 75 %.
+    var scale = 0.75 * (screenDiagonal / currentDiagonal);
+
+    var scaledCoordinates = _(coordinates).map(function(point) {
+      return point.multiply(scale);
+    });
+
+    // Remove the minVec and add a few to not clip the edge points.
+    var min = min.multiply(scale); // to subtract.
+    var buf = Vector.create([1,1]).toUnitVector().multiply(0.05*screenDiagonal);
+    var vec = buf.subtract(min);
+
+    var transformedCoordinates = _(scaledCoordinates).map(function(point) {
+      return point.add(vec);
+    });
+    return transformedCoordinates;
   }
 });
 

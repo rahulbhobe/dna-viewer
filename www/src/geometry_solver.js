@@ -1,8 +1,10 @@
 var _ = require('underscore');
 
 var GeometrySolver = function (sequenceParser) {
-  var distance     = 35; // Distance between nodes.
-                         // Common chord length on all circles.
+  var distance     = 100; // Distance between nodes.
+                          // Common chord length on all circles.
+                          // Some base value. This will be normalized to screen coordinates
+                          // when asked for it. Could not have pre guessed the structures size any way.
 
   var getThetaFromBase = function (base) {
     var subStructure = sequenceParser.getSubStructureAtIndex(base.getIndex());
@@ -22,7 +24,7 @@ var GeometrySolver = function (sequenceParser) {
     return getRadiusFromTheta(theta) * Math.cos(theta/2);
   };
 
-  var centerPosition = Vector.create([700, 400]); // Start position for the center.
+  var centerPosition = Vector.create([0, 0]); // Start position for the center.
 
   var moveCenter = false;
   var prevPoint  = null;
