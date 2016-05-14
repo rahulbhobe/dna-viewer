@@ -8,7 +8,7 @@ var DebugUtils = require('../src/debug');
 var SequenceParser = require('../src/sequence_parser');
 var _ = require('underscore');
 
-var GATTACA = React.createClass({
+var DnaStructure = React.createClass({
   getInitialState: function() {
     return {
       selected: null,
@@ -113,9 +113,9 @@ $(document).ready(function () {
   var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
 
   ReactDOM.render(
-    <GATTACA sequenceParser={sequenceParser} seq={pair.seq} dbn={pair.dbn}/>,
+    <DnaStructure sequenceParser={sequenceParser} seq={pair.seq} dbn={pair.dbn}/>,
     document.getElementById('body-div')
   );
 });
 
-module.exports = GATTACA;
+module.exports = DnaStructure;
