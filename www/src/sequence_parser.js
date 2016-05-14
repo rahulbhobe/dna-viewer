@@ -22,7 +22,7 @@ var SequenceParser = function(seq, dbn) {
     } else if (dbnType === ')') {
       if (secondary.onStack()<=1) {
         // Error handling
-        return Utils.errorObject("Tried to close too early at index", [ii]);
+        return Utils.errorObject("Tried to close too early at index", ii);
       }
 
       secondary.onClose(ii);
@@ -36,7 +36,7 @@ var SequenceParser = function(seq, dbn) {
   {
     // Error handling.
     if (secondary.onStack()!==1) {
-      return Utils.errorObject("Missing closing brackets ", [secondary.__curStructures[1].openedAt()]);
+      return Utils.errorObject("Missing closing brackets ", secondary.__curStructures[1].openedAt());
     }
   }
 
@@ -61,8 +61,8 @@ var SequenceParser = function(seq, dbn) {
       return false;
     },
 
-    getErrorIndices: function() {
-      return indices;
+    getErrorIndex: function() {
+      return null;
     }
   };
 };

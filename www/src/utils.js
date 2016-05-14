@@ -11,14 +11,14 @@ Utils.assert = function (condition, message) {
   }
 };
 
-Utils.errorObject = function (msg, indices) {
+Utils.errorObject = function (msg, index) {
   return {
     hasErrors: function() {
       return msg;
     },
 
-    getErrorIndices: function() {
-      return indices;
+    getErrorIndex: function() {
+      return index;
     }
   };
 };
