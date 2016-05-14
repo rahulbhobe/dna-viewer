@@ -7,9 +7,9 @@ var ShareLink =  React.createClass({
   render: function () {
     var clsName = (this.state && this.state.expanded) ? "" : "share-link-box-hidden";
     clsName += " share-links-box";
-    var value   = this.state ? this.state.url : "aa";
+    var value   = this.state ? this.state.url : "place holder";
     return (<div className="share-link-button" >
-              <input type="image" src="res/share_icon.png" alt="Submit" onClick={this.onClick}/>
+              <input type="image" src="/res/share_icon.png" alt="Submit" onClick={this.onClick}/>
               <span className={clsName}>{value}</span>
             </div>);
   },
@@ -21,7 +21,7 @@ var ShareLink =  React.createClass({
     };
     $.ajax({
       type: "POST",
-      url: "sharelink",
+      url: "/sharelink",
       data: JSON.stringify(data),
       success: this.onSuccess,
       dataType: "json",
@@ -30,7 +30,7 @@ var ShareLink =  React.createClass({
   },
 
   onSuccess: function (data) {
-    var url = window.location.origin + '/' + data.url;
+    var url = window.location.origin + '/l/' + data.url;
     this.setState({
       url: url,
       expanded: true,

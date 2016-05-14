@@ -9,6 +9,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/www'));
+app.set('views', __dirname + '/www');
+app.set('view engine', 'html');
 app.use(bodyParser.json());
 
 app.post('/sharelink', function(req, res) {
@@ -30,16 +32,25 @@ app.post('/sharelink', function(req, res) {
 
 });
 
-app.get('/*', function(req, res) {
-  var url = req.path.substring(1);
-
+app.get('/l/*', function(req, res) {
+  var url = req.path.substring(3);
   Data.findOne({url: url}, function(err, data) {
     if (err) return console.error(err);
-    console.log(data);
+    var query = "/d/seq=" + data.seq + "&dbn" + data.dbn;
+    var port  = app.get('port');
+    if (port) {
+      port = ":" + port;
+    } else {
+      port = "";
+    }
+    res.redirect(req.protocol + "://" + req.hostname + port + query);
   });
 
-  res.send(data);
-  res.redirect('/');
+});
+
+app.get('/d/*', function(req, res) {
+  var url = req.path.substring(1);
+  res.render('index.ejs');
 });
 
 
