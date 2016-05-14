@@ -36,12 +36,17 @@ app.get('/l/*', function(req, res) {
   var url = req.path.substring(3);
   Data.findOne({url: url}, function(err, data) {
     if (err) {
-      redirect('/');
+      res.redirect('/');
+      return;
+    }
+
+    if (!data) {
+      res.redirect('/');
       return;
     }
 
     if (!(("seq" in data)&&("dbn" in data))) {
-      redirect('/');
+      res.redirect('/');
       return;
     }
 
