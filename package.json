@@ -2,7 +2,7 @@
   "name": "gattaca",
   "version": "1.0.0",
   "description": "",
-  "main": " ",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "build": "browserify -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/bundle/gattaca_bundle.js"
