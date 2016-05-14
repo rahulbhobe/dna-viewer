@@ -67,12 +67,19 @@ var SequenceFormView = React.createClass({
     var str = this.state.value;
     var letterDivs = [];
     for (var ii=0; ii<str.length; ii++) {
-      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii} selected={this.props.selected===ii} moving={this.props.moving==ii} onSelected={this.props.onSelected} key={"letter_" + ii}/>));
+      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii}
+                         selected={this.props.selected===ii} moving={this.props.moving==ii}
+                        onSelected={this.props.onSelected}
+                        key={"letter_" + ii}/>));
     }
 
     return (<div>
               <form className={formClass}>
-                <input type="text" className={inpClass} defaultValue={this.props.value} onChange={this.onChange} onBlur={this.onBlur} ref="inp" placeholder={this.props.placeholder} style={{width: '100%'}} ></input>
+                <input type="text" className={inpClass} defaultValue={this.props.value}
+                  onChange={this.onChange} onBlur={this.onBlur}
+                  ref="inp" placeholder={this.props.placeholder}
+                  style={{width: '100%'}} >
+                </input>
                 <div className={divClass} onClick={this.onClick} >
                   {letterDivs}
                 </div>
@@ -126,8 +133,14 @@ var SequenceView = React.createClass({
 
   render: function () {
     return (<div className="sequence-form-wrapper-div">
-              <SequenceFormView value={this.state.seq} type="seq" error={this.state.error} selected={this.props.selected} moving={this.props.moving} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DNA sequence" />
-              <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error} selected={this.props.selected} moving={this.props.moving} onSelected={this.props.onSelected} onChange={this.onChange} placeholder="Enter DBN" />
+              <SequenceFormView value={this.state.seq} type="seq" error={this.state.error}
+                selected={this.props.selected} moving={this.props.moving}
+                onSelected={this.props.onSelected} onChange={this.onChange}
+                placeholder="Enter DNA sequence" />
+              <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error}
+                selected={this.props.selected} moving={this.props.moving}
+                onSelected={this.props.onSelected} onChange={this.onChange}
+                placeholder="Enter DBN" />
               <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
             </div>);
   }

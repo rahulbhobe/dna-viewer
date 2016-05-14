@@ -71,33 +71,24 @@ var DnaStructure = React.createClass({
       }
     });
 
-    if (!found) {
-      return;
-    }
-
-    if (moving==found) {
-      return;
-    }
+    if (!found) return;
+    if (moving==found) return;
 
     var sequenceParser = this.state.sequenceParser;
     var bases = sequenceParser.getBases();
     var base1 = bases[moving];
     var base2 = bases[found];
 
-    if (!base1.isUnpaired()) {
-      return;
-    }
-    if (!base2.isUnpaired()) {
-      return;
-    }
-    if (!base1.canPairWith(base2)) {
-      return;
-    }
+    if (!base1.isUnpaired()) return;
+    if (!base2.isUnpaired()) return;
+    if (!base1.canPairWith(base2)) return;
 
     var seq = this.state.seq;
     var dbn = this.state.dbn;
+    var min = Math.min(moving, found);
+    var max = Math.max(moving, found);
 
-    var newdbn = dbn.substring(0, Math.min(moving, found)) + '(' + dbn.substring(Math.min(moving, found)+1, Math.max(moving, found)) + ')' + dbn.substring(Math.max(moving, found)+1);
+    var newdbn =  dbn.substring(0, min) + '(' + dbn.substring(min+1, max) + ')' + dbn.substring(max+1);
     var sequenceParserNew = new SequenceParser(seq, newdbn);
     if (sequenceParser.hasErrors()) {
       return;
