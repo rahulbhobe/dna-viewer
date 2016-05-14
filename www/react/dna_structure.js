@@ -22,9 +22,17 @@ var DnaStructure = React.createClass({
 
   render: function () {
     return (<div>
-              <Canvas sequenceParser={this.state.sequenceParser} selected={this.state.selected} moving={this.state.moving} onSelected={this.onSelected} onMouseClick={this.onMoving}/>
-              <SequenceView onSequenceChanged={this.onSequenceChanged} seq={this.state.seq} dbn={this.state.dbn} selected={this.state.selected} moving={this.state.moving} onSelected={this.onSelected} />
-              <SettingsView />
+              <Canvas sequenceParser={this.state.sequenceParser}
+                selected={this.state.selected} moving={this.state.moving}
+                onSelected={this.onSelected} onMouseClick={this.onMoving}>
+              </Canvas>
+              <SequenceView onSequenceChanged={this.onSequenceChanged}
+                seq={this.state.seq} dbn={this.state.dbn}
+                selected={this.state.selected} moving={this.state.moving}
+                onSelected={this.onSelected}>
+              </SequenceView>
+              <SettingsView>
+              </SettingsView>
             </div>);
   },
 
