@@ -36,7 +36,7 @@ app.get('/l/*', function(req, res) {
   var url = req.path.substring(3);
   Data.findOne({url: url}, function(err, data) {
     if (err) return console.error(err);
-    var query = "/d/seq=" + data.seq + "&dbn" + data.dbn;
+    var query = "/d/seq=" + data.seq + "&dbn=" + data.dbn;
     var port  = app.get('port');
     if (port) {
       port = ":" + port;
