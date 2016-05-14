@@ -35,7 +35,16 @@ app.post('/sharelink', function(req, res) {
 app.get('/l/*', function(req, res) {
   var url = req.path.substring(3);
   Data.findOne({url: url}, function(err, data) {
-    if (err) return console.error(err);
+    if (err) {
+      redirect('/');
+      return;
+    }
+
+    if (!(("seq" in data)&&("dbn" in data))) {
+      redirect('/');
+      return;
+    }
+
     var query = "/d/seq=" + data.seq + "&dbn=" + data.dbn;
     var port  = app.get('port');
     if (port) {
