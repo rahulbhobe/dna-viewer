@@ -125,3 +125,16 @@ svg text::selection {
   margin-top: 40px;
   width: 100px;
 }
+
+.share-links-button {
+  position: relative;
+  top: 10;
+  right:10;
+}
+
+.share-link-box {
+}
+
+.share-link-box-hidden {
+  display: none;
+}

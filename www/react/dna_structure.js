@@ -4,6 +4,7 @@ var $ = require('jquery');
 var Canvas = require('./canvas');
 var SettingsView = require('./settings_view');
 var SequenceView = require('./sequence_view');
+var ShareLink = require('./share_link');
 var DebugUtils = require('../src/debug');
 var SequenceParser = require('../src/sequence_parser');
 var _ = require('underscore');
@@ -22,6 +23,7 @@ var DnaStructure = React.createClass({
 
   render: function () {
     return (<div>
+              <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
               <Canvas sequenceParser={this.state.sequenceParser}
                 selected={this.state.selected} moving={this.state.moving}
                 onSelected={this.onSelected} onMouseClick={this.onMoving}>
@@ -31,8 +33,7 @@ var DnaStructure = React.createClass({
                 selected={this.state.selected} moving={this.state.moving}
                 onSelected={this.onSelected}>
               </SequenceView>
-              <SettingsView>
-              </SettingsView>
+              <SettingsView/>
             </div>);
   },
 
