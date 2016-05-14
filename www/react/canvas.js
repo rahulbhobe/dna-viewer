@@ -14,10 +14,14 @@ var DnaBaseView = React.createClass({
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
     classes += this.props.selected ? " dna-base-selected" : "";
     classes += this.props.moving ? " dna-base-moving" : "";
-    clsName += this.props.bannedCursorWithMoving ? " dna-base-banned-pairing " : "";
-    return (<g className={clsName} onMouseDown={this.onMouseClick} transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
-              <circle className={classes} />
-              <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
+    clsName += this.props.bannedCursorWhenMoving ? " dna-base-banned-pairing " : "";
+    return (<g className={clsName}
+              onMouseDown={this.onMouseClick}
+              transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}
+              onMouseOver={this.onMouseOver}
+              onMouseLeave={this.onMouseLeave}>
+            <circle className={classes} />
+            <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
   },
 
@@ -96,19 +100,6 @@ var Canvas = React.createClass({
     }
 
     var self = this;
-    var bannedCursorWithMoving = function(index) {
-      var moving = self.props.moving;
-      if (!moving||moving<0) {
-        return false;
-      }
-      if (moving === index) {
-        return false;
-      }
-
-      var movingBase = bases[moving];
-      var thisBase = bases[index];
-      return !thisBase.canPairWith(movingBase);
-    }
 
     return (
       <div className={wrapperCls}>
@@ -126,7 +117,12 @@ var Canvas = React.createClass({
         })}
 
         {_(coordinates).map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]} selected={self.props.selected===ii} moving={self.props.moving===ii} bannedCursorWithMoving={bannedCursorWithMoving(ii)} onMouseClick={self.props.onMouseClick} onSelected={self.props.onSelected} key={"base" + ii}/>);
+            return (<DnaBaseView point={point} base={bases[ii]}
+              selected={self.props.selected===ii} moving={self.props.moving===ii}
+              bannedCursorWhenMoving={self.bannedCursorWhenMoving(ii)}
+              onMouseClick={self.props.onMouseClick}
+              onSelected={self.props.onSelected} key={"base" + ii}/>
+            );
         })}
 
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
@@ -134,6 +130,19 @@ var Canvas = React.createClass({
       </svg>
       </div>);
   },
+
+  bannedCursorWhenMoving: function(index) {
+    var moving = this.props.moving;
+    var sequenceParser = this.props.sequenceParser;
+    var bases = sequenceParser.getBases();
+
+    if (!moving||moving<0) return false;
+    if (moving === index) return false;
+
+    var movingBase = bases[moving];
+    var thisBase = bases[index];
+    return !thisBase.canPairWith(movingBase);
+  }
 });
 
 module.exports = Canvas;
