@@ -1,10 +1,11 @@
 {
-  "name": "gattaca",
+  "name": "dnaviewer",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "postinstall": "bower install && npm run build",
     "build": "browserify -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/bundle/dna_structure_bundle.js"
   },
   "repository": {
