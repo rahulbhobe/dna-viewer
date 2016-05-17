@@ -29,6 +29,13 @@ var SequenceFormView = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function (nextProps) {
+    this.setState({
+      value: nextProps.value,
+      editMode: false
+    });
+  },
+
   componentDidUpdate: function() {
     if (this.state.editMode) {
       var inputBox = ReactDOM.findDOMNode(this.refs.inp);
@@ -108,6 +115,15 @@ var SequenceView = React.createClass({
       dirty: false,
       error: false
     };
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    this.setState({
+      seq: nextProps.seq,
+      dbn: nextProps.dbn,
+      dirty: false,
+      error: false
+    });
   },
 
   onChange: function (type, value) {
