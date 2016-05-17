@@ -81,6 +81,20 @@ var DnaAnnotation = React.createClass({
 
 
 var Canvas = React.createClass({
+  getInitialState: function () {
+    return {
+      screenCoordinates: this.getCoordinatesForScreen(this.props.sequenceParser)
+    }
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (nextProps.sequenceParser !== this.props.sequenceParser) {
+      this.setState({
+        screenCoordinates: this.getCoordinatesForScreen(nextProps.sequenceParser)
+      });
+    }
+  },
+
   render: function () {
     var sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) {
@@ -88,9 +102,9 @@ var Canvas = React.createClass({
     }
 
     var wrapperCls  = null;
-    var width       = $(window).width() * 0.8;
-    var height      = $(window).height() * 0.8;
-    var coordinates = this.getCoordinatesForScreen(width, height);
+    var width       = this.getWindowWidth();
+    var height      = this.getWindowHeight();
+    var coordinates = this.state.screenCoordinates;
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();
     var self        = this;
@@ -145,8 +159,17 @@ var Canvas = React.createClass({
     return !thisBase.canPairWith(movingBase);
   },
 
-  getCoordinatesForScreen: function(width, height) {
-    var sequenceParser = this.props.sequenceParser;
+  getWindowWidth: function() {
+    return $(window).width() * 0.8;
+  },
+
+  getWindowHeight: function() {
+    return $(window).height() * 0.8;
+  },
+
+  getCoordinatesForScreen: function(sequenceParser) {
+    var width       = this.getWindowWidth();
+    var height      = this.getWindowHeight();
     var coordinates = sequenceParser.getCoordinates();
 
     var min = Vector.create(coordinates[0].elements);
