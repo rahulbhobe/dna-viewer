@@ -90,7 +90,7 @@ var Canvas = React.createClass({
     var wrapperCls  = null;
     var width       = $(window).width() * 0.8;
     var height      = $(window).height() * 0.8;
-    var coordinates = this.getCoordinatesForScreen([width, height]);
+    var coordinates = this.getCoordinatesForScreen(width, height);
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();
     var self        = this;
@@ -127,6 +127,7 @@ var Canvas = React.createClass({
 
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
+
       </svg>
       </div>);
   },
@@ -144,11 +145,9 @@ var Canvas = React.createClass({
     return !thisBase.canPairWith(movingBase);
   },
 
-  getCoordinatesForScreen: function(screenDimensions) {
+  getCoordinatesForScreen: function(width, height) {
     var sequenceParser = this.props.sequenceParser;
     var coordinates = sequenceParser.getCoordinates();
-
-    var screenDiagonal = Math.sqrt((screenDimensions[0]*screenDimensions[0]) + (screenDimensions[1]*screenDimensions[1]));
 
     var min = Vector.create(coordinates[0].elements);
     var max = Vector.create(coordinates[0].elements);
@@ -160,17 +159,31 @@ var Canvas = React.createClass({
       max.elements[1] = Math.max(max.elements[1], vec.elements[1]);
     });
 
-    var currentDiagonal = min.distanceFrom(max);
-    // Scale by 75 %.
-    var scale = 0.75 * (screenDiagonal / currentDiagonal);
+    var rotatedCoordinates = coordinates;
+    if ((max.elements[0]-min.elements[0]) < (max.elements[1]-min.elements[1])) {
+      // Rotate by 90 deg if width is less than height. Most screens have larger width.
+      rotatedCoordinates = _(coordinates).map(function(point) {
+        return point.rotate(-0.5*Math.PI, min);
+      });
 
-    var scaledCoordinates = _(coordinates).map(function(point) {
-      return point.multiply(scale);
+      var temp1 = min;
+      var temp2 = max;
+      min = Vector.create([temp1.elements[0], temp1.elements[1]-(temp2.elements[0]-temp1.elements[0])]);
+      max = Vector.create([temp1.elements[0]+(temp2.elements[1]-temp1.elements[1]), temp1.elements[1]]);
+    }
+
+    var scaleW = width  / (max.elements[0]-min.elements[0]);
+    var scaleH = height / (max.elements[1]-min.elements[1]);
+    var scale  = scaleW < scaleH ? scaleW : scaleH;
+
+    var scaledCoordinates = _(rotatedCoordinates).map(function(point) {
+      return point.multiply(scale*0.92);
     });
 
     // Remove the minVec and add a few to not clip the edge points.
-    var min = min.multiply(scale); // to subtract.
-    var buf = Vector.create([1,1]).toUnitVector().multiply(0.05*screenDiagonal);
+    var min = min.multiply(scale*0.92); // to subtract.
+    var buf = Vector.create([width*0.04, height*0.04]);
+    //var buf = Vector.create([0,0]);
     var vec = buf.subtract(min);
 
     var transformedCoordinates = _(scaledCoordinates).map(function(point) {
