@@ -189,10 +189,10 @@ var Canvas = React.createClass({
         return point.rotate(-0.5*Math.PI, min);
       });
 
-      var temp1 = min;
-      var temp2 = max;
-      min = Vector.create([temp1.elements[0], temp1.elements[1]-(temp2.elements[0]-temp1.elements[0])]);
-      max = Vector.create([temp1.elements[0]+(temp2.elements[1]-temp1.elements[1]), temp1.elements[1]]);
+      var t1 = min;
+      var t2 = max;
+      min = Vector.create([t1.elements[0], t1.elements[1]-(t2.elements[0]-t1.elements[0])]);
+      max = Vector.create([t1.elements[0]+(t2.elements[1]-t1.elements[1]), t1.elements[1]]);
     }
 
     var scaleW = width  / (max.elements[0]-min.elements[0]);
@@ -206,7 +206,6 @@ var Canvas = React.createClass({
     // Remove the minVec and add a few to not clip the edge points.
     var min = min.multiply(scale*0.92); // to subtract.
     var buf = Vector.create([width*0.04, height*0.04]);
-    //var buf = Vector.create([0,0]);
     var vec = buf.subtract(min);
 
     var transformedCoordinates = _(scaledCoordinates).map(function(point) {
