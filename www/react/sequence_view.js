@@ -30,9 +30,11 @@ var SequenceFormView = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
+    if (this.props.value === nextProps.value) {
+      return;
+    }
     this.setState({
-      value: nextProps.value,
-      editMode: false
+      value: nextProps.value
     });
   },
 
