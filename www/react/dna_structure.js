@@ -110,15 +110,7 @@ var DnaStructure = React.createClass({
 
 $(document).ready(function () {
   var getDataFromDiv = function () {
-    var seq = $("#data-div").data("seq");
-    var dbn = $("#data-div").data("dbn");
-
-    if (!seq || !dbn) return;
-
-    return {
-      seq: seq,
-      dbn: dbn
-    };
+    return $("#data-div").data("data");
   };
 
   var sequenceParser = null;

@@ -51,11 +51,12 @@ app.get('/*', function(req, res) {
     }
 
     res.render('index', {
+      data: JSON.stringify({
         seq: data.seq,
         dbn: data.dbn
+      })
     });
   });
-
 });
 
 app.set('port', process.env.PORT || 3000);
