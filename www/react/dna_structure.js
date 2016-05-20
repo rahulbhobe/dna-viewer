@@ -109,19 +109,21 @@ var DnaStructure = React.createClass({
 
 
 $(document).ready(function () {
-  var getParmsFromWindowLocation = function () {
-    var query = location.pathname.substr(3);
-    var result = {};
-    _(query.split("&")).each(function(part) {
-      var item = part.split("=");
-      result[item[0]] = decodeURIComponent(item[1]);
-    });
-    return result;
+  var getDataFromDiv = function () {
+    var seq = $("#data-div").data("seq");
+    var dbn = $("#data-div").data("dbn");
+
+    if (!seq || !dbn) return;
+
+    return {
+      seq: seq,
+      dbn: dbn
+    };
   };
 
   var sequenceParser = null;
-  var obj = getParmsFromWindowLocation();
-  if (("seq" in obj) && ("dbn" in obj)) {
+  var obj = getDataFromDiv();
+  if (obj && ("seq" in obj) && ("dbn" in obj)) {
     sequenceParser = new SequenceParser(obj.seq, obj.dbn);
     if (sequenceParser.hasErrors()) {
       sequenceParser = null;
@@ -132,7 +134,6 @@ $(document).ready(function () {
     obj = DebugUtils.debug_examples[0];
     sequenceParser = new SequenceParser(obj.seq, obj.dbn);
   }
-
 
   ReactDOM.render(
     <DnaStructure sequenceParser={sequenceParser} seq={obj.seq} dbn={obj.dbn}/>,

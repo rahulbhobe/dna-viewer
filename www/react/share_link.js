@@ -30,7 +30,7 @@ var ShareLink =  React.createClass({
   },
 
   onSuccess: function (data) {
-    var url = window.location.origin + '/l/' + data.url;
+    var url = window.location.origin + '/' + data.url;
     this.setState({
       url: url,
       expanded: true,
