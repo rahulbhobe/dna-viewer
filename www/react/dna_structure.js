@@ -17,7 +17,8 @@ var DnaStructure = React.createClass({
       seq: this.props.seq,
       dbn: this.props.dbn,
       sequenceParser: this.props.sequenceParser,
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      updateSequence: false
     };
   },
 
@@ -29,7 +30,7 @@ var DnaStructure = React.createClass({
                 onSelected={this.onSelected} onMouseClick={this.onMoving}>
               </Canvas>
               <SequenceView onSequenceChanged={this.onSequenceChanged}
-                seq={this.state.seq} dbn={this.state.dbn}
+                seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}
                 selected={this.state.selected} moving={this.state.moving}
                 onSelected={this.onSelected}>
               </SequenceView>
@@ -38,7 +39,10 @@ var DnaStructure = React.createClass({
   },
 
   handleResize: function(e) {
-    this.setState({windowWidth: window.innerWidth});
+    this.setState({
+      windowWidth: window.innerWidth,
+      updateSequence: false
+    });
   },
 
   componentDidMount: function() {
@@ -53,16 +57,23 @@ var DnaStructure = React.createClass({
     this.setState({
       sequenceParser: new SequenceParser(seq, dbn),
       seq: seq,
-      dbn: dbn
+      dbn: dbn,
+      updateSequence: true
     });
   },
 
   onSelected: function(selected) {
-    this.setState({selected: selected});
+    this.setState({
+      selected: selected,
+      updateSequence: false
+    });
   },
 
   onMoving: function(moving) {
-    this.setState({moving: moving});
+    this.setState({
+      moving: moving,
+      updateSequence: false
+    });
     if (moving >= 0) {
       document.addEventListener('mouseup', this.onMouseUp, false);
     }
@@ -71,7 +82,10 @@ var DnaStructure = React.createClass({
   onMouseUp: function(event) {
     document.removeEventListener('mouseup', this.onMouseUp, false);
     var moving = this.state.moving;
-    this.setState({moving: null});
+    this.setState({
+      moving: null,
+      updateSequence: false
+    });
 
     var found = null;
     _(event.target.classList).each(function (cls){
@@ -81,7 +95,7 @@ var DnaStructure = React.createClass({
     });
 
     if (!found) return;
-    if (moving==found) return;
+    if (moving===found) return;
 
     var sequenceParser = this.state.sequenceParser;
     var bases = sequenceParser.getBases();

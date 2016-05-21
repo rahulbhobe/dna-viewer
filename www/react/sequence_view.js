@@ -120,6 +120,12 @@ var SequenceView = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
+    if (this.state.dirty) {
+      if (!nextProps.updateSequence) {
+        return;
+      }
+    }
+
     this.setState({
       seq: nextProps.seq,
       dbn: nextProps.dbn,
