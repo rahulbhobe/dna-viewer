@@ -36,7 +36,7 @@ var SequenceParser = function(seq, dbn) {
   {
     // Error handling.
     if (secondary.onStack()!==1) {
-      return Utils.errorObject("Missing closing brackets ", secondary.__curStructures[1].openedAt());
+      return Utils.errorObject("Missing closing brackets ", secondary._curStructures[1].openedAt());
     }
   }
 
