@@ -87,15 +87,15 @@ var DnaStructure = React.createClass({
       updateSequence: false
     });
 
-    var found = null;
+    var found = -1;
     _(event.target.classList).each(function (cls){
       if (cls.includes('dna-target-spot-')) {
         found = parseInt(cls.substring('dna-target-spot-'.length));
       }
     });
 
-    if (!found) return;
-    if (moving===found) return;
+    if (found===-1) return;
+    if (found===moving) return;
 
     var sequenceParser = this.state.sequenceParser;
     var bases = sequenceParser.getBases();
