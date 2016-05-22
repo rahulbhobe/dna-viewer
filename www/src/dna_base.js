@@ -21,6 +21,9 @@ DnaBase.prototype.canPairWithType = function(otherType) {
   if (this._type === 'N') {
     return true;
   }
+  if (otherType === 'N') {
+    return true;
+  }
 
   if (this._type === 'A') {
     return otherType === 'T';
