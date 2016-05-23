@@ -14,6 +14,8 @@ var DnaStructure = React.createClass({
     return {
       selected: null,
       moving: null,
+      movingX: null,
+      movingY: null,
       seq: this.props.seq,
       dbn: this.props.dbn,
       sequenceParser: this.props.sequenceParser,
@@ -27,6 +29,7 @@ var DnaStructure = React.createClass({
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
               <Canvas sequenceParser={this.state.sequenceParser}
                 selected={this.state.selected} moving={this.state.moving}
+                movingX={this.state.movingX} movingY={this.state.movingY}
                 onSelected={this.onSelected} onMouseClick={this.onMoving}>
               </Canvas>
               <SequenceView onSequenceChanged={this.onSequenceChanged}
@@ -75,20 +78,33 @@ var DnaStructure = React.createClass({
       updateSequence: false
     });
     if (moving >= 0) {
-      document.addEventListener('mouseup', this.onMouseUp, false);
+      document.addEventListener('mouseup',   this.onMouseUp, false);
+      document.addEventListener('mousemove', this.onMouseMove, false);
     }
   },
 
+  onMouseMove: function(event) {
+    this.setState({
+      movingX: event.x,
+      movingY: event.y,
+      updateSequence: false
+    });
+  },
+
   onMouseUp: function(event) {
-    document.removeEventListener('mouseup', this.onMouseUp, false);
+    document.removeEventListener('mouseup',   this.onMouseUp, false);
+    document.removeEventListener('mousemove', this.onMouseMove, false);
     var moving = this.state.moving;
+
     this.setState({
       moving: null,
+      movingX: null,
+      movingY: null,
       updateSequence: false
     });
 
     var found = -1;
-    _(event.target.classList).each(function (cls){
+    _(event.target.classList).each(function (cls) {
       if (cls.includes('dna-target-spot-')) {
         found = parseInt(cls.substring('dna-target-spot-'.length));
       }

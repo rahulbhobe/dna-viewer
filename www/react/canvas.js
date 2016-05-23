@@ -26,14 +26,17 @@ var DnaBaseView = React.createClass({
   },
 
   onMouseClick: function() {
+    if (!this.props.onMouseClick) return;
     this.props.onMouseClick(this.props.base.getIndex());
   },
 
   onMouseOver: function() {
+    if (!this.props.onSelected) return;
     this.props.onSelected(this.props.base.getIndex());
   },
 
   onMouseLeave: function() {
+    if (!this.props.onSelected) return;
     this.props.onSelected(-1);
   }
 });
@@ -117,7 +120,7 @@ var Canvas = React.createClass({
 
     return (
       <div className={wrapperCls}>
-      <svg width={width} height={height}>
+      <svg width={width} height={height} ref='svg'>
         {_(coordinates).map(function (point, ii) {
             if (ii >= coordinates.length-1) {
               return;
@@ -144,6 +147,20 @@ var Canvas = React.createClass({
 
       </svg>
       </div>);
+  },
+
+  getMovingBaseGraphichs: function() {
+    if (!this.props.moving) return;
+
+    var sequenceParser = this.props.sequenceParser;
+    if (sequenceParser.hasErrors()) return;
+
+    var bases = sequenceParser.getBases();
+    var svg   = this.refs.svg;
+    var rect  = svg.getBoundingClientRect();
+    var point = Vector.create([this.props.movingX-rect.left, this.props.movingY-rect.top]);
+    return (<DnaBaseView point={point} base={bases[this.props.moving]} selected={false} moving={false}
+              bannedCursorWhenMoving={false} onMouseClick={null} onSelected={null}/>);
   },
 
   bannedCursorWhenMoving: function(index) {
