@@ -23,17 +23,19 @@ app.post('/sharelink', function(req, res) {
     seq: obj.seq,
     dbn: obj.dbn
   }).then(function (data) {
-    res.send(_(data).pick(['url', 'seq', 'dbn']));
-  }).catch(function (err) {
-    var data = Promise.promisifyAll(new Data({
+    if (data && ('seq' in data) && ('dbn' in data))
+      return data;
+
+    var newData = Promise.promisifyAll(new Data({
       seq: obj.seq,
       dbn: obj.dbn,
       url: shortid.generate()
     }));
-
-    data.saveAsync().then(function(data) {
-      res.send(_(data).pick(['url', 'seq', 'dbn']));
-    });
+    return newData.saveAsync();
+  }).then(function (data) {
+    res.send(_(data).pick(['url', 'seq', 'dbn']));
+  }).catch(function (err) {
+    res.sendStatus(500);
   });
 });
 
@@ -41,10 +43,7 @@ app.get('/*', function(req, res) {
   var url = req.path.substring(1);
   Data.findOneAsync({url: url}).then(function (data) {
     res.render('index', {
-      data: JSON.stringify({
-        seq: data.seq,
-        dbn: data.dbn
-      })
+      data: JSON.stringify(_(data).pick(['seq', 'dbn']))
     });
   }).catch(function (err) {
     console.log(err);
