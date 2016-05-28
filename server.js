@@ -1,6 +1,7 @@
 var express     =  require('express');
 var bodyParser  =  require('body-parser');
 var app         =  express();
+var _           = require('underscore');
 var Promise     =  require('bluebird');
 var Data        =  Promise.promisifyAll(require('./data'));
 var shortid     =  require('shortid');
@@ -19,13 +20,8 @@ app.post('/sharelink', function(req, res) {
   Data.findOneAsync({
     seq: obj.seq,
     dbn: obj.dbn
-  }).then(function (d) {
-    var obj = {
-      url: d.url,
-      seq: d.seq,
-      dbn: d.dbn
-    };
-    res.send(obj);
+  }).then(function (data) {
+    res.send(_(data).pick(['url', 'seq', 'dbn']));
   }).catch(function (err) {
     var data = Promise.promisifyAll(new Data({
       seq: obj.seq,
@@ -33,13 +29,8 @@ app.post('/sharelink', function(req, res) {
       url: shortid.generate()
     }));
 
-    data.saveAsync().then(function(d) {
-      var obj = {
-        url: d.url,
-        seq: d.seq,
-        dbn: d.dbn
-      };
-      res.send(obj);
+    data.saveAsync().then(function(data) {
+      res.send(_(data).pick(['url', 'seq', 'dbn']));
     });
   });
 });
