@@ -1,7 +1,8 @@
 var express     =  require('express');
 var bodyParser  =  require('body-parser');
+var favicon     =  require('serve-favicon');
 var app         =  express();
-var _           = require('underscore');
+var _           =  require('underscore');
 var Promise     =  require('bluebird');
 var Data        =  Promise.promisifyAll(require('./data'));
 var shortid     =  require('shortid');
@@ -10,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/www'));
+app.use(favicon(__dirname + '/www/res/favicon.ico'));
 app.set('views', __dirname + '/www');
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
