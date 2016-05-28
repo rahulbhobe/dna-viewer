@@ -2,7 +2,7 @@ var express     =  require('express');
 var bodyParser  =  require('body-parser');
 var app         =  express();
 var Promise     =  require('bluebird');
-var Data        =  require('./data');
+var Data        =  Promise.promisifyAll(require('./data'));
 var shortid     =  require('shortid');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,47 +15,47 @@ app.use(bodyParser.json());
 
 app.post('/sharelink', function(req, res) {
   var obj = req.body;
-  var data = Promise.promisifyAll(new Data({
-    seq: obj.seq,
-    dbn: obj.dbn,
-    url: shortid.generate()
-  }));
 
-  data.saveAsync().then(function(d) {
+  Data.findOneAsync({
+    seq: obj.seq,
+    dbn: obj.dbn
+  }).then(function (d) {
     var obj = {
       url: d.url,
       seq: d.seq,
       dbn: d.dbn
     };
     res.send(obj);
-  });
+  }).catch(function (err) {
+    var data = Promise.promisifyAll(new Data({
+      seq: obj.seq,
+      dbn: obj.dbn,
+      url: shortid.generate()
+    }));
 
+    data.saveAsync().then(function(d) {
+      var obj = {
+        url: d.url,
+        seq: d.seq,
+        dbn: d.dbn
+      };
+      res.send(obj);
+    });
+  });
 });
 
 app.get('/*', function(req, res) {
   var url = req.path.substring(1);
-  Data.findOne({url: url}, function(err, data) {
-    if (err) {
-      res.redirect('/');
-      return;
-    }
-
-    if (!data) {
-      res.redirect('/');
-      return;
-    }
-
-    if (!(("seq" in data)&&("dbn" in data))) {
-      res.redirect('/');
-      return;
-    }
-
+  Data.findOneAsync({url: url}).then(function (data) {
     res.render('index', {
       data: JSON.stringify({
         seq: data.seq,
         dbn: data.dbn
       })
     });
+  }).catch(function (err) {
+    console.log(err);
+    res.redirect('/');
   });
 });
 

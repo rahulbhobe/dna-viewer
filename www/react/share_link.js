@@ -4,17 +4,28 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 var ShareLink =  React.createClass({
+  getInitialState: function() {
+    return {
+      url: window.location.origin,
+      expanded: false
+    };
+  },
+
   render: function () {
     var clsName = (this.state && this.state.expanded) ? "" : "share-link-box-hidden";
     clsName += " share-links-box";
-    var value   = this.state ? this.state.url : "place holder";
     return (<div className="share-link-button" >
               <input type="image" src="/res/share_icon.png" alt="Submit" onClick={this.onClick}/>
-              <span className={clsName}>{value}</span>
+              <span className={clsName}>{this.state.url}</span>
             </div>);
   },
 
   onClick: function () {
+    if (this.state.expanded) {
+      this.setState({expanded: false});
+      return;
+    }
+
     var data = {
       seq: this.props.seq,
       dbn: this.props.dbn
