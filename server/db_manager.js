@@ -8,6 +8,10 @@ var DbManager = function() {
     connected = true;
   });
 
+  mongoose.connection.on('reconnected', function () {
+    connected = true;
+  });
+
   mongoose.connection.on('disconnected', function () {
     connected = false;
   });
