@@ -17,20 +17,14 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 
 app.post('/sharelink', function(req, res) {
-  var obj = req.body;
+  var obj = _(req.body).pick(['seq', 'dbn']);
 
-  Data.findOneAsync({
-    seq: obj.seq,
-    dbn: obj.dbn
-  }).then(function (data) {
+  Data.findOneAsync(obj).then(function (data) {
     if (data && ('seq' in data) && ('dbn' in data))
       return data;
 
-    var newData = Promise.promisifyAll(new Data({
-      seq: obj.seq,
-      dbn: obj.dbn,
-      url: shortid.generate()
-    }));
+    _(obj).extend({url: shortid.generate()});
+    var newData = Promise.promisifyAll(new Data(obj));
     return newData.saveAsync();
   }).then(function (data) {
     res.send(_(data).pick(['url', 'seq', 'dbn']));
