@@ -4,6 +4,7 @@ var favicon     =  require('serve-favicon');
 var app         =  express();
 var _           =  require('underscore');
 var Promise     =  require('bluebird');
+var DBManager   =  require('./db_manager');
 var Data        =  Promise.promisifyAll(require('./data'));
 var shortid     =  require('shortid');
 
@@ -54,4 +55,4 @@ var server = app.listen(app.get('port'), function() {
   console.log('Server listening on port ' + server.address().port);
 });
 
-var data = require('./data');
+DBManager.init();
