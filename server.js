@@ -36,6 +36,9 @@ app.post('/sharelink', function(req, res) {
 app.get('/*', function(req, res) {
   var url = req.path.substring(1);
   Data.findOneAsync({url: url}).then(function (data) {
+    if (!data) throw Error("Not found: " + url);
+    if (!data.seq) throw Error("Invalid url: " + url);
+    if (!data.dbn) throw Error("Invalid url: " + url);
     res.render('index', {
       data: JSON.stringify(_(data).pick(['seq', 'dbn']))
     });
