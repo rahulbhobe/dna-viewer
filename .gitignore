@@ -35,4 +35,4 @@ www/bower_components
 Thumbs.db
 *.bak
 
-www/bundle/dna_structure_bundle.js
+www/bundle/dna_viewer_bundle.js
