@@ -35,6 +35,7 @@ var ShareLink =  React.createClass({
       url: "/sharelink",
       data: JSON.stringify(data),
       success: this.onSuccess,
+      error: this.onError,
       dataType: "json",
       contentType: "application/json"
     });
@@ -48,6 +49,10 @@ var ShareLink =  React.createClass({
       seq: this.props.seq,
       dbn: this.props.dbn
     });
+  },
+
+  onError: function () {
+    console.log('Server Error.');
   },
 
   componentWillReceiveProps: function (nextProps) {
