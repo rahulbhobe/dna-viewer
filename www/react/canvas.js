@@ -150,22 +150,6 @@ var Canvas = React.createClass({
       </div>);
   },
 
-  getSVGBoundingClientRect: function() {
-    var svg   = this.refs.svg;
-    return svg.getBoundingClientRect();
-  },
-
-  createClientRectAt: function(clientX, clientY) {
-    var svg            = this.refs.svg;
-    var boundingRect   = this.getSVGBoundingClientRect();
-    var clientRect     = svg.createSVGRect();
-    clientRect.x = clientX - boundingRect.left;
-    clientRect.y = clientY - boundingRect.top;
-    clientRect.width   = 1;
-    clientRect.height  = 1;
-    return clientRect;
-  },
-
   getMovingBaseGraphichs: function() {
     if (!this.props.moving) return;
 
@@ -173,7 +157,8 @@ var Canvas = React.createClass({
     if (sequenceParser.hasErrors()) return;
 
     var bases = sequenceParser.getBases();
-    var rect  = this.getSVGBoundingClientRect();
+    var svg   = this.refs.svg;
+    var rect  = svg.getBoundingClientRect();
     var point = Vector.create([this.props.movingX-rect.left, this.props.movingY-rect.top]);
     return (<DnaBaseView point={point} base={bases[this.props.moving]} selected={false} moving={false}
               bannedCursorWhenMoving={false} onMouseClick={null} onSelected={null}/>);

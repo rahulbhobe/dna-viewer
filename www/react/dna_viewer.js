@@ -91,6 +91,25 @@ var DnaStructure = React.createClass({
     });
   },
 
+  getIndexAtClientPosition: function(clientX, clientY) {
+    var canvas = this.refs.canvas;
+    var svg    = canvas.refs.svg;
+
+    var boundingRect   = svg.getBoundingClientRect();
+    var hitTestRect    = svg.createSVGRect();
+
+    hitTestRect.x = clientX - boundingRect.left;
+    hitTestRect.y = clientY - boundingRect.top;
+    hitTestRect.width   = 1;
+    hitTestRect.height  = 1;
+
+    _(svg.getIntersectionList(hitTestRect, null)).each(function (elem) {
+      if (elem.tagName !== 'circle') { return; }
+      found = parseInt(elem.getAttribute('data-index'));
+    });
+    return found;
+  },
+
   onMouseUp: function(event) {
     document.removeEventListener('mouseup',   this.onMouseUp, false);
     document.removeEventListener('mousemove', this.onMouseMove, false);
@@ -103,16 +122,7 @@ var DnaStructure = React.createClass({
       updateSequence: false
     });
 
-    var found = -1;
-
-    var canvas = this.refs.canvas;
-    var svg    = canvas.refs.svg;
-    var hitTestPoint = canvas.createClientRectAt(event.clientX, event.clientY);
-
-    _(svg.getIntersectionList(hitTestPoint, null)).each(function (elem) {
-      if (elem.tagName !== 'circle') { return; }
-      found = parseInt(elem.getAttribute('data-index'));
-    });
+    var found = this.getIndexAtClientPosition(event.clientX, event.clientY);
 
     if (found===-1) return;
     if (found===moving) return;
