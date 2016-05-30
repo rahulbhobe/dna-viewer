@@ -12,8 +12,8 @@ var _ = require('underscore');
 var DnaStructure = React.createClass({
   getInitialState: function() {
     return {
-      selected: null,
-      moving: null,
+      selected: -1,
+      moving: -1,
       movingX: null,
       movingY: null,
       seq: this.props.seq,
@@ -28,9 +28,8 @@ var DnaStructure = React.createClass({
     return (<div>
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
               <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}
-                selected={this.state.selected} moving={this.state.moving}
-                movingX={this.state.movingX} movingY={this.state.movingY}
-                onSelected={this.onSelected} onMouseClick={this.onMoving}>
+                moving={this.state.moving}
+                movingX={this.state.movingX} movingY={this.state.movingY}>
               </Canvas>
               <SequenceView onSequenceChanged={this.onSequenceChanged}
                 seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}
@@ -50,10 +49,16 @@ var DnaStructure = React.createClass({
 
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
+    window.addEventListener('mousemove', this.onMouseMove, false);
+    window.addEventListener('mouseup',   this.onMouseUp, false);
+    window.addEventListener('mousedown', this.onMouseDown, false);
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('mousemove', this.onMouseMove, false);
+    window.removeEventListener('mouseup',   this.onMouseUp, false);
+    window.removeEventListener('mousedown', this.onMouseDown, false);
   },
 
   onSequenceChanged: function(seq, dbn) {
@@ -65,7 +70,28 @@ var DnaStructure = React.createClass({
     });
   },
 
+  getBaseViewAtIndex: function(index) {
+    var canvas   = this.refs.canvas;
+    return canvas.refs['baseref' + index];
+  },
+
   onSelected: function(selected) {
+    var previous = this.state.selected;
+
+    if (previous===selected) { return; }
+
+    if (previous!==-1) {
+      this.getBaseViewAtIndex(previous).setState({
+        selected: false
+      });
+    }
+
+    if (selected!==-1) {
+      this.getBaseViewAtIndex(selected).setState({
+        selected: true
+      });
+    }
+
     this.setState({
       selected: selected,
       updateSequence: false
@@ -73,17 +99,29 @@ var DnaStructure = React.createClass({
   },
 
   onMoving: function(moving) {
+    if (moving!==-1) {
+      this.getBaseViewAtIndex(moving).setState({
+        moving: true
+      });
+    }
+
     this.setState({
       moving: moving,
       updateSequence: false
     });
-    if (moving >= 0) {
-      document.addEventListener('mouseup',   this.onMouseUp, false);
-      document.addEventListener('mousemove', this.onMouseMove, false);
-    }
+  },
+
+  onMouseDown: function(event) {
+    var moving = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    this.onMoving(moving);
   },
 
   onMouseMove: function(event) {
+    var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    this.onSelected(selected);
+
+    if (this.state.moving === -1) { return; }
+
     this.setState({
       movingX: event.x,
       movingY: event.y,
@@ -94,6 +132,7 @@ var DnaStructure = React.createClass({
   getIndexAtClientPosition: function(clientX, clientY) {
     var canvas = this.refs.canvas;
     var svg    = canvas.refs.svg;
+    var found  = -1;
 
     var boundingRect   = svg.getBoundingClientRect();
     var hitTestRect    = svg.createSVGRect();
@@ -111,12 +150,16 @@ var DnaStructure = React.createClass({
   },
 
   onMouseUp: function(event) {
-    document.removeEventListener('mouseup',   this.onMouseUp, false);
-    document.removeEventListener('mousemove', this.onMouseMove, false);
     var moving = this.state.moving;
 
+    if (moving === -1) { return; }
+
+    this.getBaseViewAtIndex(moving).setState({
+      moving: false
+    });
+
     this.setState({
-      moving: null,
+      moving: -1,
       movingX: null,
       movingY: null,
       updateSequence: false

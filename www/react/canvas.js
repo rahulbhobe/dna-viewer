@@ -4,6 +4,13 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 var DnaBaseView = React.createClass({
+  getInitialState: function() {
+    return {
+      slected: false,
+      moving: false
+    }
+  },
+
   render: function () {
     var point   = this.props.point;
     var base    = this.props.base;
@@ -11,33 +18,15 @@ var DnaBaseView = React.createClass({
     var textCls = "dna-text dna-base-font ";
 
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
-    classes += this.props.selected ? " dna-base-selected" : "";
-    classes += this.props.moving ? " dna-base-moving" : "";
+    classes += this.state.selected ? " dna-base-selected" : "";
+    classes += this.state.moving ? " dna-base-moving" : "";
     var clsName = this.props.bannedCursorWhenMoving ? " dna-base-banned-pairing " : "";
     return (<g className={clsName}
-              onMouseDown={this.onMouseClick}
-              transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}
-              onMouseOver={this.onMouseOver}
-              onMouseLeave={this.onMouseLeave}>
+              transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
             <circle className={classes} data-index={base.getIndex()} />
             <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
   },
-
-  onMouseClick: function() {
-    if (!this.props.onMouseClick) return;
-    this.props.onMouseClick(this.props.base.getIndex());
-  },
-
-  onMouseOver: function() {
-    if (!this.props.onSelected) return;
-    this.props.onSelected(this.props.base.getIndex());
-  },
-
-  onMouseLeave: function() {
-    if (!this.props.onSelected) return;
-    this.props.onSelected(-1);
-  }
 });
 
 var DnaBackbone = React.createClass({
@@ -133,11 +122,8 @@ var Canvas = React.createClass({
         })}
 
         {_(coordinates).map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]}
-              selected={self.props.selected===ii} moving={self.props.moving===ii}
-              bannedCursorWhenMoving={self.bannedCursorWhenMoving(ii)}
-              onMouseClick={self.props.onMouseClick}
-              onSelected={self.props.onSelected} key={"base" + ii}/>
+            return (<DnaBaseView point={point} base={bases[ii]} ref={'baseref' + ii}
+              bannedCursorWhenMoving={self.bannedCursorWhenMoving(ii)} key={"base" + ii}/>
             );
         })}
 
@@ -151,7 +137,7 @@ var Canvas = React.createClass({
   },
 
   getMovingBaseGraphichs: function() {
-    if (!this.props.moving) return;
+    if (this.props.moving===-1) return;
 
     var sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) return;
