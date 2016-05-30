@@ -110,11 +110,8 @@ var DnaStructure = React.createClass({
     var hitTestPoint = canvas.createClientRectAt(event.clientX, event.clientY);
 
     _(svg.getIntersectionList(hitTestPoint, null)).each(function (elem) {
-      _(elem.classList).each(function (cls) {
-        if (cls.includes('dna-target-spot-')) {
-          found = parseInt(cls.substring('dna-target-spot-'.length));
-        }
-      });
+      if (elem.tagName !== 'circle') { return; }
+      found = parseInt(elem.getAttribute('data-index'));
     });
 
     if (found===-1) return;
