@@ -27,7 +27,7 @@ var DnaStructure = React.createClass({
   render: function () {
     return (<div>
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
-              <Canvas sequenceParser={this.state.sequenceParser}
+              <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}
                 selected={this.state.selected} moving={this.state.moving}
                 movingX={this.state.movingX} movingY={this.state.movingY}
                 onSelected={this.onSelected} onMouseClick={this.onMoving}>
@@ -104,10 +104,17 @@ var DnaStructure = React.createClass({
     });
 
     var found = -1;
-    _(event.target.classList).each(function (cls) {
-      if (cls.includes('dna-target-spot-')) {
-        found = parseInt(cls.substring('dna-target-spot-'.length));
-      }
+
+    var canvas = this.refs.canvas;
+    var svg    = canvas.refs.svg;
+    var hitTestPoint = canvas.createClientRectAt(event.clientX, event.clientY);
+
+    _(svg.getIntersectionList(hitTestPoint, null)).each(function (elem) {
+      _(elem.classList).each(function (cls) {
+        if (cls.includes('dna-target-spot-')) {
+          found = parseInt(cls.substring('dna-target-spot-'.length));
+        }
+      });
     });
 
     if (found===-1) return;

@@ -145,8 +145,26 @@ var Canvas = React.createClass({
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
 
+        {this.getMovingBaseGraphichs()}
+
       </svg>
       </div>);
+  },
+
+  getSVGBoundingClientRect: function() {
+    var svg   = this.refs.svg;
+    return svg.getBoundingClientRect();
+  },
+
+  createClientRectAt: function(clientX, clientY) {
+    var svg            = this.refs.svg;
+    var boundingRect   = this.getSVGBoundingClientRect();
+    var clientRect     = svg.createSVGRect();
+    clientRect.x = clientX - boundingRect.left;
+    clientRect.y = clientY - boundingRect.top;
+    clientRect.width   = 1;
+    clientRect.height  = 1;
+    return clientRect;
   },
 
   getMovingBaseGraphichs: function() {
@@ -156,8 +174,7 @@ var Canvas = React.createClass({
     if (sequenceParser.hasErrors()) return;
 
     var bases = sequenceParser.getBases();
-    var svg   = this.refs.svg;
-    var rect  = svg.getBoundingClientRect();
+    var rect  = this.getSVGBoundingClientRect();
     var point = Vector.create([this.props.movingX-rect.left, this.props.movingY-rect.top]);
     return (<DnaBaseView point={point} base={bases[this.props.moving]} selected={false} moving={false}
               bannedCursorWhenMoving={false} onMouseClick={null} onSelected={null}/>);
