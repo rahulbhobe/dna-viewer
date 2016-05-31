@@ -82,6 +82,8 @@ var DnaStructure = React.createClass({
   },
 
   setStateForBaseViewAtIndex: function(index, stateObj) {
+    if (index === -1) { return; } // Can happen.
+
     var canvas   = this.refs.canvas;
     var baseView = canvas.refs['baseref' + index];
     if (!baseView) { return; } // Can happen.
@@ -93,24 +95,18 @@ var DnaStructure = React.createClass({
 
     if (previous===selected) { return; }
 
-    if (previous!==-1) {
-      this.setStateForBaseViewAtIndex(previous, {selected: false});
-      this.refs.sequence.setSelected(previous, false);
-    }
+    this.setStateForBaseViewAtIndex(previous, {selected: false});
+    this.refs.sequence.setStateForIndex(previous, {selected: false});
 
-    if (selected!==-1) {
-      this.setStateForBaseViewAtIndex(selected, {selected: true});
-      this.refs.sequence.setSelected(selected, true);
-    }
+    this.setStateForBaseViewAtIndex(selected, {selected: true});
+    this.refs.sequence.setStateForIndex(selected, {selected: true});
 
     this.selected = selected;
   },
 
   onMoving: function(moving) {
-    if (moving!==-1) {
-      this.setStateForBaseViewAtIndex(moving, {moving: true});
-      this.refs.sequence.setMoving(moving, true);
-    }
+    this.setStateForBaseViewAtIndex(moving, {moving: true});
+    this.refs.sequence.setStateForIndex(moving, {moving: true});
     this.moving = moving;
   },
 
@@ -158,7 +154,7 @@ var DnaStructure = React.createClass({
     if (moving === -1) { return; }
 
     this.setStateForBaseViewAtIndex(moving, {moving: false});
-    this.refs.sequence.setMoving(moving, false);
+    this.refs.sequence.setStateForIndex(moving, {moving: false});
 
     this.moving = -1;
     this.setState({
@@ -201,7 +197,7 @@ var DnaStructure = React.createClass({
     if (moving === -1) { return; }
 
     this.setStateForBaseViewAtIndex(moving, {moving: false});
-    this.refs.sequence.setMoving(moving, false);
+    this.refs.sequence.setStateForIndex(moving, {moving: false});
 
     this.moving = -1;
   }

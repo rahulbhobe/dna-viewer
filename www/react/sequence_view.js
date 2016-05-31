@@ -161,27 +161,15 @@ var SequenceView = React.createClass({
     });
   },
 
-  setSelected: function(index, val) {
-    var  obj = {selected: val};
+  setStateForIndex: function(index, stateObj) {
+    if (index === -1) { return; } // Can happen.
     var  seq = this.refs.seqview.refs['letterref' + index];
     var  dbn = this.refs.dbnview.refs['letterref' + index];
     if (seq) {
-      seq.setState(obj);
+      seq.setState(stateObj);
     }
     if (dbn) {
-      dbn.setState(obj);
-    }
-  },
-
-  setMoving: function(index, val) {
-    var  obj = {moving: val};
-    var  seq = this.refs.seqview.refs['letterref' + index];
-    var  dbn = this.refs.dbnview.refs['letterref' + index];
-    if (seq) {
-      seq.setState(obj);
-    }
-    if (dbn) {
-      dbn.setState(obj);
+      dbn.setState(stateObj);
     }
   },
 
