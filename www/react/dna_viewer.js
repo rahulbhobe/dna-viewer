@@ -28,7 +28,7 @@ var DnaStructure = React.createClass({
     return (<div>
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
               <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}
-                moving={this.state.moving} movingX={this.state.movingX} movingY={this.state.movingY}>
+                moving={this.moving} movingX={this.state.movingX} movingY={this.state.movingY}>
               </Canvas>
               <SequenceView ref='sequence' onSequenceChanged={this.onSequenceChanged}
                 seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}
@@ -45,6 +45,11 @@ var DnaStructure = React.createClass({
     });
   },
 
+  componentWillMount: function() {
+    this.moving = -1;
+    this.selected = -1;
+  },
+
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
 
@@ -54,9 +59,6 @@ var DnaStructure = React.createClass({
     svg.addEventListener('mouseup',   this.onMouseUp, false);
     svg.addEventListener('mousedown', this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
-
-    this.moving = -1;
-    this.selected = -1;
   },
 
   componentWillUnmount: function() {
