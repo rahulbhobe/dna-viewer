@@ -116,24 +116,6 @@ var DnaStructure = React.createClass({
     this.moving = moving;
   },
 
-  onMouseDown: function(event) {
-    var moving = this.getIndexAtClientPosition(event.clientX, event.clientY);
-    this.onMoving(moving);
-  },
-
-  onMouseMove: function(event) {
-    var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
-    this.onSelected(selected);
-
-    if (this.state.moving === -1) { return; }
-
-    this.setState({
-      movingX: event.x,
-      movingY: event.y,
-      updateSequence: false
-    });
-  },
-
   getIndexAtClientPosition: function(clientX, clientY) {
     var canvas = this.refs.canvas;
     var svg    = canvas.refs.svg;
@@ -152,6 +134,24 @@ var DnaStructure = React.createClass({
       found = parseInt(elem.getAttribute('data-index'));
     });
     return found;
+  },
+
+  onMouseDown: function(event) {
+    var moving = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    this.onMoving(moving);
+  },
+
+  onMouseMove: function(event) {
+    var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    this.onSelected(selected);
+
+    if (this.state.moving === -1) { return; }
+
+    this.setState({
+      movingX: event.x,
+      movingY: event.y,
+      updateSequence: false
+    });
   },
 
   onMouseUp: function(event) {
