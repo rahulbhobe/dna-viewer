@@ -81,9 +81,11 @@ var DnaStructure = React.createClass({
     });
   },
 
-  getBaseViewAtIndex: function(index) {
+  setStateForBaseViewAtIndex: function(index, stateObj) {
     var canvas   = this.refs.canvas;
-    return canvas.refs['baseref' + index];
+    var baseView = canvas.refs['baseref' + index];
+    if (!baseView) { return; } // Can happen.
+    baseView.setState(stateObj);
   },
 
   onSelected: function(selected) {
@@ -92,22 +94,12 @@ var DnaStructure = React.createClass({
     if (previous===selected) { return; }
 
     if (previous!==-1) {
-      var baseView = this.getBaseViewAtIndex(previous);
-      if (baseView) {
-        baseView.setState({
-          selected: false
-        });
-      }
+      this.setStateForBaseViewAtIndex(previous, {selected: false});
       this.refs.sequence.setSelected(previous, false);
     }
 
     if (selected!==-1) {
-      var baseView = this.getBaseViewAtIndex(selected);
-      if (baseView) {
-        baseView.setState({
-          selected: true
-        });
-      }
+      this.setStateForBaseViewAtIndex(selected, {selected: true});
       this.refs.sequence.setSelected(selected, true);
     }
 
@@ -116,9 +108,7 @@ var DnaStructure = React.createClass({
 
   onMoving: function(moving) {
     if (moving!==-1) {
-      this.getBaseViewAtIndex(moving).setState({
-        moving: true
-      });
+      this.setStateForBaseViewAtIndex(moving, {moving: true});
       this.refs.sequence.setMoving(moving, true);
     }
     this.moving = moving;
@@ -167,9 +157,7 @@ var DnaStructure = React.createClass({
 
     if (moving === -1) { return; }
 
-    this.getBaseViewAtIndex(moving).setState({
-      moving: false
-    });
+    this.setStateForBaseViewAtIndex(moving, {moving: false});
     this.refs.sequence.setMoving(moving, false);
 
     this.moving = -1;
@@ -212,9 +200,7 @@ var DnaStructure = React.createClass({
 
     if (moving === -1) { return; }
 
-    this.getBaseViewAtIndex(moving).setState({
-      moving: false
-    });
+    this.setStateForBaseViewAtIndex(moving, {moving: false});
     this.refs.sequence.setMoving(moving, false);
 
     this.moving = -1;
