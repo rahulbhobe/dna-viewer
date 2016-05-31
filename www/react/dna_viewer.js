@@ -9,7 +9,7 @@ var DebugUtils = require('../src/debug');
 var SequenceParser = require('../src/sequence_parser');
 var _ = require('underscore');
 
-var DnaStructure = React.createClass({
+var DnaViewer = React.createClass({
   getInitialState: function() {
     return {
       selected: -1,
@@ -224,9 +224,9 @@ $(document).ready(function () {
   }
 
   ReactDOM.render(
-    <DnaStructure sequenceParser={sequenceParser} seq={obj.seq} dbn={obj.dbn}/>,
+    <DnaViewer sequenceParser={sequenceParser} seq={obj.seq} dbn={obj.dbn}/>,
     document.getElementById('body-div')
   );
 });
 
-module.exports = DnaStructure;
+module.exports = DnaViewer;
