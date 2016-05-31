@@ -100,7 +100,7 @@ var Canvas = React.createClass({
     var connections = sequenceParser.getConnections();
     var self        = this;
 
-    if (this.props.moving) {
+    if (this.props.moving !== -1) {
       wrapperCls = 'dna-canvas-div-grabbing ';
     }
 

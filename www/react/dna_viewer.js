@@ -28,12 +28,10 @@ var DnaStructure = React.createClass({
     return (<div>
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
               <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}
-                moving={this.state.moving}
-                movingX={this.state.movingX} movingY={this.state.movingY}>
+                moving={this.state.moving} movingX={this.state.movingX} movingY={this.state.movingY}>
               </Canvas>
-              <SequenceView onSequenceChanged={this.onSequenceChanged}
+              <SequenceView ref='sequence' onSequenceChanged={this.onSequenceChanged}
                 seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}
-                selected={this.state.selected} moving={this.state.moving}
                 onSelected={this.onSelected}>
               </SequenceView>
               <SettingsView/>
@@ -49,16 +47,27 @@ var DnaStructure = React.createClass({
 
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
-    window.addEventListener('mousemove', this.onMouseMove, false);
-    window.addEventListener('mouseup',   this.onMouseUp, false);
-    window.addEventListener('mousedown', this.onMouseDown, false);
+
+    var canvas = this.refs.canvas;
+    var svg    = canvas.refs.svg;
+    svg.addEventListener('mousemove', this.onMouseMove, false);
+    svg.addEventListener('mouseup',   this.onMouseUp, false);
+    svg.addEventListener('mousedown', this.onMouseDown, false);
+    svg.addEventListener('mouseleave', this.onMouseLeave, false);
+
+    this.moving = -1;
+    this.selected = -1;
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize);
-    window.removeEventListener('mousemove', this.onMouseMove, false);
-    window.removeEventListener('mouseup',   this.onMouseUp, false);
-    window.removeEventListener('mousedown', this.onMouseDown, false);
+
+    var canvas = this.refs.canvas;
+    var svg    = canvas.refs.svg;
+    svg.removeEventListener('mousemove', this.onMouseMove, false);
+    svg.removeEventListener('mouseup',   this.onMouseUp, false);
+    svg.removeEventListener('mousedown', this.onMouseDown, false);
+    svg.removeEventListener('mouseleave', this.onMouseLeave, false);
   },
 
   onSequenceChanged: function(seq, dbn) {
@@ -76,7 +85,7 @@ var DnaStructure = React.createClass({
   },
 
   onSelected: function(selected) {
-    var previous = this.state.selected;
+    var previous = this.selected;
 
     if (previous===selected) { return; }
 
@@ -84,18 +93,17 @@ var DnaStructure = React.createClass({
       this.getBaseViewAtIndex(previous).setState({
         selected: false
       });
+      this.refs.sequence.setSelected(previous, false);
     }
 
     if (selected!==-1) {
       this.getBaseViewAtIndex(selected).setState({
         selected: true
       });
+      this.refs.sequence.setSelected(selected, true);
     }
 
-    this.setState({
-      selected: selected,
-      updateSequence: false
-    });
+    this.selected = selected;
   },
 
   onMoving: function(moving) {
@@ -103,12 +111,9 @@ var DnaStructure = React.createClass({
       this.getBaseViewAtIndex(moving).setState({
         moving: true
       });
+      this.refs.sequence.setMoving(moving, true);
     }
-
-    this.setState({
-      moving: moving,
-      updateSequence: false
-    });
+    this.moving = moving;
   },
 
   onMouseDown: function(event) {
@@ -150,16 +155,17 @@ var DnaStructure = React.createClass({
   },
 
   onMouseUp: function(event) {
-    var moving = this.state.moving;
+    var moving = this.moving;
 
     if (moving === -1) { return; }
 
     this.getBaseViewAtIndex(moving).setState({
       moving: false
     });
+    this.refs.sequence.setMoving(moving, false);
 
+    this.moving = -1;
     this.setState({
-      moving: -1,
       movingX: null,
       movingY: null,
       updateSequence: false
@@ -191,6 +197,19 @@ var DnaStructure = React.createClass({
     }
 
     this.onSequenceChanged(seq, newdbn);
+  },
+
+  onMouseLeave: function() {
+    var moving = this.moving;
+
+    if (moving === -1) { return; }
+
+    this.getBaseViewAtIndex(moving).setState({
+      moving: false
+    });
+    this.refs.sequence.setMoving(moving, false);
+
+    this.moving = -1;
   }
 });
 

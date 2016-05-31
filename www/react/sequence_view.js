@@ -5,8 +5,15 @@ var SettingsData = require('./settings_data');
 var SequenceParser = require('../src/sequence_parser');
 
 var SequenceLetter = React.createClass({
+  getInitialState: function() {
+    return {
+      selected: false,
+      moving: false
+    };
+  },
+
   render: function () {
-    var clsName = this.props.selected || this.props.moving ? "higlight-sequence-text" : "";
+    var clsName = this.state.selected || this.state.moving ? "higlight-sequence-text" : "";
     return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               {this.props.letter}
             </span>);
@@ -76,8 +83,7 @@ var SequenceFormView = React.createClass({
     var str = this.state.value;
     var letterDivs = [];
     for (var ii=0; ii<str.length; ii++) {
-      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii}
-                         selected={this.props.selected===ii} moving={this.props.moving==ii}
+      letterDivs.push((<SequenceLetter ref={'letterref' + ii} letter={str[ii]} index={ii}
                         onSelected={this.props.onSelected}
                         key={"letter_" + ii}/>));
     }
@@ -155,14 +161,30 @@ var SequenceView = React.createClass({
     });
   },
 
+  setSelected: function(index, val) {
+    this.refs.seqview.refs['letterref' + index].setState({
+      selected: val
+    });
+    this.refs.dbnview.refs['letterref' + index].setState({
+      selected: val
+    });
+  },
+
+  setMoving: function(index, val) {
+    this.refs.seqview.refs['letterref' + index].setState({
+      moving: val
+    });
+    this.refs.dbnview.refs['letterref' + index].setState({
+      moving: val
+    });
+  },
+
   render: function () {
     return (<div className="sequence-form-wrapper-div">
-              <SequenceFormView value={this.state.seq} type="seq" error={this.state.error}
-                selected={this.props.selected} moving={this.props.moving}
+              <SequenceFormView ref='seqview' value={this.state.seq} type="seq" error={this.state.error}
                 onSelected={this.props.onSelected} onChange={this.onChange}
                 placeholder="Enter DNA sequence" />
-              <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error}
-                selected={this.props.selected} moving={this.props.moving}
+              <SequenceFormView ref='dbnview' value={this.state.dbn} type="dbn" error={this.state.error}
                 onSelected={this.props.onSelected} onChange={this.onChange}
                 placeholder="Enter DBN" />
               <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
