@@ -162,21 +162,27 @@ var SequenceView = React.createClass({
   },
 
   setSelected: function(index, val) {
-    this.refs.seqview.refs['letterref' + index].setState({
-      selected: val
-    });
-    this.refs.dbnview.refs['letterref' + index].setState({
-      selected: val
-    });
+    var  obj = {selected: val};
+    var  seq = this.refs.seqview.refs['letterref' + index];
+    var  dbn = this.refs.dbnview.refs['letterref' + index];
+    if (seq) {
+      seq.setState(obj);
+    }
+    if (dbn) {
+      dbn.setState(obj);
+    }
   },
 
   setMoving: function(index, val) {
-    this.refs.seqview.refs['letterref' + index].setState({
-      moving: val
-    });
-    this.refs.dbnview.refs['letterref' + index].setState({
-      moving: val
-    });
+    var  obj = {moving: val};
+    var  seq = this.refs.seqview.refs['letterref' + index];
+    var  dbn = this.refs.dbnview.refs['letterref' + index];
+    if (seq) {
+      seq.setState(obj);
+    }
+    if (dbn) {
+      dbn.setState(obj);
+    }
   },
 
   render: function () {

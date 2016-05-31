@@ -92,16 +92,22 @@ var DnaStructure = React.createClass({
     if (previous===selected) { return; }
 
     if (previous!==-1) {
-      this.getBaseViewAtIndex(previous).setState({
-        selected: false
-      });
+      var baseView = this.getBaseViewAtIndex(previous);
+      if (baseView) {
+        baseView.setState({
+          selected: false
+        });
+      }
       this.refs.sequence.setSelected(previous, false);
     }
 
     if (selected!==-1) {
-      this.getBaseViewAtIndex(selected).setState({
-        selected: true
-      });
+      var baseView = this.getBaseViewAtIndex(selected);
+      if (baseView) {
+        baseView.setState({
+          selected: true
+        });
+      }
       this.refs.sequence.setSelected(selected, true);
     }
 
