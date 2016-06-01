@@ -23,15 +23,9 @@ var AppearanceConfig = React.createClass({
 
   onChange: function (evt) {
     val = parseInt(evt.target.value);
-    if (isNaN(val)) {
-      return;
-    }
-    if (val<this.props.min) {
-      return;
-    }
-    if (val>this.props.max) {
-      return;
-    }    
+    if (isNaN(val)) { return; }
+    if (val<this.props.min) { return; }
+    if (val>this.props.max) { return; }
 
     var obj = {};
     obj[this.props.jssKey] = JSON.stringify(val) + "px";
