@@ -26,13 +26,13 @@ svg text::selection {
 }
 
 .dna-base-selected {
-  fill: none;
+  fill: #ffffff;
   stroke-width: 3px;
   stroke: #ff0000;
 }
 
 .dna-base-moving {
-  fill: none;
+  fill: #ffffff;
   stroke-width: 3px;
   stroke: #ff0000;
 }
