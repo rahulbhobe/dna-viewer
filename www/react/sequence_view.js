@@ -37,9 +37,6 @@ var SequenceFormView = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    if (this.props.value === nextProps.value) {
-      return;
-    }
     this.setState({
       value: nextProps.value
     });
@@ -90,7 +87,7 @@ var SequenceFormView = React.createClass({
 
     return (<div>
               <form className={formClass}>
-                <input type="text" className={inpClass} defaultValue={this.props.value}
+                <input type="text" className={inpClass} value={this.state.value}
                   onChange={this.onChange} onBlur={this.onBlur}
                   ref="inp" placeholder={this.props.placeholder}
                   style={{width: '100%'}} >
