@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/main.js",
     "postinstall": "bower install && npm run build",
-    "build": "browserify -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/bundle/dna_viewer_bundle.js"
+    "build": "browserify            -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "debug": "watchify   --debug -v -t [ babelify --presets [ react ] ] www/react/* www/src/* -o www/bundle/dna_viewer_bundle.js"
   },
   "repository": {
     "type": "git"
