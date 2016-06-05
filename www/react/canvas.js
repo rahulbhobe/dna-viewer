@@ -1,17 +1,18 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var _ = require('underscore');
-var $ = require('jquery');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import _ from 'underscore';
+import $ from 'jquery';
 
-var DnaBaseView = React.createClass({
-  getInitialState: function() {
-    return {
+class DnaBaseView extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       slected: false,
       moving: false
-    }
-  },
+    };
+  };
 
-  render: function () {
+  render () {
     var point   = this.props.point;
     var base    = this.props.base;
     var classes = " dna-base dna-base-size ";
@@ -26,27 +27,27 @@ var DnaBaseView = React.createClass({
             <circle className={classes} data-index={base.getIndex()} />
             <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
-  },
-});
+  };
+};
 
-var DnaBackbone = React.createClass({
-  render: function () {
+class DnaBackbone extends React.Component {
+  render () {
     var point1 = this.props.point1;
     var point2 = this.props.point2;
     return (<line x1={point1.elements[0]} y1={point1.elements[1]} x2={point2.elements[0]} y2={point2.elements[1]} className="dna-backbone dna-base-backbone" />);
-  }
-});
+  };
+};
 
-var DnaPair = React.createClass({
-  render: function () {
+class DnaPair extends React.Component {
+  render () {
     var source = this.props.source;
     var target = this.props.target;
     return (<line x1={source.elements[0]} y1={source.elements[1]} x2={target.elements[0]} y2={target.elements[1]} className="dna-pair dna-base-pair" />);
-  }
-});
+  };
+};
 
-var DnaAnnotation = React.createClass({
-  render: function () {
+class DnaAnnotation extends React.Component {
+  render () {
     var text     = this.props.text;
     var classes  = "dna-base-annotation";
     var textCls  = "dna-text dna-base-font";
@@ -55,9 +56,9 @@ var DnaAnnotation = React.createClass({
     return (<g transform={"translate(" + location.elements[0] + ", " + location.elements[1] + ")"} >
               <text className={textCls} textAnchor="middle" dominantBaseline="central">{text}</text>
             </g>);
-  },
+  };
 
-  getLocation: function () {
+  getLocation () {
     var point   = Vector.create(this.props.point);
     var other1  = Vector.create(this.props.other1);
     var other2  = Vector.create(this.props.other2);
@@ -67,26 +68,26 @@ var DnaAnnotation = React.createClass({
     var drawAt  = point.add(bisect.toUnitVector().multiply(20));
 
     return drawAt;
-  }
-});
+  };
+};
 
-
-var Canvas = React.createClass({
-  getInitialState: function () {
-    return {
+class Canvas extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       screenCoordinates: this.getCoordinatesForScreen(this.props.sequenceParser)
-    }
-  },
+    };
+  };
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.sequenceParser !== this.props.sequenceParser) {
       this.setState({
         screenCoordinates: this.getCoordinatesForScreen(nextProps.sequenceParser)
       });
     }
-  },
+  };
 
-  render: function () {
+  render () {
     var sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) {
       return null;
@@ -134,9 +135,9 @@ var Canvas = React.createClass({
 
       </svg>
       </div>);
-  },
+  };
 
-  getMovingBaseGraphichs: function() {
+  getMovingBaseGraphichs () {
     if (this.props.moving===-1) return;
 
     var sequenceParser = this.props.sequenceParser;
@@ -148,9 +149,9 @@ var Canvas = React.createClass({
     var point = Vector.create([this.props.movingX-rect.left, this.props.movingY-rect.top]);
     return (<DnaBaseView point={point} base={bases[this.props.moving]} selected={false} moving={false}
               bannedCursorWhenMoving={false} onMouseClick={null} onSelected={null}/>);
-  },
+  };
 
-  bannedCursorWhenMoving: function(index) {
+  bannedCursorWhenMoving (index) {
     var moving = this.props.moving;
     var sequenceParser = this.props.sequenceParser;
     var bases = sequenceParser.getBases();
@@ -161,17 +162,17 @@ var Canvas = React.createClass({
     var movingBase = bases[moving];
     var thisBase = bases[index];
     return !thisBase.canPairWith(movingBase);
-  },
+  };
 
-  getWindowWidth: function() {
+  getWindowWidth () {
     return $(window).width() * 0.8;
-  },
+  };
 
-  getWindowHeight: function() {
+  getWindowHeight () {
     return $(window).height() * 0.8;
-  },
+  };
 
-  getCoordinatesForScreen: function(sequenceParser) {
+  getCoordinatesForScreen (sequenceParser) {
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
     var coordinates = sequenceParser.getCoordinates();
@@ -216,7 +217,7 @@ var Canvas = React.createClass({
       return point.add(vec);
     });
     return transformedCoordinates;
-  }
-});
+  };
+};
 
-module.exports = Canvas;
+export default Canvas;
