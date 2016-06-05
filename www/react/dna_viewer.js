@@ -1,17 +1,18 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var $ = require('jquery');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
 import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
 import ShareLink from './share_link';
-var DebugUtils = require('../src/debug');
-var SequenceParser = require('../src/sequence_parser');
-var _ = require('underscore');
+import DebugUtils from '../src/debug';
+import SequenceParser from '../src/sequence_parser';
+import _ from 'underscore';
 
-var DnaViewer = React.createClass({
-  getInitialState: function() {
-    return {
+class DnaViewer extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       selected: -1,
       moving: -1,
       movingX: null,
@@ -22,9 +23,18 @@ var DnaViewer = React.createClass({
       windowWidth: window.innerWidth,
       updateSequence: false
     };
-  },
 
-  render: function () {
+    this.onMouseMove       = this.onMouseMove.bind(this);
+    this.onMouseUp         = this.onMouseUp.bind(this);
+    this.onMouseDown       = this.onMouseDown.bind(this);
+    this.onMouseLeave      = this.onMouseLeave.bind(this);
+    this.handleResize      = this.handleResize.bind(this);
+    this.onSequenceChanged = this.onSequenceChanged.bind(this);
+    this.onSelected        = this.onSelected.bind(this);
+    this.onMoving          = this.onMoving.bind(this);
+  };
+
+  render () {
     return (<div>
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
               <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}
@@ -36,61 +46,61 @@ var DnaViewer = React.createClass({
               </SequenceView>
               <SettingsView/>
             </div>);
-  },
+  };
 
-  handleResize: function(e) {
+  handleResize (e) {
     this.setState({
       windowWidth: window.innerWidth,
       updateSequence: false
     });
-  },
+  };
 
-  componentWillMount: function() {
+  componentWillMount () {
     this.moving = -1;
     this.selected = -1;
-  },
+  };
 
-  componentDidMount: function() {
+  componentDidMount () {
     window.addEventListener('resize', this.handleResize);
 
     var canvas = this.refs.canvas;
     var svg    = canvas.refs.svg;
-    svg.addEventListener('mousemove', this.onMouseMove, false);
-    svg.addEventListener('mouseup',   this.onMouseUp, false);
-    svg.addEventListener('mousedown', this.onMouseDown, false);
+    svg.addEventListener('mousemove',  this.onMouseMove, false);
+    svg.addEventListener('mouseup',    this.onMouseUp, false);
+    svg.addEventListener('mousedown',  this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
-  },
+  };
 
-  componentWillUnmount: function() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize);
 
     var canvas = this.refs.canvas;
     var svg    = canvas.refs.svg;
-    svg.removeEventListener('mousemove', this.onMouseMove, false);
-    svg.removeEventListener('mouseup',   this.onMouseUp, false);
-    svg.removeEventListener('mousedown', this.onMouseDown, false);
+    svg.removeEventListener('mousemove',  this.onMouseMove, false);
+    svg.removeEventListener('mouseup',    this.onMouseUp, false);
+    svg.removeEventListener('mousedown',  this.onMouseDown, false);
     svg.removeEventListener('mouseleave', this.onMouseLeave, false);
-  },
+  };
 
-  onSequenceChanged: function(seq, dbn) {
+  onSequenceChanged (seq, dbn) {
     this.setState({
       sequenceParser: new SequenceParser(seq, dbn),
       seq: seq,
       dbn: dbn,
       updateSequence: true
     });
-  },
+  };
 
-  setStateForBaseViewAtIndex: function(index, stateObj) {
+  setStateForBaseViewAtIndex (index, stateObj) {
     if (index === -1) { return; } // Can happen.
 
     var canvas   = this.refs.canvas;
     var baseView = canvas.refs['baseref' + index];
     if (!baseView) { return; } // Can happen.
     baseView.setState(stateObj);
-  },
+  };
 
-  onSelected: function(selected) {
+  onSelected (selected) {
     var previous = this.selected;
 
     if (previous===selected) { return; }
@@ -102,15 +112,15 @@ var DnaViewer = React.createClass({
     this.refs.sequence.setStateForIndex(selected, {selected: true});
 
     this.selected = selected;
-  },
+  };
 
-  onMoving: function(moving) {
+  onMoving (moving) {
     this.setStateForBaseViewAtIndex(moving, {moving: true});
     this.refs.sequence.setStateForIndex(moving, {moving: true});
     this.moving = moving;
-  },
+  };
 
-  getIndexAtClientPosition: function(clientX, clientY) {
+  getIndexAtClientPosition (clientX, clientY) {
     var canvas = this.refs.canvas;
     var svg    = canvas.refs.svg;
     var found  = -1;
@@ -128,14 +138,14 @@ var DnaViewer = React.createClass({
       found = parseInt(elem.getAttribute('data-index'));
     });
     return found;
-  },
+  };
 
-  onMouseDown: function(event) {
+  onMouseDown (event) {
     var moving = this.getIndexAtClientPosition(event.clientX, event.clientY);
     this.onMoving(moving);
-  },
+  };
 
-  onMouseMove: function(event) {
+  onMouseMove (event) {
     var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
     this.onSelected(selected);
 
@@ -146,9 +156,9 @@ var DnaViewer = React.createClass({
       movingY: event.y,
       updateSequence: false
     });
-  },
+  };
 
-  onMouseUp: function(event) {
+  onMouseUp (event) {
     var moving = this.moving;
 
     if (moving === -1) { return; }
@@ -189,9 +199,9 @@ var DnaViewer = React.createClass({
     }
 
     this.onSequenceChanged(seq, newdbn);
-  },
+  };
 
-  onMouseLeave: function() {
+  onMouseLeave () {
     var moving = this.moving;
 
     if (moving === -1) { return; }
@@ -200,8 +210,8 @@ var DnaViewer = React.createClass({
     this.refs.sequence.setStateForIndex(moving, {moving: false});
 
     this.moving = -1;
-  }
-});
+  };
+};
 
 
 $(document).ready(function () {
@@ -229,4 +239,4 @@ $(document).ready(function () {
   );
 });
 
-module.exports = DnaViewer;
+export default DnaViewer;
