@@ -1,4 +1,4 @@
-var _ = require('underscore');
+import _ from 'underscore';
 
 var SettingsInit = function() {
   var defaultColors = {
@@ -20,5 +20,4 @@ var SettingsInit = function() {
   jss.set('.dna-base-pair', {"stroke-width": "4px"});
 };
 
-module.exports = SettingsInit();
-
+export default SettingsInit();

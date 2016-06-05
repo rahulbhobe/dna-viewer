@@ -4,7 +4,7 @@ var $ = require('jquery');
 var Canvas = require('./canvas');
 import SettingsView from './settings_view';
 var SequenceView = require('./sequence_view');
-var ShareLink = require('./share_link');
+import ShareLink from './share_link';
 var DebugUtils = require('../src/debug');
 var SequenceParser = require('../src/sequence_parser');
 var _ = require('underscore');

@@ -1,26 +1,30 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var _ = require('underscore');
-var $ = require('jquery');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import _ from 'underscore';
+import $ from 'jquery';
 
-var ShareLink =  React.createClass({
-  getInitialState: function() {
-    return {
+class ShareLink extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       url: window.location.origin,
       expanded: false
     };
-  },
+    this.onClick   = this.onClick.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onError   = this.onError.bind(this);
+  };
 
-  render: function () {
+  render () {
     var clsName = (this.state && this.state.expanded) ? "" : "share-link-box-hidden";
     clsName += " share-links-box";
     return (<div className="share-link-button" >
               <input type="image" src="/res/share_icon.png" alt="Submit" onClick={this.onClick}/>
               <span className={clsName}>{this.state.url}</span>
             </div>);
-  },
+  };
 
-  onClick: function () {
+  onClick () {
     if (this.state.expanded) {
       this.setState({expanded: false});
       return;
@@ -39,9 +43,9 @@ var ShareLink =  React.createClass({
       dataType: "json",
       contentType: "application/json"
     });
-  },
+  };
 
-  onSuccess: function (data) {
+  onSuccess (data) {
     var url = window.location.origin + '/' + data.url;
     this.setState({
       url: url,
@@ -49,13 +53,13 @@ var ShareLink =  React.createClass({
       seq: this.props.seq,
       dbn: this.props.dbn
     });
-  },
+  };
 
-  onError: function () {
+  onError () {
     console.log('Server Error.');
-  },
+  };
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (!this.state) return;
     if (!this.state.expanded) return;
 
@@ -69,8 +73,7 @@ var ShareLink =  React.createClass({
       seq: nextProps.seq,
       dbn: nextProps.dbn
     });
-  }
-});
+  };
+};
 
-
-module.exports = ShareLink;
+export default ShareLink;
