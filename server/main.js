@@ -31,7 +31,14 @@ app.post('/sharelink', function(req, res) {
   }).then(function (data) {
     res.send(_(data).pick(['url', 'seq', 'dbn']));
   }).catch(function (err) {
+    console.log(err);
     res.sendStatus(500);
+  });
+});
+
+app.get('/', function(req, res) {
+  res.render('index', {
+    data: ''
   });
 });
 
