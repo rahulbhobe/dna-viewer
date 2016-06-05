@@ -1,13 +1,14 @@
-var express     =  require('express');
-var bodyParser  =  require('body-parser');
-var favicon     =  require('serve-favicon');
-var app         =  express();
-var _           =  require('underscore');
-var Promise     =  require('bluebird');
-var DBManager   =  require('./db_manager');
-var Data        =  Promise.promisifyAll(require('./data'));
-var shortid     =  require('shortid');
+import express from 'express';
+import bodyParser from 'body-parser';
+import favicon from 'serve-favicon';
+import _ from 'underscore';
+import Promise from 'bluebird';
+import DBManager from './db_manager';
+import DataImport from './data';
+import shortid from 'shortid';
 
+var app         =  express();
+var Data        =  Promise.promisifyAll(DataImport);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

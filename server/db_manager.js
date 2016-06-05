@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 var DbManager = function() {
   var mongoURI = 'mongodb://localhost/myappdatabase';
@@ -32,4 +32,4 @@ var DbManager = function() {
   };
 };
 
-module.exports = new DbManager();
+export default DbManager();

@@ -1,6 +1,5 @@
-var mongoose  = require('mongoose');
-var Schema    = mongoose.Schema;
-var DbManager = require('./db_manager');
+import mongoose, {Schema} from 'mongoose';
+import DbManager from './db_manager';
 
 var dataSchema = new Schema({
   url:  String,
@@ -31,4 +30,4 @@ dataSchema.pre('findOne', function(next) {
 
 var Data = mongoose.model('Data', dataSchema);
 
-module.exports = Data;
+export default Data;
