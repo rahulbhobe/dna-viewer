@@ -1,4 +1,4 @@
-var $ = require('jquery');
+import $ from 'jquery';
 
 $(document).ready(function () {
   function assert(condition, message) {
@@ -40,4 +40,4 @@ DebugUtils.debug_examples = [
   }
 ];
 
-module.exports = DebugUtils;
+export default DebugUtils;

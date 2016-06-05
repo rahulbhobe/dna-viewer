@@ -1,4 +1,4 @@
-var _ = require('underscore');
+import _ from 'underscore';
 
 var GeometrySolver = function (sequenceParser) {
   var distance     = 100; // Distance between nodes.
@@ -62,4 +62,4 @@ var GeometrySolver = function (sequenceParser) {
   };
 };
 
-module.exports = GeometrySolver;
+export default GeometrySolver;

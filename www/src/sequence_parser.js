@@ -1,7 +1,7 @@
-var SecondaryStructure = require('./secondary_structure');
-var DnaBase = require('./dna_base');
-var GeometrySolver = require('./geometry_solver');
-var Utils = require('./utils');
+import SecondaryStructure from './secondary_structure';
+import DnaBase from './dna_base';
+import GeometrySolver from './geometry_solver';
+import Utils from './utils';
 
 var SequenceParser = function(seq, dbn) {
 
@@ -67,4 +67,4 @@ var SequenceParser = function(seq, dbn) {
   };
 };
 
-module.exports = SequenceParser;
+export default SequenceParser;

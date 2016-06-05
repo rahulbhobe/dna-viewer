@@ -23,4 +23,4 @@ Utils.errorObject = function (msg, index) {
   };
 };
 
-module.exports = Utils;
+export default Utils;

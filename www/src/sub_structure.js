@@ -45,4 +45,4 @@ SubStructure.prototype.closedAt = function(val) {
   return this._closedAt;
 };
 
-module.exports = SubStructure;
+export default SubStructure;
