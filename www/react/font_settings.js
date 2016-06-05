@@ -31,5 +31,4 @@ class FontSettings extends React.Component {
   }
 };
 
-
-module.exports = FontSettings;
+export default FontSettings;
