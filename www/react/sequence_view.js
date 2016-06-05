@@ -1,73 +1,82 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var DebugUtils = require('../src/debug');
-var SettingsData = require('./settings_data');
-var SequenceParser = require('../src/sequence_parser');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import DebugUtils from '../src/debug';
+import SettingsData from './settings_data';
+import SequenceParser from '../src/sequence_parser';
 
-var SequenceLetter = React.createClass({
-  getInitialState: function() {
-    return {
+class SequenceLetter extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       selected: false,
       moving: false
     };
-  },
 
-  render: function () {
+    this.onMouseOver  = this.onMouseOver.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+  };
+
+  render () {
     var clsName = this.state.selected || this.state.moving ? "higlight-sequence-text" : "";
     return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               {this.props.letter}
             </span>);
-  },
+  };
 
-  onMouseOver: function () {
+  onMouseOver () {
     this.props.onSelected(this.props.index);
-  },
+  };
 
-  onMouseLeave: function() {
+  onMouseLeave () {
     this.props.onSelected(-1);
-  }
-});
+  };
+};
 
-var SequenceFormView = React.createClass({
-  getInitialState: function () {
-    return {
+class SequenceFormView extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       value: this.props.value,
       editMode: false
     };
-  },
 
-  componentWillReceiveProps: function (nextProps) {
+    this.onChange = this.onChange.bind(this);
+    this.onBlur   = this.onBlur.bind(this);
+    this.onClick  = this.onClick.bind(this);
+  };
+
+  componentWillReceiveProps (nextProps) {
     this.setState({
       value: nextProps.value
     });
-  },
+  };
 
-  componentDidUpdate: function() {
+  componentDidUpdate () {
     if (this.state.editMode) {
       var inputBox = ReactDOM.findDOMNode(this.refs.inp);
       inputBox.focus();
     }
-  },
+  };
 
-  onChange: function (evt) {
+  onChange (evt) {
     var value = evt.target.value.toUpperCase();
     this.setState({value: value});
     this.props.onChange(this.props.type, value);
-  },
+  };
 
-  onBlur: function () {
+  onBlur () {
     ReactDOM.findDOMNode(this.refs.inp).value = this.state.value;
     this.setState({editMode: false});
-  },
+  };
 
-  onClick: function () {
+  onClick () {
     this.setState({editMode: true});
     var inputBox = ReactDOM.findDOMNode(this.refs.inp);
     inputBox.focus();
     inputBox.select();
-  },
+  };
 
-  render: function () {
+  render () {
     var formClass = "sequence-form dna-base-font ";
     if (this.props.error) {
       formClass += " sequence-has-error";
@@ -97,11 +106,12 @@ var SequenceFormView = React.createClass({
                 </div>
               </form>
             </div>);
-  }
-});
+  };
+};
 
-var ApplyChanges = React.createClass({
-    render: function () {
+
+class ApplyChanges extends React.Component {
+    render () {
       var clsNames = "apply-changes-button sequence-form sequence-form-div";
       if (!this.props.dirty) {
         clsNames += " apply-changes-hidden ";
@@ -109,20 +119,24 @@ var ApplyChanges = React.createClass({
       return (<div>
                 <button type="button" className={clsNames} onClick={this.props.onApply}>Apply</button>
               </div>);
-  }
-});
+  };
+};
 
-var SequenceView = React.createClass({
-  getInitialState: function () {
-    return {
+class SequenceView extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       seq: this.props.seq,
       dbn: this.props.dbn,
       dirty: false,
       error: false
     };
-  },
 
-  componentWillReceiveProps: function (nextProps) {
+    this.onChange = this.onChange.bind(this);
+    this.onApply  = this.onApply.bind(this);
+  };
+
+  componentWillReceiveProps (nextProps) {
     if (this.state.dirty) {
       if (!nextProps.updateSequence) {
         return;
@@ -135,17 +149,17 @@ var SequenceView = React.createClass({
       dirty: false,
       error: false
     });
-  },
+  };
 
-  onChange: function (type, value) {
+  onChange (type, value) {
     var obj = {
       dirty: true
     };
     obj[type] = value;
     this.setState(obj);
-  },
+  };
 
-  onApply: function () {
+  onApply () {
     var sequenceParser = new SequenceParser(this.state.seq, this.state.dbn);
     if (sequenceParser.hasErrors()) {
       this.setState({error: true});
@@ -156,9 +170,9 @@ var SequenceView = React.createClass({
       error: false,
       dirty: false
     });
-  },
+  };
 
-  setStateForIndex: function(index, stateObj) {
+  setStateForIndex (index, stateObj) {
     if (index === -1) { return; } // Can happen.
     var  seq = this.refs.seqview.refs['letterref' + index];
     var  dbn = this.refs.dbnview.refs['letterref' + index];
@@ -168,9 +182,9 @@ var SequenceView = React.createClass({
     if (dbn) {
       dbn.setState(stateObj);
     }
-  },
+  };
 
-  render: function () {
+  render () {
     return (<div className="sequence-form-wrapper-div">
               <SequenceFormView ref='seqview' value={this.state.seq} type="seq" error={this.state.error}
                 onSelected={this.props.onSelected} onChange={this.onChange}
@@ -180,7 +194,7 @@ var SequenceView = React.createClass({
                 placeholder="Enter DBN" />
               <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
             </div>);
-  }
-});
+  };
+};
 
-module.exports = SequenceView;
+export default SequenceView;

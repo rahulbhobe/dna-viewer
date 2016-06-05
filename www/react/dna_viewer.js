@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Canvas = require('./canvas');
 import SettingsView from './settings_view';
-var SequenceView = require('./sequence_view');
+import SequenceView from './sequence_view';
 import ShareLink from './share_link';
 var DebugUtils = require('../src/debug');
 var SequenceParser = require('../src/sequence_parser');
