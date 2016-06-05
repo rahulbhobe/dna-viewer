@@ -1,9 +1,13 @@
-var React = require('react');
-var _ = require('underscore');
+import React from 'react';
+import _ from 'underscore';
 
-var FontSettings =  React.createClass({
+class FontSettings extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+  };
 
-  render: function () {
+  render () {
     var fonts = [ 'Andale Mono', 'Courier', 'Monaco', 'Courier New'];
 
     return (<div className="settings-font-div dna-base-font">
@@ -15,17 +19,17 @@ var FontSettings =  React.createClass({
               })}
               </select>
             </div>);
-  },
+  };
 
-  getSelected: function() {
+  getSelected () {
     var font = jss.get(".dna-base-font");
     return font["font-family"];
-  },
+  };
 
-  onChange: function(event) {
+  onChange (event) {
     jss.set(".dna-base-font", {"font-family": event.target.value})
   }
-});
+};
 
 
 module.exports = FontSettings;

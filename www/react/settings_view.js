@@ -1,16 +1,16 @@
-var React = require('react');
-var ColorSettings = require('./color_settings');
-var FontSettings = require('./font_settings');
-var AppearanceSettings = require('./appearance_settings');
+import React from 'react';
+import ColorSettings from './color_settings';
+import FontSettings from './font_settings';
+import AppearanceSettings from './appearance_settings';
 
-var SettingsView = React.createClass({
-  render: function () {
+class SettingsView extends React.Component {
+  render () {
     return (<div className="settings-view" >
               <ColorSettings />
               <FontSettings />
               <AppearanceSettings />
             </div>);
-  }
-});
+  };
+};
 
-module.exports = SettingsView;
+export default SettingsView;

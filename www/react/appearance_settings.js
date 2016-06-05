@@ -1,16 +1,18 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var _ = require('underscore');
+import React from 'react';
+import ReactDOM  from 'react-dom';
 
-var AppearanceConfig = React.createClass({
-  getInitialState: function() {
+class AppearanceConfig extends React.Component {
+  constructor(props) {
+    super(props);
     var val = jss.get(this.props.jssCls);
-    return {
+    this.state = {
       value: parseInt(val[this.props.jssKey])
     };
-  },
+    this.onChange = this.onChange.bind(this);
+    this.onBlur   = this.onBlur.bind(this);
+  };
 
-  render: function () {
+  render () {
     return (<div>
               {this.props.name}
               <br/>
@@ -19,10 +21,10 @@ var AppearanceConfig = React.createClass({
                 {"(" + this.props.min + "-" + this.props.max + ")"}
               </span>
             </div>);
-  },
+  };
 
-  onChange: function (evt) {
-    val = parseInt(evt.target.value);
+  onChange (evt) {
+    var val = parseInt(evt.target.value);
     if (isNaN(val)) { return; }
     if (val<this.props.min) { return; }
     if (val>this.props.max) { return; }
@@ -30,25 +32,22 @@ var AppearanceConfig = React.createClass({
     var obj = {};
     obj[this.props.jssKey] = JSON.stringify(val) + "px";
     jss.set(this.props.jssCls, obj);
-  },
+  };
 
-  onBlur: function () {
+  onBlur () {
     var val = jss.get(this.props.jssCls);
     ReactDOM.findDOMNode(this.refs.inp).value = JSON.stringify(parseInt(val[this.props.jssKey]));
-  }
+  };
+};
 
-});
-
-var AppearanceSettings =  React.createClass({
-  render: function () {
+class AppearanceSettings extends React.Component {
+  render () {
     return (<div className="settings-appearance-div dna-base-font">
               <AppearanceConfig  name="Size:" jssCls='.dna-base-size' jssKey='r' min={5} max={20} size="5"/>
               <AppearanceConfig  name="Backbone:" jssCls='.dna-base-backbone' jssKey='stroke-width' min={1} max={6} size="5"/>
               <AppearanceConfig  name="Base-pair:" jssCls='.dna-base-pair' jssKey='stroke-width' min={1} max={6} size="5"/>
             </div>);
-  },
+  };
+};
 
-});
-
-
-module.exports = AppearanceSettings;
+export default AppearanceSettings;

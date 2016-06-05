@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Canvas = require('./canvas');
-var SettingsView = require('./settings_view');
+import SettingsView from './settings_view';
 var SequenceView = require('./sequence_view');
 var ShareLink = require('./share_link');
 var DebugUtils = require('../src/debug');
