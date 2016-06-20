@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server/index.js",
     "postinstall": "bower install && npm run build",
-    "build": "browserify            -t [ babelify --presets [ react es2015 ] ] www/react/* www/src/* -o www/bundle/dna_viewer_bundle.js",
-    "debug": "watchify   --debug -v -t [ babelify --presets [ react es2015 ] ] www/react/* www/src/* -o www/bundle/dna_viewer_bundle.js"
+    "build": "browserify            -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "debug": "watchify   --debug -v -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js"
   },
   "repository": {
     "type": "git"
@@ -28,11 +28,13 @@
     "react": "^15.0.2",
     "react-color": "^2.1.0",
     "react-dom": "^15.0.2",
+    "redux": "^3.5.2",
     "serve-favicon": "^2.3.0",
     "shortid": "^2.2.6",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.3.0"
