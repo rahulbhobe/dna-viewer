@@ -8,6 +8,9 @@ import ShareLink from './share_link';
 import DebugUtils from '../src/debug';
 import SequenceParser from '../src/sequence_parser';
 import _ from 'underscore';
+import store from '../store/store';
+import * as actions from '../store/actions';
+
 
 class DnaViewer extends React.Component {
   constructor (props) {
@@ -69,6 +72,11 @@ class DnaViewer extends React.Component {
     svg.addEventListener('mouseup',    this.onMouseUp, false);
     svg.addEventListener('mousedown',  this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
+
+    console.log('store: ', store.getState());
+    store.subscribe(()=>{
+      console.log('store: ', store.getState());
+    });
   };
 
   componentWillUnmount () {
@@ -105,9 +113,11 @@ class DnaViewer extends React.Component {
 
     if (previous===selected) { return; }
 
+    store.dispatch(actions.hoverNodeReset());
     this.setStateForBaseViewAtIndex(previous, {selected: false});
     this.refs.sequence.setStateForIndex(previous, {selected: false});
 
+    store.dispatch(actions.hoverNodeSet(selected));
     this.setStateForBaseViewAtIndex(selected, {selected: true});
     this.refs.sequence.setStateForIndex(selected, {selected: true});
 
@@ -115,6 +125,7 @@ class DnaViewer extends React.Component {
   };
 
   onMoving (moving) {
+    store.dispatch(actions.draggingNodeSet(moving));
     this.setStateForBaseViewAtIndex(moving, {moving: true});
     this.refs.sequence.setStateForIndex(moving, {moving: true});
     this.moving = moving;
@@ -163,6 +174,7 @@ class DnaViewer extends React.Component {
 
     if (moving === -1) { return; }
 
+    store.dispatch(actions.draggingNodeReset());
     this.setStateForBaseViewAtIndex(moving, {moving: false});
     this.refs.sequence.setStateForIndex(moving, {moving: false});
 
@@ -206,6 +218,7 @@ class DnaViewer extends React.Component {
 
     if (moving === -1) { return; }
 
+    store.dispatch(actions.draggingNodeReset());
     this.setStateForBaseViewAtIndex(moving, {moving: false});
     this.refs.sequence.setStateForIndex(moving, {moving: false});
 
