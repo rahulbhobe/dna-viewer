@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
-import $ from 'jquery';
 
 class DnaBaseView extends React.Component {
   constructor (props) {
@@ -165,11 +164,11 @@ class Canvas extends React.Component {
   };
 
   getWindowWidth () {
-    return $(window).width() * 0.8;
+    return window.innerWidth * 0.8;
   };
 
   getWindowHeight () {
-    return $(window).height() * 0.8;
+    return window.innerHeight * 0.8;
   };
 
   getCoordinatesForScreen (sequenceParser) {
