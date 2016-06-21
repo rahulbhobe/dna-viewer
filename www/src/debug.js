@@ -1,6 +1,4 @@
-import $ from 'jquery';
-
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function(event) {
   function assert(condition, message) {
     if (!condition) {
         message = message || "Assertion failed";
