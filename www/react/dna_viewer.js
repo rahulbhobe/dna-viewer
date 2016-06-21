@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
 import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
@@ -227,9 +226,12 @@ class DnaViewer extends React.Component {
 };
 
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function(event) {
   var getDataFromDiv = function () {
-    return $("#data-div").data("data");
+    var dataDiv = document.getElementById('data-div');
+    var dataStr = dataDiv.dataset.data;
+    if (!dataStr) return null;
+    return JSON.parse(dataDiv.dataset.data);
   };
 
   var sequenceParser = null;
