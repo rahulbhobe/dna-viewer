@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
-import $ from 'jquery';
+import request from 'request';
 
 class ShareLink extends React.Component {
   constructor (props) {
@@ -34,14 +34,12 @@ class ShareLink extends React.Component {
       seq: this.props.seq,
       dbn: this.props.dbn
     };
-    $.ajax({
-      type: "POST",
-      url: "/sharelink",
-      data: JSON.stringify(data),
-      success: this.onSuccess,
-      error: this.onError,
-      dataType: "json",
-      contentType: "application/json"
+
+    request.post(window.location.origin + '/sharelink', {form: data}, (err, httpResponse, body) => {
+      if (err) {
+        this.onError(err);
+      }
+      this.onSuccess(JSON.parse(body));
     });
   };
 
