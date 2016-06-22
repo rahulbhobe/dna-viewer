@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/babel/main.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node server/babel/main.js",
     "postinstall": "bower install && npm run build",
     "build": "npm run client-build & npm run server-build",
     "client-build": "browserify            -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
