@@ -2,12 +2,15 @@
   "name": "dna-viewer",
   "version": "1.0.0",
   "description": "",
-  "main": "server/index.js",
+  "main": "server/babel/main.js",
   "scripts": {
     "start": "node server/index.js",
     "postinstall": "bower install && npm run build",
-    "build": "browserify            -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
-    "debug": "watchify   --debug -v -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js"
+    "build": "npm run client-build && npm run server-build",
+    "client-build": "browserify            -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "client-watch": "watchify   --debug -v -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "server-build": "babel         --presets es2015 server/src --out-dir server/babel",
+    "server-watch": "babel --watch --presets es2015 server/src --out-dir server/babel"
   },
   "repository": {
     "type": "git"
@@ -15,7 +18,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "babel-register": "^6.9.0",
     "bluebird": "^3.3.5",
     "body-parser": "^1.15.1",
     "bootstrap": "^3.3.6",
@@ -33,6 +35,7 @@
     "shortid": "^2.2.6"
   },
   "devDependencies": {
+    "babel-cli": "^6.10.1",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
