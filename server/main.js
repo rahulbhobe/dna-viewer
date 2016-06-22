@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import favicon from 'serve-favicon';
-import _ from 'underscore';
 import Promise from 'bluebird';
 import DBManager from './db_manager';
 import DataImport from './data';
@@ -19,17 +18,17 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 
 app.post('/sharelink', function(req, res) {
-  var obj = _(req.body).pick(['seq', 'dbn']);
+  let {seq, dbn} = req.body;
 
-  Data.findOneAsync(obj).then(function (data) {
-    if (data && ('seq' in data) && ('dbn' in data))
+  Data.findOneAsync({seq, dbn}).then(function (data) {
+    if (data)
       return data;
 
-    _(obj).extend({url: shortid.generate()});
-    var newData = Promise.promisifyAll(new Data(obj));
+    let url = shortid.generate();
+    var newData = Promise.promisifyAll(new Data({url, seq, dbn}));
     return newData.saveAsync();
-  }).then(function (data) {
-    res.send(_(data).pick(['url', 'seq', 'dbn']));
+  }).then(function ({url, seq, dbn}) {
+    res.send({url, seq, dbn});
   }).catch(function (err) {
     console.log(err);
     res.sendStatus(500);
@@ -46,10 +45,11 @@ app.get('/*', function(req, res) {
   var url = req.path.substring(1);
   Data.findOneAsync({url: url}).then(function (data) {
     if (!data) throw Error("Not found: " + url);
-    if (!data.seq) throw Error("Invalid url: " + url);
-    if (!data.dbn) throw Error("Invalid url: " + url);
+    let {seq, dbn} = data;
+    if (!seq) throw Error("Invalid url: " + url);
+    if (!dbn) throw Error("Invalid url: " + url);
     res.render('index', {
-      data: JSON.stringify(_(data).pick(['seq', 'dbn']))
+      data: JSON.stringify({seq, dbn})
     });
   }).catch(function (err) {
     console.log(err);
