@@ -6,7 +6,6 @@ import SequenceView from './sequence_view';
 import ShareLink from './share_link';
 import DebugUtils from '../src/debug';
 import SequenceParser from '../src/sequence_parser';
-import _ from 'underscore';
 import store from '../store/store';
 import * as actions from '../store/actions';
 
@@ -143,7 +142,7 @@ class DnaViewer extends React.Component {
     hitTestRect.width   = 1;
     hitTestRect.height  = 1;
 
-    _(svg.getIntersectionList(hitTestRect, null)).each(function (elem) {
+    svg.getIntersectionList(hitTestRect, null).forEach(function (elem) {
       if (elem.tagName !== 'circle') { return; }
       found = parseInt(elem.getAttribute('data-index'));
     });

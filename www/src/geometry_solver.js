@@ -1,4 +1,3 @@
-import _ from 'underscore';
 
 var GeometrySolver = function (sequenceParser) {
   var distance     = 100; // Distance between nodes.
@@ -30,7 +29,7 @@ var GeometrySolver = function (sequenceParser) {
   var prevPoint  = null;
   var prevTheta  = null;
   var coordinates = [];
-  _(sequenceParser.getBases()).each(function (base) {
+  sequenceParser.getBases().forEach(function (base) {
     var thisTheta = getThetaFromBase(base);
 
     if (moveCenter) {

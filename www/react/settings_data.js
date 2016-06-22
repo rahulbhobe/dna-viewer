@@ -1,16 +1,15 @@
-import _ from 'underscore';
 
 var SettingsInit = function() {
-  var defaultColors = {
-    'A': '#64dd17',
-    'C': '#00b0ff',
-    'G': '#1d2120',
-    'T': '#e62739',
-    'N': '#b0a18e'
-  };
+  var defaultColors = [
+    {type: 'A', hex: '#64dd17'},
+    {type: 'C', hex: '#00b0ff'},
+    {type: 'G', hex: '#1d2120'},
+    {type: 'T', hex: '#e62739'},
+    {type: 'N', hex: '#b0a18e'}
+  ];
 
   // initialize jss:
-  _(defaultColors).each(function (hex, type) {
+  defaultColors.forEach(function ({type, hex}) {
     var clsName = '.dna-base-' + type.toLowerCase();
     jss.set(clsName, {fill: hex})
   });

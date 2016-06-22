@@ -1,5 +1,4 @@
 import SubStructure from './sub_structure';
-import _ from 'underscore';
 
 var SecondaryStructure = function() {
   // All structures created by the helper.
@@ -51,7 +50,7 @@ SecondaryStructure.prototype.getStructures = function() {
 
 SecondaryStructure.prototype.getConnections = function() {
   var structures = this._subStructures.slice(1); // Don't need root;
-  return _(structures).map(function (structure) {
+  return structures.map(function (structure) {
     return {
       source: structure.openedAt(),
       target: structure.closedAt()

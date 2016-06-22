@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import _ from 'underscore';
 import request from 'request';
 
 class ShareLink extends React.Component {
@@ -61,7 +60,7 @@ class ShareLink extends React.Component {
     if (!this.state) return;
     if (!this.state.expanded) return;
 
-    if (_.isEqual(this.state.seq, nextProps.seq) && _.isEqual(this.state.dbn, nextProps.dbn)) {
+    if ((this.state.seq===nextProps.seq) && (this.state.dbn===nextProps.dbn)) {
       return;
     }
 

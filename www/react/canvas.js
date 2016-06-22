@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import _ from 'underscore';
 
 class DnaBaseView extends React.Component {
   constructor (props) {
@@ -109,19 +108,19 @@ class Canvas extends React.Component {
     return (
       <div className={wrapperCls}>
       <svg width={width} height={height} ref='svg'>
-        {_(coordinates).map(function (point, ii) {
+        {coordinates.map(function (point, ii) {
             if (ii >= coordinates.length-1) {
               return;
             }
             return (<DnaBackbone point1={point} point2={coordinates[ii+1]} key={"backbone" + ii}/>);
         })}
-        {_(connections).map(function (connection, ii) {
+        {connections.map(function (connection, ii) {
             var source = coordinates[connection.source];
             var target = coordinates[connection.target];
             return (<DnaPair source={source} target={target} key={"pair" + ii}/>);
         })}
 
-        {_(coordinates).map(function (point, ii) {
+        {coordinates.map(function (point, ii) {
             return (<DnaBaseView point={point} base={bases[ii]} ref={'baseref' + ii}
               bannedCursorWhenMoving={self.bannedCursorWhenMoving(ii)} key={"base" + ii}/>
             );
@@ -179,7 +178,7 @@ class Canvas extends React.Component {
     var min = Vector.create(coordinates[0].elements);
     var max = Vector.create(coordinates[0].elements);
 
-    _(coordinates).each(function (vec) {
+    coordinates.forEach(function (vec) {
       min.elements[0] = Math.min(min.elements[0], vec.elements[0]);
       min.elements[1] = Math.min(min.elements[1], vec.elements[1]);
       max.elements[0] = Math.max(max.elements[0], vec.elements[0]);
@@ -189,7 +188,7 @@ class Canvas extends React.Component {
     var rotatedCoordinates = coordinates;
     if ((max.elements[0]-min.elements[0]) < (max.elements[1]-min.elements[1])) {
       // Rotate by 90 deg if width is less than height. Most screens have larger width.
-      rotatedCoordinates = _(coordinates).map(function(point) {
+      rotatedCoordinates = coordinates.map(function(point) {
         return point.rotate(-0.5*Math.PI, min);
       });
 
@@ -203,7 +202,7 @@ class Canvas extends React.Component {
     var scaleH = height / (max.elements[1]-min.elements[1]);
     var scale  = scaleW < scaleH ? scaleW : scaleH;
 
-    var scaledCoordinates = _(rotatedCoordinates).map(function(point) {
+    var scaledCoordinates = rotatedCoordinates.map(function(point) {
       return point.multiply(scale*0.92);
     });
 
@@ -212,7 +211,7 @@ class Canvas extends React.Component {
     var buf = Vector.create([width*0.04, height*0.04]);
     var vec = buf.subtract(min);
 
-    var transformedCoordinates = _(scaledCoordinates).map(function(point) {
+    var transformedCoordinates = scaledCoordinates.map(function(point) {
       return point.add(vec);
     });
     return transformedCoordinates;

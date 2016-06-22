@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'underscore';
 
 class FontSettings extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class FontSettings extends React.Component {
               Font:
               <br/>
               <select onChange={this.onChange} selected={this.getSelected()}>
-              {_(fonts).map(function (font, ii) {
+              {fonts.map(function (font, ii) {
                 return (<option value={font} style={{fontFamily: font}} key={"fonts_" + ii}>{font}</option>);
               })}
               </select>
