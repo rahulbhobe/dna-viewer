@@ -18,7 +18,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.3.5",
     "body-parser": "^1.15.1",
     "bootstrap": "^3.3.6",
     "ejs": "^2.4.1",

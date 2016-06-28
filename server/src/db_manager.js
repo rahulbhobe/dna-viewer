@@ -24,6 +24,7 @@ var DbManager = function() {
   return {
     init: function () {
       mongoose.connect(mongoURI);
+      mongoose.Promise = Promise;
     },
 
     isConnected: function() {
