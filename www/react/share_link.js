@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import request from 'request';
+import promisify from 'es6-promisify';
 
 class ShareLink extends React.Component {
   constructor (props) {
@@ -34,11 +35,11 @@ class ShareLink extends React.Component {
       dbn: this.props.dbn
     };
 
-    request.post(window.location.origin + '/sharelink', {form: data}, (err, httpResponse, body) => {
-      if (err) {
-        this.onError(err);
-      }
-      this.onSuccess(JSON.parse(body));
+    promisify(request.post)(window.location.origin + '/sharelink', {form: data})
+    .then((httpResponse) => {
+      this.onSuccess(JSON.parse(httpResponse.body));
+    }).catch((err) => {
+      this.onError(err);
     });
   };
 
@@ -52,8 +53,8 @@ class ShareLink extends React.Component {
     });
   };
 
-  onError () {
-    console.log('Server Error.');
+  onError (err) {
+    console.log('Server Error: ', err);
   };
 
   componentWillReceiveProps (nextProps) {
