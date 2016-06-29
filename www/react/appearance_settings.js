@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM  from 'react-dom';
+import ReactDOM from 'react-dom';
+import jss from 'jss-browserify';
 
 class AppearanceConfig extends React.Component {
   constructor(props) {

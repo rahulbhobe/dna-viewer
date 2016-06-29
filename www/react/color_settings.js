@@ -1,5 +1,6 @@
 import React from 'react';
 import {SketchPicker as ColorPicker} from 'react-color';
+import jss from 'jss-browserify';
 
 class ColorsButton extends React.Component {
   constructor (props) {

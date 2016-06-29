@@ -1,4 +1,5 @@
 import React from 'react';
+import jss from 'jss-browserify';
 
 class FontSettings extends React.Component {
   constructor(props) {

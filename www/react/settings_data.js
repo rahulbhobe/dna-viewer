@@ -1,3 +1,4 @@
+import jss from 'jss-browserify';
 
 var SettingsInit = function() {
   var defaultColors = [
