@@ -35,8 +35,19 @@ app.post('/sharelink', function(req, res) {
 });
 
 app.get('/*', function(req, res) {
-  res.render('index', {
-    data: ''
+  var url = req.path.substring(1);
+  if (!url) {
+    res.render('index');
+    return;
+  }
+
+  Data.findOne({url: url}).exec()
+  .then(function (data) {
+    if (!data) throw Error("Not found: " + url);
+    res.render('index');
+  }).catch(function (err) {
+    console.log('sss', err);
+    res.redirect('/');
   });
 });
 
