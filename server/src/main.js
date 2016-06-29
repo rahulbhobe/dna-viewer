@@ -46,7 +46,7 @@ app.get('/*', function(req, res) {
     if (!data) throw Error("Not found: " + url);
     res.render('index');
   }).catch(function (err) {
-    console.log('sss', err);
+    console.log(err);
     res.redirect('/');
   });
 });
