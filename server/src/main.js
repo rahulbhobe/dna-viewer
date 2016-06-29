@@ -34,26 +34,24 @@ app.post('/sharelink', function(req, res) {
   });
 });
 
-app.get('/', function(req, res) {
+app.get('/*', function(req, res) {
   res.render('index', {
     data: ''
   });
 });
 
-app.get('/*', function(req, res) {
-  var url = req.path.substring(1);
-  Data.findOne({url: url}).exec()
+app.post('/data', function(req, res) {
+  let {url} = req.body;
+  Data.findOne({url}).exec()
   .then(function (data) {
     if (!data) throw Error("Not found: " + url);
     let {seq, dbn} = data;
     if (!seq) throw Error("Invalid url: " + url);
     if (!dbn) throw Error("Invalid url: " + url);
-    res.render('index', {
-      data: JSON.stringify({seq, dbn})
-    });
+    res.send({url, seq, dbn});
   }).catch(function (err) {
     console.log(err);
-    res.redirect('/');
+    res.sendStatus(400);
   });
 });
 
