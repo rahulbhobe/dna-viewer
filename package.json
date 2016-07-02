@@ -7,8 +7,8 @@
     "start": "node server/babel/main.js",
     "postinstall": "bower install && npm run build",
     "build": "npm run client-build & npm run server-build",
-    "client-build": "browserify            --ignore lapack -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
-    "client-watch": "watchify   --debug -v --ignore lapack -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "client-build": "browserify            --ignore lapack -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "client-watch": "watchify   --debug -v --ignore lapack -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
     "server-build": "babel         --presets es2015 server/src --out-dir server/babel",
     "server-watch": "babel --watch --presets es2015 server/src --out-dir server/babel"
   },
@@ -40,6 +40,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
-    "babelify": "^7.3.0"
+    "babelify": "^7.3.0",
+    "browserify-css": "^0.9.1"
   }
 }
