@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Vector} from 'sylvester';
 
 class DnaBaseView extends React.Component {
   constructor (props) {

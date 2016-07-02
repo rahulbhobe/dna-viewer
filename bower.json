@@ -16,7 +16,6 @@
     "tests"
   ],
   "dependencies": {
-    "sylvester": "^0.1.3",
     "bootstrap": "^3.3.6"
   }
 }

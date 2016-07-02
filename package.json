@@ -7,8 +7,8 @@
     "start": "node server/babel/main.js",
     "postinstall": "bower install && npm run build",
     "build": "npm run client-build & npm run server-build",
-    "client-build": "browserify            -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
-    "client-watch": "watchify   --debug -v -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "client-build": "browserify            --ignore lapack -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
+    "client-watch": "watchify   --debug -v --ignore lapack -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
     "server-build": "babel         --presets es2015 server/src --out-dir server/babel",
     "server-watch": "babel --watch --presets es2015 server/src --out-dir server/babel"
   },

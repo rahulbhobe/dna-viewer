@@ -1,3 +1,4 @@
+import {Vector} from 'sylvester';
 
 var GeometrySolver = function (sequenceParser) {
   var distance     = 100; // Distance between nodes.
