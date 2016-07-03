@@ -12,7 +12,9 @@
     "server-build": "babel         --presets es2015 server/src --out-dir server/babel",
     "server-watch": "babel --watch --presets es2015 server/src --out-dir server/babel",
     "db-import": "mongoimport -h ds011755.mlab.com:11755 -d dna_viewer -c datas -u dna_user -p dna_password --file  db/db.json",
-    "db-export": "mongoexport -h ds011755.mlab.com:11755 -d dna_viewer -c datas -u dna_user -p dna_password --out   db/db.json"
+    "db-export": "mongoexport -h ds011755.mlab.com:11755 -d dna_viewer -c datas -u dna_user -p dna_password --out   db/db.json",
+    "db-clear": "mongo ds011755.mlab.com:11755/dna_viewer -u dna_user -p dna_password --eval \"db.dropDatabase()\"",
+    "db-reset": "npm run db-clear && npm run db-import"
   },
   "repository": {
     "type": "git"
