@@ -10,7 +10,9 @@
     "client-build": "browserify            --ignore lapack -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
     "client-watch": "watchify   --debug -v --ignore lapack -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* -o www/bundle/dna_viewer_bundle.js",
     "server-build": "babel         --presets es2015 server/src --out-dir server/babel",
-    "server-watch": "babel --watch --presets es2015 server/src --out-dir server/babel"
+    "server-watch": "babel --watch --presets es2015 server/src --out-dir server/babel",
+    "db-import": "mongoimport -h ds011755.mlab.com:11755 -d dna_viewer -c datas -u dna_user -p dna_password --file  db/db.json",
+    "db-export": "mongoexport -h ds011755.mlab.com:11755 -d dna_viewer -c datas -u dna_user -p dna_password --out   db/db.json"
   },
   "repository": {
     "type": "git"
