@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/../../www'));
 app.use(favicon(__dirname + '/../../www/res/favicon.ico'));
 app.set('views', __dirname + '/../../www');
+app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 
 app.post('/sharelink', function(req, res) {
