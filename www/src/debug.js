@@ -25,6 +25,10 @@ DebugUtils.debug_examples = [
     dbn: '...(((((.(...).)))))........(((((.....((..(.((((((..(((.((...)).)))..)))))).).)))))))...............'
   },
   {
+    seq: 'CAGCACGACACTAGCAGTCAGTGTCAGACTGCATACAGCACGACACTAGCAGTCAGTGTCAGACTGCATACAGCACGACACTAGCAGTCAGTGTCAGACTGCATA',
+    dbn: '..(((((...(((((...(((((...(((((.....)))))...))))).....(((((...(((((.....)))))...))))).....)))))...)))))..'
+  },
+  {
     seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
     dbn: '.((((((...))((...)))))).'
   },
