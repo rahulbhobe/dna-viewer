@@ -1,7 +1,7 @@
 {
   "name": "dna-viewer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Dna Viewer",
   "main": "server/babel/main.js",
   "scripts": {
     "start": "node server/babel/main.js",
