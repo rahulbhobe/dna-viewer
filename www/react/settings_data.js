@@ -2,10 +2,10 @@ import jss from 'jss-browserify';
 
 var SettingsInit = function() {
   var defaultColors = [
-    {type: 'A', hex: '#64dd17'},
-    {type: 'C', hex: '#00b0ff'},
-    {type: 'G', hex: '#1d2120'},
-    {type: 'T', hex: '#e62739'},
+    {type: 'A', hex: '#63f33c'},
+    {type: 'C', hex: '#3474cc'},
+    {type: 'G', hex: '#fbb344'},
+    {type: 'T', hex: '#f0322d'},
     {type: 'N', hex: '#b0a18e'}
   ];
 
