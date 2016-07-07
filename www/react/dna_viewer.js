@@ -99,32 +99,19 @@ class DnaViewer extends React.Component {
     });
   };
 
-  setStateForBaseViewAtIndex (index, stateObj) {
-    if (index === -1) { return; } // Can happen.
-
-    var canvas   = this.refs.canvas;
-    var baseView = canvas.refs['baseref' + index];
-    if (!baseView) { return; } // Can happen.
-    baseView.setState(stateObj);
-  };
-
   onSelected (selected) {
     var previous = this.selected;
 
     if (previous===selected) { return; }
 
     store.dispatch(actions.hoverNodeReset());
-    this.setStateForBaseViewAtIndex(previous, {selected: false});
-
     store.dispatch(actions.hoverNodeSet(selected));
-    this.setStateForBaseViewAtIndex(selected, {selected: true});
 
     this.selected = selected;
   };
 
   onMoving (moving) {
     store.dispatch(actions.draggingNodeSet(moving));
-    this.setStateForBaseViewAtIndex(moving, {moving: true});
     this.moving = moving;
   };
 
@@ -172,7 +159,6 @@ class DnaViewer extends React.Component {
     if (moving === -1) { return; }
 
     store.dispatch(actions.draggingNodeReset());
-    this.setStateForBaseViewAtIndex(moving, {moving: false});
 
     this.moving = -1;
     this.setState({
@@ -215,7 +201,6 @@ class DnaViewer extends React.Component {
     if (moving === -1) { return; }
 
     store.dispatch(actions.draggingNodeReset());
-    this.setStateForBaseViewAtIndex(moving, {moving: false});
 
     this.moving = -1;
   };

@@ -1,14 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Vector} from 'sylvester';
+import store from '../store/store';
 
 class DnaBaseView extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      slected: false,
-      moving: false
+      hover: false,
+      dragging: false
     };
+    this.onStoreChanged = this.onStoreChanged.bind(this);
+    this.compareState   = this.compareState.bind(this);
+  };
+
+  compareState (stateObj) {
+    if (stateObj.hover !== this.state.hover) {
+      return true;
+    }
+    if (stateObj.dragging !== this.state.dragging) {
+      return true;
+    }
+    return false;
+  };
+
+  onStoreChanged () {
+    var {hover, dragging} = store.getState();
+    var stateObj = {
+      hover: hover===this.props.base.getIndex(),
+      dragging: dragging===this.props.base.getIndex()
+    };
+
+    if (!this.compareState(stateObj)) return;
+    this.setState(stateObj);
+  };
+
+  componentDidMount () {
+    this.unsubscribe = store.subscribe(this.onStoreChanged);
+  };
+
+  componentWillUnmount () {
+    this.unsubscribe();
   };
 
   render () {
@@ -18,8 +50,8 @@ class DnaBaseView extends React.Component {
     var textCls = "dna-text dna-base-font ";
 
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
-    classes += this.state.selected ? " dna-base-selected" : "";
-    classes += this.state.moving ? " dna-base-moving" : "";
+    classes += this.state.hover ? " dna-base-selected" : "";
+    classes += this.state.dragging ? " dna-base-moving" : "";
     var clsName = this.props.bannedCursorWhenMoving ? " dna-base-banned-pairing " : "";
     return (<g className={clsName}
               transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
@@ -122,7 +154,7 @@ class Canvas extends React.Component {
         })}
 
         {coordinates.map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]} ref={'baseref' + ii}
+            return (<DnaBaseView point={point} base={bases[ii]}
               bannedCursorWhenMoving={self.bannedCursorWhenMoving(ii)} key={"base" + ii}/>
             );
         })}

@@ -16,14 +16,28 @@ class SequenceLetter extends React.Component {
     this.onMouseOver    = this.onMouseOver.bind(this);
     this.onMouseLeave   = this.onMouseLeave.bind(this);
     this.onStoreChanged = this.onStoreChanged.bind(this);
+    this.compareState   = this.compareState.bind(this);
+  };
+
+  compareState (stateObj) {
+    if (stateObj.hover !== this.state.hover) {
+      return true;
+    }
+    if (stateObj.dragging !== this.state.dragging) {
+      return true;
+    }
+    return false;
   };
 
   onStoreChanged () {
     var {hover, dragging} = store.getState();
-    this.setState({
+    var stateObj = {
       hover: hover===this.props.index,
       dragging: dragging===this.props.index
-    });
+    };
+
+    if (!this.compareState(stateObj)) return;
+    this.setState(stateObj);
   };
 
   componentDidMount () {
@@ -32,16 +46,6 @@ class SequenceLetter extends React.Component {
 
   componentWillUnmount () {
     this.unsubscribe();
-  };
-
-  shouldComponentUpdate (nextProps, nextState) {
-    if (nextState.hover !== this.state.hover) {
-      return true;
-    }
-    if (nextState.dragging !== this.state.dragging) {
-      return true;
-    }
-    return false;
   };
 
   render () {
