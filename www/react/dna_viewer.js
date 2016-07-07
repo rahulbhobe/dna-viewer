@@ -100,13 +100,7 @@ class DnaViewer extends React.Component {
   };
 
   onSelected (selected) {
-    var previous = this.selected;
-
-    if (previous===selected) { return; }
-
-    store.dispatch(actions.hoverNodeReset());
     store.dispatch(actions.hoverNodeSet(selected));
-
     this.selected = selected;
   };
 
