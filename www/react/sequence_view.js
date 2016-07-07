@@ -3,21 +3,53 @@ import ReactDOM from 'react-dom';
 import DebugUtils from '../src/debug';
 import SettingsData from './settings_data';
 import SequenceParser from '../src/sequence_parser';
+import store from '../store/store';
 
 class SequenceLetter extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      selected: false,
-      moving: false
+      hover: false,
+      dragging: false
     };
 
-    this.onMouseOver  = this.onMouseOver.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onMouseOver    = this.onMouseOver.bind(this);
+    this.onMouseLeave   = this.onMouseLeave.bind(this);
+    this.onStoreChanged = this.onStoreChanged.bind(this);
   };
 
+  onStoreChanged () {
+    var {hover, dragging} = store.getState();
+    this.setState({
+      hover: hover===this.props.index,
+      dragging: dragging===this.props.index
+    });
+  };
+
+  componentDidMount () {
+    this.unsubscribe = store.subscribe(this.onStoreChanged);
+  };
+
+  componentWillUnmount () {
+    this.unsubscribe();
+  };
+
+  shouldComponentUpdate (nextProps, nextState) {
+    if (nextState.hover !== this.state.hover) {
+      return true;
+    }
+    if (nextState.dragging !== this.state.dragging) {
+      return true;
+    }
+    return false;
+  };
+
+  componentWillUpdate () {
+
+  }
+
   render () {
-    var clsName = this.state.selected || this.state.moving ? "higlight-sequence-text" : "";
+    var clsName = this.state.hover || this.state.dragging ? "higlight-sequence-text" : "";
     return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               {this.props.letter}
             </span>);
@@ -170,18 +202,6 @@ class SequenceView extends React.Component {
       error: false,
       dirty: false
     });
-  };
-
-  setStateForIndex (index, stateObj) {
-    if (index === -1) { return; } // Can happen.
-    var  seq = this.refs.seqview.refs['letterref' + index];
-    var  dbn = this.refs.dbnview.refs['letterref' + index];
-    if (seq) {
-      seq.setState(stateObj);
-    }
-    if (dbn) {
-      dbn.setState(stateObj);
-    }
   };
 
   render () {

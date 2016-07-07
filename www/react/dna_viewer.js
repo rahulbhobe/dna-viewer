@@ -115,11 +115,9 @@ class DnaViewer extends React.Component {
 
     store.dispatch(actions.hoverNodeReset());
     this.setStateForBaseViewAtIndex(previous, {selected: false});
-    this.refs.sequence.setStateForIndex(previous, {selected: false});
 
     store.dispatch(actions.hoverNodeSet(selected));
     this.setStateForBaseViewAtIndex(selected, {selected: true});
-    this.refs.sequence.setStateForIndex(selected, {selected: true});
 
     this.selected = selected;
   };
@@ -127,7 +125,6 @@ class DnaViewer extends React.Component {
   onMoving (moving) {
     store.dispatch(actions.draggingNodeSet(moving));
     this.setStateForBaseViewAtIndex(moving, {moving: true});
-    this.refs.sequence.setStateForIndex(moving, {moving: true});
     this.moving = moving;
   };
 
@@ -176,7 +173,6 @@ class DnaViewer extends React.Component {
 
     store.dispatch(actions.draggingNodeReset());
     this.setStateForBaseViewAtIndex(moving, {moving: false});
-    this.refs.sequence.setStateForIndex(moving, {moving: false});
 
     this.moving = -1;
     this.setState({
@@ -220,7 +216,6 @@ class DnaViewer extends React.Component {
 
     store.dispatch(actions.draggingNodeReset());
     this.setStateForBaseViewAtIndex(moving, {moving: false});
-    this.refs.sequence.setStateForIndex(moving, {moving: false});
 
     this.moving = -1;
   };
