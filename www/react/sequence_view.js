@@ -121,7 +121,7 @@ class SequenceFormView extends React.Component {
     var str = this.state.value;
     var letterDivs = [];
     for (var ii=0; ii<str.length; ii++) {
-      letterDivs.push((<SequenceLetter ref={'letterref' + ii} letter={str[ii]} index={ii}
+      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii}
                         onSelected={this.props.onSelected}
                         key={"letter_" + ii}/>));
     }
@@ -206,10 +206,10 @@ class SequenceView extends React.Component {
 
   render () {
     return (<div className="sequence-form-wrapper-div">
-              <SequenceFormView ref='seqview' value={this.state.seq} type="seq" error={this.state.error}
+              <SequenceFormView value={this.state.seq} type="seq" error={this.state.error}
                 onSelected={this.props.onSelected} onChange={this.onChange}
                 placeholder="Enter DNA sequence" />
-              <SequenceFormView ref='dbnview' value={this.state.dbn} type="dbn" error={this.state.error}
+              <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error}
                 onSelected={this.props.onSelected} onChange={this.onChange}
                 placeholder="Enter DBN" />
               <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
