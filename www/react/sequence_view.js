@@ -44,10 +44,6 @@ class SequenceLetter extends React.Component {
     return false;
   };
 
-  componentWillUpdate () {
-
-  }
-
   render () {
     var clsName = this.state.hover || this.state.dragging ? "higlight-sequence-text" : "";
     return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
