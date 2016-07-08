@@ -1,48 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Vector} from 'sylvester';
-import store from '../store/store';
+import {connect} from 'react-redux';
 
-class DnaBaseView extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      hover: false,
-      dragging: false
-    };
-    this.onStoreChanged = this.onStoreChanged.bind(this);
-    this.compareState   = this.compareState.bind(this);
-  };
-
-  compareState (stateObj) {
-    if (stateObj.hover !== this.state.hover) {
-      return true;
-    }
-    if (stateObj.dragging !== this.state.dragging) {
-      return true;
-    }
-    return false;
-  };
-
-  onStoreChanged () {
-    var {hover, dragging} = store.getState();
-    var stateObj = {
-      hover: hover===this.props.base.getIndex(),
-      dragging: dragging===this.props.base.getIndex()
-    };
-
-    if (!this.compareState(stateObj)) return;
-    this.setState(stateObj);
-  };
-
-  componentDidMount () {
-    this.unsubscribe = store.subscribe(this.onStoreChanged);
-  };
-
-  componentWillUnmount () {
-    this.unsubscribe();
-  };
-
+class DnaBaseView_ extends React.Component {
   render () {
     var point   = this.props.point;
     var base    = this.props.base;
@@ -50,8 +11,8 @@ class DnaBaseView extends React.Component {
     var textCls = "dna-text dna-base-font ";
 
     classes += " " + 'dna-base-' + base.getType().toLowerCase();
-    classes += this.state.hover ? " dna-base-selected" : "";
-    classes += this.state.dragging ? " dna-base-moving" : "";
+    classes += this.props.hover ? " dna-base-selected" : "";
+    classes += this.props.dragging ? " dna-base-moving" : "";
     var clsName = this.props.bannedCursorWhenMoving ? " dna-base-banned-pairing " : "";
     return (<g className={clsName}
               transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
@@ -60,6 +21,15 @@ class DnaBaseView extends React.Component {
             </g>);
   };
 };
+
+var mapStateToProps = function(state, ownProps) {
+  return {
+    hover: state.hover === ownProps.base.getIndex(),
+    dragging: state.dragging === ownProps.base.getIndex()
+  }
+}
+
+var DnaBaseView = connect(mapStateToProps)(DnaBaseView_);
 
 class DnaBackbone extends React.Component {
   render () {

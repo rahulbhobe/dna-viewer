@@ -10,7 +10,7 @@ import store from '../store/store';
 import * as actions from '../store/actions';
 import request from 'request';
 import promisify from 'es6-promisify';
-
+import {Provider} from 'react-redux';
 
 class DnaViewer extends React.Component {
   constructor (props) {
@@ -226,7 +226,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   .then(function(obj) {
     var sequenceParser = new SequenceParser(obj.seq, obj.dbn);
     ReactDOM.render(
-      <DnaViewer sequenceParser={sequenceParser} seq={obj.seq} dbn={obj.dbn}/>,
+      <Provider store={store}>
+        <DnaViewer sequenceParser={sequenceParser} seq={obj.seq} dbn={obj.dbn}/>
+      </Provider>,
       document.getElementById('body-div')
     );
   });

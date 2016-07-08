@@ -3,53 +3,17 @@ import ReactDOM from 'react-dom';
 import DebugUtils from '../src/debug';
 import SettingsData from './settings_data';
 import SequenceParser from '../src/sequence_parser';
-import store from '../store/store';
+import {connect} from 'react-redux';
 
-class SequenceLetter extends React.Component {
+class SequenceLetter_ extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      hover: false,
-      dragging: false
-    };
-
     this.onMouseOver    = this.onMouseOver.bind(this);
     this.onMouseLeave   = this.onMouseLeave.bind(this);
-    this.onStoreChanged = this.onStoreChanged.bind(this);
-    this.compareState   = this.compareState.bind(this);
-  };
-
-  compareState (stateObj) {
-    if (stateObj.hover !== this.state.hover) {
-      return true;
-    }
-    if (stateObj.dragging !== this.state.dragging) {
-      return true;
-    }
-    return false;
-  };
-
-  onStoreChanged () {
-    var {hover, dragging} = store.getState();
-    var stateObj = {
-      hover: hover===this.props.index,
-      dragging: dragging===this.props.index
-    };
-
-    if (!this.compareState(stateObj)) return;
-    this.setState(stateObj);
-  };
-
-  componentDidMount () {
-    this.unsubscribe = store.subscribe(this.onStoreChanged);
-  };
-
-  componentWillUnmount () {
-    this.unsubscribe();
   };
 
   render () {
-    var clsName = this.state.hover || this.state.dragging ? "higlight-sequence-text" : "";
+    var clsName = this.props.hover || this.props.dragging ? "higlight-sequence-text" : "";
     return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               {this.props.letter}
             </span>);
@@ -63,6 +27,16 @@ class SequenceLetter extends React.Component {
     this.props.onSelected(-1);
   };
 };
+
+var mapStateToProps = function(state, ownProps) {
+  return {
+    hover: state.hover === ownProps.index,
+    dragging: state.dragging === ownProps.index
+  }
+}
+
+var SequenceLetter = connect(mapStateToProps)(SequenceLetter_);
+
 
 class SequenceFormView extends React.Component {
   constructor (props) {
