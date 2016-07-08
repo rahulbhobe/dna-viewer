@@ -7,7 +7,7 @@ import ShareLink from './share_link';
 import DebugUtils from '../src/debug';
 import SequenceParser from '../src/sequence_parser';
 import store from '../store/store';
-import * as actions from '../store/actions';
+import * as actionCreators from '../store/action_creators';
 import request from 'request';
 import promisify from 'es6-promisify';
 import {Provider} from 'react-redux';
@@ -99,12 +99,12 @@ class DnaViewer extends React.Component {
   };
 
   onSelected (selected) {
-    store.dispatch(actions.hoverNodeSet(selected));
+    store.dispatch(actionCreators.hoverNodeSet(selected));
     this.selected = selected;
   };
 
   onMoving (moving) {
-    store.dispatch(actions.draggingNodeSet(moving));
+    store.dispatch(actionCreators.draggingNodeSet(moving));
     this.moving = moving;
   };
 
@@ -151,7 +151,7 @@ class DnaViewer extends React.Component {
 
     if (moving === -1) { return; }
 
-    store.dispatch(actions.draggingNodeReset());
+    store.dispatch(actionCreators.draggingNodeReset());
 
     this.moving = -1;
     this.setState({
@@ -193,7 +193,7 @@ class DnaViewer extends React.Component {
 
     if (moving === -1) { return; }
 
-    store.dispatch(actions.draggingNodeReset());
+    store.dispatch(actionCreators.draggingNodeReset());
 
     this.moving = -1;
   };

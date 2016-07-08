@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../store/actions';
+import * as actionCreators from '../store/action_creators';
 
 class SequenceLetter extends React.Component {
   constructor (props) {
