@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';

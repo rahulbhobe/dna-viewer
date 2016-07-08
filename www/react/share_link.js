@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import request from 'request';
 import promisify from 'es6-promisify';
 

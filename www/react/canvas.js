@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import DnaBaseView from './dna_base_view';
 import {Vector} from 'sylvester';
 
