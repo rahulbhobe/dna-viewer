@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DebugUtils from '../src/debug';
 import SettingsData from './settings_data';
 import SequenceParser from '../src/sequence_parser';
 import SequenceLetter from './sequence_letter';
