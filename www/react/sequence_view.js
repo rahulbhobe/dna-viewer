@@ -148,11 +148,9 @@ class SequenceView extends React.Component {
   render () {
     return (<div className="sequence-form-wrapper-div">
               <SequenceFormView value={this.state.seq} type="seq" error={this.state.error}
-                onSelected={this.props.onSelected} onChange={this.onChange}
-                placeholder="Enter DNA sequence" />
+                onChange={this.onChange} placeholder="Enter DNA sequence" />
               <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error}
-                onSelected={this.props.onSelected} onChange={this.onChange}
-                placeholder="Enter DBN" />
+                onChange={this.onChange} placeholder="Enter DBN" />
               <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
             </div>);
   };

@@ -44,8 +44,7 @@ class DnaViewer extends React.Component {
                 moving={this.moving} movingX={this.state.movingX} movingY={this.state.movingY}>
               </Canvas>
               <SequenceView ref='sequence' onSequenceChanged={this.onSequenceChanged}
-                seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}
-                onSelected={this.onSelected}>
+                seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}>
               </SequenceView>
               <SettingsView/>
             </div>);

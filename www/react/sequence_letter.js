@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../store/actions';
 
 class SequenceLetter extends React.Component {
   constructor (props) {
@@ -17,11 +19,11 @@ class SequenceLetter extends React.Component {
   };
 
   onMouseOver () {
-    this.props.onSelected(this.props.index);
+    this.props.actions.hoverNodeSet(this.props.index);
   };
 
   onMouseLeave () {
-    this.props.onSelected(-1);
+    this.props.actions.hoverNodeSet(-1);
   };
 };
 
@@ -30,6 +32,10 @@ var mapStateToProps = function(state, ownProps) {
     hover: state.hover === ownProps.index,
     dragging: state.dragging === ownProps.index
   }
+};
+
+var mapDispatchToProps = function(dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) }
 }
 
-export default connect(mapStateToProps)(SequenceLetter);
+export default connect(mapStateToProps, mapDispatchToProps)(SequenceLetter);
