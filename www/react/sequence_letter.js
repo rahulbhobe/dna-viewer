@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
 import * as actionCreators from '../store/action_creators';
 
 class SequenceLetter extends React.Component {
@@ -27,15 +27,15 @@ class SequenceLetter extends React.Component {
   };
 };
 
-var mapStateToProps = function(state, ownProps) {
+var mapStateToProps = function (state, ownProps) {
   return {
     hover: state.hover === ownProps.index,
     dragging: state.dragging === ownProps.index
   }
 };
 
-var mapDispatchToProps = function(dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) }
+var mapDispatchToProps = function (dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SequenceLetter);
