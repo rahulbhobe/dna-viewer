@@ -71,11 +71,6 @@ class DnaViewer extends React.Component {
     svg.addEventListener('mouseup',    this.onMouseUp, false);
     svg.addEventListener('mousedown',  this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
-
-    console.log('store: ', store.getState());
-    store.subscribe(()=>{
-      console.log('store: ', store.getState());
-    });
   };
 
   componentWillUnmount () {
