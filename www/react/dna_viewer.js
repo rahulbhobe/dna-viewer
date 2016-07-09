@@ -91,12 +91,12 @@ class DnaViewer extends React.Component {
   };
 
   onSelected (selected) {
-    store.dispatch(actionCreators.hoverNodeSet(selected));
+    this.props.actions.hoverNodeSet(selected);
     this.selected = selected;
   };
 
   onMoving (moving) {
-    store.dispatch(actionCreators.draggingNodeSet(moving));
+    this.props.actions.draggingNodeSet(moving);
     this.moving = moving;
   };
 
@@ -143,7 +143,7 @@ class DnaViewer extends React.Component {
 
     if (moving === -1) { return; }
 
-    store.dispatch(actionCreators.draggingNodeReset());
+    this.props.actions.draggingNodeReset();
 
     this.moving = -1;
     this.setState({
@@ -185,7 +185,7 @@ class DnaViewer extends React.Component {
 
     if (moving === -1) { return; }
 
-    store.dispatch(actionCreators.draggingNodeReset());
+    this.props.actions.draggingNodeReset();
 
     this.moving = -1;
   };
