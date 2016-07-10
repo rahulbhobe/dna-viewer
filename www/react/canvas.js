@@ -1,6 +1,7 @@
 import React from 'react';
 import DnaBaseView from './dna_base_view';
 import {Vector} from 'sylvester';
+import store from '../store/store';
 
 class DnaBackbone extends React.Component {
   render () {
@@ -73,7 +74,7 @@ class Canvas extends React.Component {
     var connections = sequenceParser.getConnections();
     var self        = this;
 
-    if (this.props.moving !== -1) {
+    if (store.getState().dragging !== -1) {
       wrapperCls = 'dna-canvas-div-grabbing ';
     }
 
@@ -95,7 +96,7 @@ class Canvas extends React.Component {
         })}
 
         {coordinates.map(function (point, ii) {
-            return (<DnaBaseView point={point} base={bases[ii]}
+            return (<DnaBaseView point={point} base={bases[ii]} ignoreDataIndex={false}
               bannedCursorWhenMoving={self.bannedCursorWhenMoving(ii)} key={"base" + ii}/>
             );
         })}
@@ -110,7 +111,7 @@ class Canvas extends React.Component {
   };
 
   getMovingBaseGraphichs () {
-    if (this.props.moving===-1) return;
+    if (store.getState().dragging===-1) return;
 
     var sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) return;
@@ -119,21 +120,21 @@ class Canvas extends React.Component {
     var svg   = this.refs.svg;
     var rect  = svg.getBoundingClientRect();
     var point = Vector.create([this.props.movingX-rect.left, this.props.movingY-rect.top]);
-    return (<DnaBaseView point={point} base={bases[this.props.moving]} selected={false} moving={false}
-              bannedCursorWhenMoving={false} onMouseClick={null} onSelected={null}/>);
+    return (<DnaBaseView point={point} base={bases[store.getState().dragging]} ignoreDataIndex={true}
+              bannedCursorWhenMoving={false}/>);
   };
 
   bannedCursorWhenMoving (index) {
-    var moving = this.props.moving;
+    var dragging = store.getState().dragging;
     var sequenceParser = this.props.sequenceParser;
     var bases = sequenceParser.getBases();
 
-    if (!moving||moving<0) return false;
-    if (moving === index) return false;
+    if (dragging<0) return false;
+    if (dragging === index) return false;
 
-    var movingBase = bases[moving];
+    var draggingBase = bases[dragging];
     var thisBase = bases[index];
-    return !thisBase.canPairWith(movingBase);
+    return !thisBase.canPairWith(draggingBase);
   };
 
   getWindowWidth () {

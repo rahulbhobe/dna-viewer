@@ -13,8 +13,6 @@ class DnaViewer extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      selected: -1,
-      moving: -1,
       movingX: null,
       movingY: null,
       seq: this.props.seq,
@@ -38,7 +36,7 @@ class DnaViewer extends React.Component {
     return (<div>
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
               <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}
-                moving={this.moving} movingX={this.state.movingX} movingY={this.state.movingY}>
+                movingX={this.state.movingX} movingY={this.state.movingY}>
               </Canvas>
               <SequenceView ref='sequence' onSequenceChanged={this.onSequenceChanged}
                 seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}>
@@ -52,11 +50,6 @@ class DnaViewer extends React.Component {
       windowWidth: window.innerWidth,
       updateSequence: false
     });
-  };
-
-  componentWillMount () {
-    this.moving = -1;
-    this.selected = -1;
   };
 
   componentDidMount () {
@@ -92,12 +85,10 @@ class DnaViewer extends React.Component {
 
   onSelected (selected) {
     this.props.actions.hoverNodeSet(selected);
-    this.selected = selected;
   };
 
   onMoving (moving) {
     this.props.actions.draggingNodeSet(moving);
-    this.moving = moving;
   };
 
   getIndexAtClientPosition (clientX, clientY) {
@@ -115,6 +106,7 @@ class DnaViewer extends React.Component {
 
     svg.getIntersectionList(hitTestRect, null).forEach(function (elem) {
       if (elem.tagName !== 'circle') { return; }
+      if (found !== -1) { return };
       found = parseInt(elem.getAttribute('data-index'));
     });
     return found;
@@ -129,8 +121,6 @@ class DnaViewer extends React.Component {
     var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
     this.onSelected(selected);
 
-    if (this.state.moving === -1) { return; }
-
     this.setState({
       movingX: event.x,
       movingY: event.y,
@@ -139,27 +129,24 @@ class DnaViewer extends React.Component {
   };
 
   onMouseUp (event) {
-    var moving = this.moving;
-
-    if (moving === -1) { return; }
+    var dragging = store.getState().dragging;
 
     this.props.actions.draggingNodeReset();
-
-    this.moving = -1;
     this.setState({
       movingX: null,
       movingY: null,
       updateSequence: false
     });
 
-    var found = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    var found  = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    if (found===-1) { return; }
+    if (dragging===-1) { return; }
+    if (found===dragging) return;
 
-    if (found===-1) return;
-    if (found===moving) return;
 
     var sequenceParser = this.state.sequenceParser;
     var bases = sequenceParser.getBases();
-    var base1 = bases[moving];
+    var base1 = bases[dragging];
     var base2 = bases[found];
 
     if (!base1.isUnpaired()) return;
@@ -168,8 +155,8 @@ class DnaViewer extends React.Component {
 
     var seq = this.state.seq;
     var dbn = this.state.dbn;
-    var min = Math.min(moving, found);
-    var max = Math.max(moving, found);
+    var min = Math.min(dragging, found);
+    var max = Math.max(dragging, found);
 
     var newdbn =  dbn.substring(0, min) + '(' + dbn.substring(min+1, max) + ')' + dbn.substring(max+1);
     var sequenceParserNew = new SequenceParser(seq, newdbn);
@@ -181,13 +168,7 @@ class DnaViewer extends React.Component {
   };
 
   onMouseLeave () {
-    var moving = this.moving;
-
-    if (moving === -1) { return; }
-
     this.props.actions.draggingNodeReset();
-
-    this.moving = -1;
   };
 };
 

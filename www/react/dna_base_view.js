@@ -14,7 +14,7 @@ class DnaBaseView extends React.Component {
     var clsName = this.props.bannedCursorWhenMoving ? " dna-base-banned-pairing " : "";
     return (<g className={clsName}
               transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
-            <circle className={classes} data-index={base.getIndex()} />
+            <circle className={classes} data-index={this.props.ignoreDataIndex ? -1 : base.getIndex()} />
             <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
             </g>);
   };
