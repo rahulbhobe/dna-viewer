@@ -13,8 +13,6 @@ class DnaViewer extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      movingX: null,
-      movingY: null,
       seq: this.props.seq,
       dbn: this.props.dbn,
       sequenceParser: this.props.sequenceParser,
@@ -35,9 +33,7 @@ class DnaViewer extends React.Component {
   render () {
     return (<div>
               <ShareLink seq={this.state.seq} dbn={this.state.dbn}/>
-              <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}
-                movingX={this.state.movingX} movingY={this.state.movingY}>
-              </Canvas>
+              <Canvas ref='canvas' sequenceParser={this.state.sequenceParser}/>
               <SequenceView ref='sequence' onSequenceChanged={this.onSequenceChanged}
                 seq={this.state.seq} dbn={this.state.dbn} updateSequence={this.state.updateSequence}>
               </SequenceView>
@@ -120,23 +116,14 @@ class DnaViewer extends React.Component {
   onMouseMove (event) {
     var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
     this.onSelected(selected);
-
-    this.setState({
-      movingX: event.x,
-      movingY: event.y,
-      updateSequence: false
-    });
+    this.props.actions.mousePositionSet(event.x, event.y);
   };
 
   onMouseUp (event) {
     var dragging = store.getState().dragging;
 
     this.props.actions.draggingNodeReset();
-    this.setState({
-      movingX: null,
-      movingY: null,
-      updateSequence: false
-    });
+    this.props.actions.mousePositionReset();
 
     var found  = this.getIndexAtClientPosition(event.clientX, event.clientY);
     if (found===-1) { return; }

@@ -1,5 +1,6 @@
 import React from 'react';
 import DnaBaseView from './dna_base_view';
+import DnaDraggedNode from './dna_dragged_node';
 import {Vector} from 'sylvester';
 import store from '../store/store';
 
@@ -50,6 +51,7 @@ class Canvas extends React.Component {
     this.state = {
       screenCoordinates: this.getCoordinatesForScreen(this.props.sequenceParser)
     };
+    this.getSvgRect = this.getSvgRect.bind(this);
   };
 
   componentWillReceiveProps (nextProps) {
@@ -104,24 +106,14 @@ class Canvas extends React.Component {
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
 
-        {this.getMovingBaseGraphichs()}
-
+        <DnaDraggedNode getRect={this.getSvgRect} bases={bases}/>
       </svg>
       </div>);
   };
 
-  getMovingBaseGraphichs () {
-    if (store.getState().dragging===-1) return;
-
-    var sequenceParser = this.props.sequenceParser;
-    if (sequenceParser.hasErrors()) return;
-
-    var bases = sequenceParser.getBases();
-    var svg   = this.refs.svg;
-    var rect  = svg.getBoundingClientRect();
-    var point = Vector.create([this.props.movingX-rect.left, this.props.movingY-rect.top]);
-    return (<DnaBaseView point={point} base={bases[store.getState().dragging]} ignoreDataIndex={true}
-              bannedCursorWhenMoving={false}/>);
+  getSvgRect () {
+    var svg = this.refs.svg;
+    return svg.getBoundingClientRect();
   };
 
   bannedCursorWhenMoving (index) {
