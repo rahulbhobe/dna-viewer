@@ -1,21 +1,22 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import classNames from 'classnames';
 
 class DnaBaseView extends React.Component {
   render () {
     var point   = this.props.point;
     var base    = this.props.base;
-    var classes = " dna-base dna-base-size ";
-    var textCls = "dna-text dna-base-font ";
+    var classes = classNames('dna-base', 'dna-base-size', {
+                              ['dna-base-' + base.getType().toLowerCase()] : true,
+                              'dna-base-selected': this.props.hover,
+                              'dna-base-moving': this.props.dragging
+                            });
+    var textCls = classNames('dna-text', 'dna-base-font');
+    var clsName = classNames({'dna-base-banned-pairing': this.props.bannedCursorWhenMoving});
 
-    classes += " " + 'dna-base-' + base.getType().toLowerCase();
-    classes += this.props.hover ? " dna-base-selected" : "";
-    classes += this.props.dragging ? " dna-base-moving" : "";
-    var clsName = this.props.bannedCursorWhenMoving ? " dna-base-banned-pairing " : "";
-    return (<g className={clsName}
-              transform={"translate(" + point.elements[0] + ", " + point.elements[1] + ")"}>
-            <circle className={classes} data-index={this.props.ignoreDataIndex ? -1 : base.getIndex()} />
-            <text className={textCls} textAnchor="middle" dominantBaseline="central"> {base.getType()}</text>
+    return (<g className={clsName} transform={'translate(' + point.elements[0] + ', ' + point.elements[1] + ')'}>
+              <circle className={classes} data-index={this.props.ignoreDataIndex ? -1 : base.getIndex()} />
+              <text className={textCls} textAnchor='middle' dominantBaseline='central'> {base.getType()}</text>
             </g>);
   };
 };
