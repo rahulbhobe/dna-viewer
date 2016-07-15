@@ -26,6 +26,6 @@ var mapStateToProps = function(state, ownProps) {
     hover: state.hover === ownProps.base.getIndex(),
     dragging: state.dragging === ownProps.base.getIndex()
   }
-}
+};
 
 export default connect(mapStateToProps)(DnaBaseView);

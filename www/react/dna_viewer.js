@@ -174,6 +174,6 @@ class DnaViewer extends React.Component {
 
 var mapDispatchToProps = function (dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) };
-}
+};
 
 export default connect(null, mapDispatchToProps)(DnaViewer);

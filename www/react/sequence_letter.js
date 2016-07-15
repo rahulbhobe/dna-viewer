@@ -35,6 +35,6 @@ var mapStateToProps = function (state, ownProps) {
 
 var mapDispatchToProps = function (dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) };
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SequenceLetter);
