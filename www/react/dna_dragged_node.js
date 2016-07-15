@@ -10,7 +10,7 @@ class DnaDraggedNode extends React.Component {
     }
     var rect  = this.props.getRect();
     var point = Vector.create([this.props.mouseX-rect.left, this.props.mouseY-rect.top]);
-    return (<DnaBaseView point={point} base={this.props.bases[this.props.dragging]} ignoreDataIndex={true} bannedCursorWhenMoving={false}/>);
+    return (<DnaBaseView point={point} base={this.props.bases[this.props.dragging]} isDraggedNode={true} bannedCursorWhenMoving={false}/>);
   };
 };
 
