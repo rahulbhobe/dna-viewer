@@ -19,9 +19,19 @@ var draggingNodeReducer = (state=-1, action) => {
   return state;
 };
 
+var mousePositionReducer = (state={x:-1, y:-1}, action) => {
+  if (action.type === ActionTypes.MOUSE_POSITION_SET) {
+    return action.value;
+  } else if (action.type === ActionTypes.MOUSE_POSITION_RESET) {
+    return {x:-1, y:-1};
+  }
+  return state;
+};
+
 var reducers = combineReducers({
   hover:  hoverNodeReducer,
-  dragging: draggingNodeReducer
+  dragging: draggingNodeReducer,
+  mousePosition: mousePositionReducer
 });
 
 export default reducers;

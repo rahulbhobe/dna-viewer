@@ -15,3 +15,11 @@ export var draggingNodeSet = (node) => {
 export var draggingNodeReset = () => {
   return { type: ActionTypes.DRAGGING_NODE_RESET };
 }
+
+export var mousePositionSet = (x, y) => {
+  return { type: ActionTypes.MOUSE_POSITION_SET, value: {x, y} };
+}
+
+export var mousePositionReset = () => {
+  return { type: ActionTypes.MOUSE_POSITION_RESET };
+}
