@@ -5,7 +5,7 @@ export var hoverNodeSet = (node) => {
 };
 
 export var hoverNodeReset = () => {
-  return { type: ActionTypes.HOVER_NODE_RESET };
+  return { type: ActionTypes.HOVER_NODE_RESET, value: -1 };
 };
 
 export var draggingNodeSet = (node) => {
@@ -13,7 +13,7 @@ export var draggingNodeSet = (node) => {
 };
 
 export var draggingNodeReset = () => {
-  return { type: ActionTypes.DRAGGING_NODE_RESET };
+  return { type: ActionTypes.DRAGGING_NODE_RESET, value: -1 };
 };
 
 export var mousePositionSet = (x, y) => {
@@ -21,5 +21,5 @@ export var mousePositionSet = (x, y) => {
 };
 
 export var mousePositionReset = () => {
-  return { type: ActionTypes.MOUSE_POSITION_RESET };
+  return { type: ActionTypes.MOUSE_POSITION_RESET, value: {x: -1, y: -1} };
 };

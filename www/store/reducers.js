@@ -5,7 +5,7 @@ var hoverNodeReducer = (state=-1, action) => {
   if (action.type === ActionTypes.HOVER_NODE_SET) {
     return action.value;
   } else if (action.type === ActionTypes.HOVER_NODE_RESET) {
-    return -1;
+    return action.value;
   }
   return state;
 };
@@ -14,7 +14,7 @@ var draggingNodeReducer = (state=-1, action) => {
   if (action.type === ActionTypes.DRAGGING_NODE_SET) {
     return action.value;
   } else if (action.type === ActionTypes.DRAGGING_NODE_RESET) {
-    return -1;
+    return action.value;
   }
   return state;
 };
@@ -23,7 +23,7 @@ var mousePositionReducer = (state={x:-1, y:-1}, action) => {
   if (action.type === ActionTypes.MOUSE_POSITION_SET) {
     return action.value;
   } else if (action.type === ActionTypes.MOUSE_POSITION_RESET) {
-    return {x:-1, y:-1};
+    return action.value;
   }
   return state;
 };
