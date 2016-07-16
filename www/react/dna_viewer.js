@@ -26,8 +26,6 @@ class DnaViewer extends React.Component {
     this.onMouseLeave      = this.onMouseLeave.bind(this);
     this.handleResize      = this.handleResize.bind(this);
     this.onSequenceChanged = this.onSequenceChanged.bind(this);
-    this.onSelected        = this.onSelected.bind(this);
-    this.onMoving          = this.onMoving.bind(this);
   };
 
   render () {
@@ -79,14 +77,6 @@ class DnaViewer extends React.Component {
     });
   };
 
-  onSelected (selected) {
-    this.props.actions.setHoverNode(selected);
-  };
-
-  onMoving (moving) {
-    this.props.actions.setDraggingNode(moving);
-  };
-
   getIndexAtClientPosition (clientX, clientY) {
     var canvas = this.refs.canvas;
     var svg    = canvas.refs.svg;
@@ -110,12 +100,12 @@ class DnaViewer extends React.Component {
 
   onMouseDown (event) {
     var moving = this.getIndexAtClientPosition(event.clientX, event.clientY);
-    this.onMoving(moving);
+    this.props.actions.setDraggingNode(moving);
   };
 
   onMouseMove (event) {
     var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
-    this.onSelected(selected);
+    this.props.actions.setHoverNode(selected);
     this.props.actions.setMousePosition(event.x, event.y);
   };
 
