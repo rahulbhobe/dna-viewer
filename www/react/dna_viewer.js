@@ -80,11 +80,11 @@ class DnaViewer extends React.Component {
   };
 
   onSelected (selected) {
-    this.props.actions.hoverNodeSet(selected);
+    this.props.actions.setHoverNode(selected);
   };
 
   onMoving (moving) {
-    this.props.actions.draggingNodeSet(moving);
+    this.props.actions.setDraggingNode(moving);
   };
 
   getIndexAtClientPosition (clientX, clientY) {
@@ -116,14 +116,14 @@ class DnaViewer extends React.Component {
   onMouseMove (event) {
     var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
     this.onSelected(selected);
-    this.props.actions.mousePositionSet(event.x, event.y);
+    this.props.actions.setMousePosition(event.x, event.y);
   };
 
   onMouseUp (event) {
     var dragging = store.getState().dragging;
 
-    this.props.actions.draggingNodeReset();
-    this.props.actions.mousePositionReset();
+    this.props.actions.resetDraggingNode();
+    this.props.actions.resetMousePosition();
 
     var found  = this.getIndexAtClientPosition(event.clientX, event.clientY);
     if (found===-1) { return; }
@@ -155,7 +155,7 @@ class DnaViewer extends React.Component {
   };
 
   onMouseLeave () {
-    this.props.actions.draggingNodeReset();
+    this.props.actions.resetDraggingNode();
   };
 };
 

@@ -18,11 +18,11 @@ class SequenceLetter extends React.Component {
   };
 
   onMouseOver () {
-    this.props.actions.hoverNodeSet(this.props.index);
+    this.props.actions.setHoverNode(this.props.index);
   };
 
   onMouseLeave () {
-    this.props.actions.hoverNodeSet(-1);
+    this.props.actions.resetHoverNode();
   };
 };
 
