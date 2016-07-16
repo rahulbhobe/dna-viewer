@@ -1,6 +1,15 @@
 import {combineReducers} from 'redux';
 import * as ActionTypes from './action_types';
 
+var sequenceParserReducer = (state=null, action) => {
+  if (action.type === ActionTypes.SET_SEQUENCE_PARSER) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_SEQUENCE_PARSER) {
+    return action.value;
+  }
+  return state;
+};
+
 var hoverNodeReducer = (state=-1, action) => {
   if (action.type === ActionTypes.SET_HOVER_NODE) {
     return action.value;
@@ -29,6 +38,7 @@ var mousePositionReducer = (state={x:-1, y:-1}, action) => {
 };
 
 var reducers = combineReducers({
+  sequenceParser: sequenceParserReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
   mousePosition: mousePositionReducer

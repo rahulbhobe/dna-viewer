@@ -1,5 +1,13 @@
 import * as ActionTypes from './action_types';
 
+export var setSequenceParser = (sequenceParser) => {
+  return { type: ActionTypes.SET_SEQUENCE_PARSER, value: sequenceParser };
+};
+
+export var resetSequenceParser = () => {
+  return { type: ActionTypes.RESET_SEQUENCE_PARSER, value: null };
+};
+
 export var setHoverNode = (node) => {
   return { type: ActionTypes.SET_HOVER_NODE, value: node };
 };
