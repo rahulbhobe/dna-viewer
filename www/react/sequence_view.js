@@ -103,29 +103,34 @@ class SequenceView extends React.Component {
     this.state = {
       seq: this.props.seq,
       dbn: this.props.dbn,
-      dirty: false,
       error: false
     };
 
     this.onChange = this.onChange.bind(this);
     this.onApply  = this.onApply.bind(this);
+    this.isDirty  = this.isDirty.bind(this);
   };
 
   componentWillReceiveProps (nextProps) {
     this.setState({
       seq: nextProps.seq,
       dbn: nextProps.dbn,
-      dirty: false,
       error: false
     });
   };
 
+  isDirty () {
+    if (this.props.seq !== this.state.seq) {
+      return true;
+    } else if (this.props.dbn !== this.state.dbn) {
+      return true;
+    }
+
+    return false;
+  };
+
   onChange (type, value) {
-    var obj = {
-      dirty: true
-    };
-    obj[type] = value;
-    this.setState(obj);
+    this.setState({[type]: value});
   };
 
   onApply () {
@@ -143,7 +148,7 @@ class SequenceView extends React.Component {
                 onChange={this.onChange} placeholder="Enter DNA sequence" />
               <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error}
                 onChange={this.onChange} placeholder="Enter DBN" />
-              <ApplyChanges dirty={this.state.dirty} onApply={this.onApply} />
+              <ApplyChanges dirty={this.isDirty()} onApply={this.onApply} />
             </div>);
   };
 };
