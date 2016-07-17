@@ -6,6 +6,7 @@ import request from 'request';
 import promisify from 'es6-promisify';
 import {Provider} from 'react-redux';
 import store from '../store/store';
+import * as actionCreators from '../store/action_creators';
 import DnaViewer from './dna_viewer'
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -32,9 +33,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
   getData()
   .then(function(obj) {
     var sequenceParser = new SequenceParser(obj.seq, obj.dbn);
+    store.dispatch(actionCreators.setSequenceParser(sequenceParser));
+
     ReactDOM.render(
       <Provider store={store}>
-        <DnaViewer sequenceParser={sequenceParser} seq={obj.seq} dbn={obj.dbn}/>
+        <DnaViewer />
       </Provider>,
       document.getElementById('body-div')
     );

@@ -41,6 +41,13 @@ var SequenceParser = function(seq, dbn) {
   }
 
   return {
+    getData : function () {
+      return {
+        seq,
+        dbn
+      };
+    },
+
     getBases : function() {
       return bases;
     },

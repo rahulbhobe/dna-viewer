@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import SettingsData from './settings_data';
 import SequenceParser from '../src/sequence_parser';
 import SequenceLetter from './sequence_letter';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionCreators from '../store/action_creators';
 
 class SequenceFormView extends React.Component {
   constructor (props) {
@@ -109,12 +112,6 @@ class SequenceView extends React.Component {
   };
 
   componentWillReceiveProps (nextProps) {
-    if (this.state.dirty) {
-      if (!nextProps.updateSequence) {
-        return;
-      }
-    }
-
     this.setState({
       seq: nextProps.seq,
       dbn: nextProps.dbn,
@@ -137,11 +134,7 @@ class SequenceView extends React.Component {
       this.setState({error: true});
       return;
     }
-    this.props.onSequenceChanged(this.state.seq, this.state.dbn);
-    this.setState({
-      error: false,
-      dirty: false
-    });
+    this.props.actions.setSequenceParser(sequenceParser);
   };
 
   render () {
@@ -155,4 +148,15 @@ class SequenceView extends React.Component {
   };
 };
 
-export default SequenceView;
+var mapStateToProps = function(state, ownProps) {
+  return {
+    seq: state.sequenceParser.getData().seq,
+    dbn: state.sequenceParser.getData().dbn
+  };
+};
+
+var mapDispatchToProps = function (dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SequenceView);

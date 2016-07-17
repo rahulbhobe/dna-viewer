@@ -188,8 +188,7 @@ class Canvas extends React.Component {
     if (!base2.isUnpaired()) return;
     if (!base1.canPairWith(base2)) return;
 
-    var seq = this.props.seq;
-    var dbn = this.props.dbn;
+    var {seq, dbn} = sequenceParser.getData();
     var min = Math.min(dragging, found);
     var max = Math.max(dragging, found);
 
@@ -199,7 +198,7 @@ class Canvas extends React.Component {
       return;
     }
 
-    this.props.onSequenceChanged(seq, newdbn);
+    this.props.actions.setSequenceParser(sequenceParserNew);
   };
 
   onMouseLeave () {
@@ -280,8 +279,14 @@ class Canvas extends React.Component {
   };
 };
 
+var mapStateToProps = function(state, ownProps) {
+  return {
+    sequenceParser: state.sequenceParser
+  };
+};
+
 var mapDispatchToProps = function (dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch) };
 };
 
-export default connect(null, mapDispatchToProps)(Canvas);
+export default connect(mapStateToProps, mapDispatchToProps)(Canvas);
