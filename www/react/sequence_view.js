@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import SettingsData from './settings_data';
 import SequenceParser from '../src/sequence_parser';
 import SequenceLetter from './sequence_letter';
+import classNames from 'classnames';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../store/action_creators';
@@ -52,14 +53,9 @@ class SequenceFormView extends React.Component {
   };
 
   render () {
-    var formClass = "sequence-form dna-base-font ";
-    if (this.props.error) {
-      formClass += " sequence-has-error";
-    }
-
-    var inpClass   =  this.state.editMode ? "" : "hidden";
-    var divClass   = !this.state.editMode ? "" : "hidden";
-    divClass += " sequence-form-div";
+    var formClass = classNames('sequence-form', 'dna-base-font', {'sequence-has-error': this.props.error});
+    var inpClass = classNames({'hidden': !this.state.editMode});
+    var divClass = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
 
     var str = this.state.value;
     var letterDivs = [];
