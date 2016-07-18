@@ -45,6 +45,7 @@ svg text::selection {
   fill: #ffffff;
   mix-blend-mode: difference;
   cursor: inherit;
+  pointer-events: none;
 }
 
 .dna-backbone {
