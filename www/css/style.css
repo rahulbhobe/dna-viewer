@@ -15,10 +15,6 @@ svg text::selection {
   background: none;
 }
 
-.dna-canvas-div-grabbing {
-  cursor: -webkit-grabbing;
-}
-
 .dna-base {
   stroke: #000000;
   stroke-width: 0.5px;

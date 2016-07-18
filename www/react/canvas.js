@@ -7,7 +7,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../store/action_creators';
 import SequenceParser from '../src/sequence_parser';
-import classNames from 'classnames';
 
 class DnaBackbone extends React.Component {
   render () {
@@ -73,14 +72,7 @@ class Canvas extends React.Component {
     var connections = sequenceParser.getConnections();
     var self        = this;
 
-    var wrapperCls = classNames({
-      'dna-base-moving': store.getState().dragging !== -1
-    });
-
-    var self = this;
-
     return (
-      <div className={wrapperCls}>
       <svg width={width} height={height} ref='svg'>
         {coordinates.map(function (point, ii) {
             if (ii >= coordinates.length-1) {
@@ -104,8 +96,7 @@ class Canvas extends React.Component {
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
 
         <DnaDraggedNode getRect={this.getSvgRect} bases={bases}/>
-      </svg>
-      </div>);
+      </svg>);
   };
 
   componentDidMount () {
