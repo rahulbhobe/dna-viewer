@@ -1,6 +1,7 @@
 import React from 'react';
 import request from 'request';
 import promisify from 'es6-promisify';
+import {connect} from 'react-redux';
 
 class ShareLink extends React.Component {
   constructor (props) {
@@ -73,4 +74,12 @@ class ShareLink extends React.Component {
   };
 };
 
-export default ShareLink;
+
+var mapStateToProps = function(state, ownProps) {
+  return {
+    seq: state.sequenceParser.getData().seq,
+    dbn: state.sequenceParser.getData().dbn
+  };
+};
+
+export default connect(mapStateToProps)(ShareLink);
