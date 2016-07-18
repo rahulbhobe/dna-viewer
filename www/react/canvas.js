@@ -52,23 +52,12 @@ class DnaAnnotation extends React.Component {
 class Canvas extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      screenCoordinates: this.getCoordinatesForScreen(this.props.sequenceParser)
-    };
 
     this.getSvgRect       = this.getSvgRect.bind(this);
     this.onMouseMove      = this.onMouseMove.bind(this);
     this.onMouseUp        = this.onMouseUp.bind(this);
     this.onMouseDown      = this.onMouseDown.bind(this);
     this.onMouseLeave     = this.onMouseLeave.bind(this);
-  };
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.sequenceParser !== this.props.sequenceParser) {
-      this.setState({
-        screenCoordinates: this.getCoordinatesForScreen(nextProps.sequenceParser)
-      });
-    }
   };
 
   render () {
@@ -80,7 +69,7 @@ class Canvas extends React.Component {
     var wrapperCls  = null;
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
-    var coordinates = this.state.screenCoordinates;
+    var coordinates = this.getCoordinatesForScreen(sequenceParser);
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();
     var self        = this;
@@ -224,11 +213,11 @@ class Canvas extends React.Component {
   };
 
   getWindowWidth () {
-    return window.innerWidth * 0.8;
+    return this.props.windowDimensions.width * 0.8;
   };
 
   getWindowHeight () {
-    return window.innerHeight * 0.8;
+    return this.props.windowDimensions.height * 0.8;
   };
 
   getCoordinatesForScreen (sequenceParser) {
@@ -281,7 +270,8 @@ class Canvas extends React.Component {
 
 var mapStateToProps = function(state, ownProps) {
   return {
-    sequenceParser: state.sequenceParser
+    sequenceParser: state.sequenceParser,
+    windowDimensions: state.windowDimensions
   };
 };
 

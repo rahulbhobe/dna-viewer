@@ -37,11 +37,19 @@ var mousePositionReducer = (state={x:-1, y:-1}, action) => {
   return state;
 };
 
+var windowDimensionsReducer = (state={width:-1, height:-1}, action) => {
+  if (action.type === ActionTypes.SET_WINDOW_DIMENSIONS) {
+    return action.value;
+  }
+  return state;
+};
+
 var reducers = combineReducers({
   sequenceParser: sequenceParserReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
-  mousePosition: mousePositionReducer
+  mousePosition: mousePositionReducer,
+  windowDimensions: windowDimensionsReducer
 });
 
 export default reducers;

@@ -31,3 +31,7 @@ export var setMousePosition = (x, y) => {
 export var resetMousePosition = () => {
   return { type: ActionTypes.RESET_MOUSE_POSITION, value: {x: -1, y: -1} };
 };
+
+export var setWindowDimensions = (width, height) => {
+  return { type: ActionTypes.SET_WINDOW_DIMENSIONS, value: {width, height} };
+};
