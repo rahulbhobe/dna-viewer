@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../store/action_creators';
 import SequenceParser from '../src/sequence_parser';
+import classNames from 'classnames';
 
 class DnaBackbone extends React.Component {
   render () {
@@ -27,7 +28,6 @@ class DnaPair extends React.Component {
 class DnaAnnotation extends React.Component {
   render () {
     var text     = this.props.text;
-    var classes  = "dna-base-annotation";
     var textCls  = "dna-text dna-base-font";
     var location = this.getLocation();
 
@@ -66,7 +66,6 @@ class Canvas extends React.Component {
       return null;
     }
 
-    var wrapperCls  = null;
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
     var coordinates = this.getCoordinatesForScreen(sequenceParser);
@@ -74,9 +73,9 @@ class Canvas extends React.Component {
     var connections = sequenceParser.getConnections();
     var self        = this;
 
-    if (store.getState().dragging !== -1) {
-      wrapperCls = 'dna-canvas-div-grabbing ';
-    }
+    var wrapperCls = classNames({
+      'dna-base-moving': store.getState().dragging !== -1
+    });
 
     var self = this;
 
