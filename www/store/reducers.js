@@ -37,6 +37,15 @@ var mousePositionReducer = (state={x:-1, y:-1}, action) => {
   return state;
 };
 
+var zoomFactorReducer = (state=100, action) => {
+  if (action.type === ActionTypes.SET_ZOOM_FACTOR) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_ZOOM_FACTOR) {
+    return action.value;
+  }
+  return state;
+};
+
 var windowDimensionsReducer = (state={width:-1, height:-1}, action) => {
   if (action.type === ActionTypes.SET_WINDOW_DIMENSIONS) {
     return action.value;
@@ -49,6 +58,7 @@ var reducers = combineReducers({
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
   mousePosition: mousePositionReducer,
+  zoomFactor: zoomFactorReducer, 
   windowDimensions: windowDimensionsReducer
 });
 

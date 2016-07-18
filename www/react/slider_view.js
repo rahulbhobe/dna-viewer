@@ -1,22 +1,32 @@
 import React from 'react';
-import ReactSlider from 'react-slider'
+import ReactSlider from 'react-slider';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionCreators from '../store/action_creators';
 
 class SliderView extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      value: 100
-    };
     this.onChange  = this.onChange.bind(this);
   };
 
   render () {
-    return (  <ReactSlider className='slider-zoom' withBars min={0} max={200} pearling value={this.state.value} onChange={this.onChange} />);
+    return (  <ReactSlider className='slider-zoom' withBars min={25} max={200} pearling value={this.props.zoomFactor} onChange={this.onChange} />);
   };
 
   onChange (value) {
-    this.setState({ value: value });
+    this.props.actions.setZoomFactor(value);
   };
 };
 
-export default SliderView;
+var mapStateToProps = function(state, ownProps) {
+  return {
+    zoomFactor: state.zoomFactor
+  };
+};
+
+var mapDispatchToProps = function (dispatch) {
+  return { actions: bindActionCreators(actionCreators, dispatch) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SliderView);
