@@ -9,7 +9,8 @@ class DnaBaseView extends React.Component {
     var classes = classNames('dna-base', 'dna-base-size', {
                               ['dna-base-' + base.getType().toLowerCase()] : true,
                               'dna-base-selected': this.props.hover && !this.props.isDraggedNode,
-                              'dna-base-moving': this.props.dragging && !this.props.isDraggedNode
+                              'dna-base-moving': this.props.dragging && !this.props.isDraggedNode,
+                              'dna-base-dragged-node': this.props.isDraggedNode
                             });
     var textCls = classNames('dna-text', 'dna-base-font');
     var clsName = classNames({'dna-base-banned-pairing': this.props.bannedCursorWhenMoving});

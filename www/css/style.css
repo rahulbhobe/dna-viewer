@@ -37,6 +37,10 @@ svg text::selection {
   stroke: #ff0000;
 }
 
+.dna-base-dragged-node {
+  cursor: -webkit-grabbing;
+}
+
 .dna-base-banned-pairing {
   cursor: not-allowed;
 }
