@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactSlider from 'react-slider';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_map';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class SliderView extends React.Component {
   constructor (props) {

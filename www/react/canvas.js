@@ -4,7 +4,7 @@ import DnaDraggedNode from './dna_dragged_node';
 import {Vector} from 'sylvester';
 import store from '../store/store';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_map';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 import SequenceParser from '../src/sequence_parser';
 
 class DnaBackbone extends React.Component {

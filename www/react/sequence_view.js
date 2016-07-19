@@ -5,7 +5,7 @@ import SequenceParser from '../src/sequence_parser';
 import SequenceLetter from './sequence_letter';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_map';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class SequenceFormView extends React.Component {
   constructor (props) {

@@ -4,7 +4,7 @@ import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
 import ShareLink from './share_link';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_map';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class DnaViewer extends React.Component {
   constructor (props) {
