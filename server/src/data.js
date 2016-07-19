@@ -8,7 +8,7 @@ var dataSchema = new Schema({
   dbn: String
 });
 
-dataSchema.pre('save', function(next) {
+dataSchema.pre('save', (next) => {
   if (!DbManager.isConnected()) {
     next('Not connected to db');
     return;
@@ -20,7 +20,7 @@ dataSchema.pre('save', function(next) {
   next();
 });
 
-dataSchema.pre('findOne', function(next) {
+dataSchema.pre('findOne', (next) => {
   if (!DbManager.isConnected()) {
     next('Not connected to db');
     return;

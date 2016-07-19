@@ -15,26 +15,26 @@ app.set('views', __dirname + '/../../www');
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 
-app.post('/sharelink', function(req, res) {
+app.post('/sharelink', (req, res) => {
   let {seq, dbn} = req.body;
 
   Data.findOne({seq, dbn}).exec()
-  .then(function (data) {
+  .then((data) => {
     if (data)
       return data;
 
     let url = shortid.generate();
     var newData = new Data({url, seq, dbn});
     return newData.save();
-  }).then(function ({url, seq, dbn}) {
+  }).then(({url, seq, dbn}) => {
     res.send({url, seq, dbn});
-  }).catch(function (err) {
+  }).catch((err) => {
     console.log(err);
     res.sendStatus(500);
   });
 });
 
-app.get('/*', function(req, res) {
+app.get('/*', (req, res) => {
   var url = req.path.substring(1);
   if (!url) {
     res.render('index');
@@ -42,25 +42,25 @@ app.get('/*', function(req, res) {
   }
 
   Data.findOne({url: url}).exec()
-  .then(function (data) {
+  .then((data) => {
     if (!data) throw Error("Not found: " + url);
     res.render('index');
-  }).catch(function (err) {
+  }).catch((err) => {
     console.log(err);
     res.redirect('/');
   });
 });
 
-app.post('/data', function(req, res) {
+app.post('/data', (req, res) => {
   let {url} = req.body;
   Data.findOne({url}).exec()
-  .then(function (data) {
+  .then((data) => {
     if (!data) throw Error("Not found: " + url);
     let {seq, dbn} = data;
     if (!seq) throw Error("Invalid url: " + url);
     if (!dbn) throw Error("Invalid url: " + url);
     res.send({url, seq, dbn});
-  }).catch(function (err) {
+  }).catch((err) => {
     console.log(err);
     res.sendStatus(400);
   });
@@ -68,7 +68,7 @@ app.post('/data', function(req, res) {
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), () => {
   console.log('Server listening on port ' + server.address().port);
 });
 
