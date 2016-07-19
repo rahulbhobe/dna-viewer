@@ -69,25 +69,24 @@ class Canvas extends React.Component {
     var coordinates = this.getCoordinatesForScreen(sequenceParser);
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();
-    var self        = this;
 
     return (
       <svg width={width} height={height} ref='svg'>
-        {coordinates.map(function (point, ii) {
+        {coordinates.map((point, ii) => {
             if (ii >= coordinates.length-1) {
               return;
             }
             return (<DnaBackbone point1={point} point2={coordinates[ii+1]} key={"backbone" + ii}/>);
         })}
-        {connections.map(function (connection, ii) {
+        {connections.map((connection, ii) => {
             var source = coordinates[connection.source];
             var target = coordinates[connection.target];
             return (<DnaPair source={source} target={target} key={"pair" + ii}/>);
         })}
 
-        {coordinates.map(function (point, ii) {
+        {coordinates.map((point, ii) => {
             return (<DnaBaseView point={point} base={bases[ii]} ignoreDataIndex={false}
-              bannedCursorWhenMoving={self.bannedCursorWhenMoving(ii)} key={"base" + ii}/>
+              bannedCursorWhenMoving={this.bannedCursorWhenMoving(ii)} key={"base" + ii}/>
             );
         })}
 
@@ -126,7 +125,7 @@ class Canvas extends React.Component {
     hitTestRect.width   = 1;
     hitTestRect.height  = 1;
 
-    svg.getIntersectionList(hitTestRect, null).forEach(function (elem) {
+    svg.getIntersectionList(hitTestRect, null).forEach((elem) => {
       if (elem.tagName !== 'circle') { return; }
       if (found !== -1) { return };
       found = parseInt(elem.getAttribute('data-index'));
@@ -217,7 +216,7 @@ class Canvas extends React.Component {
     var min = Vector.create(coordinates[0].elements);
     var max = Vector.create(coordinates[0].elements);
 
-    coordinates.forEach(function (vec) {
+    coordinates.forEach((vec) => {
       min.elements[0] = Math.min(min.elements[0], vec.elements[0]);
       min.elements[1] = Math.min(min.elements[1], vec.elements[1]);
       max.elements[0] = Math.max(max.elements[0], vec.elements[0]);
@@ -227,7 +226,7 @@ class Canvas extends React.Component {
     var rotatedCoordinates = coordinates;
     if ((max.elements[0]-min.elements[0]) < (max.elements[1]-min.elements[1])) {
       // Rotate by 90 deg if width is less than height. Most screens have larger width.
-      rotatedCoordinates = coordinates.map(function(point) {
+      rotatedCoordinates = coordinates.map((point) => {
         return point.rotate(-0.5*Math.PI, min);
       });
 
@@ -241,7 +240,7 @@ class Canvas extends React.Component {
     var scaleH = height / (max.elements[1]-min.elements[1]);
     var scale  = scaleW < scaleH ? scaleW : scaleH;
 
-    var scaledCoordinates = rotatedCoordinates.map(function(point) {
+    var scaledCoordinates = rotatedCoordinates.map((point) => {
       return point.multiply(scale*0.92);
     });
 
@@ -250,14 +249,14 @@ class Canvas extends React.Component {
     var buf = Vector.create([width*0.04, height*0.04]);
     var vec = buf.subtract(min);
 
-    var transformedCoordinates = scaledCoordinates.map(function(point) {
+    var transformedCoordinates = scaledCoordinates.map((point) => {
       return point.add(vec);
     });
     return transformedCoordinates;
   };
 };
 
-var mapStateToProps = function(state, ownProps) {
+var mapStateToProps = (state, ownProps) => {
   return {
     sequenceParser: state.sequenceParser,
     windowDimensions: state.windowDimensions
