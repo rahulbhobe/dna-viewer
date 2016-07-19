@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactSlider from 'react-slider';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actionCreators from '../store/action_creators';
+import {mapDispatchToProps} from '../store/action_map';
 
 class SliderView extends React.Component {
   constructor (props) {
@@ -23,10 +22,6 @@ var mapStateToProps = function(state, ownProps) {
   return {
     zoomFactor: state.zoomFactor
   };
-};
-
-var mapDispatchToProps = function (dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SliderView);

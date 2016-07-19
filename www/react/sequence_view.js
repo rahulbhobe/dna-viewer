@@ -5,8 +5,7 @@ import SequenceParser from '../src/sequence_parser';
 import SequenceLetter from './sequence_letter';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actionCreators from '../store/action_creators';
+import {mapDispatchToProps} from '../store/action_map';
 
 class SequenceFormView extends React.Component {
   constructor (props) {
@@ -154,10 +153,6 @@ var mapStateToProps = function(state, ownProps) {
     seq: state.sequenceParser.getData().seq,
     dbn: state.sequenceParser.getData().dbn
   };
-};
-
-var mapDispatchToProps = function (dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SequenceView);

@@ -4,8 +4,7 @@ import DnaDraggedNode from './dna_dragged_node';
 import {Vector} from 'sylvester';
 import store from '../store/store';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actionCreators from '../store/action_creators';
+import {mapDispatchToProps} from '../store/action_map';
 import SequenceParser from '../src/sequence_parser';
 
 class DnaBackbone extends React.Component {
@@ -263,10 +262,6 @@ var mapStateToProps = function(state, ownProps) {
     sequenceParser: state.sequenceParser,
     windowDimensions: state.windowDimensions
   };
-};
-
-var mapDispatchToProps = function (dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Canvas);

@@ -4,8 +4,7 @@ import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
 import ShareLink from './share_link';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actionCreators from '../store/action_creators';
+import {mapDispatchToProps} from '../store/action_map';
 
 class DnaViewer extends React.Component {
   constructor (props) {
@@ -33,10 +32,6 @@ class DnaViewer extends React.Component {
   componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize);
   };
-};
-
-var mapDispatchToProps = function (dispatch) {
-  return { actions: bindActionCreators(actionCreators, dispatch) };
 };
 
 export default connect(null, mapDispatchToProps)(DnaViewer);
