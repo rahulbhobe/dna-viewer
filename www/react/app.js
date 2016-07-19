@@ -9,9 +9,9 @@ import store from '../store/store';
 import * as actionCreators from '../store/action_creators';
 import DnaViewer from './dna_viewer'
 
-document.addEventListener("DOMContentLoaded", function(event) {
-  var getData = function() {
-    var defaultRet = new Promise(function(resolve) {
+document.addEventListener("DOMContentLoaded", (event) => {
+  var getData = () => {
+    var defaultRet = new Promise((resolve) => {
       resolve(DebugUtils.debug_examples[0]);
     });
 
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   };
 
   getData()
-  .then(function(obj) {
+  .then((obj) => {
     var sequenceParser = new SequenceParser(obj.seq, obj.dbn);
     store.dispatch(actionCreators.setSequenceParser(sequenceParser));
     store.dispatch(actionCreators.setWindowDimensions(window.innerWidth, window.innerHeight));

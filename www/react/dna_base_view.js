@@ -22,7 +22,7 @@ class DnaBaseView extends React.Component {
   };
 };
 
-var mapStateToProps = function(state, ownProps) {
+var mapStateToProps = (state, ownProps) => {
   return {
     hover: state.hover === ownProps.base.getIndex(),
     dragging: state.dragging === ownProps.base.getIndex()

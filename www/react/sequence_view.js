@@ -148,7 +148,7 @@ class SequenceView extends React.Component {
   };
 };
 
-var mapStateToProps = function(state, ownProps) {
+var mapStateToProps = (state, ownProps) => {
   return {
     seq: state.sequenceParser.getData().seq,
     dbn: state.sequenceParser.getData().dbn

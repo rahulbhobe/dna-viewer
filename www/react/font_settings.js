@@ -14,7 +14,7 @@ class FontSettings extends React.Component {
               Font:
               <br/>
               <select onChange={this.onChange} selected={this.getSelected()}>
-              {fonts.map(function (font, ii) {
+              {fonts.map((font, ii) => {
                 return (<option value={font} style={{fontFamily: font}} key={"fonts_" + ii}>{font}</option>);
               })}
               </select>

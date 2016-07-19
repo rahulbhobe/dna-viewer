@@ -25,7 +25,7 @@ class SequenceLetter extends React.Component {
   };
 };
 
-var mapStateToProps = function (state, ownProps) {
+var mapStateToProps = (state, ownProps) => {
   return {
     hover: state.hover === ownProps.index,
     dragging: state.dragging === ownProps.index
