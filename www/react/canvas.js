@@ -243,12 +243,10 @@ class Canvas extends React.Component {
     var scaledCoordinates = rotatedCoordinates.map((point) => {
       return point.multiply(scale*0.92);
     });
+    var mid = min.add(max).multiply(0.5).multiply(scale*0.92);
 
-    // Remove the minVec and add a few to not clip the edge points.
-    var min = min.multiply(scale*0.92); // to subtract.
-    var buf = Vector.create([width*0.04, height*0.04]);
-    var vec = buf.subtract(min);
-
+    var scr = Vector.create([width*0.5, height*0.5])
+    var vec = scr.subtract(mid);
     var transformedCoordinates = scaledCoordinates.map((point) => {
       return point.add(vec);
     });
