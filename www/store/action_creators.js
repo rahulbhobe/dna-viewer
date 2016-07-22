@@ -40,6 +40,14 @@ export var resetZoomFactor = () => {
   return { type: ActionTypes.RESET_ZOOM_FACTOR, value: 100 };
 };
 
+export var setRotationAngle = (rotationAngle) => {
+  return { type: ActionTypes.SET_ROTATION_ANGLE, value: rotationAngle };
+};
+
+export var resetRotationAngle = () => {
+  return { type: ActionTypes.RESET_ROTATION_ANGLE, value: 0 };
+};
+
 export var setWindowDimensions = (width, height) => {
   return { type: ActionTypes.SET_WINDOW_DIMENSIONS, value: {width, height} };
 };
