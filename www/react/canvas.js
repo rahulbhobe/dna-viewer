@@ -222,6 +222,7 @@ class Canvas extends React.Component {
       max.elements[0] = Math.max(max.elements[0], vec.elements[0]);
       max.elements[1] = Math.max(max.elements[1], vec.elements[1]);
     });
+    var mid = min.add(max).multiply(0.5);
 
     var rotatedCoordinates = coordinates;
     if ((max.elements[0]-min.elements[0]) < (max.elements[1]-min.elements[1])) {
@@ -234,6 +235,7 @@ class Canvas extends React.Component {
       var t2 = max;
       min = Vector.create([t1.elements[0], t1.elements[1]-(t2.elements[0]-t1.elements[0])]);
       max = Vector.create([t1.elements[0]+(t2.elements[1]-t1.elements[1]), t1.elements[1]]);
+      mid = min.add(max).multiply(0.5);
     }
 
     var scaleW = width  / (max.elements[0]-min.elements[0]);
@@ -243,7 +245,7 @@ class Canvas extends React.Component {
     var scaledCoordinates = rotatedCoordinates.map((point) => {
       return point.multiply(scale*0.92);
     });
-    var mid = min.add(max).multiply(0.5).multiply(scale*0.92);
+    mid = mid.multiply(scale*0.92);
 
     var scr = Vector.create([width*0.5, height*0.5])
     var vec = scr.subtract(mid);
