@@ -117,15 +117,22 @@ class Canvas extends React.Component {
     svg.removeEventListener('mousewheel', this.onMouseWheel, false);
   };
 
-  getIndexAtClientPosition (clientX, clientY) {
+  positionAtEvent (event) {
+    var boundingRect   = this.getSvgRect();
+    return {
+      x: event.clientX - boundingRect.left,
+      y: event.clientY - boundingRect.top
+    };
+  };
+
+  getNodeAtEvent (event) {
     var svg    = this.refs.svg;
     var found  = -1;
-
-    var boundingRect   = svg.getBoundingClientRect();
     var hitTestRect    = svg.createSVGRect();
+    var screenPosition = this.positionAtEvent(event);
 
-    hitTestRect.x = clientX - boundingRect.left;
-    hitTestRect.y = clientY - boundingRect.top;
+    hitTestRect.x = screenPosition.x;
+    hitTestRect.y = screenPosition.y;
     hitTestRect.width   = 1;
     hitTestRect.height  = 1;
 
@@ -143,12 +150,12 @@ class Canvas extends React.Component {
   };
 
   onMouseDown (event) {
-    var moving = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    var moving   = this.getNodeAtEvent(event);
     this.props.actions.setDraggingNode(moving);
   };
 
   onMouseMove (event) {
-    var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    var selected = this.getNodeAtEvent(event);
     this.props.actions.setHoverNode(selected);
     this.props.actions.setCurrentMousePosition(event.x, event.y);
   };
@@ -159,7 +166,7 @@ class Canvas extends React.Component {
     this.props.actions.resetDraggingNode();
     this.props.actions.resetCurrentMousePosition();
 
-    var found  = this.getIndexAtClientPosition(event.clientX, event.clientY);
+    var found  = this.getNodeAtEvent(event);
     if (found===-1) { return; }
     if (dragging===-1) { return; }
     if (found===dragging) return;
