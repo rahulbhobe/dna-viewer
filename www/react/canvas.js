@@ -56,6 +56,7 @@ class Canvas extends React.Component {
     this.onMouseUp        = this.onMouseUp.bind(this);
     this.onMouseDown      = this.onMouseDown.bind(this);
     this.onMouseLeave     = this.onMouseLeave.bind(this);
+    this.onMouseWheel     = this.onMouseWheel.bind(this);
   };
 
   render () {
@@ -71,7 +72,7 @@ class Canvas extends React.Component {
     var connections = sequenceParser.getConnections();
 
     return (
-      <svg width={width} height={height} ref='svg'>
+      <svg width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
         {coordinates.map((point, ii) => {
             if (ii >= coordinates.length-1) {
               return;
@@ -103,6 +104,7 @@ class Canvas extends React.Component {
     svg.addEventListener('mouseup',    this.onMouseUp, false);
     svg.addEventListener('mousedown',  this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
+    svg.addEventListener('mousewheel', this.onMouseWheel, false);
   };
 
   componentWillUnmount () {
@@ -111,6 +113,7 @@ class Canvas extends React.Component {
     svg.removeEventListener('mouseup',    this.onMouseUp, false);
     svg.removeEventListener('mousedown',  this.onMouseDown, false);
     svg.removeEventListener('mouseleave', this.onMouseLeave, false);
+    svg.removeEventListener('mousewheel', this.onMouseWheel, false);
   };
 
   getIndexAtClientPosition (clientX, clientY) {
@@ -180,6 +183,16 @@ class Canvas extends React.Component {
 
   onMouseLeave () {
     this.props.actions.resetDraggingNode();
+  };
+
+  onMouseWheel (event) {
+    event.preventDefault();
+
+    var wheelDistance = Math.round(event.wheelDelta/40);
+    var zoomFactor    = this.props.zoomFactor + wheelDistance;
+    if (zoomFactor < 25) { return false; }
+    this.props.actions.setZoomFactor(zoomFactor + wheelDistance);
+    return false;
   };
 
   getSvgRect () {
