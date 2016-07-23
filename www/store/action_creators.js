@@ -32,12 +32,12 @@ export var resetCurrentMousePosition = () => {
   return { type: ActionTypes.RESET_CURRENT_MOUSE_POSITION, value: {x: -1, y: -1} };
 };
 
-export var setMouseActionData = (type, x, y) => {
-  return { type: ActionTypes.SET_MOUSE_ACTION_DATA, value: {type, oldPosition: {x, y} } };
+export var setMouseActionData = (type, position, otherData = {}) => {
+  return { type: ActionTypes.SET_MOUSE_ACTION_DATA, value: {type, startData: Object.assign(otherData, {position}) } };
 };
 
 export var resetMouseActionData = () => {
-  return { type: ActionTypes.RESET_MOUSE_ACTION_DATA, value: {type: 'none', oldPosition: {x: -1, y: -1} } };
+  return { type: ActionTypes.RESET_MOUSE_ACTION_DATA, value: {type: 'none', startData: null} };
 };
 
 export var setZoomFactor = (zoomFactor) => {

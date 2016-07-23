@@ -37,7 +37,7 @@ var currentMousePositionReducer = (state={x:-1, y:-1}, action) => {
   return state;
 };
 
-var setMouseActionDataReducer = (state= {type: 'none', oldPosition: {x: -1, y: -1} }, action) => {
+var setMouseActionDataReducer = (state= {type: 'none', startData: null}, action) => {
   if (action.type === ActionTypes.SET_MOUSE_ACTION_DATA) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_MOUSE_ACTION_DATA) {
