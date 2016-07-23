@@ -117,7 +117,7 @@ class Canvas extends React.Component {
     svg.removeEventListener('mousewheel', this.onMouseWheel, false);
   };
 
-  positionAtEvent (event) {
+  getPositionAtEvent (event) {
     var boundingRect   = this.getSvgRect();
     return {
       x: event.clientX - boundingRect.left,
@@ -129,7 +129,7 @@ class Canvas extends React.Component {
     var svg    = this.refs.svg;
     var found  = -1;
     var hitTestRect    = svg.createSVGRect();
-    var screenPosition = this.positionAtEvent(event);
+    var screenPosition = this.getPositionAtEvent(event);
 
     hitTestRect.x = screenPosition.x;
     hitTestRect.y = screenPosition.y;
