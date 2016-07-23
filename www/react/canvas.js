@@ -196,7 +196,8 @@ class Canvas extends React.Component {
 
     var wheelDistance = Math.round(event.wheelDelta/40);
     var zoomFactor    = this.props.zoomFactor + wheelDistance;
-    if (zoomFactor < 25) { return false; }
+    if (zoomFactor < 25)  { return false; }
+    if (zoomFactor > 200) { return false; }
     this.props.actions.setZoomFactor(zoomFactor + wheelDistance);
     return false;
   };
