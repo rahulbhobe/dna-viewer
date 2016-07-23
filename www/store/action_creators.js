@@ -37,7 +37,7 @@ export var setMouseActionData = (type, x, y) => {
 };
 
 export var resetMouseActionData = () => {
-  return { type: ActionTypes.RESET_MOUSE_ACTION_DATA, value: {type, oldPosition: {x: -1, y: -1} } };
+  return { type: ActionTypes.RESET_MOUSE_ACTION_DATA, value: {type: 'none', oldPosition: {x: -1, y: -1} } };
 };
 
 export var setZoomFactor = (zoomFactor) => {
