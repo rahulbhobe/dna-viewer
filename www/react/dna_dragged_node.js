@@ -16,8 +16,8 @@ class DnaDraggedNode extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    mouseX: state.mousePosition.x,
-    mouseY: state.mousePosition.y,
+    mouseX: state.currentMousePosition.x,
+    mouseY: state.currentMousePosition.y,
     dragging: state.dragging
   }
 };

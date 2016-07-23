@@ -24,12 +24,12 @@ export var resetDraggingNode = () => {
   return { type: ActionTypes.RESET_DRAGGING_NODE, value: -1 };
 };
 
-export var setMousePosition = (x, y) => {
-  return { type: ActionTypes.SET_MOUSE_POSITION, value: {x, y} };
+export var setCurrentMousePosition = (x, y) => {
+  return { type: ActionTypes.SET_CURRENT_MOUSE_POSITION, value: {x, y} };
 };
 
-export var resetMousePosition = () => {
-  return { type: ActionTypes.RESET_MOUSE_POSITION, value: {x: -1, y: -1} };
+export var resetCurrentMousePosition = () => {
+  return { type: ActionTypes.RESET_CURRENT_MOUSE_POSITION, value: {x: -1, y: -1} };
 };
 
 export var setZoomFactor = (zoomFactor) => {

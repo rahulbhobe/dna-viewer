@@ -150,14 +150,14 @@ class Canvas extends React.Component {
   onMouseMove (event) {
     var selected = this.getIndexAtClientPosition(event.clientX, event.clientY);
     this.props.actions.setHoverNode(selected);
-    this.props.actions.setMousePosition(event.x, event.y);
+    this.props.actions.setCurrentMousePosition(event.x, event.y);
   };
 
   onMouseUp (event) {
     var dragging = store.getState().dragging;
 
     this.props.actions.resetDraggingNode();
-    this.props.actions.resetMousePosition();
+    this.props.actions.resetCurrentMousePosition();
 
     var found  = this.getIndexAtClientPosition(event.clientX, event.clientY);
     if (found===-1) { return; }
