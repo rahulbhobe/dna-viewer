@@ -37,6 +37,15 @@ var currentMousePositionReducer = (state={x:-1, y:-1}, action) => {
   return state;
 };
 
+var setMouseActionDataReducer = (state= {type: 'none', oldPosition: {x: -1, y: -1} }, action) => {
+  if (action.type === ActionTypes.SET_MOUSE_ACTION_DATA) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_MOUSE_ACTION_DATA) {
+    return action.value;
+  }
+  return state;
+};
+
 var zoomFactorReducer = (state=100, action) => {
   if (action.type === ActionTypes.SET_ZOOM_FACTOR) {
     return action.value;
@@ -67,6 +76,7 @@ var reducers = combineReducers({
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
   currentMousePosition: currentMousePositionReducer,
+  mouseActionData: setMouseActionDataReducer,
   zoomFactor: zoomFactorReducer,
   rotationAngle: rotationAngleReducer,
   windowDimensions: windowDimensionsReducer
