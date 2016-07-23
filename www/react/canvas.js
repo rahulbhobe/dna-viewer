@@ -57,6 +57,7 @@ class Canvas extends React.Component {
     this.onMouseDown      = this.onMouseDown.bind(this);
     this.onMouseLeave     = this.onMouseLeave.bind(this);
     this.onMouseWheel     = this.onMouseWheel.bind(this);
+    this.onContextMenu    = this.onContextMenu.bind(this);
   };
 
   render () {
@@ -134,6 +135,11 @@ class Canvas extends React.Component {
       found = parseInt(elem.getAttribute('data-index'));
     });
     return found;
+  };
+
+  onContextMenu (event) {
+    event.preventDefault();
+    return false;
   };
 
   onMouseDown (event) {
