@@ -22,6 +22,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "angle-input": "0.0.1",
     "body-parser": "1.15.2",
     "bootstrap": "3.3.6",
     "classnames": "2.2.5",

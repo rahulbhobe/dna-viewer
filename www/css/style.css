@@ -169,3 +169,46 @@ svg text::selection {
 .slider-zoom .bar.bar-1 {
   background: #ffffff;
 }
+
+
+.angle-input {
+  position:relative;
+  float: left;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  border: 1px solid grey;
+  cursor: pointer;
+  outline: none;
+}
+
+.angle-input:focus {
+  border: 1px solid #00aaff;
+  cursor: pointer;
+}
+
+.angle-input-pivot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -1px;
+  height: 2px;
+}
+
+.angle-input .angle-input-pivot::before {
+  content: '';
+  position: absolute;
+  right: 1px;
+  top: 50%;
+  width: 6px;
+  margin-top: -2px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ff0000;
+  border: 1px solid #cccccc;
+}
+
+.angle-input:focus .angle-input-pivot::before {
+  border: 1px solid #00aaff;
+}
