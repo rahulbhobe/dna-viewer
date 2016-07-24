@@ -259,7 +259,9 @@ class Canvas extends React.Component {
     var currentPosition = this.getPositionAtEvent(event);
     var startPnt        = Vector.create([startPosition.x, startPosition.y]);
     var currentPnt      = Vector.create([currentPosition.x, currentPosition.y]);
-    var vec             = currentPnt.subtract(startPnt).multiply(1 / (this.props.zoomFactor*0.01));
+    var vec             = currentPnt.rotate(this.props.rotationAngle * 2 * Math.PI / 360, startPnt)
+                            .subtract(startPnt)
+                            .multiply(1 / (this.props.zoomFactor*0.01));
     var org             = Vector.create([oldOrigin.x, oldOrigin.y]).subtract(vec);
     this.props.actions.setOrigin({x: org.elements[0], y: org.elements[1]});
   };
