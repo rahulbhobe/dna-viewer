@@ -191,7 +191,6 @@ class Canvas extends React.Component {
     }
 
     this.props.actions.resetDraggingNode();
-    this.props.actions.resetCurrentMousePosition();
     this.props.actions.resetMouseActionData();
 
     var found  = this.getNodeAtEvent(event);
@@ -224,6 +223,7 @@ class Canvas extends React.Component {
 
   onMouseLeave () {
     this.props.actions.resetDraggingNode();
+    this.props.actions.resetMouseActionData();
   };
 
   onMouseWheel (event) {
