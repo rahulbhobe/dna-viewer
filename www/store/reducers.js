@@ -64,6 +64,15 @@ var rotationAngleReducer = (state=0, action) => {
   return state;
 };
 
+var originReducer = (state={x:0, y:0}, action) => {
+  if (action.type === ActionTypes.SET_ORIGIN) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_ORIGIN) {
+    return action.value;
+  }
+  return state;
+};
+
 var windowDimensionsReducer = (state={width:-1, height:-1}, action) => {
   if (action.type === ActionTypes.SET_WINDOW_DIMENSIONS) {
     return action.value;
@@ -79,6 +88,7 @@ var reducers = combineReducers({
   mouseActionData: setMouseActionDataReducer,
   zoomFactor: zoomFactorReducer,
   rotationAngle: rotationAngleReducer,
+  origin: originReducer,
   windowDimensions: windowDimensionsReducer
 });
 

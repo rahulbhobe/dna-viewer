@@ -56,6 +56,14 @@ export var resetRotationAngle = () => {
   return { type: ActionTypes.RESET_ROTATION_ANGLE, value: 0 };
 };
 
+export var setOrigin = (origin) => {
+  return { type: ActionTypes.SET_ORIGIN, value: origin };
+};
+
+export var resetOrigin = () => {
+  return { type: ActionTypes.RESET_ORIGIN, value: {x: 0, y: 0} };
+};
+
 export var setWindowDimensions = (width, height) => {
   return { type: ActionTypes.SET_WINDOW_DIMENSIONS, value: {width, height} };
 };

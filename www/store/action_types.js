@@ -12,4 +12,6 @@ export const SET_ZOOM_FACTOR                    = 'SET_ZOOM_FACTOR';
 export const RESET_ZOOM_FACTOR                  = 'RESET_ZOOM_FACTOR';
 export const SET_ROTATION_ANGLE                 = 'SET_ROTATION_ANGLE';
 export const RESET_ROTATION_ANGLE               = 'RESET_ROTATION_ANGLE';
+export const SET_ORIGIN                         = 'SET_ORIGIN';
+export const RESET_ORIGIN                       = 'RESET_ORIGIN';
 export const SET_WINDOW_DIMENSIONS              = 'SET_WINDOW_DIMENSIONS';
