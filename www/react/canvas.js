@@ -310,12 +310,13 @@ class Canvas extends React.Component {
     });
     mid = mid.multiply(scale*0.92*this.props.zoomFactor*0.01);
 
+    var org = Vector.create([this.props.origin.x, this.props.origin.y]).multiply(this.props.zoomFactor*0.01);
     var newCoordinates = scaledCoordinates.map((point) => {
-      return point.rotate((-2 * Math.PI * this.props.rotationAngle)/360, mid);
+      return point.rotate((-2 * Math.PI * this.props.rotationAngle)/360, mid.add(org));
     });
 
     var scr = Vector.create([width*0.5, height*0.5])
-    var vec = scr.subtract(mid);
+    var vec = scr.subtract(mid).subtract(org);
     var transformedCoordinates = newCoordinates.map((point) => {
       return point.add(vec);
     });
@@ -328,6 +329,7 @@ var mapStateToProps = (state, ownProps) => {
     sequenceParser: state.sequenceParser,
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
+    origin: state.origin,
     windowDimensions: state.windowDimensions
   };
 };
