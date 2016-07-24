@@ -150,8 +150,8 @@ class Canvas extends React.Component {
   };
 
   onMouseDown (event) {
-    var moving   = this.getNodeAtEvent(event);
-    this.props.actions.setDraggingNode(moving);
+    var dragging = this.getNodeAtEvent(event);
+    this.props.actions.setDraggingNode(dragging);
   };
 
   onMouseMove (event) {
