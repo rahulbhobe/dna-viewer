@@ -95,7 +95,7 @@ class Canvas extends React.Component {
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
 
-        <DnaDraggedNode getRect={this.getSvgRect} bases={bases}/>
+        <DnaDraggedNode bases={bases}/>
       </svg>);
   };
 
@@ -157,7 +157,7 @@ class Canvas extends React.Component {
   onMouseMove (event) {
     var selected = this.getNodeAtEvent(event);
     this.props.actions.setHoverNode(selected);
-    this.props.actions.setCurrentMousePosition(event.x, event.y);
+    this.props.actions.setCurrentMousePosition(this.getPositionAtEvent(event));
   };
 
   onMouseUp (event) {
