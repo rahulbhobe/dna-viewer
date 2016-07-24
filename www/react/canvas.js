@@ -156,6 +156,9 @@ class Canvas extends React.Component {
     if (dragging!==-1) {
       dataType = 'dragging';
       this.props.actions.setDraggingNode(dragging);
+    } else if (true) {
+      dataType = 'pan';
+      data.origin = this.props.origin;
     } else {
       dataType = 'rotate';
       data.angle = this.props.rotationAngle;
@@ -170,7 +173,9 @@ class Canvas extends React.Component {
     this.props.actions.setCurrentMousePosition(this.getPositionAtEvent(event));
 
     var data = store.getState().mouseActionData;
-    if (data.type === 'rotate') {
+    if (data.type === 'pan') {
+      this.handlePan(event);
+    } else if (data.type === 'rotate') {
       this.handleRotate(event);
     }
   };
@@ -179,7 +184,9 @@ class Canvas extends React.Component {
     var dragging = store.getState().dragging;
     var data     = store.getState().mouseActionData;
 
-    if (data.type === 'rotate') {
+    if (data.type === 'pan') {
+      this.handlePan(event);
+    } else if (data.type === 'rotate') {
       this.handleRotate(event);
     }
 
@@ -231,8 +238,8 @@ class Canvas extends React.Component {
     return false;
   };
 
-  handleRotate(event) {
-    var data = store.getState().mouseActionData;
+  handleRotate (event) {
+    var data            = store.getState().mouseActionData;
     var startAngle      = data.startData.angle;
     var startPosition   = data.startData.position;
     var currentPosition = this.getPositionAtEvent(event);
@@ -243,6 +250,18 @@ class Canvas extends React.Component {
     var sign            = crossVec.elements[2] > 0 ? -1 : 1;
     var angle           = sign * startVec.angleFrom(currentVec) * (360 / (2 * Math.PI));
     this.props.actions.setRotationAngle(startAngle + angle);
+  };
+
+  handlePan (event) {
+    var data            = store.getState().mouseActionData;
+    var oldOrigin       = data.startData.origin;
+    var startPosition   = data.startData.position;
+    var currentPosition = this.getPositionAtEvent(event);
+    var startPnt        = Vector.create([startPosition.x, startPosition.y]);
+    var currentPnt      = Vector.create([currentPosition.x, currentPosition.y]);
+    var vec             = currentPnt.subtract(startPnt);
+    var org             = Vector.create([oldOrigin.x, oldOrigin.y]).subtract(vec);
+    this.props.actions.setOrigin({x: org.elements[0], y: org.elements[1]});
   };
 
   getSvgRect () {
