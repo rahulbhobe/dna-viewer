@@ -156,7 +156,7 @@ class Canvas extends React.Component {
     if (dragging!==-1) {
       dataType = 'dragging';
       this.props.actions.setDraggingNode(dragging);
-    } else if (true) {
+    } else if (!event.shiftKey) {
       dataType = 'pan';
       data.origin = this.props.origin;
     } else {
@@ -259,7 +259,7 @@ class Canvas extends React.Component {
     var currentPosition = this.getPositionAtEvent(event);
     var startPnt        = Vector.create([startPosition.x, startPosition.y]);
     var currentPnt      = Vector.create([currentPosition.x, currentPosition.y]);
-    var vec             = currentPnt.subtract(startPnt);
+    var vec             = currentPnt.subtract(startPnt).multiply(1 / (this.props.zoomFactor*0.01));
     var org             = Vector.create([oldOrigin.x, oldOrigin.y]).subtract(vec);
     this.props.actions.setOrigin({x: org.elements[0], y: org.elements[1]});
   };
