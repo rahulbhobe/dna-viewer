@@ -151,20 +151,41 @@ class Canvas extends React.Component {
 
   onMouseDown (event) {
     var dragging = this.getNodeAtEvent(event);
-    this.props.actions.setDraggingNode(dragging);
+    var dataType = 'none';
+    var data     = {};
+    if (dragging!==-1) {
+      dataType = 'dragging';
+      this.props.actions.setDraggingNode(dragging);
+    } else {
+      dataType = 'rotate';
+      data.angle = this.props.rotationAngle;
+    }
+
+    this.props.actions.setMouseActionData(dataType, this.getPositionAtEvent(event), data);
   };
 
   onMouseMove (event) {
     var selected = this.getNodeAtEvent(event);
     this.props.actions.setHoverNode(selected);
     this.props.actions.setCurrentMousePosition(this.getPositionAtEvent(event));
+
+    var data = store.getState().mouseActionData;
+    if (data.type === 'rotate') {
+      this.handleRotate(event);
+    }
   };
 
   onMouseUp (event) {
     var dragging = store.getState().dragging;
+    var data     = store.getState().mouseActionData;
+
+    if (data.type === 'rotate') {
+      this.handleRotate(event);
+    }
 
     this.props.actions.resetDraggingNode();
     this.props.actions.resetCurrentMousePosition();
+    this.props.actions.resetMouseActionData();
 
     var found  = this.getNodeAtEvent(event);
     if (found===-1) { return; }
@@ -208,6 +229,20 @@ class Canvas extends React.Component {
     if (zoomFactor > 200) { return false; }
     this.props.actions.setZoomFactor(zoomFactor + wheelDistance);
     return false;
+  };
+
+  handleRotate(event) {
+    var data = store.getState().mouseActionData;
+    var startAngle      = data.startData.angle;
+    var startPosition   = data.startData.position;
+    var currentPosition = this.getPositionAtEvent(event);
+    var midPoint        = Vector.create([this.getWindowWidth()*0.5, this.getWindowHeight()*0.5, 0])
+    var startVec        = Vector.create([startPosition.x, startPosition.y, 0]).subtract(midPoint);
+    var currentVec      = Vector.create([currentPosition.x, currentPosition.y, 0]).subtract(midPoint);
+    var crossVec        = startVec.cross(currentVec);
+    var sign            = crossVec.elements[2] > 0 ? -1 : 1;
+    var angle           = sign * startVec.angleFrom(currentVec) * (360 / (2 * Math.PI));
+    this.props.actions.setRotationAngle(startAngle + angle);
   };
 
   getSvgRect () {
