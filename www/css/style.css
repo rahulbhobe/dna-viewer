@@ -4,14 +4,29 @@
   background: #dddddd;
 }
 
-svg text {
+.svg-cursor-none {
+}
+
+.svg-cursor-dragging {
+  cursor: -webkit-grab;
+}
+
+.svg-cursor-pan {
+  cursor: url('/res/pan_image.png'), auto;
+}
+
+.svg-cursor-rotate {
+  cursor: url('/res/rotate_image.png'), auto;
+}
+
+.svg-class text {
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
 }
 
-svg text::selection {
+.svg-class text::selection {
   background: none;
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import DnaBaseView from './dna_base_view';
 import DnaDraggedNode from './dna_dragged_node';
 import {Vector} from 'sylvester';
+import classNames from 'classnames';
 import store from '../store/store';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
@@ -66,6 +67,7 @@ class Canvas extends React.Component {
       return null;
     }
 
+    var svgClass    = classNames('svg-class', 'svg-cursor-' + this.props.mouseActionDataType);
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
     var coordinates = this.getCoordinatesForScreen(sequenceParser);
@@ -73,7 +75,7 @@ class Canvas extends React.Component {
     var connections = sequenceParser.getConnections();
 
     return (
-      <svg width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
+      <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
         {coordinates.map((point, ii) => {
             if (ii >= coordinates.length-1) {
               return;
@@ -351,6 +353,7 @@ var mapStateToProps = (state, ownProps) => {
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
     origin: state.origin,
+    mouseActionDataType: state.mouseActionData.type,
     windowDimensions: state.windowDimensions
   };
 };
