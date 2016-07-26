@@ -8,7 +8,7 @@ class FontSettings extends React.Component {
   };
 
   render () {
-    var fonts = [ 'Andale Mono', 'Courier', 'Monaco', 'Courier New'];
+    var fonts = [ 'Andale Mono', 'Courier', 'Monaco', 'Courier New', 'Menlo', 'monospace'];
 
     return (<div className="settings-font-div dna-base-font">
               Font:
