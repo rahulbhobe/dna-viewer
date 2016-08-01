@@ -101,7 +101,10 @@
   background-color: #ff0000
 }
 
-.apply-changes-hidden {
+.sequence-change-button {
+}
+
+.sequence-change-button-hidden {
   display: none;
 }
 

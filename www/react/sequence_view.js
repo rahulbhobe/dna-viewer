@@ -79,12 +79,11 @@ class SequenceFormView extends React.Component {
   };
 };
 
-
-class ApplyChanges extends React.Component {
+class SequenceChanges extends React.Component {
     render () {
-      var clsNames = classNames('apply-changes-button', 'sequence-form', 'sequence-form-div', {'apply-changes-hidden': !this.props.dirty});
+      var clsNames = classNames('sequence-change-button', 'sequence-form', 'sequence-form-div', {'sequence-change-button-hidden': !this.props.dirty});
       return (<div>
-                <button type="button" className={clsNames} onClick={this.props.onApply}>Apply</button>
+                <button type="button" className={clsNames} onClick={this.props.onClick}>{this.props.buttonText}</button>
               </div>);
   };
 };
@@ -99,6 +98,7 @@ class SequenceView extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onCancel = this.onCancel.bind(this);
     this.onApply  = this.onApply.bind(this);
     this.isDirty  = this.isDirty.bind(this);
   };
@@ -125,6 +125,14 @@ class SequenceView extends React.Component {
     this.setState({[type]: value});
   };
 
+  onCancel () {
+    this.setState({
+      seq: this.props.seq,
+      dbn: this.props.dbn,
+      error: false
+    });
+  };
+
   onApply () {
     var sequenceParser = new SequenceParser(this.state.seq, this.state.dbn);
     if (sequenceParser.hasErrors()) {
@@ -140,7 +148,8 @@ class SequenceView extends React.Component {
                 onChange={this.onChange} placeholder="Enter DNA sequence" />
               <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error}
                 onChange={this.onChange} placeholder="Enter DBN" />
-              <ApplyChanges dirty={this.isDirty()} onApply={this.onApply} />
+              <SequenceChanges dirty={this.isDirty()} onClick={this.onCancel} buttonText={'Cancel'}/>
+              <SequenceChanges dirty={this.isDirty()} onClick={this.onApply} buttonText={'Apply'}/>
             </div>);
   };
 };
