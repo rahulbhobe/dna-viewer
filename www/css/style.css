@@ -71,6 +71,10 @@
   stroke: #8b572a;
 }
 
+.sequence-form-wrapper-div {
+  height: 140px;
+}
+
 .sequence-form {
   font-size: 1.1vw;
   padding: 10px;
@@ -114,6 +118,7 @@
   right: 10px;
   top: 10px;
   background: #dddddd;
+  width: 225px;
 }
 
 .settings-color-div {
