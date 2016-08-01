@@ -287,11 +287,11 @@ class Canvas extends React.Component {
   };
 
   getWindowWidth () {
-    return this.props.windowDimensions.width * 0.8;
+    return this.props.windowDimensions.width - 225 - 10;
   };
 
   getWindowHeight () {
-    return this.props.windowDimensions.height * 0.8;
+    return this.props.windowDimensions.height - 30 - 150 - 5;
   };
 
   getCoordinatesForScreen (sequenceParser) {
