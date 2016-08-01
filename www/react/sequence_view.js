@@ -82,10 +82,7 @@ class SequenceFormView extends React.Component {
 
 class ApplyChanges extends React.Component {
     render () {
-      var clsNames = "apply-changes-button sequence-form sequence-form-div";
-      if (!this.props.dirty) {
-        clsNames += " apply-changes-hidden ";
-      }
+      var clsNames = classNames('apply-changes-button', 'sequence-form', 'sequence-form-div', {'apply-changes-hidden': !this.props.dirty});
       return (<div>
                 <button type="button" className={clsNames} onClick={this.props.onApply}>Apply</button>
               </div>);
