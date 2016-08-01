@@ -286,11 +286,21 @@ class Canvas extends React.Component {
     return !thisBase.canPairWith(draggingBase);
   };
 
+  isWindowSmall () {
+    return (this.props.windowDimensions.width < 900);
+  };
+
   getWindowWidth () {
+    if (this.isWindowSmall()) {
+      return this.props.windowDimensions.width;
+    }
     return this.props.windowDimensions.width - 225 - 10;
   };
 
   getWindowHeight () {
+    if (this.isWindowSmall()) {
+      return this.props.windowDimensions.height - 30;
+    }
     return this.props.windowDimensions.height - 30 - 150 - 5;
   };
 
