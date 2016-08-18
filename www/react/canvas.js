@@ -248,6 +248,10 @@ class Canvas extends React.Component {
   };
 
   onKeydown (event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      return false;
+    }
     if (event.keyCode !== 27) {
       return;
     }
