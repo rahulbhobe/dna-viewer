@@ -52,14 +52,14 @@ class Canvas extends React.Component {
   constructor (props) {
     super(props);
 
-    this.getSvgRect       = this.getSvgRect.bind(this);
-    this.onMouseMove      = this.onMouseMove.bind(this);
-    this.onMouseUp        = this.onMouseUp.bind(this);
-    this.onMouseDown      = this.onMouseDown.bind(this);
-    this.onMouseLeave     = this.onMouseLeave.bind(this);
-    this.onMouseWheel     = this.onMouseWheel.bind(this);
-    this.onKeydown        = this.onKeydown.bind(this);
-    this.onContextMenu    = this.onContextMenu.bind(this);
+    this.getSvgRect = this.getSvgRect.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onMouseWheel = this.onMouseWheel.bind(this);
+    this.onKeydown = this.onKeydown.bind(this);
+    this.onContextMenu = this.onContextMenu.bind(this);
   };
 
   render () {
@@ -104,9 +104,9 @@ class Canvas extends React.Component {
 
   componentDidMount () {
     var svg = this.refs.svg;
-    svg.addEventListener('mousemove',  this.onMouseMove, false);
-    svg.addEventListener('mouseup',    this.onMouseUp, false);
-    svg.addEventListener('mousedown',  this.onMouseDown, false);
+    svg.addEventListener('mousemove', this.onMouseMove, false);
+    svg.addEventListener('mouseup', this.onMouseUp, false);
+    svg.addEventListener('mousedown', this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
     svg.addEventListener('mousewheel', this.onMouseWheel, false);
     document.addEventListener('keydown', this.onKeydown, false);
@@ -114,9 +114,9 @@ class Canvas extends React.Component {
 
   componentWillUnmount () {
     var svg = this.refs.svg;
-    svg.removeEventListener('mousemove',  this.onMouseMove, false);
-    svg.removeEventListener('mouseup',    this.onMouseUp, false);
-    svg.removeEventListener('mousedown',  this.onMouseDown, false);
+    svg.removeEventListener('mousemove', this.onMouseMove, false);
+    svg.removeEventListener('mouseup', this.onMouseUp, false);
+    svg.removeEventListener('mousedown', this.onMouseDown, false);
     svg.removeEventListener('mouseleave', this.onMouseLeave, false);
     svg.removeEventListener('mousewheel', this.onMouseWheel, false);
     document.removeEventListener('keydown', this.onKeydown, false);
