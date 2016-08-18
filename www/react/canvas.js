@@ -58,6 +58,7 @@ class Canvas extends React.Component {
     this.onMouseDown      = this.onMouseDown.bind(this);
     this.onMouseLeave     = this.onMouseLeave.bind(this);
     this.onMouseWheel     = this.onMouseWheel.bind(this);
+    this.onKeydown        = this.onKeydown.bind(this);
     this.onContextMenu    = this.onContextMenu.bind(this);
   };
 
@@ -108,6 +109,7 @@ class Canvas extends React.Component {
     svg.addEventListener('mousedown',  this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
     svg.addEventListener('mousewheel', this.onMouseWheel, false);
+    document.addEventListener('keydown', this.onKeydown, false);
   };
 
   componentWillUnmount () {
@@ -117,6 +119,7 @@ class Canvas extends React.Component {
     svg.removeEventListener('mousedown',  this.onMouseDown, false);
     svg.removeEventListener('mouseleave', this.onMouseLeave, false);
     svg.removeEventListener('mousewheel', this.onMouseWheel, false);
+    document.removeEventListener('keydown', this.onKeydown, false);
   };
 
   getPositionAtEvent (event) {
@@ -244,6 +247,22 @@ class Canvas extends React.Component {
     return false;
   };
 
+  onKeydown (event) {
+    if (event.keyCode !== 27) {
+      return;
+    }
+
+    var data     = store.getState().mouseActionData;
+    if (data.type === 'pan') {
+      this.cancelPan();
+    } else if (data.type === 'rotate') {
+      this.cancelRotate();
+    }
+
+    this.props.actions.resetDraggingNode();
+    this.props.actions.resetMouseActionData();
+  };
+
   handleRotate (event) {
     var data            = store.getState().mouseActionData;
     var startAngle      = data.startData.angle;
@@ -258,6 +277,11 @@ class Canvas extends React.Component {
     this.props.actions.setRotationAngle(startAngle + angle);
   };
 
+  cancelRotate () {
+    var data = store.getState().mouseActionData;
+    this.props.actions.setRotationAngle(data.startData.angle);
+  };
+
   handlePan (event) {
     var data            = store.getState().mouseActionData;
     var oldOrigin       = data.startData.origin;
@@ -270,6 +294,11 @@ class Canvas extends React.Component {
                             .multiply(1 / (this.props.zoomFactor*0.01));
     var org             = Vector.create([oldOrigin.x, oldOrigin.y]).subtract(vec);
     this.props.actions.setOrigin({x: org.elements[0], y: org.elements[1]});
+  };
+
+  cancelPan () {
+    var data = store.getState().mouseActionData;
+    this.props.actions.setOrigin(data.startData.origin);
   };
 
   getSvgRect () {
