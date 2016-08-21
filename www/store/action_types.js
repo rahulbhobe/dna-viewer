@@ -1,5 +1,7 @@
 export const SET_SEQUENCE_PARSER                = 'SET_SEQUENCE_PARSER';
 export const RESET_SEQUENCE_PARSER              = 'RESET_SEQUENCE_PARSER';
+export const SET_CURRENT_URL                    = 'SET_CURRENT_URL';
+export const RESET_CURRENT_URL                  = 'RESET_CURRENT_URL';
 export const SET_HOVER_NODE                     = 'SET_HOVER_NODE';
 export const RESET_HOVER_NODE                   = 'RESET_HOVER_NODE';
 export const SET_DRAGGING_NODE                  = 'SET_DRAGGING_NODE';

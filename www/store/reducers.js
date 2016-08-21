@@ -10,6 +10,15 @@ var sequenceParserReducer = (state=null, action) => {
   return state;
 };
 
+var currentUrlReducer = (state="", action) => {
+  if (action.type === ActionTypes.SET_CURRENT_URL) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_CURRENT_URL) {
+    return action.value;
+  }
+  return state;
+};
+
 var hoverNodeReducer = (state=-1, action) => {
   if (action.type === ActionTypes.SET_HOVER_NODE) {
     return action.value;
@@ -82,6 +91,7 @@ var windowDimensionsReducer = (state={width:-1, height:-1}, action) => {
 
 var reducers = combineReducers({
   sequenceParser: sequenceParserReducer,
+  currentUrl: currentUrlReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
   currentMousePosition: currentMousePositionReducer,

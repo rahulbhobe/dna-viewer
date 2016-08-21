@@ -8,6 +8,14 @@ export var resetSequenceParser = () => {
   return { type: ActionTypes.RESET_SEQUENCE_PARSER, value: null };
 };
 
+export var setCurrentUrl = (url) => {
+  return { type: ActionTypes.SET_CURRENT_URL, value: url };
+};
+
+export var resetCurrentUrl = () => {
+  return { type: ActionTypes.RESET_CURRENT_URL, value: "" };
+};
+
 export var setHoverNode = (node) => {
   return { type: ActionTypes.SET_HOVER_NODE, value: node };
 };
