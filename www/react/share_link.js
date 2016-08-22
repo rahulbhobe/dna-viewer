@@ -1,29 +1,48 @@
 import React from 'react';
 import request from 'request';
 import promisify from 'es6-promisify';
+import classNames from 'classnames';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 import {connect} from 'react-redux';
 
 class ShareLink extends React.Component {
   constructor (props) {
     super(props);
-    this.onClick   = this.onClick.bind(this);
-    this.onSuccess = this.onSuccess.bind(this);
-    this.onError   = this.onError.bind(this);
+    this.onAdd    = this.onAdd.bind(this);
+    this.onSave   = this.onSave.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   };
 
   render () {
+    var clsName = classNames({'share-link-hidden': !this.props.url});
     return (<div className="share-link-button" >
-              <input type="image" src="/res/share_icon.png" alt="Submit" onClick={this.onClick}/>
+              <input type="image"                     title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
+              <input type="image" className={clsName} title={'Save data at "' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
+              <input type="image" className={clsName} title={'Remove data stored at "' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
             </div>);
   };
 
-  onClick () {
+  onAdd () {
+    this.onSaveImpl("add");
+  };
+
+  onSave () {
+    this.onSaveImpl("save");
+  };
+
+  onDelete () {
+    this.onSaveImpl("delete");
+  };
+
+  onSaveImpl (type) {
     var data = {
-      seq: this.props.seq,
-      dbn: this.props.dbn
+      type,
+      url:  this.props.url,
+      seq:  this.props.seq,
+      dbn:  this.props.dbn
     };
 
-    promisify(request.post)(window.location.origin + '/sharelink', {form: data})
+    promisify(request.post)(window.location.origin + '/link', {form: data})
     .then((httpResponse) => {
       this.onSuccess(JSON.parse(httpResponse.body));
     }).catch((err) => {
@@ -32,7 +51,7 @@ class ShareLink extends React.Component {
   };
 
   onSuccess (data) {
-    var url = window.location.origin + '/' + data.url;
+    this.props.actions.setCurrentUrl(data.url);
   };
 
   onError (err) {
@@ -43,9 +62,10 @@ class ShareLink extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
+    url: state.currentUrl,
     seq: state.sequenceParser.getData().seq,
     dbn: state.sequenceParser.getData().dbn
   };
 };
 
-export default connect(mapStateToProps)(ShareLink);
+export default connect(mapStateToProps, mapDispatchToProps)(ShareLink);

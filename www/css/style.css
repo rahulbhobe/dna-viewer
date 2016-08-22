@@ -159,3 +159,6 @@
 .share-link-button {
   height: 30px;
 }
+.share-link-hidden {
+  display: none;
+}
