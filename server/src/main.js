@@ -17,35 +17,30 @@ app.use(bodyParser.json());
 
 app.post('/link', (req, res) => {
   let {type, url, seq, dbn} = req.body;
-  if (type === 'save') {
-    Data.update({url}, {seq, dbn}).exec()
-    .then((data) => {
-      return data;
-    }).then(({url}) => {
-      res.send({url});
-    }).catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
-  } else if (type === 'add') {
-    let url = shortid.generate();
-    var newData = new Data({url, seq, dbn});
-    newData.save()
-    .then(({url}) => {
-      res.send({url});
-    }).catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
-  } else if (type === 'delete') {
-    Data.remove({url}).exec()
-    .then(() => {
-      res.send({url: ""});
-    }).catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
-  }
+
+  Promise.resolve(type)
+  .then((type) => {
+    if (type === 'save') {
+      return Data.update({url}, {seq, dbn}).exec()
+      .then((data) => {
+        return data;
+      });
+    } else if (type === 'add') {
+      let url = shortid.generate();
+      var newData = new Data({url, seq, dbn});
+      return newData.save();
+    } else if (type === 'delete') {
+      return Data.remove({url}).exec()
+      .then(() => {
+        return ({url: ""});
+      });
+    }
+  }).then(({url}) => {
+    res.send({url});
+  }).catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  });
 });
 
 app.get('/*', (req, res) => {
