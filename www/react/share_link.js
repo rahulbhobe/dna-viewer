@@ -44,14 +44,16 @@ class ShareLink extends React.Component {
 
     promisify(request.post)(window.location.origin + '/link', {form: data})
     .then((httpResponse) => {
-      this.onSuccess(JSON.parse(httpResponse.body));
+      var {url} = JSON.parse(httpResponse.body);
+      this.onSuccess(type, url);
     }).catch((err) => {
       this.onError(err);
     });
   };
 
-  onSuccess (data) {
-    this.props.actions.setCurrentUrl(data.url);
+  onSuccess (type, url) {
+    this.props.actions.setCurrentUrl(url);
+    window.history.pushState("", "Title", "/" + url);
   };
 
   onError (err) {

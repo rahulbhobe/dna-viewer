@@ -12,7 +12,8 @@ import DnaViewer from './dna_viewer'
 document.addEventListener("DOMContentLoaded", (event) => {
   var getData = () => {
     var defaultRet = new Promise((resolve) => {
-      resolve(DebugUtils.debug_examples[0]);
+      var {seq, dbn} = DebugUtils.debug_examples[0];
+      resolve({url: "", seq, dbn});
     });
 
     var url = window.location.pathname.substring(1);
@@ -33,6 +34,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   getData()
   .then((obj) => {
     var sequenceParser = new SequenceParser(obj.seq, obj.dbn);
+    store.dispatch(actionCreators.setCurrentUrl(obj.url));
     store.dispatch(actionCreators.setSequenceParser(sequenceParser));
     store.dispatch(actionCreators.setWindowDimensions(window.innerWidth, window.innerHeight));
 
