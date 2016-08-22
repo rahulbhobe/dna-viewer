@@ -15,23 +15,37 @@ app.set('views', __dirname + '/../../www');
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 
-app.post('/sharelink', (req, res) => {
-  let {seq, dbn} = req.body;
-
-  Data.findOne({seq, dbn}).exec()
-  .then((data) => {
-    if (data)
+app.post('/link', (req, res) => {
+  let {type, url, seq, dbn} = req.body;
+  if (type === 'save') {
+    Data.update({url}, {seq, dbn}).exec()
+    .then((data) => {
       return data;
-
+    }).then(({url}) => {
+      res.send({url});
+    }).catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+  } else if (type === 'add') {
     let url = shortid.generate();
     var newData = new Data({url, seq, dbn});
-    return newData.save();
-  }).then(({url, seq, dbn}) => {
-    res.send({url, seq, dbn});
-  }).catch((err) => {
-    console.log(err);
-    res.sendStatus(500);
-  });
+    newData.save()
+    .then(({url}) => {
+      res.send({url});
+    }).catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+  } else if (type === 'delete') {
+    Data.remove({url}).exec()
+    .then(() => {
+      res.send({url: ""});
+    }).catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+  }
 });
 
 app.get('/*', (req, res) => {
