@@ -17,8 +17,8 @@ class ShareLink extends React.Component {
     var clsName = classNames({'share-link-hidden': !this.props.url});
     return (<div className="share-link-button" >
               <input type="image"                     title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
-              <input type="image" className={clsName} title={'Save data at "' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
-              <input type="image" className={clsName} title={'Remove data stored at "' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
+              <input type="image" className={clsName} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
+              <input type="image" className={clsName} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
             </div>);
   };
 
