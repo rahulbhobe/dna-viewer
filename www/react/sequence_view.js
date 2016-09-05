@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PureRenderMixin from 'react/lib/ReactComponentWithPureRenderMixin';
-import ReactGridLayout from 'react-grid-layout';
+import GridLayout from './grid_layout';
 import SettingsData from './settings_data';
 import SequenceParser from '../src/sequence_parser';
 import SequenceLetter from './sequence_letter';
@@ -103,7 +102,6 @@ class SequenceView extends React.Component {
     this.onCancel = this.onCancel.bind(this);
     this.onApply  = this.onApply.bind(this);
     this.isDirty  = this.isDirty.bind(this);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   };
 
   componentWillReceiveProps (nextProps) {
@@ -147,42 +145,22 @@ class SequenceView extends React.Component {
 
   getLayout() {
     return [
-      {x:0,  y:0,  w:25,  h:1,  i: 'SequenceFormViewSEQ'},
-      {x:0,  y:1,  w:25,  h:1,  i: 'SequenceFormViewDBN'},
-      {x:25, y:0,  w:2,   h:2,  i: 'SequenceChangesCancel'},
-      {x:27, y:0,  w:2,   h:2,  i: 'SequenceChangesApply'},
+      {x:0,  y:0,  w:25,  h:1,  v: true, i: 'SequenceFormViewSEQ',   d: (<SequenceFormView value={this.state.seq} type="seq" error={this.state.error} onChange={this.onChange} placeholder="Enter DNA sequence" />)},
+      {x:0,  y:1,  w:25,  h:1,  v: true, i: 'SequenceFormViewDBN',   d: (<SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error} onChange={this.onChange} placeholder="Enter DBN" />)},
+      {x:25, y:0,  w:2,   h:2,  v: true, i: 'SequenceChangesCancel', d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onCancel} buttonText={'Cancel'}/>)},
+      {x:27, y:0,  w:2,   h:2,  v: true, i: 'SequenceChangesApply',  d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onApply} buttonText={'Apply'}/>)}
     ];
   };
 
   render () {
     var properties = {
-      className: "layout",
-      isDraggable: false,
-      isResizable: false,
       cols: 29,
       rowHeight: 32*2,
-      width: window.innerWidth,
-      margin: [0, 0],
-      verticalCompact: false
+      width: window.innerWidth
     };
 
     return (<div className="sequence-form-wrapper-div">
-              <ReactGridLayout layout={this.getLayout()}{...properties}>
-                <div key='SequenceFormViewSEQ'>
-                  <SequenceFormView value={this.state.seq} type="seq" error={this.state.error}
-                    onChange={this.onChange} placeholder="Enter DNA sequence" />
-                </div>
-                <div key='SequenceFormViewDBN'>
-                  <SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error}
-                    onChange={this.onChange} placeholder="Enter DBN" />
-                </div>
-                <div key='SequenceChangesCancel'>
-                  <SequenceChanges dirty={this.isDirty()} onClick={this.onCancel} buttonText={'Cancel'}/>
-                </div>
-                <div key='SequenceChangesApply'>
-                  <SequenceChanges dirty={this.isDirty()} onClick={this.onApply} buttonText={'Apply'}/>
-                </div>
-              </ReactGridLayout>
+              <GridLayout properties={properties} layout={this.getLayout()} />
             </div>);
   };
 };
