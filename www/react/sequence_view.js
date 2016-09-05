@@ -120,8 +120,8 @@ class SequenceView extends React.Component {
 
   onChange (type, value) {
     var obj = {
-      seq: this.props.seqPerm,
-      dbn: this.props.dbnPerm
+      seq: this.props.seqTemp,
+      dbn: this.props.dbnTemp
     };
     obj[type] = value;
     this.props.actions.setTempSequence(obj.seq, obj.dbn);
