@@ -16,15 +16,22 @@ class DnaViewer extends React.Component {
     this.setCanvasDimensions();
   };
 
+  calculateCanvasDimensions() {
+    return {
+      width:  window.innerWidth - 235,
+      height: window.innerHeight - (32 * (1+5))
+    };
+  };
+
   setCanvasDimensions() {
-    var width  = window.innerWidth - 235;
-    var height = window.innerHeight - (32 * (1+5));
+    var {width, height}  = this.calculateCanvasDimensions();
     this.props.actions.setCanvasDimensions(width, height);
   };
 
   getLayout() {
-    var ch = this.props.canvasDimensions.height/32;
-    var cw = this.props.canvasDimensions.width;
+    var {width, height}  = this.calculateCanvasDimensions();
+    var ch = height/32;
+    var cw = width;
     var sw = window.innerWidth - cw;
 
     return [
