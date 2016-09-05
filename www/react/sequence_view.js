@@ -54,7 +54,7 @@ class SequenceFormView extends React.Component {
   };
 
   render () {
-    var formClass = classNames('sequence-form', 'dna-base-font', {'sequence-has-error': this.props.error});
+    var formClass = classNames('dna-base-font', {'sequence-has-error': this.props.error});
     var inpClass = classNames({'hidden': !this.state.editMode});
     var divClass = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
 
@@ -66,7 +66,7 @@ class SequenceFormView extends React.Component {
                         key={"letter_" + ii}/>));
     }
 
-    return (<div className='sequence-form-vertical-center'>
+    return (<div className='sequence-form'>
               <form className={formClass}>
                 <input type="text" className={inpClass} value={this.state.value}
                   onChange={this.onChange} onBlur={this.onBlur}
@@ -83,7 +83,7 @@ class SequenceFormView extends React.Component {
 
 class SequenceChanges extends React.Component {
     render () {
-      var clsNames = classNames('sequence-change-button', 'sequence-change-' + this.props.buttonText.toLowerCase(), 'sequence-form', 'sequence-form-div', {'sequence-change-button-hidden': !this.props.dirty});
+      var clsNames = classNames('sequence-change-button', 'sequence-change-' + this.props.buttonText.toLowerCase(), 'sequence-form-div', {'sequence-change-button-hidden': !this.props.dirty});
       return (<div>
                 <button type="button" className={clsNames} onClick={this.props.onClick}>{this.props.buttonText}</button>
               </div>);
