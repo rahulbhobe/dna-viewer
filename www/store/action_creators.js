@@ -72,6 +72,14 @@ export var resetOrigin = () => {
   return { type: ActionTypes.RESET_ORIGIN, value: {x: 0, y: 0} };
 };
 
+export var setPickingColor = (type) => {
+  return { type: ActionTypes.SET_PICKING_COLOR, value: type };
+};
+
+export var resetPickingColor = () => {
+  return { type: ActionTypes.RESET_PICKING_COLOR, value: null };
+};
+
 export var setCanvasDimensions = (width, height) => {
   return { type: ActionTypes.SET_CANVAS_DIMENSIONS, value: {width, height} };
 };
