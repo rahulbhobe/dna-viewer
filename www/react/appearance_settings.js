@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
+import {connect} from 'react-redux';
 import jss from 'jss-browserify';
 
 class AppearanceConfig extends React.Component {
@@ -43,7 +45,7 @@ class AppearanceConfig extends React.Component {
 
 class AppearanceSettings extends React.Component {
   render () {
-    return (<div className="settings-appearance-div dna-base-font">
+    return (<div className={classNames('settings-appearance-div', 'dna-base-font', {'hidden': this.props.isPickingColor})}>
               <AppearanceConfig  name="Size:" jssCls='.dna-base-size' jssKey='r' min={5} max={20} size="5"/>
               <AppearanceConfig  name="Backbone:" jssCls='.dna-base-backbone' jssKey='stroke-width' min={1} max={6} size="5"/>
               <AppearanceConfig  name="Base-pair:" jssCls='.dna-base-pair' jssKey='stroke-width' min={1} max={6} size="5"/>
@@ -51,4 +53,10 @@ class AppearanceSettings extends React.Component {
   };
 };
 
-export default AppearanceSettings;
+var mapStateToProps = (state, ownProps) => {
+  return {
+    isPickingColor: state.pickingColor !== null
+  }
+};
+
+export default connect(mapStateToProps)(AppearanceSettings);
