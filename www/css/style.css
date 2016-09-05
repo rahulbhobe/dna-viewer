@@ -72,7 +72,13 @@
 }
 
 .sequence-form-wrapper-div {
-  height: 150px;
+  background: #e6e6e6;
+}
+
+.sequence-form-vertical-center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .sequence-form {
@@ -102,6 +108,22 @@
 }
 
 .sequence-change-button {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  height: 128px;
+}
+
+.sequence-change-cancel {
+  background-color: #f44336;
+}
+
+.sequence-change-apply {
+  background-color: #4caf50;
 }
 
 .sequence-change-button-hidden {
