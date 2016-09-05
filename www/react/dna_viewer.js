@@ -40,10 +40,10 @@ class DnaViewer extends React.Component {
     var sw = tw - cw;
 
     return [
-      {x:0,   y:0,    w:cw,  h:1,     i: 'ShareLink'},
-      {x:0,   y:1,    w:cw,  h:ch,    i: 'Canvas'},
-      {x:0,   y:ch+1, w:tw,  h:4,     i: 'SequenceView'},
-      {x:cw,  y:0,    w:sw,  h:ch+1,  i: 'SettingsView'}
+      {x:0,   y:0,    w:cw,  h:1,     i: 'ShareLink',    d: (<ShareLink />)},
+      {x:0,   y:1,    w:cw,  h:ch,    i: 'Canvas',       d: (<Canvas />)},
+      {x:0,   y:ch+1, w:tw,  h:4,     i: 'SequenceView', d: (<SequenceView />)},
+      {x:cw,  y:0,    w:sw,  h:ch+1,  i: 'SettingsView', d: (<SettingsView />)}
     ];
   };
 
@@ -58,11 +58,16 @@ class DnaViewer extends React.Component {
       margin: [0, 0],
       verticalCompact: false
     };
-    return (<ReactGridLayout layout={this.getLayout()}{...properties}>
-              <div key='ShareLink'>    <ShareLink/>    </div>
-              <div key='Canvas'>       <Canvas />      </div>
-              <div key='SequenceView'> <SequenceView/> </div>
-              <div key='SettingsView'> <SettingsView/> </div>
+
+    var layout     = this.getLayout();
+    return (<ReactGridLayout {...properties} layout={layout} >
+              {layout.map((item) => {
+                return (
+                  <div key={item.i} >
+                    {item.d}
+                  </div>
+                );
+              })}
             </ReactGridLayout>);
   };
 
