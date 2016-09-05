@@ -83,9 +83,9 @@ class SequenceFormView extends React.Component {
 
 class SequenceChanges extends React.Component {
     render () {
-      var clsNames = classNames('sequence-change-button', 'sequence-change-' + this.props.buttonText.toLowerCase(), 'sequence-form-div', {'sequence-change-button-hidden': !this.props.dirty});
+      var clsNames = classNames('sequence-change-button', 'sequence-form-div', {'sequence-change-button-hidden': !this.props.dirty});
       return (<div>
-                <button type="button" className={clsNames} onClick={this.props.onClick}>{this.props.buttonText}</button>
+                <input type="image" className={clsNames} onClick={this.props.onClick} src={'/res/' + this.props.buttonText.toLowerCase() + '-button.png'}/>
               </div>);
   };
 };

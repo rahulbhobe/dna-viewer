@@ -102,29 +102,14 @@
 }
 
 .sequence-has-error {
-  background-color: #ff0000
+  background-color: #ff0000;
 }
 
 .sequence-change-button {
-  font-size: 1.1vw;
   width: 100%;
-
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  height: 128px;
   cursor: pointer;
   border-radius: 6px;
-  height: 128px;
-}
-
-.sequence-change-cancel {
-  background-color: #f44336;
-}
-
-.sequence-change-apply {
-  background-color: #4caf50;
 }
 
 .sequence-change-button-hidden {
