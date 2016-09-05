@@ -1,6 +1,5 @@
 import React from 'react';
-import PureRenderMixin from 'react/lib/ReactComponentWithPureRenderMixin';
-import ReactGridLayout from 'react-grid-layout';
+import GridLayout from './grid_layout';
 import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
@@ -12,7 +11,6 @@ class DnaViewer extends React.Component {
   constructor (props) {
     super(props);
     this.handleResize = this.handleResize.bind(this);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.setCanvasDimensions();
   };
 
@@ -60,26 +58,12 @@ class DnaViewer extends React.Component {
 
   render () {
     var properties = {
-      className: "layout",
-      isDraggable: false,
-      isResizable: false,
       cols: window.innerWidth,
       rowHeight: this.getRowHeight(),
-      width: window.innerWidth,
-      margin: [0, 0],
-      verticalCompact: false
+      width: window.innerWidth
     };
 
-    var layout     = this.getLayout();
-    return (<ReactGridLayout {...properties} layout={layout} >
-              {layout.map((item) => {
-                return (
-                  <div key={item.i} >
-                    {item.v ? item.d : null}
-                  </div>
-                );
-              })}
-            </ReactGridLayout>);
+    return (<GridLayout properties={properties} layout={this.getLayout()} />);
   };
 
   handleResize (e) {
