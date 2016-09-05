@@ -1,6 +1,8 @@
 import React from 'react';
 import {SketchPicker as ColorPicker} from 'react-color';
 import jss from 'jss-browserify';
+import {connect} from 'react-redux';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class ColorsButton extends React.Component {
   constructor (props) {
@@ -25,10 +27,7 @@ class ColorsButton extends React.Component {
 
 class ColorSettings extends React.Component {
   constructor (props) {
-    super(props)
-    this.state = {
-      selected: null
-    };
+    super(props);
 
     this.onSelected       = this.onSelected.bind(this);
     this.onChangeComplete = this.onChangeComplete.bind(this);
@@ -45,24 +44,24 @@ class ColorSettings extends React.Component {
   };
 
   onSelected (type) {
-    if (this.state.selected === type) {
-      this.setState({selected: null});
+    if (this.props.pickingColor === type) {
+      this.props.actions.resetPickingColor();
       return;
     }
-    this.setState({selected: type});
+    this.props.actions.setPickingColor(type);
   };
 
   onChangeComplete (color) {
-    var type = this.state.selected; 
+    var type = this.props.pickingColor;
     this.setColorForType(type, color.hex)
-    this.setState({selected: null});
+    this.props.actions.resetPickingColor();
   };
 
   colorPalleteForSelection () {
-    if (!this.state.selected) {
+    if (!this.props.pickingColor) {
       return;
     }
-    var color = this.getColorForType(this.state.selected);
+    var color = this.getColorForType(this.props.pickingColor);
     return (<ColorPicker type="sketch" onChangeComplete={this.onChangeComplete} color={color}/>);
   };
 
@@ -78,4 +77,10 @@ class ColorSettings extends React.Component {
   };
 };
 
-export default ColorSettings;
+var mapStateToProps = (state, ownProps) => {
+  return {
+    pickingColor: state.pickingColor
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ColorSettings);
