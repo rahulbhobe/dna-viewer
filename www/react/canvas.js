@@ -323,22 +323,12 @@ class Canvas extends React.Component {
     return !thisBase.canPairWith(draggingBase);
   };
 
-  isWindowSmall () {
-    return (this.props.windowDimensions.width < 900);
-  };
-
   getWindowWidth () {
-    if (this.isWindowSmall()) {
-      return this.props.windowDimensions.width;
-    }
-    return this.props.windowDimensions.width - 225 - 10;
+    return this.props.dimensions.width;
   };
 
   getWindowHeight () {
-    if (this.isWindowSmall()) {
-      return this.props.windowDimensions.height - 30;
-    }
-    return this.props.windowDimensions.height - 30 - 150 - 5;
+    return this.props.dimensions.height;
   };
 
   getCoordinatesForScreen (sequenceParser) {
@@ -401,7 +391,7 @@ var mapStateToProps = (state, ownProps) => {
     rotationAngle: state.rotationAngle,
     origin: state.origin,
     mouseActionDataType: state.mouseActionData.type,
-    windowDimensions: state.windowDimensions
+    dimensions: state.windowDimensions
   };
 };
 

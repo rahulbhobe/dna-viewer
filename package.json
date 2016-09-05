@@ -33,6 +33,7 @@
     "react": "15.3.1",
     "react-color": "2.2.2",
     "react-dom": "15.3.1",
+    "react-grid-layout": "0.13.3",
     "react-redux": "4.4.5",
     "redux": "3.5.2",
     "request": "2.74.0",

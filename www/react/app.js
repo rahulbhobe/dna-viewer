@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     var sequenceParser = new SequenceParser(obj.seq, obj.dbn);
     store.dispatch(actionCreators.setCurrentUrl(obj.url));
     store.dispatch(actionCreators.setSequenceParser(sequenceParser));
-    store.dispatch(actionCreators.setWindowDimensions(window.innerWidth, window.innerHeight));
 
     ReactDOM.render(
       <Provider store={store}>
