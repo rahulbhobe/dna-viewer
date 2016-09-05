@@ -224,6 +224,7 @@ class Canvas extends React.Component {
     }
 
     this.props.actions.setSequenceParser(sequenceParserNew);
+    this.props.actions.setTempSequence(seq, newdbn);
   };
 
   onMouseLeave () {

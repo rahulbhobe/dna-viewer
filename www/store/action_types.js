@@ -1,5 +1,6 @@
 export const SET_SEQUENCE_PARSER                = 'SET_SEQUENCE_PARSER';
 export const RESET_SEQUENCE_PARSER              = 'RESET_SEQUENCE_PARSER';
+export const SET_TEMP_SEQUENCE                  = 'SET_TEMP_SEQUENCE';
 export const SET_CURRENT_URL                    = 'SET_CURRENT_URL';
 export const RESET_CURRENT_URL                  = 'RESET_CURRENT_URL';
 export const SET_HOVER_NODE                     = 'SET_HOVER_NODE';

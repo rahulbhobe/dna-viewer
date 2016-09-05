@@ -32,10 +32,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   };
 
   getData()
-  .then((obj) => {
-    var sequenceParser = new SequenceParser(obj.seq, obj.dbn);
-    store.dispatch(actionCreators.setCurrentUrl(obj.url));
+  .then(({seq, dbn, url}) => {
+    var sequenceParser = new SequenceParser(seq, dbn);
+    store.dispatch(actionCreators.setCurrentUrl(url));
     store.dispatch(actionCreators.setSequenceParser(sequenceParser));
+    store.dispatch(actionCreators.setTempSequence(seq, dbn));
 
     ReactDOM.render(
       <Provider store={store}>

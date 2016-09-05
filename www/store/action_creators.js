@@ -8,6 +8,10 @@ export var resetSequenceParser = () => {
   return { type: ActionTypes.RESET_SEQUENCE_PARSER, value: null };
 };
 
+export var setTempSequence = (seq, dbn) => {
+  return { type: ActionTypes.SET_TEMP_SEQUENCE, value: {seq, dbn} };
+};
+
 export var setCurrentUrl = (url) => {
   return { type: ActionTypes.SET_CURRENT_URL, value: url };
 };

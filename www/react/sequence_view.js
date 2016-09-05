@@ -93,8 +93,6 @@ class SequenceView extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      seq: this.props.seq,
-      dbn: this.props.dbn,
       error: false
     };
 
@@ -106,16 +104,14 @@ class SequenceView extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     this.setState({
-      seq: nextProps.seq,
-      dbn: nextProps.dbn,
       error: false
     });
   };
 
   isDirty () {
-    if (this.props.seq !== this.state.seq) {
+    if (this.props.seqTemp !== this.props.seqPerm) {
       return true;
-    } else if (this.props.dbn !== this.state.dbn) {
+    } else if (this.props.dbnTemp !== this.props.dbnPerm) {
       return true;
     }
 
@@ -123,19 +119,23 @@ class SequenceView extends React.Component {
   };
 
   onChange (type, value) {
-    this.setState({[type]: value});
+    var obj = {
+      seq: this.props.seqPerm,
+      dbn: this.props.dbnPerm
+    };
+    obj[type] = value;
+    this.props.actions.setTempSequence(obj.seq, obj.dbn);
   };
 
   onCancel () {
+    this.props.actions.setTempSequence(this.props.seqPerm, this.props.dbnPerm);
     this.setState({
-      seq: this.props.seq,
-      dbn: this.props.dbn,
       error: false
     });
   };
 
   onApply () {
-    var sequenceParser = new SequenceParser(this.state.seq, this.state.dbn);
+    var sequenceParser = new SequenceParser(this.props.seqTemp, this.props.dbnTemp);
     if (sequenceParser.hasErrors()) {
       this.setState({error: true});
       return;
@@ -145,8 +145,8 @@ class SequenceView extends React.Component {
 
   getLayout() {
     return [
-      {x:0,  y:0,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.state.seq} type="seq" error={this.state.error} onChange={this.onChange} placeholder="Enter DNA sequence" />)},
-      {x:0,  y:1,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.state.dbn} type="dbn" error={this.state.error} onChange={this.onChange} placeholder="Enter DBN" />)},
+      {x:0,  y:0,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.props.seqTemp} type="seq" error={this.state.error} onChange={this.onChange} placeholder="Enter DNA sequence" />)},
+      {x:0,  y:1,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.props.dbnTemp} type="dbn" error={this.state.error} onChange={this.onChange} placeholder="Enter DBN" />)},
       {x:25, y:0,  w:2,   h:2,  v: true,  d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onCancel} buttonText={'Cancel'}/>)},
       {x:27, y:0,  w:2,   h:2,  v: true,  d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onApply} buttonText={'Apply'}/>)}
     ];
@@ -167,8 +167,10 @@ class SequenceView extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    seq: state.sequenceParser.getData().seq,
-    dbn: state.sequenceParser.getData().dbn,
+    seqPerm: state.sequenceParser.getData().seq,
+    dbnPerm: state.sequenceParser.getData().dbn,
+    seqTemp: state.tempSequence.seq,
+    dbnTemp: state.tempSequence.dbn,
     canvasDimensions: state.canvasDimensions
   };
 };

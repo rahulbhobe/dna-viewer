@@ -10,6 +10,13 @@ var sequenceParserReducer = (state=null, action) => {
   return state;
 };
 
+var tempSequenceReducer = (state={seq: '', dbn: ''}, action) => {
+  if (action.type === ActionTypes.SET_TEMP_SEQUENCE) {
+    return action.value;
+  }
+  return state;
+};
+
 var currentUrlReducer = (state="", action) => {
   if (action.type === ActionTypes.SET_CURRENT_URL) {
     return action.value;
@@ -100,6 +107,7 @@ var canvasDimensionsReducer = (state={width:-1, height:-1}, action) => {
 
 var reducers = combineReducers({
   sequenceParser: sequenceParserReducer,
+  tempSequence: tempSequenceReducer,
   currentUrl: currentUrlReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
