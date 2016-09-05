@@ -16,23 +16,34 @@ class DnaViewer extends React.Component {
     this.setCanvasDimensions();
   };
 
-  getRowHeight() {
+  getRowHeight () {
     return 32;
   };
 
-  calculateCanvasDimensions() {
+  isWidthSmall () {
+    return (window.innerWidth < 900);
+  };
+
+  isHeightSmall () {
+    return (window.innerHeight < 650);
+  };
+
+  calculateCanvasDimensions () {
+    var winW = window.innerWidth;
+    var winH = window.innerHeight;
+
     return {
-      width:  window.innerWidth - 235,
-      height: window.innerHeight - (this.getRowHeight() * (1+4))
+      width:  this.isWidthSmall()  ? winW  : winW - 235,
+      height: this.isHeightSmall() ? (winH - (this.getRowHeight() * (1))) : winH - (this.getRowHeight() * (1+4))
     };
   };
 
-  setCanvasDimensions() {
+  setCanvasDimensions () {
     var {width, height}  = this.calculateCanvasDimensions();
     this.props.actions.setCanvasDimensions(width, height);
   };
 
-  getLayout() {
+  getLayout () {
     var {width, height}  = this.calculateCanvasDimensions();
     var ch = height/this.getRowHeight();
     var cw = width;
@@ -40,10 +51,10 @@ class DnaViewer extends React.Component {
     var sw = tw - cw;
 
     return [
-      {x:0,   y:0,    w:cw,  h:1,     i: 'ShareLink',    d: (<ShareLink />)},
-      {x:0,   y:1,    w:cw,  h:ch,    i: 'Canvas',       d: (<Canvas />)},
-      {x:0,   y:ch+1, w:tw,  h:4,     i: 'SequenceView', d: (<SequenceView />)},
-      {x:cw,  y:0,    w:sw,  h:ch+1,  i: 'SettingsView', d: (<SettingsView />)}
+      {x:0,   y:0,    w:cw,  h:1,     v: true,                   i: 'ShareLink',    d: (<ShareLink />)},
+      {x:0,   y:1,    w:cw,  h:ch,    v: true,                   i: 'Canvas',       d: (<Canvas />)},
+      {x:0,   y:ch+1, w:tw,  h:4,     v: !this.isHeightSmall(),  i: 'SequenceView', d: (<SequenceView />)},
+      {x:cw,  y:0,    w:sw,  h:ch+1,  v: !this.isWidthSmall(),   i: 'SettingsView', d: (<SettingsView />)}
     ];
   };
 
@@ -64,7 +75,7 @@ class DnaViewer extends React.Component {
               {layout.map((item) => {
                 return (
                   <div key={item.i} >
-                    {item.d}
+                    {item.v ? item.d : null}
                   </div>
                 );
               })}
