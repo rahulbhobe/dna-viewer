@@ -19,7 +19,7 @@ class DnaViewer extends React.Component {
   setCanvasDimensions() {
     var width  = window.innerWidth - 235;
     var height = window.innerHeight - (32 * (1+5));
-    this.props.actions.setWindowDimensions(width, height);
+    this.props.actions.setCanvasDimensions(width, height);
   };
 
   getLayout() {
@@ -69,7 +69,7 @@ class DnaViewer extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    canvasDimensions: state.windowDimensions
+    canvasDimensions: state.canvasDimensions
   };
 };
 

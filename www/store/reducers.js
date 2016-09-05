@@ -82,8 +82,8 @@ var originReducer = (state={x:0, y:0}, action) => {
   return state;
 };
 
-var windowDimensionsReducer = (state={width:-1, height:-1}, action) => {
-  if (action.type === ActionTypes.SET_WINDOW_DIMENSIONS) {
+var canvasDimensionsReducer = (state={width:-1, height:-1}, action) => {
+  if (action.type === ActionTypes.SET_CANVAS_DIMENSIONS) {
     return action.value;
   }
   return state;
@@ -99,7 +99,7 @@ var reducers = combineReducers({
   zoomFactor: zoomFactorReducer,
   rotationAngle: rotationAngleReducer,
   origin: originReducer,
-  windowDimensions: windowDimensionsReducer
+  canvasDimensions: canvasDimensionsReducer
 });
 
 export default reducers;

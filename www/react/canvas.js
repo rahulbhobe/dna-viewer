@@ -391,7 +391,7 @@ var mapStateToProps = (state, ownProps) => {
     rotationAngle: state.rotationAngle,
     origin: state.origin,
     mouseActionDataType: state.mouseActionData.type,
-    dimensions: state.windowDimensions
+    dimensions: state.canvasDimensions
   };
 };
 

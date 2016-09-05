@@ -72,6 +72,6 @@ export var resetOrigin = () => {
   return { type: ActionTypes.RESET_ORIGIN, value: {x: 0, y: 0} };
 };
 
-export var setWindowDimensions = (width, height) => {
-  return { type: ActionTypes.SET_WINDOW_DIMENSIONS, value: {width, height} };
+export var setCanvasDimensions = (width, height) => {
+  return { type: ActionTypes.SET_CANVAS_DIMENSIONS, value: {width, height} };
 };
