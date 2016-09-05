@@ -9,8 +9,13 @@ class GridLayout extends React.Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   };
 
+  getKeyFromIndex (idx) {
+    return 'grid_layout_key_' + idx;
+  };
+
   getLayout () {
-    return this.props.layout.map(({i, x, y, w, h}) => {
+    return this.props.layout.map(({x, y, w, h}, idx) => {
+      var i = this.getKeyFromIndex(idx);
       return {i, x, y, w, h};
     });
   };
@@ -27,9 +32,9 @@ class GridLayout extends React.Component {
 
     return (
       <ReactGridLayout layout={this.getLayout()} {...properties} >
-        {this.props.layout.map((item) => {
+        {this.props.layout.map((item, idx) => {
           return (
-            <div key={item.i} >
+            <div key={this.getKeyFromIndex(idx)} >
               {item.v ? item.d : null}
             </div>
           );
