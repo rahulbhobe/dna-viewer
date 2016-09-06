@@ -12,6 +12,14 @@ export var setTempSequence = (seq, dbn) => {
   return { type: ActionTypes.SET_TEMP_SEQUENCE, value: {seq, dbn} };
 };
 
+export var setSequenceViewHasErrors = (value) => {
+  return { type: ActionTypes.SET_SEQUENCE_VIEW_HAS_ERRORS, value: value };
+};
+
+export var resetSequenceViewHasErrors = () => {
+  return { type: ActionTypes.RESET_SEQUENCE_VIEW_HAS_ERRORS, value: false };
+};
+
 export var setCurrentUrl = (url) => {
   return { type: ActionTypes.SET_CURRENT_URL, value: url };
 };

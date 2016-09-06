@@ -55,7 +55,7 @@ class SequenceFormView extends React.Component {
   };
 
   render () {
-    var formClass = classNames('dna-base-font', {'sequence-has-error': this.props.error});
+    var formClass = classNames('dna-base-font', {'sequence-has-error': this.props.hasErrors});
     var inpClass = classNames({'hidden': !this.state.editMode});
     var divClass = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
 
@@ -84,8 +84,9 @@ class SequenceFormView extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    seqTemp: state.tempSequence.seq,
-    dbnTemp: state.tempSequence.dbn
+    seqTemp:   state.tempSequence.seq,
+    dbnTemp:   state.tempSequence.dbn,
+    hasErrors: state.sequenceViewHasErrors
   };
 };
 

@@ -17,6 +17,15 @@ var tempSequenceReducer = (state={seq: '', dbn: ''}, action) => {
   return state;
 };
 
+var sequenceViewHasErrorsReducer = (state=false, action) => {
+  if (action.type === ActionTypes.SET_SEQUENCE_VIEW_HAS_ERRORS) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_SEQUENCE_VIEW_HAS_ERRORS) {
+    return action.value;
+  }
+  return state;
+};
+
 var currentUrlReducer = (state="", action) => {
   if (action.type === ActionTypes.SET_CURRENT_URL) {
     return action.value;
@@ -108,6 +117,7 @@ var canvasDimensionsReducer = (state={width:-1, height:-1}, action) => {
 var reducers = combineReducers({
   sequenceParser: sequenceParserReducer,
   tempSequence: tempSequenceReducer,
+  sequenceViewHasErrors: sequenceViewHasErrorsReducer,
   currentUrl: currentUrlReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
