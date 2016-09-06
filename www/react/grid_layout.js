@@ -41,7 +41,7 @@ class GridLayout extends React.Component {
         {this.getVisibleLayout().map((item, idx) => {
           return (
             <div key={this.getKeyFromIndex(idx)} >
-              {item.v ? item.d : null}
+              {item.d}
             </div>
           );
         })}
