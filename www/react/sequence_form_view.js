@@ -9,19 +9,12 @@ class SequenceFormView extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      value: this.props.value,
       editMode: false
     };
 
     this.onChange = this.onChange.bind(this);
     this.onBlur   = this.onBlur.bind(this);
     this.onClick  = this.onClick.bind(this);
-  };
-
-  componentWillReceiveProps (nextProps) {
-    this.setState({
-      value: nextProps.value
-    });
   };
 
   componentDidUpdate () {
@@ -33,7 +26,6 @@ class SequenceFormView extends React.Component {
 
   onChange (evt) {
     var value = evt.target.value.toUpperCase();
-    this.setState({value: value});
     var obj = {
       seq: this.props.seqTemp,
       dbn: this.props.dbnTemp
@@ -42,8 +34,16 @@ class SequenceFormView extends React.Component {
     this.props.actions.setTempSequence(obj.seq, obj.dbn);
   };
 
+  getValueForView () {
+    var obj = {
+      seq: this.props.seqTemp,
+      dbn: this.props.dbnTemp
+    };
+    return obj[this.props.type];
+  };
+
   onBlur () {
-    ReactDOM.findDOMNode(this.refs.inp).value = this.state.value;
+    ReactDOM.findDOMNode(this.refs.inp).value = this.getValueForView();
     this.setState({editMode: false});
   };
 
@@ -59,7 +59,7 @@ class SequenceFormView extends React.Component {
     var inpClass = classNames({'hidden': !this.state.editMode});
     var divClass = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
 
-    var str = this.state.value;
+    var str = this.getValueForView();
     var letterDivs = [];
     for (var ii=0; ii<str.length; ii++) {
       letterDivs.push((<SequenceLetter letter={str[ii]} index={ii}
@@ -69,7 +69,7 @@ class SequenceFormView extends React.Component {
 
     return (<div className='sequence-form'>
               <form className={formClass}>
-                <input type="text" className={inpClass} value={this.state.value}
+                <input type="text" className={inpClass} value={this.getValueForView()}
                   onChange={this.onChange} onBlur={this.onBlur}
                   ref="inp" placeholder={this.props.placeholder}
                   style={{width: '100%'}} >
