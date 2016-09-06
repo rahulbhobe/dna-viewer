@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SequenceLetter from './sequence_letter';
 import classNames from 'classnames';
+import {connect} from 'react-redux';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class SequenceFormView extends React.Component {
   constructor (props) {
@@ -32,7 +34,12 @@ class SequenceFormView extends React.Component {
   onChange (evt) {
     var value = evt.target.value.toUpperCase();
     this.setState({value: value});
-    this.props.onChange(this.props.type, value);
+    var obj = {
+      seq: this.props.seqTemp,
+      dbn: this.props.dbnTemp
+    };
+    obj[this.props.type] = value;
+    this.props.actions.setTempSequence(obj.seq, obj.dbn);
   };
 
   onBlur () {
@@ -75,4 +82,11 @@ class SequenceFormView extends React.Component {
   };
 };
 
-export default SequenceFormView;
+var mapStateToProps = (state, ownProps) => {
+  return {
+    seqTemp: state.tempSequence.seq,
+    dbnTemp: state.tempSequence.dbn
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SequenceFormView);

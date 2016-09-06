@@ -22,7 +22,6 @@ class SequenceView extends React.Component {
       error: false
     };
 
-    this.onChange = this.onChange.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onApply  = this.onApply.bind(this);
     this.isDirty  = this.isDirty.bind(this);
@@ -44,15 +43,6 @@ class SequenceView extends React.Component {
     return false;
   };
 
-  onChange (type, value) {
-    var obj = {
-      seq: this.props.seqTemp,
-      dbn: this.props.dbnTemp
-    };
-    obj[type] = value;
-    this.props.actions.setTempSequence(obj.seq, obj.dbn);
-  };
-
   onCancel () {
     this.props.actions.setTempSequence(this.props.seqPerm, this.props.dbnPerm);
     this.setState({
@@ -71,8 +61,8 @@ class SequenceView extends React.Component {
 
   getLayout() {
     return [
-      {x:0,  y:0,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.props.seqTemp} type="seq" error={this.state.error} onChange={this.onChange} placeholder="Enter DNA sequence" />)},
-      {x:0,  y:1,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.props.dbnTemp} type="dbn" error={this.state.error} onChange={this.onChange} placeholder="Enter DBN" />)},
+      {x:0,  y:0,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.props.seqTemp} type="seq" error={this.state.error} placeholder="Enter DNA sequence" />)},
+      {x:0,  y:1,  w:25,  h:1,  v: true,  d: (<SequenceFormView value={this.props.dbnTemp} type="dbn" error={this.state.error} placeholder="Enter DBN" />)},
       {x:25, y:0,  w:2,   h:2,  v: true,  d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onCancel} buttonText={'Cancel'}/>)},
       {x:27, y:0,  w:2,   h:2,  v: true,  d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onApply} buttonText={'Apply'}/>)}
     ];
