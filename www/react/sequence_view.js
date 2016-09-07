@@ -51,8 +51,8 @@ class SequenceView extends React.Component {
     return [
       {x:0,  y:0,  w:25,  h:1,  v: true,            d: (<SequenceFormView type="seq" placeholder="Enter DNA sequence" />)},
       {x:0,  y:1,  w:25,  h:1,  v: true,            d: (<SequenceFormView type="dbn" placeholder="Enter DBN" />)},
-      {x:25, y:0,  w:2,   h:2,  v: this.isDirty(),  d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onCancel} buttonText={'Cancel'}/>)},
-      {x:27, y:0,  w:2,   h:2,  v: this.isDirty(),  d: (<SequenceChanges dirty={this.isDirty()} onClick={this.onApply} buttonText={'Apply'}/>)}
+      {x:25, y:0,  w:2,   h:2,  v: this.isDirty(),  d: (<SequenceChanges  onClick={this.onCancel} buttonText={'Cancel'}/>)},
+      {x:27, y:0,  w:2,   h:2,  v: this.isDirty(),  d: (<SequenceChanges  onClick={this.onApply} buttonText={'Apply'}/>)}
     ];
   };
 
