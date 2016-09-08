@@ -60,6 +60,7 @@ class Canvas extends React.Component {
     this.onMouseWheel = this.onMouseWheel.bind(this);
     this.onKeydown = this.onKeydown.bind(this);
     this.onContextMenu = this.onContextMenu.bind(this);
+    this.onMouseWheelDoc = this.onMouseWheelDoc.bind(this);
   };
 
   render () {
@@ -110,6 +111,7 @@ class Canvas extends React.Component {
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
     svg.addEventListener('mousewheel', this.onMouseWheel, false);
     document.addEventListener('keydown', this.onKeydown, false);
+    document.addEventListener('mousewheel', this.onMouseWheelDoc, false);
   };
 
   componentWillUnmount () {
@@ -120,6 +122,7 @@ class Canvas extends React.Component {
     svg.removeEventListener('mouseleave', this.onMouseLeave, false);
     svg.removeEventListener('mousewheel', this.onMouseWheel, false);
     document.removeEventListener('keydown', this.onKeydown, false);
+    document.removeEventListener('mousewheel', this.onMouseWheelDoc, false);
   };
 
   getPositionAtEvent (event) {
@@ -150,6 +153,11 @@ class Canvas extends React.Component {
   };
 
   onContextMenu (event) {
+    event.preventDefault();
+    return false;
+  };
+
+  onMouseWheelDoc (event) {
     event.preventDefault();
     return false;
   };
