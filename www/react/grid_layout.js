@@ -15,6 +15,21 @@ class GridLayout extends React.Component {
     });
   };
 
+  getVisibleKeys () {
+    var layout = this.getVisibleLayout();
+    return layout.reduce((acc, item) => {
+      acc[item.i] = true;
+      return acc;
+    }, {});
+  };
+
+  getVisibleChildren () {
+    var keys = this.getVisibleKeys();
+    return this.props.children.filter((child) => {
+      return (child.key in keys);
+    });
+  };
+
   getLayout () {
     return this.getVisibleLayout().map(({i, x, y, w, h}) => {
       return {i, x, y, w, h};
@@ -34,7 +49,7 @@ class GridLayout extends React.Component {
     var layout = this.getLayout();
     return (
       <ReactGridLayout layout={layout} {...properties} >
-        {this.props.children.map((child) => {
+        {this.getVisibleChildren().map((child) => {
           return (
             <div key={child.key} >
               {child}
