@@ -7,9 +7,9 @@ import GridLayout from './grid_layout';
 class SettingsView extends React.Component {
   getLayout() {
     return [
-      {x:0,  y:0,  w:2,  h:2,  v: true, d: (<ColorSettings />)},
-      {x:0,  y:1,  w:1,  h:3,  v: true, d: (<AppearanceSettings />)},
-      {x:1,  y:1,  w:1,  h:1,  v: true, d: (<FontSettings />)}
+      {x:0,  y:0,  w:2,  h:2,  v: true, i: 'ColorSettings'},
+      {x:0,  y:1,  w:1,  h:3,  v: true, i: 'AppearanceSettings'},
+      {x:1,  y:1,  w:1,  h:1,  v: true, i: 'FontSettings'}
     ];
   };
 
@@ -21,7 +21,11 @@ class SettingsView extends React.Component {
     };
 
     return (<div className="settings-view" >
-              <GridLayout properties={properties} layout={this.getLayout()} />
+              <GridLayout properties={properties} layout={this.getLayout()}>
+                <ColorSettings      key='ColorSettings' />
+                <AppearanceSettings key='AppearanceSettings' />
+                <FontSettings       key='FontSettings' />
+              </GridLayout>
             </div>);
   };
 };

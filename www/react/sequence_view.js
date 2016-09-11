@@ -49,10 +49,10 @@ class SequenceView extends React.Component {
 
   getLayout() {
     return [
-      {x:0,  y:0,  w:25,  h:1,  v: true,            d: (<SequenceFormView type="seq" placeholder="Enter DNA sequence" />)},
-      {x:0,  y:1,  w:25,  h:1,  v: true,            d: (<SequenceFormView type="dbn" placeholder="Enter DBN" />)},
-      {x:25, y:0,  w:2,   h:2,  v: this.isDirty(),  d: (<SequenceChanges  onClick={this.onCancel} buttonText={'Cancel'}/>)},
-      {x:27, y:0,  w:2,   h:2,  v: this.isDirty(),  d: (<SequenceChanges  onClick={this.onApply} buttonText={'Apply'}/>)}
+      {x:0,  y:0,  w:25,  h:1,  v: true,            i: 'SequenceFormViewSeq'},
+      {x:0,  y:1,  w:25,  h:1,  v: true,            i: 'SequenceFormViewDbn'},
+      {x:25, y:0,  w:2,   h:2,  v: this.isDirty(),  i: 'SequenceChangesCancel'},
+      {x:27, y:0,  w:2,   h:2,  v: this.isDirty(),  i: 'SequenceChangesApply'}
     ];
   };
 
@@ -64,7 +64,12 @@ class SequenceView extends React.Component {
     };
 
     return (<div className="sequence-form-wrapper-div">
-              <GridLayout properties={properties} layout={this.getLayout()} />
+              <GridLayout properties={properties} layout={this.getLayout()} >
+                <SequenceFormView key='SequenceFormViewSeq'   type="seq" placeholder="Enter DNA sequence" />
+                <SequenceFormView key='SequenceFormViewDbn'   type="dbn" placeholder="Enter DBN" />
+                <SequenceChanges  key='SequenceChangesCancel' onClick={this.onCancel} buttonText={'Cancel'}/>
+                <SequenceChanges  key='SequenceChangesApply'  onClick={this.onApply} buttonText={'Apply'}/>
+              </GridLayout>
             </div>);
   };
 };

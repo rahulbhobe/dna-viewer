@@ -9,10 +9,6 @@ class GridLayout extends React.Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   };
 
-  getKeyFromIndex (idx) {
-    return 'grid_layout_key_' + idx;
-  };
-
   getVisibleLayout () {
     return this.props.layout.filter(({v}) => {
       return v === true;
@@ -20,8 +16,7 @@ class GridLayout extends React.Component {
   };
 
   getLayout () {
-    return this.getVisibleLayout().map(({x, y, w, h}, idx) => {
-      var i = this.getKeyFromIndex(idx);
+    return this.getVisibleLayout().map(({i, x, y, w, h}) => {
       return {i, x, y, w, h};
     });
   };
@@ -36,12 +31,13 @@ class GridLayout extends React.Component {
       ...this.props.properties
     };
 
+    var layout = this.getLayout();
     return (
-      <ReactGridLayout layout={this.getLayout()} {...properties} >
-        {this.getVisibleLayout().map((item, idx) => {
+      <ReactGridLayout layout={layout} {...properties} >
+        {this.props.children.map((child) => {
           return (
-            <div key={this.getKeyFromIndex(idx)} >
-              {item.d}
+            <div key={child.key} >
+              {child}
             </div>
           );
         })}

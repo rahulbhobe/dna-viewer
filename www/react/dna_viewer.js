@@ -49,10 +49,10 @@ class DnaViewer extends React.Component {
     var sw = tw - cw;
 
     return [
-      {x:0,   y:0,    w:cw,  h:1,     v: true,                   d: (<ShareLink />)},
-      {x:0,   y:1,    w:cw,  h:ch,    v: true,                   d: (<Canvas />)},
-      {x:0,   y:ch+1, w:tw,  h:4,     v: !this.isHeightSmall(),  d: (<SequenceView />)},
-      {x:cw,  y:0,    w:sw,  h:ch+1,  v: !this.isWidthSmall(),   d: (<SettingsView />)}
+      {x:0,   y:0,    w:cw,  h:1,     v: true,                   i: 'ShareLink'},
+      {x:0,   y:1,    w:cw,  h:ch,    v: true,                   i: 'Canvas'},
+      {x:0,   y:ch+1, w:tw,  h:4,     v: !this.isHeightSmall(),  i: 'SequenceView'},
+      {x:cw,  y:0,    w:sw,  h:ch+1,  v: !this.isWidthSmall(),   i: 'SettingsView'}
     ];
   };
 
@@ -63,7 +63,13 @@ class DnaViewer extends React.Component {
       width: window.innerWidth
     };
 
-    return (<GridLayout properties={properties} layout={this.getLayout()} />);
+    return (<GridLayout properties={properties} layout={this.getLayout()}>
+              <ShareLink    key='ShareLink' />
+              <Canvas       key='Canvas' />
+              <SequenceView key='SequenceView' />
+              <SettingsView key='SettingsView' />
+            </GridLayout>
+      );
   };
 
   handleResize (e) {
