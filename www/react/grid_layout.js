@@ -29,8 +29,7 @@ class GridLayout extends React.Component {
 
   getVisibleChildren () {
     var keys = this.getVisibleKeys();
-    return this.props.children.filter((child) => {
-      var key = child.key;
+    return this.props.children.filter(({key}) => {
       if (key === undefined) return false;
       if (key === null)      return false;
       return (key in keys);
