@@ -33,7 +33,7 @@ class GridLayout extends React.Component {
       var key = child.key;
       if (key === undefined) return false;
       if (key === null)      return false;
-      return (child.key in keys);
+      return (key in keys);
     });
   };
 
