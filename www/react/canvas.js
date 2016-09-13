@@ -177,6 +177,7 @@ class Canvas extends React.Component {
       data.angle = this.props.rotationAngle;
     }
 
+    this.props.actions.setCurrentMousePosition(this.getPositionAtEvent(event));
     this.props.actions.setMouseActionData(dataType, this.getPositionAtEvent(event), data);
   };
 
