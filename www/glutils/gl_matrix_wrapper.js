@@ -68,10 +68,7 @@ class MatrixTransformations {
   };
 
   transformPoint(x, y) {
-    var matrix = this.t.reduceRight((matrix, trf) => {
-      var m = trf(matrix);
-      return m;
-    }, new Matrix());
+    var matrix = this.t.reduceRight((matrix, trf)=>trf(matrix), new Matrix());
 
     var point = new Vector(x, y);
     point.transform(matrix);
