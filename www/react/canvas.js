@@ -2,6 +2,7 @@ import React from 'react';
 import DnaBaseView from './dna_base_view';
 import DnaDraggedNode from './dna_dragged_node';
 import {Vector} from 'sylvester';
+import {vec2 as Vec2, mat2d as Mat2d} from 'gl-matrix';
 import classNames from 'classnames';
 import store from '../store/store';
 import {connect} from 'react-redux';
@@ -341,6 +342,16 @@ class Canvas extends React.Component {
     return this.props.dimensions.height;
   };
 
+  applyMatrixTransformationsToCoordinates(matrixTransforms, coordinates) {
+    var matrix = matrixTransforms.reduceRight((matrix, trf) => trf(matrix), new Mat2d.create());
+
+    return coordinates.map((point) => {
+      var newPoint = Vec2.fromValues(point.elements[0], point.elements[1]);
+      Vec2.transformMat2d(newPoint, newPoint, matrix);
+      return Vector.create([newPoint[0], newPoint[1]]);
+    });
+  };
+
   getCoordinatesForScreen (sequenceParser) {
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
@@ -355,42 +366,33 @@ class Canvas extends React.Component {
       max.elements[0] = Math.max(max.elements[0], vec.elements[0]);
       max.elements[1] = Math.max(max.elements[1], vec.elements[1]);
     });
+
+    var diffW = max.elements[0]-min.elements[0];
+    var diffH = max.elements[1]-min.elements[1];
+
     var mid = min.add(max).multiply(0.5);
 
-    var rotatedCoordinates = coordinates;
-    if ((max.elements[0]-min.elements[0]) < (max.elements[1]-min.elements[1])) {
-      // Rotate by 90 deg if width is less than height. Most screens have larger width.
-      rotatedCoordinates = coordinates.map((point) => {
-        return point.rotate(-0.5*Math.PI, min);
-      });
+    var matrixTransforms = [];
+    matrixTransforms.push(m => Mat2d.translate(m, m, Vec2.fromValues(-1*mid.elements[0], -1*mid.elements[1])));
 
-      var t1 = min;
-      var t2 = max;
-      min = Vector.create([t1.elements[0], t1.elements[1]-(t2.elements[0]-t1.elements[0])]);
-      max = Vector.create([t1.elements[0]+(t2.elements[1]-t1.elements[1]), t1.elements[1]]);
-      mid = min.add(max).multiply(0.5);
+    if (diffW < diffH) {
+      // Rotate by 90 deg if width is less than height. Most screens have larger width.
+      matrixTransforms.push(m => Mat2d.rotate(m, m, -0.5*Math.PI));
+      [diffW, diffH] = [diffH, diffW];
     }
 
-    var scaleW = width  / (max.elements[0]-min.elements[0]);
-    var scaleH = height / (max.elements[1]-min.elements[1]);
+    var scaleW = width  / diffW;
+    var scaleH = height / diffH;
     var scale  = scaleW < scaleH ? scaleW : scaleH;
+    matrixTransforms.push(m => Mat2d.scale(m, m, Vec2.fromValues(scale*0.92, scale*0.92)));
 
-    var scaledCoordinates = rotatedCoordinates.map((point) => {
-      return point.multiply(scale*0.92*this.props.zoomFactor*0.01);
-    });
-    mid = mid.multiply(scale*0.92*this.props.zoomFactor*0.01);
+    matrixTransforms.push(m => Mat2d.translate(m, m, Vec2.fromValues(-1*this.props.origin.x, -1*this.props.origin.y)));
+    matrixTransforms.push(m => Mat2d.scale(m, m, Vec2.fromValues(this.props.zoomFactor*0.01, this.props.zoomFactor*0.01)));
+    matrixTransforms.push(m => Mat2d.rotate(m, m, (-2 * Math.PI * this.props.rotationAngle)/360));
 
-    var org = Vector.create([this.props.origin.x, this.props.origin.y]).multiply(this.props.zoomFactor*0.01);
-    var newCoordinates = scaledCoordinates.map((point) => {
-      return point.rotate((-2 * Math.PI * this.props.rotationAngle)/360, mid.add(org));
-    });
+    matrixTransforms.push(m => Mat2d.translate(m, m, Vec2.fromValues(width*0.5, height*0.5)));
 
-    var scr = Vector.create([width*0.5, height*0.5])
-    var vec = scr.subtract(mid).subtract(org);
-    var transformedCoordinates = newCoordinates.map((point) => {
-      return point.add(vec);
-    });
-    return transformedCoordinates;
+    return this.applyMatrixTransformationsToCoordinates(matrixTransforms, coordinates);
   };
 };
 
