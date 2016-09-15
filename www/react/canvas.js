@@ -1,7 +1,7 @@
 import React from 'react';
 import DnaBaseView from './dna_base_view';
 import DnaDraggedNode from './dna_dragged_node';
-import {Vector} from 'sylvester';
+import {Vector} from '../glutils/gl_matrix_wrapper';
 import {MatrixTransformations} from '../glutils/gl_matrix_wrapper';
 import classNames from 'classnames';
 import store from '../store/store';
@@ -11,17 +11,17 @@ import SequenceParser from '../src/sequence_parser';
 
 class DnaBackbone extends React.Component {
   render () {
-    var point1 = this.props.point1;
-    var point2 = this.props.point2;
-    return (<line x1={point1.elements[0]} y1={point1.elements[1]} x2={point2.elements[0]} y2={point2.elements[1]} className="dna-backbone dna-base-backbone" />);
+    var p1 = this.props.point1.asObj();
+    var p2 = this.props.point2.asObj();
+    return (<line x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} className="dna-backbone dna-base-backbone" />);
   };
 };
 
 class DnaPair extends React.Component {
   render () {
-    var source = this.props.source;
-    var target = this.props.target;
-    return (<line x1={source.elements[0]} y1={source.elements[1]} x2={target.elements[0]} y2={target.elements[1]} className="dna-pair dna-base-pair" />);
+    var p1 = this.props.source.asObj();
+    var p2 = this.props.target.asObj();
+    return (<line x1={p2.x} y1={p2.y} x2={p2.x} y2={p2.y} className="dna-pair dna-base-pair" />);
   };
 };
 
@@ -29,21 +29,21 @@ class DnaAnnotation extends React.Component {
   render () {
     var text     = this.props.text;
     var textCls  = "dna-text dna-base-font";
-    var location = this.getLocation();
+    var location = this.getLocation().asObj();
 
-    return (<g transform={"translate(" + location.elements[0] + ", " + location.elements[1] + ")"} >
+    return (<g transform={"translate(" + location.x + ", " + location.y + ")"} >
               <text className={textCls} textAnchor="middle" dominantBaseline="central">{text}</text>
             </g>);
   };
 
   getLocation () {
-    var point   = Vector.create(this.props.point);
-    var other1  = Vector.create(this.props.other1);
-    var other2  = Vector.create(this.props.other2);
+    var point   = this.props.point.clone();
+    var other1  = this.props.other1.clone();
+    var other2  = this.props.other2.clone();
     var vec1    = point.subtract(other1);
     var vec2    = point.subtract(other2);
     var bisect  = vec1.add(vec2);
-    var drawAt  = point.add(bisect.toUnitVector().multiply(20));
+    var drawAt  = point.add(bisect.normalize().scale(20));
 
     return drawAt;
   };
@@ -283,12 +283,10 @@ class Canvas extends React.Component {
     var startAngle      = data.startData.angle;
     var startPosition   = data.startData.position;
     var currentPosition = this.getPositionAtEvent(event);
-    var midPoint        = Vector.create([this.getWindowWidth()*0.5, this.getWindowHeight()*0.5, 0])
-    var startVec        = Vector.create([startPosition.x, startPosition.y, 0]).subtract(midPoint);
-    var currentVec      = Vector.create([currentPosition.x, currentPosition.y, 0]).subtract(midPoint);
-    var crossVec        = startVec.cross(currentVec);
-    var sign            = crossVec.elements[2] > 0 ? -1 : 1;
-    var angle           = sign * startVec.angleFrom(currentVec) * (360 / (2 * Math.PI));
+    var midPoint        = Vector.create(this.getWindowWidth()*0.5, this.getWindowHeight()*0.5);
+    var startVec        = Vector.create(startPosition.x, startPosition.y).subtract(midPoint);
+    var currentVec      = Vector.create(currentPosition.x, currentPosition.y).subtract(midPoint);
+    var angle           = currentVec.angleFrom(startVec) * (360 / (2 * Math.PI));
     this.props.actions.setRotationAngle(startAngle + angle);
   };
 
@@ -302,13 +300,13 @@ class Canvas extends React.Component {
     var oldOrigin       = data.startData.origin;
     var startPosition   = data.startData.position;
     var currentPosition = this.getPositionAtEvent(event);
-    var startPnt        = Vector.create([startPosition.x, startPosition.y]);
-    var currentPnt      = Vector.create([currentPosition.x, currentPosition.y]);
+    var startPnt        = Vector.create(startPosition.x, startPosition.y);
+    var currentPnt      = Vector.create(currentPosition.x, currentPosition.y);
     var vec             = currentPnt.rotate(this.props.rotationAngle * 2 * Math.PI / 360, startPnt)
                             .subtract(startPnt)
-                            .multiply(1 / (this.props.zoomFactor*0.01));
-    var org             = Vector.create([oldOrigin.x, oldOrigin.y]).subtract(vec);
-    this.props.actions.setOrigin({x: org.elements[0], y: org.elements[1]});
+                            .scale(1 / (this.props.zoomFactor*0.01));
+    var org             = Vector.create(oldOrigin.x, oldOrigin.y).subtract(vec);
+    this.props.actions.setOrigin(org.asObj());
   };
 
   cancelPan () {
@@ -347,23 +345,16 @@ class Canvas extends React.Component {
     var height      = this.getWindowHeight();
     var coordinates = sequenceParser.getCoordinates();
 
-    var min = Vector.create(coordinates[0].elements);
-    var max = Vector.create(coordinates[0].elements);
+    var min = coordinates.reduce((min, vec) => min.min(vec), coordinates[0].clone());
+    var max = coordinates.reduce((max, vec) => max.max(vec), coordinates[0].clone());
 
-    coordinates.forEach((vec) => {
-      min.elements[0] = Math.min(min.elements[0], vec.elements[0]);
-      min.elements[1] = Math.min(min.elements[1], vec.elements[1]);
-      max.elements[0] = Math.max(max.elements[0], vec.elements[0]);
-      max.elements[1] = Math.max(max.elements[1], vec.elements[1]);
-    });
+    var diffW = max.asObj().x - min.asObj().x;
+    var diffH = max.asObj().y - min.asObj().y;
 
-    var diffW = max.elements[0]-min.elements[0];
-    var diffH = max.elements[1]-min.elements[1];
+    var mid = min.add(max).scale(0.5);
 
-    var mid = min.add(max).multiply(0.5);
-
-    var matrixTransforms = new MatrixTransformations();
-    matrixTransforms.append(m => m.translate(-1*mid.elements[0], -1*mid.elements[1]));
+    var matrixTransforms = MatrixTransformations.create();
+    matrixTransforms.append(m => m.translate(mid.negate()));
 
     if (diffW < diffH) {
       // Rotate by 90 deg if width is less than height. Most screens have larger width.
@@ -376,15 +367,14 @@ class Canvas extends React.Component {
     var scale  = scaleW < scaleH ? scaleW : scaleH;
     matrixTransforms.append(m => m.scale(scale*0.92));
 
-    matrixTransforms.append(m => m.translate(-1*this.props.origin.x, -1*this.props.origin.y));
+    matrixTransforms.append(m => m.translate(Vector.create(-1*this.props.origin.x, -1*this.props.origin.y)));
     matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
     matrixTransforms.append(m => m.rotate((-2 * Math.PI * this.props.rotationAngle)/360));
 
-    matrixTransforms.append(m => m.translate(width*0.5, height*0.5));
+    matrixTransforms.append(m => m.translate(Vector.create(width*0.5, height*0.5)));
 
     return coordinates.map((point) => {
-      var newPoint = matrixTransforms.transformPoint(point.elements[0], point.elements[1]);
-      return Vector.create(newPoint.asArr());
+      return matrixTransforms.transformPoint(point);
     });
   };
 };

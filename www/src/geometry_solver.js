@@ -1,4 +1,4 @@
-import {Vector} from 'sylvester';
+import {Vector} from '../glutils/gl_matrix_wrapper';
 
 var GeometrySolver = function (sequenceParser) {
   var distance     = 100; // Distance between nodes.
@@ -24,7 +24,7 @@ var GeometrySolver = function (sequenceParser) {
     return getRadiusFromTheta(theta) * Math.cos(theta/2);
   };
 
-  var centerPosition = Vector.create([0, 0]); // Start position for the center.
+  var centerPosition = Vector.create(0, 0); // Start position for the center.
 
   var moveCenter = false;
   var prevPoint  = null;
@@ -37,7 +37,7 @@ var GeometrySolver = function (sequenceParser) {
       // Two intersecting circles with common chord length "distance".
       var distanceBetweenCenters = getDistanceToChord(thisTheta) + getDistanceToChord(prevTheta);
       var point = prevPoint.rotate(prevTheta/2, centerPosition); // Rotate to align with the "other" circle.
-      var vec   = point.subtract(centerPosition).toUnitVector().multiply(distanceBetweenCenters);
+      var vec   = point.subtract(centerPosition).normalize().scale(distanceBetweenCenters);
       centerPosition = centerPosition.add(vec);
     }
 
@@ -46,7 +46,7 @@ var GeometrySolver = function (sequenceParser) {
       thisPoint = prevPoint.rotate(thisTheta, centerPosition);
     } else {
       // Start point. Center is chosen (see above). Radius is known. Create a point at a chosen angle.
-      thisPoint = centerPosition.add(Vector.create([0, -1]).multiply(getRadiusFromTheta(thisTheta)));
+      thisPoint = centerPosition.add(Vector.create(0, -1).scale(getRadiusFromTheta(thisTheta)));
     }
 
     coordinates.push(thisPoint);

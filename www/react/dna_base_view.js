@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 class DnaBaseView extends React.Component {
   render () {
-    var point   = this.props.point;
+    var {x, y}  = this.props.point.asObj();
     var base    = this.props.base;
     var classes = classNames('dna-base', 'dna-base-size', {
                               ['dna-base-' + base.getType().toLowerCase()] : true,
@@ -15,7 +15,7 @@ class DnaBaseView extends React.Component {
     var textCls = classNames('dna-text', 'dna-base-font');
     var clsName = classNames({'dna-base-banned-pairing': this.props.bannedCursorWhenMoving});
 
-    return (<g className={clsName} transform={'translate(' + point.elements[0] + ', ' + point.elements[1] + ')'}>
+    return (<g className={clsName} transform={'translate(' + x + ', ' + y + ')'}>
               <circle className={classes} data-index={this.props.isDraggedNode ? -1 : base.getIndex()} />
               <text className={textCls} textAnchor='middle' dominantBaseline='central'> {base.getType()}</text>
             </g>);
