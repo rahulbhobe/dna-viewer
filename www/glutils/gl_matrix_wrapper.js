@@ -1,26 +1,5 @@
 import {vec2 as Vec2, mat2d as Mat2d} from 'gl-matrix';
 
-class Matrix {
-  constructor() {
-    this.m = Mat2d.create();
-  };
-
-  translate(x, y) {
-    Mat2d.translate(this.m, this.m, Vec2.fromValues(x, y));
-    return this;
-  };
-
-  rotate(rad) {
-    Mat2d.rotate(this.m, this.m, rad);
-    return this;
-  };
-
-  scale(val) {
-    Mat2d.scale(this.m, this.m, Vec2.fromValues(val, val));
-    return this;
-  };
-};
-
 class Vector {
   constructor(x, y) {
     x = x || 0;
@@ -56,7 +35,27 @@ class Vector {
       this.v[1]
     ];
   };
+};
 
+class Matrix {
+  constructor() {
+    this.m = Mat2d.create();
+  };
+
+  translate(x, y) {
+    Mat2d.translate(this.m, this.m, Vec2.fromValues(x, y));
+    return this;
+  };
+
+  rotate(rad) {
+    Mat2d.rotate(this.m, this.m, rad);
+    return this;
+  };
+
+  scale(val) {
+    Mat2d.scale(this.m, this.m, Vec2.fromValues(val, val));
+    return this;
+  };
 };
 
 export {Matrix, Vector};
