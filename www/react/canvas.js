@@ -348,14 +348,12 @@ class Canvas extends React.Component {
     var min = coordinates.reduce((min, vec) => min.min(vec), coordinates[0].clone());
     var max = coordinates.reduce((max, vec) => max.max(vec), coordinates[0].clone());
 
-    var diffW = max.asObj().x - min.asObj().x;
-    var diffH = max.asObj().y - min.asObj().y;
-
-    var mid = min.add(max).scale(0.5);
-
     var matrixTransforms = MatrixTransformations.create();
-    matrixTransforms.append(m => m.translate(mid.negate()));
 
+    var negMid = min.add(max).scale(0.5).negate();
+    matrixTransforms.append(m => m.translate(negMid));
+
+    var {x: diffW, y: diffH} = max.subtract(min).asObj();
     if (diffW < diffH) {
       // Rotate by 90 deg if width is less than height. Most screens have larger width.
       matrixTransforms.append(m => m.rotate(-0.5*Math.PI));
@@ -367,11 +365,12 @@ class Canvas extends React.Component {
     var scale  = scaleW < scaleH ? scaleW : scaleH;
     matrixTransforms.append(m => m.scale(scale*0.92));
 
-    matrixTransforms.append(m => m.translate(Vector.create(-1*this.props.origin.x, -1*this.props.origin.y)));
+    var negOrg = Vector.create(this.props.origin.x, this.props.origin.y).negate();
+    matrixTransforms.append(m => m.translate(negOrg));
     matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
     matrixTransforms.append(m => m.rotate((-2 * Math.PI * this.props.rotationAngle)/360));
 
-    matrixTransforms.append(m => m.translate(Vector.create(width*0.5, height*0.5)));
+    matrixTransforms.append(m => m.translate(Vector.create(width, height).scale(0.5)));
 
     return coordinates.map((point) => {
       return matrixTransforms.transformPoint(point);
