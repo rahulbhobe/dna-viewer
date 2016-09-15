@@ -2,7 +2,7 @@ import React from 'react';
 import DnaBaseView from './dna_base_view';
 import DnaDraggedNode from './dna_dragged_node';
 import {Vector} from 'sylvester';
-import {vec2 as Vec2, mat2d as Mat2d} from 'gl-matrix';
+import {Vector as Vec2, Matrix} from '../glutils/gl_matrix_wrapper';
 import classNames from 'classnames';
 import store from '../store/store';
 import {connect} from 'react-redux';
@@ -343,12 +343,15 @@ class Canvas extends React.Component {
   };
 
   applyMatrixTransformationsToCoordinates(matrixTransforms, coordinates) {
-    var matrix = matrixTransforms.reduceRight((matrix, trf) => trf(matrix), new Mat2d.create());
+    var matrix = matrixTransforms.reduceRight((matrix, trf) => {
+      var m = trf(matrix);
+      return m;
+    }, new Matrix());
 
     return coordinates.map((point) => {
-      var newPoint = Vec2.fromValues(point.elements[0], point.elements[1]);
-      Vec2.transformMat2d(newPoint, newPoint, matrix);
-      return Vector.create([newPoint[0], newPoint[1]]);
+      var newPoint = new Vec2(point.elements[0], point.elements[1]);
+      newPoint.transform(matrix);
+      return Vector.create(newPoint.asArr());
     });
   };
 
@@ -373,24 +376,24 @@ class Canvas extends React.Component {
     var mid = min.add(max).multiply(0.5);
 
     var matrixTransforms = [];
-    matrixTransforms.push(m => Mat2d.translate(m, m, Vec2.fromValues(-1*mid.elements[0], -1*mid.elements[1])));
+    matrixTransforms.push(m => m.translate(-1*mid.elements[0], -1*mid.elements[1]));
 
     if (diffW < diffH) {
       // Rotate by 90 deg if width is less than height. Most screens have larger width.
-      matrixTransforms.push(m => Mat2d.rotate(m, m, -0.5*Math.PI));
+      matrixTransforms.push(m => m.rotate(-0.5*Math.PI));
       [diffW, diffH] = [diffH, diffW];
     }
 
     var scaleW = width  / diffW;
     var scaleH = height / diffH;
     var scale  = scaleW < scaleH ? scaleW : scaleH;
-    matrixTransforms.push(m => Mat2d.scale(m, m, Vec2.fromValues(scale*0.92, scale*0.92)));
+    matrixTransforms.push(m => m.scale(scale*0.92));
 
-    matrixTransforms.push(m => Mat2d.translate(m, m, Vec2.fromValues(-1*this.props.origin.x, -1*this.props.origin.y)));
-    matrixTransforms.push(m => Mat2d.scale(m, m, Vec2.fromValues(this.props.zoomFactor*0.01, this.props.zoomFactor*0.01)));
-    matrixTransforms.push(m => Mat2d.rotate(m, m, (-2 * Math.PI * this.props.rotationAngle)/360));
+    matrixTransforms.push(m => m.translate(-1*this.props.origin.x, -1*this.props.origin.y));
+    matrixTransforms.push(m => m.scale(this.props.zoomFactor*0.01));
+    matrixTransforms.push(m => m.rotate((-2 * Math.PI * this.props.rotationAngle)/360));
 
-    matrixTransforms.push(m => Mat2d.translate(m, m, Vec2.fromValues(width*0.5, height*0.5)));
+    matrixTransforms.push(m => m.translate(width*0.5, height*0.5));
 
     return this.applyMatrixTransformationsToCoordinates(matrixTransforms, coordinates);
   };
