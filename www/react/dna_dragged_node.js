@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import DnaBaseView from './dna_base_view';
-import {Vector} from '../glutils/gl_matrix_wrapper';
+import {Vector} from '../mathutils/gl_matrix_wrapper';
 
 class DnaDraggedNode extends React.Component {
   render () {

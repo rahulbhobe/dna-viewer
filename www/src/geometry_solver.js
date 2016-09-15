@@ -1,4 +1,4 @@
-import {Vector} from '../glutils/gl_matrix_wrapper';
+import {Vector} from '../mathutils/gl_matrix_wrapper';
 
 var GeometrySolver = function (sequenceParser) {
   var distance     = 100; // Distance between nodes.

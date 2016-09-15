@@ -1,8 +1,7 @@
 import React from 'react';
 import DnaBaseView from './dna_base_view';
 import DnaDraggedNode from './dna_dragged_node';
-import {Vector} from '../glutils/gl_matrix_wrapper';
-import {MatrixTransformations} from '../glutils/gl_matrix_wrapper';
+import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
 import store from '../store/store';
 import {connect} from 'react-redux';
