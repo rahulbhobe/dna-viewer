@@ -58,4 +58,25 @@ class Matrix {
   };
 };
 
-export {Matrix, Vector};
+class MatrixTransformations {
+  constructor() {
+    this.t = [];
+  };
+
+  append(t) {
+    this.t.push(t);
+  };
+
+  transformPoint(x, y) {
+    var matrix = this.t.reduceRight((matrix, trf) => {
+      var m = trf(matrix);
+      return m;
+    }, new Matrix());
+
+    var point = new Vector(x, y);
+    point.transform(matrix);
+    return point;
+  };
+};
+
+export {Vector, Matrix, MatrixTransformations};

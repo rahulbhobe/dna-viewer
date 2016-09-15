@@ -2,7 +2,7 @@ import React from 'react';
 import DnaBaseView from './dna_base_view';
 import DnaDraggedNode from './dna_dragged_node';
 import {Vector} from 'sylvester';
-import {Vector as Vec2, Matrix} from '../glutils/gl_matrix_wrapper';
+import {MatrixTransformations} from '../glutils/gl_matrix_wrapper';
 import classNames from 'classnames';
 import store from '../store/store';
 import {connect} from 'react-redux';
@@ -342,19 +342,6 @@ class Canvas extends React.Component {
     return this.props.dimensions.height;
   };
 
-  applyMatrixTransformationsToCoordinates(matrixTransforms, coordinates) {
-    var matrix = matrixTransforms.reduceRight((matrix, trf) => {
-      var m = trf(matrix);
-      return m;
-    }, new Matrix());
-
-    return coordinates.map((point) => {
-      var newPoint = new Vec2(point.elements[0], point.elements[1]);
-      newPoint.transform(matrix);
-      return Vector.create(newPoint.asArr());
-    });
-  };
-
   getCoordinatesForScreen (sequenceParser) {
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
@@ -375,27 +362,30 @@ class Canvas extends React.Component {
 
     var mid = min.add(max).multiply(0.5);
 
-    var matrixTransforms = [];
-    matrixTransforms.push(m => m.translate(-1*mid.elements[0], -1*mid.elements[1]));
+    var matrixTransforms = new MatrixTransformations();
+    matrixTransforms.append(m => m.translate(-1*mid.elements[0], -1*mid.elements[1]));
 
     if (diffW < diffH) {
       // Rotate by 90 deg if width is less than height. Most screens have larger width.
-      matrixTransforms.push(m => m.rotate(-0.5*Math.PI));
+      matrixTransforms.append(m => m.rotate(-0.5*Math.PI));
       [diffW, diffH] = [diffH, diffW];
     }
 
     var scaleW = width  / diffW;
     var scaleH = height / diffH;
     var scale  = scaleW < scaleH ? scaleW : scaleH;
-    matrixTransforms.push(m => m.scale(scale*0.92));
+    matrixTransforms.append(m => m.scale(scale*0.92));
 
-    matrixTransforms.push(m => m.translate(-1*this.props.origin.x, -1*this.props.origin.y));
-    matrixTransforms.push(m => m.scale(this.props.zoomFactor*0.01));
-    matrixTransforms.push(m => m.rotate((-2 * Math.PI * this.props.rotationAngle)/360));
+    matrixTransforms.append(m => m.translate(-1*this.props.origin.x, -1*this.props.origin.y));
+    matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
+    matrixTransforms.append(m => m.rotate((-2 * Math.PI * this.props.rotationAngle)/360));
 
-    matrixTransforms.push(m => m.translate(width*0.5, height*0.5));
+    matrixTransforms.append(m => m.translate(width*0.5, height*0.5));
 
-    return this.applyMatrixTransformationsToCoordinates(matrixTransforms, coordinates);
+    return coordinates.map((point) => {
+      var newPoint = matrixTransforms.transformPoint(point.elements[0], point.elements[1]);
+      return Vector.create(newPoint.asArr());
+    });
   };
 };
 
