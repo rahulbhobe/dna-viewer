@@ -2,6 +2,7 @@ import React from 'react';
 import DnaBaseView from './dna_base_view';
 import DnaDraggedNode from './dna_dragged_node';
 import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
+import AngleConverter from '../mathutils/angle_converter';
 import classNames from 'classnames';
 import store from '../store/store';
 import {connect} from 'react-redux';
@@ -285,7 +286,7 @@ class Canvas extends React.Component {
     var midPoint        = Vector.create(this.getWindowWidth()*0.5, this.getWindowHeight()*0.5);
     var startVec        = Vector.create(startPosition.x, startPosition.y).subtract(midPoint);
     var currentVec      = Vector.create(currentPosition.x, currentPosition.y).subtract(midPoint);
-    var angle           = currentVec.angleFrom(startVec) * (360 / (2 * Math.PI));
+    var angle           = AngleConverter.toDeg(currentVec.angleFrom(startVec));
     this.props.actions.setRotationAngle(startAngle + angle);
   };
 
@@ -301,7 +302,7 @@ class Canvas extends React.Component {
     var currentPosition = this.getPositionAtEvent(event);
     var startPnt        = Vector.create(startPosition.x, startPosition.y);
     var currentPnt      = Vector.create(currentPosition.x, currentPosition.y);
-    var vec             = currentPnt.rotate(this.props.rotationAngle * 2 * Math.PI / 360, startPnt)
+    var vec             = currentPnt.rotate(AngleConverter.toRad(this.props.rotationAngle), startPnt)
                             .subtract(startPnt)
                             .scale(1 / (this.props.zoomFactor*0.01));
     var org             = Vector.create(oldOrigin.x, oldOrigin.y).subtract(vec);
@@ -355,7 +356,7 @@ class Canvas extends React.Component {
     var {x: diffW, y: diffH} = max.subtract(min).asObj();
     if (diffW < diffH) {
       // Rotate by 90 deg if width is less than height. Most screens have larger width.
-      matrixTransforms.append(m => m.rotate(-0.5*Math.PI));
+      matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-90)));
       [diffW, diffH] = [diffH, diffW];
     }
 
@@ -367,7 +368,7 @@ class Canvas extends React.Component {
     var negOrg = Vector.create(this.props.origin.x, this.props.origin.y).negate();
     matrixTransforms.append(m => m.translate(negOrg));
     matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
-    matrixTransforms.append(m => m.rotate((-2 * Math.PI * this.props.rotationAngle)/360));
+    matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-1 * this.props.rotationAngle)));
 
     matrixTransforms.append(m => m.translate(Vector.create(width, height).scale(0.5)));
 
