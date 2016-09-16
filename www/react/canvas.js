@@ -11,17 +11,17 @@ import SequenceParser from '../src/sequence_parser';
 
 class DnaBackbone extends React.Component {
   render () {
-    var p1 = this.props.point1.asObj();
-    var p2 = this.props.point2.asObj();
-    return (<line x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} className="dna-backbone dna-base-backbone" />);
+    var {x: x1, y: y1} = this.props.point1.asObj();
+    var {x: x2, y: y2} = this.props.point2.asObj();
+    return (<line x1={x1} y1={y1} x2={x2} y2={y2} className="dna-backbone dna-base-backbone" />);
   };
 };
 
 class DnaPair extends React.Component {
   render () {
-    var p1 = this.props.source.asObj();
-    var p2 = this.props.target.asObj();
-    return (<line x1={p2.x} y1={p2.y} x2={p2.x} y2={p2.y} className="dna-pair dna-base-pair" />);
+    var {x: x1, y: y1} = this.props.source.asObj();
+    var {x: x2, y: y2} = this.props.target.asObj();
+    return (<line x1={x1} y1={y1} x2={x2} y2={y2} className="dna-pair dna-base-pair" />);
   };
 };
 
