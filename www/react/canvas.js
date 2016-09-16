@@ -370,7 +370,8 @@ class Canvas extends React.Component {
     matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
     matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-1 * this.props.rotationAngle)));
 
-    matrixTransforms.append(m => m.translate(Vector.create(width, height).scale(0.5)));
+    var scrMid = Vector.create(width, height).scale(0.5);
+    matrixTransforms.append(m => m.translate(scrMid));
 
     return coordinates.map((point) => {
       return matrixTransforms.transformPoint(point);
