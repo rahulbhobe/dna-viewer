@@ -78,7 +78,7 @@ class Vector {
   rotate(rad, b) {
     var matrixTransformations = MatrixTransformations.create();
 
-    var n = b.scale(-1);
+    var n = b.negate();
     matrixTransformations.append(m => m.translate(n));
     matrixTransformations.append(m => m.rotate(rad));
     matrixTransformations.append(m => m.translate(b));
