@@ -116,18 +116,21 @@ class Matrix {
   };
 
   translate(point) {
-    Mat2d.translate(this.m, this.m, point.v);
-    return this;
+    var r = Matrix.create();
+    Mat2d.translate(r.m, this.m, point.v);
+    return r;
   };
 
   rotate(rad) {
-    Mat2d.rotate(this.m, this.m, rad);
-    return this;
+    var r = Matrix.create();
+    Mat2d.rotate(r.m, this.m, rad);
+    return r;
   };
 
   scale(val) {
-    Mat2d.scale(this.m, this.m, Vec2.fromValues(val, val));
-    return this;
+    var r = Matrix.create();
+    Mat2d.scale(r.m, this.m, Vec2.fromValues(val, val));
+    return r;
   };
 };
 
