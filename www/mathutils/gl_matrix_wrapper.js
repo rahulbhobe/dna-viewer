@@ -137,8 +137,8 @@ class MatrixTransformations {
     return new MatrixTransformations();
   };
 
-  append(t) {
-    this.t.push(t);
+  append(trf) {
+    this.t.push(trf);
   };
 
   transformPoint(point) {
