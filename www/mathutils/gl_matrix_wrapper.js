@@ -85,12 +85,6 @@ class Vector {
     return matrixTransformations.transformPoint(this);
   };
 
-  transform(mat) {
-    var r = Vector.create();
-    Vec2.transformMat2d(r.v, this.v, mat.m);
-    return r;
-  };
-
   asObj() {
     return {
       x: this.v[0],
@@ -149,7 +143,10 @@ class MatrixTransformations {
 
   transformPoint(point) {
     var matrix = this.t.reduceRight((matrix, trf)=>trf(matrix), Matrix.create());
-    return point.transform(matrix);
+
+    var r = Vector.create();
+    Vec2.transformMat2d(r.v, point.v, matrix.m);
+    return r;
   };
 };
 
