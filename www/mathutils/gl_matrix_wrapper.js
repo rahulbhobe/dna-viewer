@@ -75,16 +75,6 @@ class Vector {
     return Vec2.dot(this.v, b.v);
   };
 
-  rotate(rad, b) {
-    var matrixTransformations = MatrixTransformations.create();
-
-    var n = b.negate();
-    matrixTransformations.append(m => m.translate(n));
-    matrixTransformations.append(m => m.rotate(rad));
-    matrixTransformations.append(m => m.translate(b));
-    return matrixTransformations.transformPoint(this);
-  };
-
   asObj() {
     return {
       x: this.v[0],
