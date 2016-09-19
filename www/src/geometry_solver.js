@@ -5,7 +5,7 @@ var GeometrySolver = function (sequenceParser) {
                           // This is just a chosen base value. It will be normalized to screen coordinates
                           // when asked for it. We could not have pre guessed the structures size anyway.
 
-  var coordinates = {};
+  var coordinates = [];
   var subStructures = sequenceParser.getSubStructures();
   subStructures.forEach((subStructure) => {
     var theta  = (2 * Math.PI) / subStructure.getNumNodes(true);
@@ -36,16 +36,14 @@ var GeometrySolver = function (sequenceParser) {
 
       subCoordinates = subCoordinates.map(point => matrixTransforms.transformPoint(point));
     }
-    var subCoordinatesObj = subStructure.getNodes(true).reduce((acc, node, idx) => {
-      acc[node] = subCoordinates[idx];
-      return acc;
-    }, {});
-    coordinates = Object.assign(coordinates, subCoordinatesObj);
+    subStructure.getNodes(true).forEach((node, idx) => {
+      coordinates[node] = subCoordinates[idx];
+    });
   });
 
   return {
     getCoordinates : function() {
-      return Object.keys(coordinates).map(point => coordinates[point]);
+      return coordinates;
     }
   };
 };
