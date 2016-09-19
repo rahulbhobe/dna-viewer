@@ -8,8 +8,8 @@ class SettingsView extends React.Component {
   getLayout() {
     return [
       {x:0,  y:0,  w:2,  h:2,  v: true, i: 'ColorSettings'},
-      {x:0,  y:1,  w:1,  h:3,  v: true, i: 'AppearanceSettings'},
-      {x:1,  y:1,  w:1,  h:1,  v: true, i: 'FontSettings'}
+      {x:0,  y:2,  w:1,  h:3,  v: true, i: 'AppearanceSettings'},
+      {x:1,  y:2,  w:1,  h:1,  v: true, i: 'FontSettings'}
     ];
   };
 
