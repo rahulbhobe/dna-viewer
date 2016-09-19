@@ -49,7 +49,7 @@ SecondaryStructure.prototype.getStructures = function() {
 };
 
 SecondaryStructure.prototype.getConnections = function() {
-  var structures = this._subStructures.slice(1); // Don't need root;
+  var structures = this.getStructures().slice(1); // Don't need root;
   return structures.map(function (structure) {
     return {
       source: structure.openedAt(),

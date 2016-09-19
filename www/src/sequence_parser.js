@@ -56,6 +56,10 @@ var SequenceParser = function(seq, dbn) {
       return secondary.getConnections();
     },
 
+    getSubStructures : function() {
+      return secondary.getStructures();
+    },
+
     getSubStructureAtIndex: function (index) {
       return secondary.getSubStructureAtIndex(index);
     },
