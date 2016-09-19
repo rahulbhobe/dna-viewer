@@ -302,10 +302,13 @@ class Canvas extends React.Component {
     var currentPosition = this.getPositionAtEvent(event);
     var startPnt        = Vector.create(startPosition.x, startPosition.y);
     var currentPnt      = Vector.create(currentPosition.x, currentPosition.y);
-    var vec             = currentPnt.rotate(AngleConverter.toRad(this.props.rotationAngle), startPnt)
-                            .subtract(startPnt)
-                            .scale(1 / (this.props.zoomFactor*0.01));
-    var org             = Vector.create(oldOrigin.x, oldOrigin.y).subtract(vec);
+
+    var matrixTrfs      = MatrixTransformations.create();
+    matrixTrfs.append(m => m.rotate(AngleConverter.toRad(this.props.rotationAngle)));
+    matrixTrfs.append(m => m.scale(1 / (this.props.zoomFactor*0.01)));
+
+    var moveVec = matrixTrfs.transformPoint(currentPnt.subtract(startPnt));
+    var org = Vector.create(oldOrigin.x, oldOrigin.y).subtract(moveVec);
     this.props.actions.setOrigin(org.asObj());
   };
 
