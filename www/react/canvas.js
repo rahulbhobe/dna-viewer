@@ -345,8 +345,8 @@ class Canvas extends React.Component {
     var height      = this.getWindowHeight();
     var coordinates = sequenceParser.getCoordinates();
 
-    var min = coordinates.reduce((min, vec) => min.min(vec), coordinates[0].clone());
-    var max = coordinates.reduce((max, vec) => max.max(vec), coordinates[0].clone());
+    var min = coordinates.reduce((min, vec) => min.min(vec), Vector.create(   Number.MAX_VALUE,    Number.MAX_VALUE));
+    var max = coordinates.reduce((max, vec) => max.max(vec), Vector.create(-1*Number.MAX_VALUE, -1*Number.MAX_VALUE));
 
     var matrixTransforms = MatrixTransformations.create();
 
