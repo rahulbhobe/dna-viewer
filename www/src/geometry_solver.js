@@ -1,63 +1,53 @@
-import {Vector} from '../mathutils/gl_matrix_wrapper';
+import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
 
 var GeometrySolver = function (sequenceParser) {
-  var distance     = 100; // Distance between nodes.
-                          // Common chord length on all circles.
-                          // Some base value. This will be normalized to screen coordinates
-                          // when asked for it. Could not have pre guessed the structures size any way.
+  var distance     = 100; // Distance between nodes. This is the common chord length on all circles.
+                          // This is just a chosen base value. It will be normalized to screen coordinates
+                          // when asked for it. We could not have pre guessed the structures size anyway.
 
-  var getThetaFromBase = function (base) {
-    var subStructure = sequenceParser.getSubStructureAtIndex(base.getIndex());
-    return (2 * Math.PI) / subStructure.getNumNodes(true);
-  };
+  var coordinates = {};
+  var subStructures = sequenceParser.getSubStructures();
+  subStructures.forEach((subStructure) => {
+    var theta  = (2 * Math.PI) / subStructure.getNumNodes(true);
+    var radius = (distance/2) / Math.sin(theta/2);
+    var center = Vector.create(0, 0);
 
-  var getRadiusFromTheta = function (theta) {
-    // Chord length is "distance" and "theta" is the angle at the center.
-    // (distance/2) / sin(theta/2)
-    return (distance*0.5) / Math.sin(theta/2);
-  };
+    var subCoordinates = {};
+    subStructure.getNodes(true).forEach((node, idx) => {
+      let matrixTransforms = MatrixTransformations.create();
+      matrixTransforms.append(m => m.translate(Vector.create(radius, 0)));
+      matrixTransforms.append(m => m.rotate((idx+0.5)*theta));
+      subCoordinates[node] = matrixTransforms.transformPoint(center);
+    });
 
-  var getDistanceToChord = function (theta) {
-    // Chord length is "distance" and "theta" is the angle at the center.
-    // Need the distance to chord from center.
-    // (radius) * cos(theta/2)
-    return getRadiusFromTheta(theta) * Math.cos(theta/2);
-  };
-
-  var centerPosition = Vector.create(0, 0); // Start position for the center.
-
-  var moveCenter = false;
-  var prevPoint  = null;
-  var prevTheta  = null;
-  var coordinates = [];
-  sequenceParser.getBases().forEach(function (base) {
-    var thisTheta = getThetaFromBase(base);
-
-    if (moveCenter) {
-      // Two intersecting circles with common chord length "distance".
-      var distanceBetweenCenters = getDistanceToChord(thisTheta) + getDistanceToChord(prevTheta);
-      var point = prevPoint.rotate(prevTheta/2, centerPosition); // Rotate to align with the "other" circle.
-      var vec   = point.subtract(centerPosition).normalize().scale(distanceBetweenCenters);
-      centerPosition = centerPosition.add(vec);
-    }
-
-    var thisPoint = null;
-    if (prevPoint) {
-      thisPoint = prevPoint.rotate(thisTheta, centerPosition);
+    let opened = subStructure.openedAt();
+    let closed = subStructure.closedAt();
+    if ((opened===null) && (closed===null)) {
+      coordinates = Object.assign(coordinates, subCoordinates);
     } else {
-      // Start point. Center is chosen (see above). Radius is known. Create a point at a chosen angle.
-      thisPoint = centerPosition.add(Vector.create(0, -1).scale(getRadiusFromTheta(thisTheta)));
-    }
+      var subOpened = subCoordinates[opened];
+      var subClosed = subCoordinates[closed];
 
-    coordinates.push(thisPoint);
-    prevPoint = thisPoint; // For next iteration.
-    prevTheta = thisTheta;
-    moveCenter = !base.isUnpaired(); // Done with current "structure". May visit back after completing "inner" structures.
+      let matrixTransforms = MatrixTransformations.create();
+      matrixTransforms.append(m => m.translate(coordinates[opened].subtract(subOpened)));
+
+      let subClosed = matrixTransforms.transformPoint(subClosed);
+      let angle =  subClosed.subtract(coordinates[opened]).angleFrom(coordinates[closed].subtract(coordinates[opened]));
+      matrixTransforms.append(m => m.translate(coordinates[opened].negate()));
+      matrixTransforms.append(m => m.rotate(angle));
+      matrixTransforms.append(m => m.translate(coordinates[opened]));
+
+      for (let node in subCoordinates)
+      {
+        subCoordinates[node] = matrixTransforms.transformPoint(subCoordinates[node]);
+      }
+      coordinates = Object.assign(coordinates, subCoordinates);
+    }
   });
 
   return {
     getCoordinates : function() {
-      return coordinates;
+      return Object.keys(coordinates).map(point => coordinates[point]);
     }
   };
 };
