@@ -12,21 +12,18 @@ var GeometrySolver = function (sequenceParser) {
     var radius = (distance/2) / Math.sin(theta/2);
     var center = Vector.create(0, 0);
 
-    var subCoordinates = {};
-    subStructure.getNodes(true).forEach((node, idx) => {
+    var subCoordinates = subStructure.getNodes(true).map((node, idx) => {
       let matrixTransforms = MatrixTransformations.create();
       matrixTransforms.append(m => m.translate(Vector.create(radius, 0)));
       matrixTransforms.append(m => m.rotate((idx+0.5)*theta));
-      subCoordinates[node] = matrixTransforms.transformPoint(center);
+      return matrixTransforms.transformPoint(center);
     });
 
     let opened = subStructure.openedAt();
     let closed = subStructure.closedAt();
-    if ((opened===null) && (closed===null)) {
-      coordinates = Object.assign(coordinates, subCoordinates);
-    } else {
-      var subOpened = subCoordinates[opened];
-      var subClosed = subCoordinates[closed];
+    if ((opened!==null) && (closed!==null)) {
+      var subOpened = subCoordinates[0];
+      var subClosed = subCoordinates[subCoordinates.length-1];
 
       let matrixTransforms = MatrixTransformations.create();
       matrixTransforms.append(m => m.translate(coordinates[opened].subtract(subOpened)));
@@ -37,12 +34,13 @@ var GeometrySolver = function (sequenceParser) {
       matrixTransforms.append(m => m.rotate(angle));
       matrixTransforms.append(m => m.translate(coordinates[opened]));
 
-      for (let node in subCoordinates)
-      {
-        subCoordinates[node] = matrixTransforms.transformPoint(subCoordinates[node]);
-      }
-      coordinates = Object.assign(coordinates, subCoordinates);
+      subCoordinates = subCoordinates.map(point => matrixTransforms.transformPoint(point));
     }
+    var subCoordinatesObj = subStructure.getNodes(true).reduce((acc, node, idx) => {
+      acc[node] = subCoordinates[idx];
+      return acc;
+    }, {});
+    coordinates = Object.assign(coordinates, subCoordinatesObj);
   });
 
   return {
