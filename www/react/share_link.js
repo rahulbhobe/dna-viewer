@@ -1,4 +1,5 @@
 import React from 'react';
+import GridLayout from './grid_layout';
 import request from 'request';
 import promisify from 'es6-promisify';
 import classNames from 'classnames';
@@ -14,15 +15,33 @@ class ShareLink extends React.Component {
     this.onFitToScreen = this.onFitToScreen.bind(this);
   };
 
+  getLayout() {
+    var u  = !!this.props.url;
+    var cw = this.props.canvasDimensions.width;
+    var ww = 36;
+    return [
+      {x:0,          y:0,  w:ww,  h:1,  v: u,    i: 'DocSave'},
+      {x:u?ww:0,     y:0,  w:ww,  h:1,  v: true, i: 'DocAdd'},
+      {x:2*ww,       y:0,  w:ww,  h:1,  v: u,    i: 'DocDelete'},
+      {x:cw-(3*ww),  y:0,  w:ww,  h:1,  v: true, i: 'FitToScreen'}
+    ];
+  };
+
   render () {
+    var properties = {
+      cols: this.props.canvasDimensions.width,
+      rowHeight: 32,
+      width: this.props.canvasDimensions.width
+    };
+
     var clsName1 = classNames('share-link-button');
     var clsName2 = classNames('share-link-button', {'share-link-hidden': !this.props.url});
-    return (<div>
-              <input type="image" className={clsName2} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
-              <input type="image" className={clsName1} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
-              <input type="image" className={clsName2} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
-              <input type="image" className={clsName1} title={'Fit to screen.'} src="/res/fit_to_screen_icon.png" alt="Submit" onClick={this.onFitToScreen}/>
-            </div>);
+    return (<GridLayout properties={properties} layout={this.getLayout()}>
+              <input key='DocSave'      type="image" className={clsName2} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
+              <input key='DocAdd'       type="image" className={clsName1} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
+              <input key='DocDelete'    type="image" className={clsName2} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
+              <input key='FitToScreen'  type="image" className={clsName1} title={'Fit to screen.'} src="/res/fit_to_screen_icon.png" alt="Submit" onClick={this.onFitToScreen}/>
+            </GridLayout>);
   };
 
   onAdd () {
@@ -75,7 +94,8 @@ var mapStateToProps = (state, ownProps) => {
   return {
     url: state.currentUrl,
     seq: state.sequenceParser.getData().seq,
-    dbn: state.sequenceParser.getData().dbn
+    dbn: state.sequenceParser.getData().dbn,
+    canvasDimensions: state.canvasDimensions
   };
 };
 
