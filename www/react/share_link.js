@@ -8,9 +8,10 @@ import {connect} from 'react-redux';
 class ShareLink extends React.Component {
   constructor (props) {
     super(props);
-    this.onAdd    = this.onAdd.bind(this);
-    this.onSave   = this.onSave.bind(this);
-    this.onDelete = this.onDelete.bind(this);
+    this.onAdd         = this.onAdd.bind(this);
+    this.onSave        = this.onSave.bind(this);
+    this.onDelete      = this.onDelete.bind(this);
+    this.onFitToScreen = this.onFitToScreen.bind(this);
   };
 
   render () {
@@ -20,6 +21,7 @@ class ShareLink extends React.Component {
               <input type="image" className={clsName2} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
               <input type="image" className={clsName1} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
               <input type="image" className={clsName2} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
+              <input type="image" className={clsName1} title={'Fit to screen.'} src="/res/fit_to_screen_icon.png" alt="Submit" onClick={this.onFitToScreen}/>
             </div>);
   };
 
@@ -33,6 +35,12 @@ class ShareLink extends React.Component {
 
   onDelete () {
     this.onSaveImpl("delete");
+  };
+
+  onFitToScreen () {
+    this.props.actions.resetOrigin();
+    this.props.actions.resetRotationAngle();
+    this.props.actions.resetZoomFactor();
   };
 
   onSaveImpl (type) {
