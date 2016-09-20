@@ -130,7 +130,8 @@
 .settings-color-div {
   float: left;
   text-align: center;
-  padding: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .settings-color-button {
