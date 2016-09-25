@@ -116,6 +116,18 @@ class Matrix {
     Mat2d.scale(r.m, this.m, Vec2.fromValues(val, val));
     return r;
   };
+
+  invert() {
+    var r = Matrix.create();
+    Mat2d.invert(r.m, this.m);
+    return r;
+  };
+
+  multiply(b) {
+    var r = Matrix.create();
+    Mat2d.multiply(r.m, this.m, b.m);
+    return r;
+  };
 };
 
 class MatrixTransformations {
@@ -131,9 +143,12 @@ class MatrixTransformations {
     this.t.push(trf);
   };
 
+  appendFromOther(mt) {
+    mt.t.forEach(trf => this.append(trf));
+  };
+
   transformPoint(point) {
     var matrix = this.t.reduceRight((matrix, trf)=>trf(matrix), Matrix.create());
-
     var r = Vector.create();
     Vec2.transformMat2d(r.v, point.v, matrix.m);
     return r;
