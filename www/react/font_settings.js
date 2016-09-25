@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import jss from 'jss-browserify';
 
 class FontSettings extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.onChange = this.onChange.bind(this);
   };

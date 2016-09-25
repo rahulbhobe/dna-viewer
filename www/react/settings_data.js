@@ -1,6 +1,6 @@
 import jss from 'jss-browserify';
 
-var SettingsInit = function() {
+var SettingsInit = () => {
   var defaultColors = [
     {type: 'A', hex: '#63f33c'},
     {type: 'C', hex: '#3474cc'},
@@ -10,7 +10,7 @@ var SettingsInit = function() {
   ];
 
   // initialize jss:
-  defaultColors.forEach(function ({type, hex}) {
+  defaultColors.forEach(({type, hex}) => {
     var clsName = '.dna-base-' + type.toLowerCase();
     jss.set(clsName, {fill: hex})
   });

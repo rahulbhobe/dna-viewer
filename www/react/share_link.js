@@ -18,7 +18,7 @@ class ShareLink extends React.Component {
     this.onRotateClockwise        = this.onRotateClockwise.bind(this);
   };
 
-  getLayout() {
+  getLayout () {
     var u  = !!this.props.url;
     var cw = this.props.canvasDimensions.width;
     var ww = 36;

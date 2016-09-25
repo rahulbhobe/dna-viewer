@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import jss from 'jss-browserify';
 
 class AppearanceConfig extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     var val = jss.get(this.props.jssCls);
     this.state = {
