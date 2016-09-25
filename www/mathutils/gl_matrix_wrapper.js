@@ -1,65 +1,65 @@
 import {vec2 as Vec2, vec3 as Vec3, mat2d as Mat2d} from 'gl-matrix';
 
 class Vector {
-  constructor(x, y) {
+  constructor (x, y) {
     x = x || 0;
     y = y || 0;
     this.v = Vec2.fromValues(x, y);
   };
 
-  static create(x, y) {
+  static create (x, y) {
     return new Vector(x, y);
   };
 
-  clone() {
+  clone () {
     var r = Vector.create();
     Vec2.copy(r.v, this.v);
     return r;
   };
 
-  add(b) {
+  add (b) {
     var r = Vector.create();
     Vec2.add(r.v, this.v, b.v);
     return r;
   };
 
-  subtract(b) {
+  subtract (b) {
     var r = Vector.create();
     Vec2.subtract(r.v, this.v, b.v);
     return r;
   };
 
-  scale(val) {
+  scale (val) {
     var r = Vector.create();
     Vec2.scale(r.v, this.v, val);
     return r;
   };
 
-  negate() {
+  negate () {
     var r = Vector.create();
     Vec2.negate(r.v, this.v);
     return r;
   };
 
-  normalize() {
+  normalize () {
     var r = Vector.create();
     Vec2.normalize(r.v, this.v);
     return r;
   };
 
-  min(b) {
+  min (b) {
     var r = Vector.create();
     Vec2.min(r.v, this.v, b.v);
     return r;
   };
 
-  max(b) {
+  max (b) {
     var r = Vector.create();
     Vec2.max(r.v, this.v, b.v);
     return r;
   };
 
-  angleFrom(b) {
+  angleFrom (b) {
     var c = Vec3.fromValues(0, 0, 0);
     Vec2.cross(c, this.v, b.v);
     var sign = c[2] > 0 ? 1 : -1;
@@ -67,22 +67,22 @@ class Vector {
     return sign * Math.acos(cos);
   };
 
-  length() {
+  length () {
     return Vec2.length(this.v);
   };
 
-  dot(b) {
+  dot (b) {
     return Vec2.dot(this.v, b.v);
   };
 
-  asObj() {
+  asObj () {
     return {
       x: this.v[0],
       y: this.v[1]
     };
   };
 
-  asArr() {
+  asArr () {
     return [
       this.v[0],
       this.v[1]
@@ -91,39 +91,39 @@ class Vector {
 };
 
 class Matrix {
-  constructor() {
+  constructor () {
     this.m = Mat2d.create();
   };
 
-  static create() {
+  static create () {
     return new Matrix();
   };
 
-  translate(point) {
+  translate (point) {
     var r = Matrix.create();
     Mat2d.translate(r.m, this.m, point.v);
     return r;
   };
 
-  rotate(rad) {
+  rotate (rad) {
     var r = Matrix.create();
     Mat2d.rotate(r.m, this.m, rad);
     return r;
   };
 
-  scale(val) {
+  scale (val) {
     var r = Matrix.create();
     Mat2d.scale(r.m, this.m, Vec2.fromValues(val, val));
     return r;
   };
 
-  invert() {
+  invert () {
     var r = Matrix.create();
     Mat2d.invert(r.m, this.m);
     return r;
   };
 
-  multiply(b) {
+  multiply (b) {
     var r = Matrix.create();
     Mat2d.multiply(r.m, this.m, b.m);
     return r;
@@ -131,23 +131,23 @@ class Matrix {
 };
 
 class MatrixTransformations {
-  constructor() {
+  constructor () {
     this.t = [];
   };
 
-  static create() {
+  static create () {
     return new MatrixTransformations();
   };
 
-  append(trf) {
+  append (trf) {
     this.t.push(trf);
   };
 
-  appendFromOther(mt) {
+  appendFromOther (mt) {
     mt.t.forEach(trf => this.append(trf));
   };
 
-  transformPoint(point) {
+  transformPoint (point) {
     var matrix = this.t.reduceRight((matrix, trf)=>trf(matrix), Matrix.create());
     var r = Vector.create();
     Vec2.transformMat2d(r.v, point.v, matrix.m);
