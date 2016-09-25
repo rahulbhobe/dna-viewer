@@ -73,7 +73,7 @@ class Canvas extends React.Component {
     var svgClass    = classNames('svg-class', 'svg-cursor-' + this.props.mouseActionDataType);
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
-    var coordinates = this.getCoordinatesForScreen(sequenceParser);
+    var coordinates = this.getCoordinatesForScreen();
     var bases       = sequenceParser.getBases();
     var connections = sequenceParser.getConnections();
 
@@ -343,10 +343,11 @@ class Canvas extends React.Component {
     return this.props.dimensions.height;
   };
 
-  getCoordinatesForScreen (sequenceParser) {
-    var width       = this.getWindowWidth();
-    var height      = this.getWindowHeight();
-    var coordinates = sequenceParser.getCoordinates();
+  getCoordinatesForScreen () {
+    var width          = this.getWindowWidth();
+    var height         = this.getWindowHeight();
+    var sequenceParser = this.props.sequenceParser;
+    var coordinates    = sequenceParser.getCoordinates();
 
     var min = coordinates.reduce((min, vec) => min.min(vec), Vector.create(   Number.MAX_VALUE,    Number.MAX_VALUE));
     var max = coordinates.reduce((max, vec) => max.max(vec), Vector.create(-1*Number.MAX_VALUE, -1*Number.MAX_VALUE));
