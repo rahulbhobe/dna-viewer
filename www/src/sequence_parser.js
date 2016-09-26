@@ -64,8 +64,8 @@ var SequenceParser = function(seq, dbn) {
       return secondary.getSubStructureAtIndex(index);
     },
 
-    getCoordinates: function() {
-      return new GeometrySolver(this).getCoordinates();
+    getCoordinates: function(width, height, modelTransforms) {
+      return new GeometrySolver(this).getCoordinates(width, height, modelTransforms);
     },
 
     hasErrors : function() {
