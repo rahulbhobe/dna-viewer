@@ -1,6 +1,7 @@
 import React from 'react';
 import {Vector} from '../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
+import * as Dimensions from './dimensions';
 import {connect} from 'react-redux';
 
 class Preview extends React.Component {
@@ -30,11 +31,11 @@ class Preview extends React.Component {
   };
 
   getWindowWidth () {
-    return 235;
+    return Dimensions.SETTINGS_VIEW_WIDTH;
   };
 
   getWindowHeight () {
-    return 46 * 3;
+    return Dimensions.SETTINGS_VIEW_ROW_HEIGHT * 3;
   };
 
   getCoordinatesForScreen () {

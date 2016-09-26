@@ -4,6 +4,7 @@ import ColorSettings from './color_settings';
 import FontSettings from './font_settings';
 import AppearanceSettings from './appearance_settings';
 import Preview from './preview';
+import * as Dimensions from './dimensions';
 import GridLayout from './grid_layout';
 
 class SettingsView extends React.Component {
@@ -22,8 +23,8 @@ class SettingsView extends React.Component {
   render () {
     var properties = {
       cols: 2,
-      rowHeight: 46,
-      width: 235
+      rowHeight: Dimensions.SETTINGS_VIEW_ROW_HEIGHT,
+      width: Dimensions.SETTINGS_VIEW_WIDTH
     };
 
     return (<div className="settings-view" >

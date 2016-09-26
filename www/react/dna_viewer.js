@@ -4,6 +4,7 @@ import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
 import ShareLink from './share_link';
+import * as Dimensions from './dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
@@ -31,7 +32,7 @@ class DnaViewer extends React.Component {
     var winH = window.innerHeight;
 
     return {
-      width:  this.isWidthSmall()  ? winW  : winW - 235,
+      width:  this.isWidthSmall()  ? winW  : winW - Dimensions.SETTINGS_VIEW_WIDTH,
       height: this.isHeightSmall() ? (winH - (this.getRowHeight() * (1))) : winH - (this.getRowHeight() * (1+4))
     };
   };
