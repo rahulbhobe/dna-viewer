@@ -16,7 +16,7 @@ class SettingsView extends React.Component {
       {x:0,  y:0,  w:2,  h:2,  v: true,             i: 'ColorSettings'},
       {x:0,  y:2,  w:1,  h:3,  v: notPickingColor,  i: 'AppearanceSettings'},
       {x:1,  y:2,  w:1,  h:1,  v: notPickingColor,  i: 'FontSettings'},
-      {x:0,  y:8,  w:2,  h:4,  v: dragging,         i: 'Preview'}
+      {x:0,  y:9,  w:2,  h:4,  v: dragging,         i: 'Preview'}
     ];
   };
 
