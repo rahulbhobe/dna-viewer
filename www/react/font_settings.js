@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import {connect} from 'react-redux';
 import jss from 'jss-browserify';
 
 class FontSettings extends React.Component {
@@ -12,7 +11,7 @@ class FontSettings extends React.Component {
   render () {
     var fonts = [ 'Andale Mono', 'Courier', 'Monaco', 'Courier New', 'Menlo', 'monospace'];
 
-    return (<div className={classNames('settings-font-div', 'dna-base-font', {'hidden': this.props.isPickingColor})}>
+    return (<div className={classNames('settings-font-div', 'dna-base-font')}>
               Font:
               <br/>
               <select onChange={this.onChange} selected={this.getSelected()}>
@@ -33,10 +32,4 @@ class FontSettings extends React.Component {
   }
 };
 
-var mapStateToProps = (state, ownProps) => {
-  return {
-    isPickingColor: state.pickingColor !== null
-  }
-};
-
-export default connect(mapStateToProps)(FontSettings);
+export default FontSettings;
