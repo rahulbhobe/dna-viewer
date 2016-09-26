@@ -35,7 +35,7 @@ class Preview extends React.Component {
   };
 
   getWindowHeight () {
-    return Dimensions.SETTINGS_VIEW_ROW_HEIGHT * 3;
+    return Dimensions.SETTINGS_VIEW_ROW_HEIGHT * 4;
   };
 
   getCoordinatesForScreen () {
