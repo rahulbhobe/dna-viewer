@@ -42,26 +42,32 @@ var GeometrySolver = function (sequenceParser) {
     });
   });
 
+  var min = coordinates.reduce((min, vec) => min.min(vec), Vector.create(   Number.MAX_VALUE,    Number.MAX_VALUE));
+  var max = coordinates.reduce((max, vec) => max.max(vec), Vector.create(-1*Number.MAX_VALUE, -1*Number.MAX_VALUE));
+
+  var matrixTransforms = MatrixTransformations.create();
+
+  var negMid = min.add(max).scale(0.5).negate();
+  matrixTransforms.append(m => m.translate(negMid));
+
+  var {x: diffW, y: diffH} = max.subtract(min).asObj();
+  if (diffW < diffH) {
+    // Rotate by 90 deg if width is less than height. Most screens have larger width.
+    matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-90)));
+    [diffW, diffH] = [diffH, diffW];
+  }
+
+  coordinates = coordinates.map((point) => {
+    return matrixTransforms.transformPoint(point);
+  });
+
   return {
     getCoordinates : (width, height, modelTransforms) => {
-      var min = coordinates.reduce((min, vec) => min.min(vec), Vector.create(   Number.MAX_VALUE,    Number.MAX_VALUE));
-      var max = coordinates.reduce((max, vec) => max.max(vec), Vector.create(-1*Number.MAX_VALUE, -1*Number.MAX_VALUE));
-
-      var matrixTransforms = MatrixTransformations.create();
-
-      var negMid = min.add(max).scale(0.5).negate();
-      matrixTransforms.append(m => m.translate(negMid));
-
-      var {x: diffW, y: diffH} = max.subtract(min).asObj();
-      if (diffW < diffH) {
-        // Rotate by 90 deg if width is less than height. Most screens have larger width.
-        matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-90)));
-        [diffW, diffH] = [diffH, diffW];
-      }
-
       var scaleW = width  / diffW;
       var scaleH = height / diffH;
       var scale  = scaleW < scaleH ? scaleW : scaleH;
+      var matrixTransforms = MatrixTransformations.create();
+
       matrixTransforms.append(m => m.scale(scale*0.92));
 
       matrixTransforms.appendFromOther(modelTransforms);
