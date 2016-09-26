@@ -29,7 +29,7 @@ var GeometrySolver = function (sequenceParser) {
       let matrixTransforms = MatrixTransformations.create();
       matrixTransforms.append(m => m.translate(coordinates[opened].subtract(subOpened)));
 
-      let subClosed = matrixTransforms.transformPoint(subClosed);
+      subClosed = matrixTransforms.transformPoint(subClosed);
       let angle =  subClosed.subtract(coordinates[opened]).angleFrom(coordinates[closed].subtract(coordinates[opened]));
       matrixTransforms.append(m => m.translate(coordinates[opened].negate()));
       matrixTransforms.append(m => m.rotate(angle));
