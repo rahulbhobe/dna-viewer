@@ -1,6 +1,7 @@
 import React from 'react';
 import {SketchPicker as ColorPicker} from 'react-color';
 import jss from 'jss-browserify';
+import * as Dimensions from './dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
@@ -62,7 +63,7 @@ class ColorSettings extends React.Component {
       return;
     }
     var color = this.getColorForType(this.props.pickingColor);
-    return (<ColorPicker type="sketch" onChangeComplete={this.onChangeComplete} color={color}/>);
+    return (<ColorPicker type="sketch" width={Dimensions.SETTINGS_VIEW_WIDTH-20} onChangeComplete={this.onChangeComplete} color={color}/>);
   };
 
   render () {

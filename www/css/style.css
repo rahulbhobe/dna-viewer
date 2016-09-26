@@ -135,12 +135,11 @@
 .settings-color-div {
   float: left;
   text-align: center;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 10px;
 }
 
 .settings-color-button {
-  width: 35px;
+  width: 40px;
   height: 40px;
 }
 

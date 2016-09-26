@@ -1,2 +1,2 @@
-export const SETTINGS_VIEW_WIDTH                = 235;
-export const SETTINGS_VIEW_ROW_HEIGHT           = 46;
+export const SETTINGS_VIEW_WIDTH                = 300;
+export const SETTINGS_VIEW_ROW_HEIGHT           = 50;
