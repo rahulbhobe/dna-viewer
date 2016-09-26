@@ -70,6 +70,7 @@ var GeometrySolver = function (sequenceParser) {
 
       matrixTransforms.append(m => m.scale(scale*0.92));
 
+      modelTransforms = modelTransforms || MatrixTransformations.create();
       matrixTransforms.appendFromOther(modelTransforms);
 
       let scrMid = Vector.create(width, height).scale(0.5);
