@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Vector} from '../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
 import * as Dimensions from './dimensions';
@@ -18,16 +19,19 @@ class Preview extends React.Component {
     var bases       = sequenceParser.getBases();
 
     return (
-      <svg className='svg-class' width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
-        {coordinates.map((point, ii) => {
+      <ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={1500} transitionEnterTimeout={1} transitionLeaveTimeout={1}>
+        <svg key='svg' className='svg-class' width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
+          {coordinates.map((point, ii) => {
             var {x, y}  = point.asObj();
             var base    = bases[ii];
             var classes = classNames('dna-base-preview', 'dna-base-' + base.getType().toLowerCase());
-            return (<g transform={'translate(' + x + ', ' + y + ')'} key={'base_preview' + ii} >
-                      <circle className={classes} />
-                    </g>);
-        })}
-      </svg>);
+            return (
+              <g transform={'translate(' + x + ', ' + y + ')'} key={'base_preview' + ii} >
+                <circle className={classes} />
+              </g>);
+          })}
+        </svg>
+      </ReactCSSTransitionGroup>);
   };
 
   getWindowWidth () {
