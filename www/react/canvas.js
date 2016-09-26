@@ -343,6 +343,17 @@ class Canvas extends React.Component {
     return this.props.dimensions.height;
   };
 
+  getModelTransformations () {
+    var matrixTransforms = MatrixTransformations.create();
+
+    var negOrg = Vector.create(this.props.origin.x, this.props.origin.y).negate();
+    matrixTransforms.append(m => m.translate(negOrg));
+    matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
+    matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-1 * this.props.rotationAngle)));
+
+    return matrixTransforms;
+  };
+
   getCoordinatesForScreen () {
     var width          = this.getWindowWidth();
     var height         = this.getWindowHeight();
@@ -369,10 +380,7 @@ class Canvas extends React.Component {
     var scale  = scaleW < scaleH ? scaleW : scaleH;
     matrixTransforms.append(m => m.scale(scale*0.92));
 
-    var negOrg = Vector.create(this.props.origin.x, this.props.origin.y).negate();
-    matrixTransforms.append(m => m.translate(negOrg));
-    matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
-    matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-1 * this.props.rotationAngle)));
+    matrixTransforms.appendFromOther(this.getModelTransformations());
 
     var scrMid = Vector.create(width, height).scale(0.5);
     matrixTransforms.append(m => m.translate(scrMid));
