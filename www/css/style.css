@@ -36,6 +36,11 @@
   cursor: -webkit-grab;
 }
 
+.dna-base-preview {
+  stroke-width: 0px;
+  r: 3px;
+}
+
 .dna-base-selected {
   stroke-width: 3px;
   stroke: #ff0000;
