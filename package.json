@@ -7,8 +7,8 @@
     "start": "node server/babel/main.js",
     "postinstall": "npm run build",
     "build": "npm run client-build && npm run server-build",
-    "client-build": "browserify            -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* www/mathutils/* -o www/bundle/dna_viewer_bundle.js",
-    "client-watch": "watchify   --debug -v -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-object-rest-spread ] ] www/react/* www/store/* www/src/* www/mathutils/* -o www/bundle/dna_viewer_bundle.js",
+    "client-build": "browserify            -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-class-properties transform-object-rest-spread ] ] www/react/* www/store/* www/src/* www/mathutils/* -o www/bundle/dna_viewer_bundle.js",
+    "client-watch": "watchify   --debug -v -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-class-properties transform-object-rest-spread ] ] www/react/* www/store/* www/src/* www/mathutils/* -o www/bundle/dna_viewer_bundle.js",
     "server-build": "babel         --presets es2015 server/src --out-dir server/babel",
     "server-watch": "babel --watch --presets es2015 server/src --out-dir server/babel",
     "db-import": "mongoimport -h ds011755.mlab.com:11755 -d dna_viewer -c datas -u dna_user -p dna_password --file  db/db.json",
@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "babel-cli": "6.14.0",
+    "babel-plugin-transform-class-properties": "6.11.5",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
     "babel-preset-es2015": "6.14.0",
     "babel-preset-react": "6.11.1",
