@@ -4,7 +4,7 @@ import ColorSettings from './color_settings';
 import FontSettings from './font_settings';
 import AppearanceSettings from './appearance_settings';
 import Preview from './preview';
-import * as Dimensions from './dimensions';
+import Dimensions from './dimensions';
 import GridLayout from './grid_layout';
 
 class SettingsView extends React.Component {
@@ -13,17 +13,17 @@ class SettingsView extends React.Component {
     let notPickingColor  = this.props.notPickingColor;
 
     return [
-      {x:0,  y:0,  w:2,  h:2,  v: true,             i: 'ColorSettings'},
-      {x:0,  y:2,  w:1,  h:3,  v: notPickingColor,  i: 'AppearanceSettings'},
-      {x:1,  y:2,  w:1,  h:1,  v: notPickingColor,  i: 'FontSettings'},
-      {x:0,  y:9,  w:2,  h:4,  v: dragging,         i: 'Preview'}
+      {x:0,  y:0,  w:2,  h:3,  v: true,             i: 'ColorSettings'},
+      {x:0,  y:3,  w:1,  h:5,  v: notPickingColor,  i: 'AppearanceSettings'},
+      {x:1,  y:3,  w:1,  h:2,  v: notPickingColor,  i: 'FontSettings'},
+      {x:0,  y:9,  w:2,  h:6,  v: dragging,         i: 'Preview'}
     ];
   };
 
   render () {
     var properties = {
       cols: 2,
-      rowHeight: Dimensions.SETTINGS_VIEW_ROW_HEIGHT,
+      rowHeight: Dimensions.DNA_VIEWER_ROW_HEIGHT,
       width: Dimensions.SETTINGS_VIEW_WIDTH
     };
 

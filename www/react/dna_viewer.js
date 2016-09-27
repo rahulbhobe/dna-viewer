@@ -4,7 +4,7 @@ import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
 import ShareLink from './share_link';
-import * as Dimensions from './dimensions';
+import Dimensions from './dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
@@ -15,52 +15,30 @@ class DnaViewer extends React.Component {
     this.setCanvasDimensions();
   };
 
-  getRowHeight () {
-    return 32;
-  };
-
-  isWidthSmall () {
-    return (window.innerWidth < 900);
-  };
-
-  isHeightSmall () {
-    return (window.innerHeight < 650);
-  };
-
-  calculateCanvasDimensions () {
-    var winW = window.innerWidth;
-    var winH = window.innerHeight;
-
-    return {
-      width:  this.isWidthSmall()  ? winW  : winW - Dimensions.SETTINGS_VIEW_WIDTH,
-      height: this.isHeightSmall() ? (winH - (this.getRowHeight() * (1))) : winH - (this.getRowHeight() * (1+4))
-    };
-  };
-
   setCanvasDimensions () {
-    var {width, height}  = this.calculateCanvasDimensions();
+    var {width, height}  = Dimensions.calculateCanvasDimensions();
     this.props.actions.setCanvasDimensions(width, height);
   };
 
   getLayout () {
-    var {width, height}  = this.calculateCanvasDimensions();
-    var ch = height/this.getRowHeight();
+    var {width, height}  = Dimensions.calculateCanvasDimensions();
+    var ch = height/Dimensions.DNA_VIEWER_ROW_HEIGHT;
     var cw = width;
     var tw = window.innerWidth;
     var sw = tw - cw;
 
     return [
-      {x:0,   y:0,    w:cw,  h:1,     v: true,                   i: 'ShareLink'},
-      {x:0,   y:1,    w:cw,  h:ch,    v: true,                   i: 'Canvas'},
-      {x:0,   y:ch+1, w:tw,  h:4,     v: !this.isHeightSmall(),  i: 'SequenceView'},
-      {x:cw,  y:0,    w:sw,  h:ch+1,  v: !this.isWidthSmall(),   i: 'SettingsView'}
+      {x:0,   y:0,    w:cw,  h:1,     v: true,                         i: 'ShareLink'},
+      {x:0,   y:1,    w:cw,  h:ch,    v: true,                         i: 'Canvas'},
+      {x:0,   y:ch+1, w:tw,  h:4,     v: !Dimensions.isHeightSmall(),  i: 'SequenceView'},
+      {x:cw,  y:0,    w:sw,  h:ch+1,  v: !Dimensions.isWidthSmall(),   i: 'SettingsView'}
     ];
   };
 
   render () {
     var properties = {
       cols: window.innerWidth,
-      rowHeight: this.getRowHeight(),
+      rowHeight: Dimensions.DNA_VIEWER_ROW_HEIGHT,
       width: window.innerWidth
     };
 

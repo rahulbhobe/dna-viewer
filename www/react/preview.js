@@ -2,7 +2,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Vector} from '../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
-import * as Dimensions from './dimensions';
+import Dimensions from './dimensions';
 import {connect} from 'react-redux';
 
 class Preview extends React.Component {
@@ -20,7 +20,7 @@ class Preview extends React.Component {
 
     return (
       <ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={1500} transitionEnterTimeout={1} transitionLeaveTimeout={1}>
-        <svg key='svg' className='svg-class' width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
+        <svg key='svg' className='svg-class-preview' width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
           {coordinates.map((point, ii) => {
             var {x, y}  = point.asObj();
             var base    = bases[ii];
@@ -39,7 +39,7 @@ class Preview extends React.Component {
   };
 
   getWindowHeight () {
-    return Dimensions.SETTINGS_VIEW_ROW_HEIGHT * 4;
+    return Dimensions.DNA_VIEWER_ROW_HEIGHT * 6;
   };
 
   getCoordinatesForScreen () {

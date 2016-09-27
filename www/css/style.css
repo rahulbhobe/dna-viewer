@@ -30,6 +30,10 @@
   background: none;
 }
 
+.svg-class-preview {
+  background: #eeeeee;
+}
+
 .dna-base {
   stroke: #000000;
   stroke-width: 0.5px;
@@ -126,7 +130,6 @@
 
 .settings-view {
   background: #d3d3d3;
-  width: 225px;
 }
 
 .settings-color-wrap-div {

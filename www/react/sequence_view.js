@@ -3,6 +3,7 @@ import GridLayout from './grid_layout';
 import SequenceParser from '../src/sequence_parser';
 import SequenceFormView from './sequence_form_view';
 import classNames from 'classnames';
+import Dimensions from './dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
@@ -49,17 +50,17 @@ class SequenceView extends React.Component {
 
   getLayout() {
     return [
-      {x:0,  y:0,  w:25,  h:1,  v: true,            i: 'SequenceFormViewSeq'},
-      {x:0,  y:1,  w:25,  h:1,  v: true,            i: 'SequenceFormViewDbn'},
-      {x:25, y:0,  w:2,   h:2,  v: this.isDirty(),  i: 'SequenceChangesCancel'},
-      {x:27, y:0,  w:2,   h:2,  v: this.isDirty(),  i: 'SequenceChangesApply'}
+      {x:0,  y:0,  w:25,  h:2,  v: true,            i: 'SequenceFormViewSeq'},
+      {x:0,  y:2,  w:25,  h:2,  v: true,            i: 'SequenceFormViewDbn'},
+      {x:25, y:0,  w:2,   h:4,  v: this.isDirty(),  i: 'SequenceChangesCancel'},
+      {x:27, y:0,  w:2,   h:4,  v: this.isDirty(),  i: 'SequenceChangesApply'}
     ];
   };
 
   render () {
     var properties = {
       cols: 29,
-      rowHeight: 32*2,
+      rowHeight: Dimensions.DNA_VIEWER_ROW_HEIGHT,
       width: window.innerWidth
     };
 
