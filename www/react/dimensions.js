@@ -1,12 +1,5 @@
+
 class Dimensions {
-  static get DNA_VIEWER_ROW_HEIGHT() {
-    return 32;
-  };
-
-  static get SETTINGS_VIEW_WIDTH() {
-    return 300;
-  };
-
   static isWidthSmall () {
     return (window.innerWidth < 900);
   };
@@ -25,5 +18,9 @@ class Dimensions {
     };
   };
 };
+
+Dimensions.DNA_VIEWER_ROW_HEIGHT = 32;
+Dimensions.SETTINGS_VIEW_WIDTH   = 300;
+
 
 export default Dimensions;
