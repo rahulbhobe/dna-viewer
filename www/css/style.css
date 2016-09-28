@@ -167,10 +167,10 @@
 }
 
 .preview-anim-appear {
-  opacity: 0.01;
+  opacity: 0.1;
 }
 
 .preview-anim-appear.preview-anim-appear-active {
   opacity: 1;
-  transition: opacity 1500ms ease-in;
+  transition: opacity 900ms ease-in;
 }
