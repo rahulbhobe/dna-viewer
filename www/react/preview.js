@@ -35,11 +35,11 @@ class Preview extends React.Component {
   };
 
   getWindowWidth () {
-    return Dimensions.SETTINGS_VIEW_WIDTH;
+    return Dimensions.SETTINGS_VIEW_WIDTH - 20;
   };
 
   getWindowHeight () {
-    return Dimensions.DNA_VIEWER_ROW_HEIGHT * 6;
+    return (Dimensions.DNA_VIEWER_ROW_HEIGHT * 6) - 20;
   };
 
   getCoordinatesForScreen () {
