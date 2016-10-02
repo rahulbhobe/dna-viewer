@@ -2,12 +2,13 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Vector} from '../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
+import SequenceParser from '../src/sequence_parser'
 import Dimensions from './dimensions';
-import {connect} from 'react-redux';
 
 class Preview extends React.Component {
   render () {
-    var sequenceParser = this.props.sequenceParser;
+    let {seq, dbn} = this.props;
+    var sequenceParser = new SequenceParser(seq, dbn);
     if (sequenceParser.hasErrors()) {
       return null;
     }
@@ -15,8 +16,7 @@ class Preview extends React.Component {
     var bases       = sequenceParser.getBases();
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
-    var coordinates = this.getCoordinatesForScreen();
-    var bases       = sequenceParser.getBases();
+    var coordinates = sequenceParser.getCoordinates(width, height);
 
     return (
       <ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={1} transitionLeaveTimeout={1}>
@@ -41,19 +41,6 @@ class Preview extends React.Component {
   getWindowHeight () {
     return (Dimensions.DNA_VIEWER_ROW_HEIGHT * 6) - 20;
   };
-
-  getCoordinatesForScreen () {
-    var width          = this.getWindowWidth();
-    var height         = this.getWindowHeight();
-    var sequenceParser = this.props.sequenceParser;
-    return sequenceParser.getCoordinates(width, height);
-  };
 };
 
-var mapStateToProps = (state, ownProps) => {
-  return {
-    sequenceParser: state.sequenceParser
-  };
-};
-
-export default connect(mapStateToProps)(Preview);
+export default Preview;

@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/../../www'));
+app.use('/node_modules', express.static(__dirname + '/../../node_modules'));
 app.use(favicon(__dirname + '/../../www/res/favicon.ico'));
 app.set('views', __dirname + '/../../www');
 app.set('view engine', 'ejs');

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import ColorSettings from './color_settings';
 import FontSettings from './font_settings';
 import AppearanceSettings from './appearance_settings';
-import Preview from './preview';
+import SavedViews from './saved_views';
 import Dimensions from './dimensions';
 import GridLayout from './grid_layout';
 
@@ -16,7 +16,7 @@ class SettingsView extends React.Component {
       {x:0,  y:0,  w:2,  h:3,  v: true,             i: 'ColorSettings'},
       {x:0,  y:3,  w:1,  h:5,  v: notPickingColor,  i: 'AppearanceSettings'},
       {x:1,  y:3,  w:1,  h:2,  v: notPickingColor,  i: 'FontSettings'},
-      {x:0,  y:9,  w:2,  h:6,  v: dragging,         i: 'Preview'}
+      {x:0,  y:9,  w:2,  h:7,  v: notPickingColor,  i: 'SavedViews'}
     ];
   };
 
@@ -32,7 +32,7 @@ class SettingsView extends React.Component {
                 <ColorSettings      key='ColorSettings' />
                 <AppearanceSettings key='AppearanceSettings' />
                 <FontSettings       key='FontSettings' />
-                <Preview            key='Preview' />
+                <SavedViews         key='SavedViews' />
               </GridLayout>
             </div>);
   };

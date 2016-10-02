@@ -174,3 +174,18 @@
   opacity: 1;
   transition: opacity 900ms ease-in;
 }
+
+.slick-prev {
+  left: 10px;
+}
+
+.slick-next {
+  right: 10px;
+}
+
+.slick-prev, .slick-next {
+  z-index: 5;
+}
+.slick-prev:before, .slick-next:before {
+  color: #add8e6;
+}
