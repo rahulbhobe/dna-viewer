@@ -24,12 +24,12 @@ class SavedViews extends React.Component {
       lazyLoad: true
     };
 
-    var links = Array.from(Array(7).keys());
-
-    var items = links.map((link) => {
-      return (<div key={link}> <Preview seq={this.props.seq} dbn={this.props.dbn} /> </div>);
+    var items = this.props.savedViews.map(({url, seq, dbn}) => {
+      return (<div key={url}> <Preview seq={seq} dbn={dbn} /> </div>);
     });
-      
+
+    if (items.length===0) {return null;}
+
     return (<div className='dna-base-font' style={{textAlign: 'center'}}>
               <SavedViewsHeader url={'Bfhbg3R'}/>
               <Slick {...settings}>
@@ -42,8 +42,7 @@ class SavedViews extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    seq: state.sequenceParser.getData().seq,
-    dbn: state.sequenceParser.getData().dbn
+    savedViews: state.savedViews,
   };
 };
 

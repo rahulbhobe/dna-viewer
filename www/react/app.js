@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       return defaultRet;
     }
 
-    var data = {type: 'one', url};
+    let data = {type: 'one', url};
     return promisify(request.post)(window.location.origin + '/data', {form: data})
     .then((httpResponse) => {
       return JSON.parse(httpResponse.body);
@@ -45,6 +45,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
       </Provider>,
       document.getElementById('body-div')
     );
+  });
+
+  let data = {type: 'all'};
+  promisify(request.post)(window.location.origin + '/data', {form: data}).then((httpResponse) => {
+    let savedViews = JSON.parse(httpResponse.body);
+    store.dispatch(actionCreators.setSavedViews(savedViews));
+  }).catch((err) => {
+    console.log(err);
   });
 });
 
