@@ -114,6 +114,13 @@ var canvasDimensionsReducer = (state={width:-1, height:-1}, action) => {
   return state;
 };
 
+var savedViewsReducer = (state=[], action) => {
+  if (action.type === ActionTypes.SET_SAVED_VIEWS) {
+    return action.value;
+  }
+  return state;
+}
+
 var reducers = combineReducers({
   sequenceParser: sequenceParserReducer,
   tempSequence: tempSequenceReducer,
@@ -127,7 +134,8 @@ var reducers = combineReducers({
   rotationAngle: rotationAngleReducer,
   origin: originReducer,
   pickingColor: pickingColorReducer,
-  canvasDimensions: canvasDimensionsReducer
+  canvasDimensions: canvasDimensionsReducer,
+  savedViews: savedViewsReducer
 });
 
 export default reducers;

@@ -95,3 +95,7 @@ export var resetPickingColor = () => {
 export var setCanvasDimensions = (width, height) => {
   return { type: ActionTypes.SET_CANVAS_DIMENSIONS, value: {width, height} };
 };
+
+export var setSavedViews = (views) => {
+  return { type: ActionTypes.SET_SAVED_VIEWS, value: views };
+};
