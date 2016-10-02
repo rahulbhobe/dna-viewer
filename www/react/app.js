@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       return defaultRet;
     }
 
-    var data = {url};
+    var data = {type: 'one', url};
     return promisify(request.post)(window.location.origin + '/data', {form: data})
     .then((httpResponse) => {
       return JSON.parse(httpResponse.body);
@@ -34,9 +34,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
   getData()
   .then(({seq, dbn, url}) => {
     var sequenceParser = new SequenceParser(seq, dbn);
-    store.dispatch(actionCreators.setCurrentUrl(url));
     store.dispatch(actionCreators.setSequenceParser(sequenceParser));
     store.dispatch(actionCreators.setTempSequence(seq, dbn));
+    store.dispatch(actionCreators.setCurrentUrl(url));
+    window.history.pushState("", "Title", "/" + url);
 
     ReactDOM.render(
       <Provider store={store}>

@@ -62,14 +62,28 @@ app.get('/*', (req, res) => {
 });
 
 app.post('/data', (req, res) => {
-  let {url} = req.body;
-  Data.findOne({url}).exec()
-  .then((data) => {
-    if (!data) throw Error("Not found: " + url);
-    let {seq, dbn} = data;
-    if (!seq) throw Error("Invalid url: " + url);
-    if (!dbn) throw Error("Invalid url: " + url);
-    res.send({url, seq, dbn});
+  let {type} = req.body;
+  Promise.resolve(type).then((type) => {
+    if (type === 'one') {
+      let {url} = req.body;
+      return Data.findOne({url}).exec().then((data) => {
+        if (!data) throw Error("Not found: " + url);
+        let {seq, dbn} = data;
+        if (!seq) throw Error("Invalid url: " + url);
+        if (!dbn) throw Error("Invalid url: " + url);
+        res.send({url, seq, dbn});
+      });
+    } else if (type === 'all') {
+      return Data.find({}).exec().then((data) => {
+        if (!data) throw Error("No data found");
+        let arr = data.map(({url, seq, dbn}) => {
+          return {url, seq, dbn}
+        });
+        res.send(arr);
+      });
+    } else {
+      throw Error('Bad post: Unknown post');
+    }
   }).catch((err) => {
     console.log(err);
     res.sendStatus(400);
