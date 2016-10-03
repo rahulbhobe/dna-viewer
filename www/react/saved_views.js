@@ -8,37 +8,48 @@ const SavedViewsHeader = (props) => {
 };
 
 class SavedViews extends React.Component {
+  constructor (props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+  };
+
   render () {
     var settings = {
       dots: false,
       infinite: false,
       speed: 500,
-      draggable: false,
+      draggable: true,
       arrows: true,
       autoplay: false,
       slidesToShow: 1,
       slidesToScroll: 1,
-      swipe: false,
+      swipe: true,
       initialSlide: 0,
       touchMove: false,
       lazyLoad: true
     };
 
-    var items = this.props.savedViews.map(({url, seq, dbn}) => {
-      return (<div key={url}> <Preview seq={seq} dbn={dbn} /> </div>);
-    });
-
-    if (items.length===0) {return null;}
+    if (this.props.savedViews.length===0) {return null;}
 
     return (<div className='dna-base-font' style={{textAlign: 'center'}}>
-              <SavedViewsHeader url={'Bfhbg3R'}/>
+              <SavedViewsHeader />
               <Slick {...settings}>
-                { items }
+                {this.props.savedViews.map(({url, seq, dbn}) => {
+                  return (<div key={url}>
+                            <button onClick={this.onClick(url)}>{url}</button>
+                            <Preview seq={seq} dbn={dbn} />
+                          </div>);
+                })}
               </Slick>
             </div>);
   };
-};
 
+  onClick(url) {
+    return () => {
+      alert(url);
+    };
+  };
+};
 
 var mapStateToProps = (state, ownProps) => {
   return {
