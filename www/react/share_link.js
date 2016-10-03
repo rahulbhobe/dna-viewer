@@ -1,7 +1,6 @@
 import React from 'react';
 import GridLayout from './grid_layout';
-import request from 'request';
-import promisify from 'es6-promisify';
+import RequestUtils from './request_utils'
 import classNames from 'classnames';
 import store from '../store/store';
 import {mapDispatchToProps} from '../store/action_dispatcher';
@@ -78,23 +77,15 @@ class ShareLink extends React.Component {
   };
 
   onSaveImpl (type) {
-    var data = {
-      type,
-      url:  this.props.url,
-      seq:  this.props.seq,
-      dbn:  this.props.dbn
-    };
-
-    promisify(request.post)(window.location.origin + '/link', {form: data})
-    .then((httpResponse) => {
-      var {url} = JSON.parse(httpResponse.body);
-      this.onSuccess(type, url);
+    let {url, seq, dbn} = this.props;
+    RequestUtils.saveToDataBase(type, {url, seq, dbn}).then(({url}) => {
+      this.onSuccess(url);
     }).catch((err) => {
       this.onError(err);
     });
   };
 
-  onSuccess (type, url) {
+  onSuccess (url) {
     this.props.actions.setCurrentUrl(url);
     window.history.pushState("", "Title", "/" + url);
   };

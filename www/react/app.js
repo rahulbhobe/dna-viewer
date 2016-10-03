@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import DebugUtils from '../src/debug';
 import SequenceParser from '../src/sequence_parser';
-import request from 'request';
-import promisify from 'es6-promisify';
+import RequestUtils from './request_utils'
 import {Provider} from 'react-redux';
 import store from '../store/store';
 import * as actionCreators from '../store/action_creators';
@@ -21,10 +20,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       return defaultRet;
     }
 
-    let data = {type: 'one', url};
-    return promisify(request.post)(window.location.origin + '/data', {form: data})
-    .then((httpResponse) => {
-      return JSON.parse(httpResponse.body);
+    return RequestUtils.getSavedDataForUrl(url).then((data) => {
+      return data;
     }).catch((err) => {
       console.log(err);
       return defaultRet;
@@ -47,10 +44,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     );
   });
 
-  let data = {type: 'all'};
-  promisify(request.post)(window.location.origin + '/data', {form: data}).then((httpResponse) => {
-    let savedViews = JSON.parse(httpResponse.body);
-    store.dispatch(actionCreators.setSavedViews(savedViews));
+  return RequestUtils.getAllSavedData().then((data) => {
+    store.dispatch(actionCreators.setSavedViews(data));
   }).catch((err) => {
     console.log(err);
   });

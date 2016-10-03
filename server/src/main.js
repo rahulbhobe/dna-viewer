@@ -23,8 +23,8 @@ app.post('/link', (req, res) => {
   .then((type) => {
     if (type === 'save') {
       return Data.update({url}, {seq, dbn}).exec()
-      .then((data) => {
-        return data;
+      .then(() => {
+        return {url};
       });
     } else if (type === 'add') {
       let url = shortid.generate();
