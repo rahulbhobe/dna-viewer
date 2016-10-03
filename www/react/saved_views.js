@@ -1,7 +1,10 @@
 import React from 'react';
 import Slick from 'react-slick';
 import Preview from './preview';
+import RequestUtils from './request_utils'
+import SequenceParser from '../src/sequence_parser';
 import {connect} from 'react-redux';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 
 const SavedViewsHeader = (props) => {
   return (<div> Saved Views: </div>);
@@ -46,7 +49,15 @@ class SavedViews extends React.Component {
 
   onClick(url) {
     return () => {
-      alert(url);
+      RequestUtils.getSavedDataForUrl(url).then(({url, seq, dbn}) => {
+        var sequenceParser = new SequenceParser(seq, dbn);
+        this.props.actions.setSequenceParser(sequenceParser);
+        this.props.actions.setTempSequence(seq, dbn);
+        this.props.actions.setCurrentUrl(url);
+        window.history.pushState("", "Title", "/" + url);
+      }).catch((err) => {
+        console.log(err);
+      });
     };
   };
 };
@@ -57,4 +68,4 @@ var mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(SavedViews);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedViews);
