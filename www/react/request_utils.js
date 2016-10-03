@@ -1,26 +1,27 @@
 import request from 'request';
 import promisify from 'es6-promisify';
 
+
 class RequestUtils {
-  static getAllSavedData () {
-    let payload = {type: 'all'};
-    return promisify(request.post)(window.location.origin + '/data', {form: payload}).then((httpResponse) => {
+  static postRequest (route, payload) {
+    return promisify(request.post)(window.location.origin + route, {form: payload}).then((httpResponse) => {
       return JSON.parse(httpResponse.body);
     });
+  };
+
+  static getAllSavedData () {
+    let payload = {type: 'all'};
+    return this.postRequest('/data', payload);
   };
 
   static getSavedDataForUrl (url) {
     let payload = {type: 'one', url};
-    return promisify(request.post)(window.location.origin + '/data', {form: payload}).then((httpResponse) => {
-      return JSON.parse(httpResponse.body);
-    });
+    return this.postRequest('/data', payload);
   };
 
   static saveToDataBase (type, data) {
     let payload = {type, ...data};
-    return promisify(request.post)(window.location.origin + '/link', {form: payload}).then((httpResponse) => {
-      return JSON.parse(httpResponse.body);
-    });
+    return this.postRequest('/link', payload);
   };
 };
 
