@@ -3,7 +3,7 @@ import GridLayout from './grid_layout';
 import SequenceParser from '../src/sequence_parser';
 import SequenceFormView from './sequence_form_view';
 import classNames from 'classnames';
-import Dimensions from './dimensions';
+import Dimensions from '../utils/dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 

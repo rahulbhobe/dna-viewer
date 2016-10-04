@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import DebugUtils from '../src/debug';
 import SequenceParser from '../src/sequence_parser';
-import RequestUtils from './request_utils'
+import RequestUtils from '../utils/request_utils'
 import {Provider} from 'react-redux';
 import store from '../store/store';
 import * as actionCreators from '../store/action_creators';
@@ -28,8 +28,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
   };
 
-  getData()
-  .then(({seq, dbn, url}) => {
+  getData().then(({seq, dbn, url}) => {
     var sequenceParser = new SequenceParser(seq, dbn);
     store.dispatch(actionCreators.setSequenceParser(sequenceParser));
     store.dispatch(actionCreators.setTempSequence(seq, dbn));

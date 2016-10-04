@@ -1,7 +1,7 @@
 import React from 'react';
 import {SketchPicker as ColorPicker} from 'react-color';
 import jss from 'jss-browserify';
-import Dimensions from './dimensions';
+import Dimensions from '../utils/dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 

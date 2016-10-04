@@ -4,7 +4,7 @@ import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
 import ShareLink from './share_link';
-import Dimensions from './dimensions';
+import Dimensions from '../utils/dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 

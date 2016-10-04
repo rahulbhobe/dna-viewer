@@ -1,6 +1,6 @@
 import React from 'react';
 import GridLayout from './grid_layout';
-import RequestUtils from './request_utils'
+import RequestUtils from '../utils/request_utils'
 import classNames from 'classnames';
 import store from '../store/store';
 import {mapDispatchToProps} from '../store/action_dispatcher';
