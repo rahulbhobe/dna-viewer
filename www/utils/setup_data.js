@@ -1,12 +1,13 @@
 import DebugUtils from '../src/debug';
 import SequenceParser from '../src/sequence_parser';
 import RequestUtils from './request_utils';
+import PubNubUtils from './pubnub_utils';
 import store from '../store/store';
 import * as actionCreators from '../store/action_creators';
 
 class SetupData {
   static initialize () {
-    return Promise.all([this.setupInitialData(), this.setupSavedViewsData()]).then(() => {
+    return Promise.all([this.setupInitialData(), this.setupSavedViewsData(), this.setupNotificationsForDBUpdate()]).then(() => {
       return null;
     });
   };
@@ -40,6 +41,12 @@ class SetupData {
       store.dispatch(actionCreators.setSavedViews(data));
     }).catch((err) => {
       console.log(err);
+    });
+  };
+
+  static setupNotificationsForDBUpdate () {
+    PubNubUtils.subscribe(() => {
+      this.setupSavedViewsData();
     });
   };
 };
