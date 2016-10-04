@@ -38,7 +38,7 @@
     "react-dom": "15.3.2",
     "react-grid-layout": "0.13.7",
     "react-redux": "4.4.5",
-    "react-slick": "0.14.4",
+    "react-slick": "0.14.5",
     "redux": "3.6.0",
     "request": "2.75.0",
     "serve-favicon": "2.3.0",
