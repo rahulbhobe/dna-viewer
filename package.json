@@ -31,7 +31,7 @@
     "gl-matrix": "2.3.2",
     "jss-browserify": "0.6.0",
     "mongoose": "4.6.2",
-    "pubnub": "3.16.4",
+    "pubnub": "4.0.12",
     "react": "15.3.2",
     "react-addons-css-transition-group": "15.3.2",
     "react-color": "2.3.2",

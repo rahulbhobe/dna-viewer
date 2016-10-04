@@ -99,3 +99,4 @@ var server = app.listen(app.get('port'), () => {
 });
 
 DBManager.init();
+PubNubServerUtils.init();
