@@ -22,9 +22,7 @@ class SetupData {
       if (!url) {
         return this.getDefaultData();
       }
-      return RequestUtils.getSavedDataForUrl(url).then((data) => {
-        return data;
-      });
+      return RequestUtils.getSavedDataForUrl(url);
     }).catch((err) => {
       console.log(err);
       return this.getDefaultData();
