@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import favicon from 'serve-favicon';
 import DBManager from './db_manager';
 import Data from './data';
+import PubNubServerUtils from './pubnub_server_utils';
 import shortid from 'shortid';
 
 var app         =  express();
@@ -37,6 +38,7 @@ app.post('/link', (req, res) => {
       });
     }
   }).then(({url}) => {
+    PubNubServerUtils.publish(type);
     res.send({url});
   }).catch((err) => {
     console.log(err);
