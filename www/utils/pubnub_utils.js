@@ -11,7 +11,7 @@ class PubNubUtils {
     this.pubnub = new PubNub({
       publishKey: this.PUBLISH_KEY,
       subscribeKey: this.SUBSCRIBE_KEY,
-      ssl: ((document.location.protocol==='https:') ? true : false)
+      ssl: ((window.location.protocol.toLowerCase()==='https:') ? true : false)
     });
 
     this.pubnub.addListener({
