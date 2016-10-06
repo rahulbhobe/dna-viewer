@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import SequenceParser from '../src/sequence_parser'
 import Dimensions from '../utils/dimensions';
 
-class Preview extends React.Component {
+class ThumbnailView extends React.Component {
   render () {
     let {seq, dbn} = this.props;
     var sequenceParser = new SequenceParser(seq, dbn);
@@ -43,4 +43,4 @@ class Preview extends React.Component {
   };
 };
 
-export default Preview;
+export default ThumbnailView;

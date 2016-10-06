@@ -1,6 +1,6 @@
 import React from 'react';
 import Slick from 'react-slick';
-import Preview from './preview';
+import ThumbnailView from './thumbnail_view';
 import RequestUtils from '../utils/request_utils'
 import SequenceParser from '../src/sequence_parser';
 import {connect} from 'react-redux';
@@ -40,7 +40,7 @@ class SavedViews extends React.Component {
                 {this.props.savedViews.map(({url, seq, dbn}) => {
                   return (<div key={url}>
                             <button onClick={this.onClick(url)}>{url}</button>
-                            <Preview seq={seq} dbn={dbn} />
+                            <ThumbnailView seq={seq} dbn={dbn} />
                           </div>);
                 })}
               </Slick>
