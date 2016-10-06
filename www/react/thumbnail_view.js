@@ -2,7 +2,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Vector} from '../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
-import SequenceParser from '../src/sequence_parser'
+import SequenceParser from '../src/sequence_parser';
 import Dimensions from '../utils/dimensions';
 
 class ThumbnailView extends React.Component {
