@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import SequenceUtils from '../utils/sequence_utils';
 import ThumbnailView from './thumbnail_view';
 import {connect} from 'react-redux';
@@ -8,10 +9,11 @@ class Preview extends React.Component {
     let sequenceParser = this.getSequenceParserToRender();
     let {seq, dbn} = sequenceParser.getData();
 
-    return (
-      <div className='dna-base-font' style={{textAlign: 'center'}}>
-        <ThumbnailView seq={seq} dbn={dbn} />
-      </div>);
+    return (<div className='dna-base-font' style={{textAlign: 'center'}}>
+              <ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={1} transitionLeaveTimeout={1}>
+                <ThumbnailView key='thumbnail' seq={seq} dbn={dbn} />
+              </ReactCSSTransitionGroup>
+            </div>);
   };
 
   getSequenceParserToRender () {

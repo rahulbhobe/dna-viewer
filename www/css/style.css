@@ -30,7 +30,7 @@
   background: none;
 }
 
-.svg-class-preview {
+.svg-class-thumbnail {
   background: #eeeeee;
 }
 
@@ -40,7 +40,7 @@
   cursor: -webkit-grab;
 }
 
-.dna-base-preview {
+.dna-base-thumbnail {
   stroke-width: 0px;
   r: 3px;
 }

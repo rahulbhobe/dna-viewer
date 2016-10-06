@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Vector} from '../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
 import SequenceParser from '../src/sequence_parser';
@@ -19,19 +18,17 @@ class ThumbnailView extends React.Component {
     var coordinates = sequenceParser.getCoordinates(width, height);
 
     return (
-      <ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={1} transitionLeaveTimeout={1}>
-        <svg key='svg' className='svg-class-preview' width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
+        <svg key='svg' className='svg-class-thumbnail' width={width} height={height} onContextMenu={this.onContextMenu} >
           {coordinates.map((point, ii) => {
             var {x, y}  = point.asObj();
             var base    = bases[ii];
-            var classes = classNames('dna-base-preview', 'dna-base-' + base.getType().toLowerCase());
+            var classes = classNames('dna-base-thumbnail', 'dna-base-' + base.getType().toLowerCase());
             return (
-              <g transform={'translate(' + x + ', ' + y + ')'} key={'base_preview' + ii} >
+              <g transform={'translate(' + x + ', ' + y + ')'} key={'base_thumbnail_' + ii} >
                 <circle className={classes} />
               </g>);
           })}
-        </svg>
-      </ReactCSSTransitionGroup>);
+        </svg>);
   };
 
   getWindowWidth () {
