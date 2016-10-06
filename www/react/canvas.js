@@ -8,6 +8,7 @@ import store from '../store/store';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 import SequenceParser from '../src/sequence_parser';
+import SequenceUtils from '../utils/sequence_utils';
 
 class DnaBackbone extends React.Component {
   render () {
@@ -214,27 +215,14 @@ class Canvas extends React.Component {
     if (found===dragging) return;
 
 
-    var sequenceParser = this.props.sequenceParser;
-    var bases = sequenceParser.getBases();
-    var base1 = bases[dragging];
-    var base2 = bases[found];
-
-    if (!base1.isUnpaired()) return;
-    if (!base2.isUnpaired()) return;
-    if (!base1.canPairWith(base2)) return;
-
-    var {seq, dbn} = sequenceParser.getData();
-    var min = Math.min(dragging, found);
-    var max = Math.max(dragging, found);
-
-    var newdbn =  dbn.substring(0, min) + '(' + dbn.substring(min+1, max) + ')' + dbn.substring(max+1);
-    var sequenceParserNew = new SequenceParser(seq, newdbn);
-    if (sequenceParser.hasErrors()) {
+    var sequenceParserNew = SequenceUtils.getJoinedSequence(this.props.sequenceParser, dragging, found);
+    if (!sequenceParserNew) {
       return;
     }
 
+    let {seq, dbn} = sequenceParserNew.getData();
     this.props.actions.setSequenceParser(sequenceParserNew);
-    this.props.actions.setTempSequence(seq, newdbn);
+    this.props.actions.setTempSequence(seq, dbn);
   };
 
   onMouseLeave () {
