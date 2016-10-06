@@ -8,7 +8,10 @@ class Preview extends React.Component {
     let sequenceParser = this.getSequenceParserToRender();
     let {seq, dbn} = sequenceParser.getData();
 
-    return (<ThumbnailView seq={seq} dbn={dbn} />);
+    return (
+      <div className='dna-base-font' style={{textAlign: 'center'}}>
+        <ThumbnailView seq={seq} dbn={dbn} />
+      </div>);
   };
 
   getSequenceParserToRender () {
