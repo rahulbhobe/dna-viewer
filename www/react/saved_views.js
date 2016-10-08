@@ -6,10 +6,6 @@ import SequenceParser from '../src/sequence_parser';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
-const SavedViewsHeader = (props) => {
-  return (<div> Saved Views: </div>);
-};
-
 class SavedViews extends React.Component {
   constructor (props) {
     super(props);
@@ -35,7 +31,7 @@ class SavedViews extends React.Component {
     if (this.props.savedViews.length===0) {return null;}
 
     return (<div className='dna-base-font' style={{textAlign: 'center'}}>
-              <SavedViewsHeader />
+              <div> Saved Views: </div>
               <Slick {...settings}>
                 {this.props.savedViews.map(({url, seq, dbn}) => {
                   return (<div key={url}>

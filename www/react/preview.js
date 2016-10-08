@@ -10,6 +10,7 @@ class Preview extends React.Component {
     let {seq, dbn} = sequenceParser.getData();
 
     return (<div className='dna-base-font' style={{textAlign: 'center'}}>
+              <div> Preview: </div>
               <ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={1} transitionLeaveTimeout={1}>
                 <ThumbnailView key='thumbnail' seq={seq} dbn={dbn} />
               </ReactCSSTransitionGroup>
