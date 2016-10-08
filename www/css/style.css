@@ -32,6 +32,13 @@
 
 .svg-class-thumbnail {
   background: #eeeeee;
+  border-style: groove;
+}
+
+.div-empty-preview {
+  border-style: groove;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .dna-base {

@@ -10,7 +10,6 @@ import GridLayout from './grid_layout';
 
 class SettingsView extends React.Component {
   getLayout () {
-    let dragging         = this.props.dragging;
     let notPickingColor  = this.props.notPickingColor;
 
     return [
@@ -18,7 +17,7 @@ class SettingsView extends React.Component {
       {x:0,  y:3,  w:1,  h:5,  v: notPickingColor,  i: 'AppearanceSettings'},
       {x:1,  y:3,  w:1,  h:2,  v: notPickingColor,  i: 'FontSettings'},
       {x:0,  y:9,  w:2,  h:7,  v: notPickingColor,  i: 'SavedViews'},
-      {x:0,  y:17, w:2,  h:6,  v: dragging,         i: 'Preview'}
+      {x:0,  y:17, w:2,  h:6,  v: notPickingColor,  i: 'Preview'}
     ];
   };
 
@@ -43,7 +42,6 @@ class SettingsView extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    dragging: state.dragging !== -1,
     notPickingColor: state.pickingColor === null
   }
 };
