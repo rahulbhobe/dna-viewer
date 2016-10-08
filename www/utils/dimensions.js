@@ -8,7 +8,7 @@ class Dimensions {
   };
 
   static isHeightSmall () {
-    return (window.innerHeight < 650);
+    return (window.innerHeight < (this.DNA_VIEWER_ROW_HEIGHT * 27));
   };
 
   static calculateCanvasDimensions () {
