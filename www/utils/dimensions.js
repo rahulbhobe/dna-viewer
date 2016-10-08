@@ -20,6 +20,14 @@ class Dimensions {
       height: this.isHeightSmall() ? (winH - (this.DNA_VIEWER_ROW_HEIGHT * (1))) : winH - (this.DNA_VIEWER_ROW_HEIGHT * (1+4))
     };
   };
+
+  static getThumbnailWidth () {
+    return this.SETTINGS_VIEW_WIDTH - 20;
+  };
+
+  static getThumbnailHeight () {
+    return (this.DNA_VIEWER_ROW_HEIGHT * 6) - 20;
+  };
 };
 
 export default Dimensions;

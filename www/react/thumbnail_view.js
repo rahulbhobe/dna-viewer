@@ -13,8 +13,8 @@ class ThumbnailView extends React.Component {
     }
 
     var bases       = sequenceParser.getBases();
-    var width       = this.getWindowWidth();
-    var height      = this.getWindowHeight();
+    var width       = Dimensions.getThumbnailWidth();
+    var height      = Dimensions.getThumbnailHeight();
     var coordinates = sequenceParser.getCoordinates(width, height);
 
     return (
@@ -29,14 +29,6 @@ class ThumbnailView extends React.Component {
               </g>);
           })}
         </svg>);
-  };
-
-  getWindowWidth () {
-    return Dimensions.SETTINGS_VIEW_WIDTH - 20;
-  };
-
-  getWindowHeight () {
-    return (Dimensions.DNA_VIEWER_ROW_HEIGHT * 6) - 20;
   };
 };
 
