@@ -26,9 +26,11 @@ class Preview extends React.Component {
   };
 
   getSequenceParserToRender () {
-    let sequenceParser = this.props.sequenceParser;
-    if (this.props.dragging === -1) return sequenceParser;
-    if (this.props.hover    === -1) return sequenceParser;
+    let sequenceParser    = this.props.sequenceParser;
+    let {dragging, hover} = this.props;
+    if (dragging === -1)    return sequenceParser;
+    if (hover    === -1)    return sequenceParser;
+    if (dragging === hover) return sequenceParser;
     let sequenceParserNew = SequenceUtils.getJoinedSequence(sequenceParser, this.props.dragging, this.props.hover);
     if (!sequenceParserNew) return sequenceParser;
     return sequenceParserNew;

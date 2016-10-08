@@ -5,6 +5,7 @@ class SequenceUtils {
     if (!sequenceParser) return null;
     if (node1 === -1)    return null;
     if (node2 === -1)    return null;
+    if (node1 === node2) return null;
 
     let bases    = sequenceParser.getBases();
     let base1    = bases[node1];
