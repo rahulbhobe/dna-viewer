@@ -25,9 +25,9 @@ class ShareLink extends React.Component {
       {x:0,          y:0,  w:ww,  h:1,  v: u,    i: 'DocSave'},
       {x:u?ww:0,     y:0,  w:ww,  h:1,  v: true, i: 'DocAdd'},
       {x:2*ww,       y:0,  w:ww,  h:1,  v: u,    i: 'DocDelete'},
-      {x:cw-(5*ww),  y:0,  w:ww,  h:1,  v: true, i: 'RotateCCW'},
-      {x:cw-(4*ww),  y:0,  w:ww,  h:1,  v: true, i: 'RotateCW'},
-      {x:cw-(3*ww),  y:0,  w:ww,  h:1,  v: true, i: 'FitToScreen'}
+      {x:cw-(3*ww),  y:0,  w:ww,  h:1,  v: true, i: 'RotateCCW'},
+      {x:cw-(2*ww),  y:0,  w:ww,  h:1,  v: true, i: 'RotateCW'},
+      {x:cw-(1*ww),  y:0,  w:ww,  h:1,  v: true, i: 'FitToScreen'}
     ];
   };
 
