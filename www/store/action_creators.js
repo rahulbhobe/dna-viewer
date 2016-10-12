@@ -33,7 +33,7 @@ export var setSimulatedData = (data) => {
 };
 
 export var resetSimulatedData = () => {
-  return { type: ActionTypes.RESET_SIMULATED_DATA, value: {anchored: [], animated: []} };
+  return { type: ActionTypes.RESET_SIMULATED_DATA, value: {simulation: null, anchored: [], animated: []} };
 };
 
 export var setHoverNode = (node) => {

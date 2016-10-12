@@ -35,7 +35,7 @@ var currentUrlReducer = (state="", action) => {
   return state;
 };
 
-var simulatedDataReducer = (state={anchored: [], animated: []}, action) => {
+var simulatedDataReducer = (state={simulation: null, anchored: [], animated: []}, action) => {
   if (action.type === ActionTypes.SET_SIMULATED_DATA) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_SIMULATED_DATA) {

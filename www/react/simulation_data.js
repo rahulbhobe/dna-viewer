@@ -18,17 +18,23 @@ class SimulationData extends React.Component {
     return null;
   };
 
-  componentWillMount () {
-    this.simulation = d3.forceSimulation();
-    this.data       = {anchored: [], animated: []};
+  setCurrentData () {
+    this.props.actions.setSimulatedData(this.data);
+  };
+
+  resetData () {
+    this.data = {simulation: null, anchored: [], animated: []};
     this.props.actions.resetSimulatedData();
+  };
+
+  componentWillMount () {
+    let simulation = d3.forceSimulation();
+    this.data       = {simulation, anchored: [], animated: []};
+    this.setCurrentData();
   };
 
   componentWillUnmount () {
     this.simulation.stop();
-
-    this.simulation = null;
-    this.data       = {anchored: [], animated: []};
     this.props.actions.resetSimulatedData();
   };
 
@@ -66,7 +72,7 @@ class SimulationData extends React.Component {
       return {source: 'animated_' + connection.source, target: 'animated_' + connection.target};
     });
 
-    let simulation = this.simulation;
+    let simulation = this.data.simulation;
     let nodes = this.data.anchored.concat(this.data.animated);
     let links = linkAnchoredAnimated.concat(linkBackbone, linkPair);
 
@@ -87,7 +93,7 @@ class SimulationData extends React.Component {
   };
 
   onSimulationTicked () {
-    this.props.actions.setSimulatedData(this.data);
+    this.setCurrentData();
   };
 
   getModelTransformations () {
