@@ -135,6 +135,7 @@ var reducers = combineReducers({
   tempSequence: tempSequenceReducer,
   sequenceViewHasErrors: sequenceViewHasErrorsReducer,
   currentUrl: currentUrlReducer,
+  simulatedData: simulatedDataReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
   currentMousePosition: currentMousePositionReducer,
