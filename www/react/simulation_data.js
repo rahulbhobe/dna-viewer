@@ -7,7 +7,11 @@ import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class SimulationData extends React.Component {
-  static simulation = null;
+  constructor (props) {
+    super(props);
+
+    this.onSimulationTicked = this.onSimulationTicked.bind(this);
+  };
 
   render () {
     this.generateSimulation();
@@ -16,10 +20,16 @@ class SimulationData extends React.Component {
 
   componentWillMount () {
     this.simulation = d3.forceSimulation();
+    this.data       = {anchored: [], animated: []};
+    this.props.actions.resetSimulatedData();
   };
 
   componentWillUnmount () {
     this.simulation.stop();
+
+    this.simulation = null;
+    this.data       = {anchored: [], animated: []};
+    this.props.actions.resetSimulatedData();
   };
 
   generateSimulation () {
@@ -31,13 +41,13 @@ class SimulationData extends React.Component {
     var coordinates = this.getCoordinatesForScreen();
     var connections = sequenceParser.getConnections();
 
-    let nodesAnchored = coordinates.map((point, ii) => {
+    this.data.anchored = coordinates.map((point, ii) => {
       let id     = 'anchor_' + ii;
       let {x, y} = point.asObj();
       return {id, fx: x, fy: y};
     });
 
-    let nodesAnimated = coordinates.map((point, ii) => {
+    this.data.animated = coordinates.map((point, ii) => {
       let id     = 'animated_' + ii;
       let {x, y} = point.asObj();
       return {id, x, y};
@@ -57,7 +67,7 @@ class SimulationData extends React.Component {
     });
 
     let simulation = this.simulation;
-    let nodes = nodesAnchored.concat(nodesAnimated);
+    let nodes = this.data.anchored.concat(this.data.animated);
     let links = linkAnchoredAnimated.concat(linkBackbone, linkPair);
 
     simulation.nodes(nodes).on('tick', this.onSimulationTicked);
@@ -77,6 +87,7 @@ class SimulationData extends React.Component {
   };
 
   onSimulationTicked () {
+    this.props.actions.setSimulatedData(this.data);
   };
 
   getModelTransformations () {
