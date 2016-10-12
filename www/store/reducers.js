@@ -35,6 +35,15 @@ var currentUrlReducer = (state="", action) => {
   return state;
 };
 
+var simulatedDataReducer = (state={anchored: [], animated: []}, action) => {
+  if (action.type === ActionTypes.SET_SIMULATED_DATA) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_SIMULATED_DATA) {
+    return action.value;
+  }
+  return state;
+};
+
 var hoverNodeReducer = (state=-1, action) => {
   if (action.type === ActionTypes.SET_HOVER_NODE) {
     return action.value;

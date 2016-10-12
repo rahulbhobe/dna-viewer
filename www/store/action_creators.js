@@ -28,6 +28,14 @@ export var resetCurrentUrl = () => {
   return { type: ActionTypes.RESET_CURRENT_URL, value: "" };
 };
 
+export var setSimulatedData = (data) => {
+  return { type: ActionTypes.SET_SIMULATED_DATA, value: data };
+};
+
+export var resetSimulatedData = () => {
+  return { type: ActionTypes.RESET_SIMULATED_DATA, value: {anchored: [], animated: []} };
+};
+
 export var setHoverNode = (node) => {
   return { type: ActionTypes.SET_HOVER_NODE, value: node };
 };
