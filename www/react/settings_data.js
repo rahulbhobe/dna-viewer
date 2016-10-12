@@ -16,7 +16,7 @@ var SettingsInit = () => {
   });
   jss.set('.dna-base-font', {'font-family': 'Courier'});
   jss.set('.dna-base-size', {'r': '10px'});
-  jss.set('.dna-base-backbone', {'stroke-width': '1px'});
+  jss.set('.dna-base-backbone', {'stroke-width': '3px'});
   jss.set('.dna-base-pair', {'stroke-width': '4px'});
   jss.set('.dna-base-selected', {'fill': '#ffffff'});
 };
