@@ -92,9 +92,7 @@ class SimulationData extends React.Component {
     simulation.force('dna_backbone', d3.forceLink(linkBackbone).id(n => n.id).distance(distance).strength(2));
     simulation.force('dna_pair', d3.forceLink(linkPair).id(n => n.id).distance(distance).strength(2));
 
-    //  simulation.velocityDecay(0.7);
-
-    if (this.props.mouseActionDataType === 'none') {
+    if (store.getState().mouseActionData.type === 'none') {
       simulation.alphaTarget(0.99);
       setTimeout(() => simulation.alphaTarget(0), 800);
     }
@@ -144,8 +142,7 @@ var mapStateToProps = (state, ownProps) => {
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
     origin: state.origin,
-    dimensions: state.canvasDimensions,
-    mouseActionDataType: state.mouseActionData.type
+    dimensions: state.canvasDimensions
   };
 };
 
