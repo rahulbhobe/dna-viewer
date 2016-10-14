@@ -64,8 +64,8 @@ class Canvas extends React.Component {
 
     return (
       <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
-        {coordinates.map((point, ii) => {
-            if (ii >= coordinates.length-1) {
+        {bases.map((base, ii) => {
+            if (ii >= bases.length-1) {
               return;
             }
             return (<DnaLineView key={'backbone' + ii} type='backbone' source={ii} target={ii+1}/>);
@@ -75,8 +75,8 @@ class Canvas extends React.Component {
             return (<DnaLineView key={'pair' + ii} type='pair' source={source} target={target}/>);
         })}
 
-        {coordinates.map((point, ii) => {
-            return (<DnaBaseView key={"base" + ii} index={ii} bannedCursorWhenMoving={this.bannedCursorWhenMoving(ii)} />
+        {bases.map((base, ii) => {
+            return (<DnaBaseView key={'base' + ii} index={ii} bannedCursorWhenMoving={this.bannedCursorWhenMoving(ii)} />
             );
         })}
 
