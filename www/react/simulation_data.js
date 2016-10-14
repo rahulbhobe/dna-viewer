@@ -88,13 +88,9 @@ class SimulationData extends React.Component {
     simulation.nodes(nodes).on('tick', this.onSimulationTicked);
 
     let distance    = coordinates[0].subtract(coordinates[1]).length();
-    simulation.force('anchored_animated', d3.forceLink().id(n => n.id).distance(0).strength(2));
-    simulation.force('dna_backbone', d3.forceLink().id(n => n.id).distance(distance).strength(2));
-    simulation.force('dna_pair', d3.forceLink().id(n => n.id).distance(distance).strength(2));
-
-    simulation.force('anchored_animated').links(linkAnchoredAnimated);
-    simulation.force('dna_backbone').links(linkBackbone);
-    simulation.force('dna_pair').links(linkPair);
+    simulation.force('anchored_animated', d3.forceLink(linkAnchoredAnimated).id(n => n.id).distance(0).strength(2));
+    simulation.force('dna_backbone', d3.forceLink(linkBackbone).id(n => n.id).distance(distance).strength(2));
+    simulation.force('dna_pair', d3.forceLink(linkPair).id(n => n.id).distance(distance).strength(2));
 
     simulation.on('end', this.onSimulationEnded);
 
