@@ -1,5 +1,6 @@
 import React from 'react';
 import GridLayout from './grid_layout';
+import SimulationData from './simulation_data';
 import Canvas from './canvas';
 import SettingsView from './settings_view';
 import SequenceView from './sequence_view';
@@ -42,13 +43,15 @@ class DnaViewer extends React.Component {
       width: window.innerWidth
     };
 
-    return (<GridLayout properties={properties} layout={this.getLayout()}>
-              <ShareLink    key='ShareLink' />
-              <Canvas       key='Canvas' />
-              <SequenceView key='SequenceView' />
-              <SettingsView key='SettingsView' />
-            </GridLayout>
-      );
+    return (<div>
+              <SimulationData />
+              <GridLayout properties={properties} layout={this.getLayout()}>
+                <ShareLink    key='ShareLink' />
+                <Canvas       key='Canvas' />
+                <SequenceView key='SequenceView' />
+                <SettingsView key='SettingsView' />
+              </GridLayout>
+            </div>);
   };
 
   handleResize (e) {
