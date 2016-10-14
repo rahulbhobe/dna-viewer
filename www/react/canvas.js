@@ -93,8 +93,7 @@ class Canvas extends React.Component {
         })}
 
         {coordinates.map((point, ii) => {
-            return (<DnaBaseView point={point} base={bases[ii]} ignoreDataIndex={false}
-              bannedCursorWhenMoving={this.bannedCursorWhenMoving(ii)} key={"base" + ii}/>
+            return (<DnaBaseView key={"base" + ii} index={ii} bannedCursorWhenMoving={this.bannedCursorWhenMoving(ii)} />
             );
         })}
 
