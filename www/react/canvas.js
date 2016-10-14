@@ -1,7 +1,8 @@
 import React from 'react';
 import DnaBaseView from './dna_base_view';
-import DnaLineView from './dna_line_view';
 import DnaAnchorView from './dna_anchor_view';
+import DnaBackboneView from './dna_backbone_view';
+import DnaPairView from './dna_pair_view';
 import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
 import AngleConverter from '../mathutils/angle_converter';
 import classNames from 'classnames';
@@ -65,9 +66,9 @@ class Canvas extends React.Component {
 
     return (
       <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
-        <g>{Array.from(Array(bases.length-1).keys()).map((index) => (<DnaLineView key={'backbone' + index} type='backbone' source={index} target={index+1}/>))}</g>
+        <g>{Array.from(Array(bases.length-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))}</g>
 
-        <g>{connections.map(({source, target}, ii) => (<DnaLineView key={'pair' + ii} type='pair' source={source} target={target}/>))}</g>
+        <g>{Array.from(Array(connections.length).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))}</g>
 
         <g>{Array.from(Array(bases.length).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
 

@@ -2,20 +2,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 
-class DnaLineView extends React.Component {
+class DnaBackboneView extends React.Component {
   render () {
-    let {x1, y1, x2, y2, type} = this.props;
-    var classes = classNames('dna-' + type, 'dna-base-' + type);
+    let {x1, y1, x2, y2} = this.props;
+    var classes = classNames('dna-backbone', 'dna-base-backbone');
     return (<line x1={x1} y1={y1} x2={x2} y2={y2} className={classes} />);
   };
 };
 
 var mapStateToProps = (initialState, initialOwnProps) => {
-  let source = initialOwnProps.source;
-  let target = initialOwnProps.target;
+  let index  = initialOwnProps.index;
 
   return (state) => {
     let animated = state.simulatedData.animated;
+    let source = index;
+    let target = index+1;
     return {
       x1: (source < animated.length) ? animated[source].x.toFixed(2) : 0,
       y1: (source < animated.length) ? animated[source].y.toFixed(2) : 0,
@@ -25,4 +26,4 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToProps)(DnaLineView);
+export default connect(mapStateToProps)(DnaBackboneView);
