@@ -98,7 +98,7 @@ class SimulationData extends React.Component {
 
     if (this.props.mouseActionDataType === 'none') {
       simulation.alphaTarget(0.99);
-      setTimeout(() => simulation.alphaTarget(0), 1000);
+      setTimeout(() => simulation.alphaTarget(0), 800);
     }
     simulation.restart();
   };
