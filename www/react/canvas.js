@@ -64,21 +64,12 @@ class Canvas extends React.Component {
 
     return (
       <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
-        {bases.map((base, ii) => {
-            if (ii >= bases.length-1) {
-              return;
-            }
-            return (<DnaLineView key={'backbone' + ii} type='backbone' source={ii} target={ii+1}/>);
-        })}
-        {connections.map((connection, ii) => {
-            let {source, target} = connection;
-            return (<DnaLineView key={'pair' + ii} type='pair' source={source} target={target}/>);
-        })}
 
-        {bases.map((base, ii) => {
-            return (<DnaBaseView key={'base' + ii} index={ii} bannedCursorWhenMoving={this.bannedCursorWhenMoving(ii)} />
-            );
-        })}
+        {Array.from(Array(bases.length-1).keys()).map((index) => (<DnaLineView key={'backbone' + index} type='backbone' source={index} target={index+1}/>))}
+
+        {connections.map(({source, target}, ii) => (<DnaLineView key={'pair' + ii} type='pair' source={source} target={target}/>))}
+
+        {Array.from(Array(bases.length).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}
 
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
