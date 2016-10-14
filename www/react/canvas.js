@@ -29,26 +29,26 @@ class Canvas extends React.Component {
   };
 
   render () {
-    var sequenceParser = this.props.sequenceParser;
+    let sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) {
       return null;
     }
 
-    var svgClass    = classNames('svg-class', 'svg-cursor-' + this.props.mouseActionDataType);
-    var width       = this.getWindowWidth();
-    var height      = this.getWindowHeight();
-    var bases       = sequenceParser.getBases().length;
-    var connections = sequenceParser.getConnections().length;
+    let svgClass         = classNames('svg-class', 'svg-cursor-' + this.props.mouseActionDataType);
+    let width            = this.getWindowWidth();
+    let height           = this.getWindowHeight();
+    let {numBases}       = this.props;
+    let {numConnections} = this.props;
 
     return (
       <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
-        <g>{Array.from(Array(bases-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))}</g>
+        <g>{Array.from(Array(numBases-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(connections).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))}</g>
+        <g>{Array.from(Array(numConnections).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(bases).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
+        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(bases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
+        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
 
         <DnaAnnotationView type='start'/>
         <DnaAnnotationView type='end'/>
@@ -286,6 +286,8 @@ class Canvas extends React.Component {
 var mapStateToProps = (state, ownProps) => {
   return {
     sequenceParser: state.sequenceParser,
+    numBases: state.sequenceParser.getBases().length,
+    numConnections: state.sequenceParser.getConnections().length,
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
     origin: state.origin,
