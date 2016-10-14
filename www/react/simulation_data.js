@@ -104,7 +104,6 @@ class SimulationData extends React.Component {
   };
 
   onSimulationTicked () {
-    console.log('ticked');
     this.setCurrentData();
   };
 
