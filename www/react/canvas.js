@@ -3,6 +3,7 @@ import DnaBaseView from './dna_base_view';
 import DnaAnchorView from './dna_anchor_view';
 import DnaBackboneView from './dna_backbone_view';
 import DnaPairView from './dna_pair_view';
+import DnaAnnotationView from './dna_annotation_view';
 import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
 import AngleConverter from '../mathutils/angle_converter';
 import classNames from 'classnames';
@@ -11,30 +12,6 @@ import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 import SequenceParser from '../src/sequence_parser';
 import SequenceUtils from '../utils/sequence_utils';
-
-class DnaAnnotation extends React.Component {
-  render () {
-    var text     = this.props.text;
-    var textCls  = "dna-text dna-base-font";
-    var location = this.getLocation().asObj();
-
-    return (<g transform={"translate(" + location.x + ", " + location.y + ")"} >
-              <text className={textCls} textAnchor="middle" dominantBaseline="central">{text}</text>
-            </g>);
-  };
-
-  getLocation () {
-    var point   = this.props.point.clone();
-    var other1  = this.props.other1.clone();
-    var other2  = this.props.other2.clone();
-    var vec1    = point.subtract(other1);
-    var vec2    = point.subtract(other2);
-    var bisect  = vec1.add(vec2);
-    var drawAt  = point.add(bisect.normalize().scale(20));
-
-    return drawAt;
-  };
-};
 
 class Canvas extends React.Component {
   constructor (props) {
@@ -74,8 +51,8 @@ class Canvas extends React.Component {
 
         <g>{Array.from(Array(bases.length).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
 
-        <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
-        <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
+        <DnaAnnotationView type='start'/>
+        <DnaAnnotationView type='end'/>
 
       </svg>);
   };
