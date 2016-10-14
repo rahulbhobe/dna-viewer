@@ -11,6 +11,7 @@ class SimulationData extends React.Component {
     super(props);
 
     this.onSimulationTicked = this.onSimulationTicked.bind(this);
+    this.onSimulationEnded  = this.onSimulationEnded.bind(this);
   };
 
   render () {
@@ -58,7 +59,6 @@ class SimulationData extends React.Component {
     let connections = sequenceParser.getConnections();
     let numBases    = sequenceParser.getBases().length;
 
-
     this.data.anchored = coordinates.map((point, ii) => {
       let id     = 'anchor_' + ii;
       let {x, y} = point.asObj();
@@ -77,6 +77,7 @@ class SimulationData extends React.Component {
     let nodes = this.data.anchored.concat(this.data.animated);
     let links = linkAnchoredAnimated.concat(linkBackbone, linkPair);
 
+    simulation.alphaDecay(0.14);
     simulation.nodes(nodes).on('tick', this.onSimulationTicked);
 
     let distance    = coordinates[0].subtract(coordinates[1]).length();
@@ -88,12 +89,24 @@ class SimulationData extends React.Component {
     simulation.force('dna_backbone').links(linkBackbone);
     simulation.force('dna_pair').links(linkPair);
 
+    simulation.on('end', this.onSimulationEnded);
+
     //  simulation.velocityDecay(0.7);
 
     simulation.restart();
   };
 
   onSimulationTicked () {
+    this.setCurrentData();
+  };
+
+  onSimulationEnded () {
+    let coordinates = this.getCoordinatesForScreen();
+    this.data.animated = coordinates.map((point, ii) => {
+      let id     = 'animated_' + ii;
+      let {x, y} = point.asObj();
+      return {id, x, y};
+    });
     this.setCurrentData();
   };
 
