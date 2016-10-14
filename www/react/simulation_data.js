@@ -77,6 +77,8 @@ class SimulationData extends React.Component {
                                 .map((idx) => Object.assign({id :'animated_'+idx})));
     }
 
+    simulation.nodes(this.data.anchored.concat(this.data.animated));
+
     let linkAnchoredAnimated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({source: 'anchor_'+idx, target: 'animated_'+idx}));
 
     let linkBackbone = Array.from(Array(numBases-1).keys()).map((idx) => Object.assign({source: 'animated_'+idx, target: 'animated_'+(idx+1)}));
@@ -101,8 +103,6 @@ class SimulationData extends React.Component {
 
   addNodesToSimulation () {
     let simulation = this.data.simulation;
-    let nodes      = this.data.anchored.concat(this.data.animated);
-    simulation.nodes(nodes);
   };
 
   onSimulationTicked () {
@@ -111,8 +111,11 @@ class SimulationData extends React.Component {
 
   onSimulationEnded () {
     let coordinates = this.getCoordinatesForScreen();
-    this.data.animated = coordinates.map((point, ii) => Object.assign({id: 'animated_'+ii, ...point.asObj()}));
-    this.addNodesToSimulation();
+    this.data.animated.forEach((node, ii) => {
+      let {x, y} = coordinates[ii].asObj();
+      node.x = x;
+      node.y = y;
+    });
     this.setCurrentData();
   };
 
