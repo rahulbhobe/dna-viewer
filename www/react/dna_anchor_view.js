@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 class DnaAnchorView extends React.Component {
   render () {
+    if (this.props.ignore) return null;
     let {x, y, index, type} = this.props;
     var classes =  classNames('dna-base-anchor', 'dna-base-' + type.toLowerCase());
 
@@ -19,11 +20,13 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   return (state) => {
     let anchored = state.simulatedData.anchored;
     let bases    = state.sequenceParser.getBases();
+    if (index >= anchored.length) return {ignore: true};
+    if (index >= bases.length)    return {ignore: true};
     return {
       index: index,
-      x: (index < anchored.length) ? anchored[index].x.toFixed(2) : 0,
-      y: (index < anchored.length) ? anchored[index].y.toFixed(2) : 0,
-      type: (index < bases.length) ? bases[index].getType() : 'N'
+      x: anchored[index].x.toFixed(2),
+      y: anchored[index].y.toFixed(2),
+      type: bases[index].getType()
     };
   };
 };

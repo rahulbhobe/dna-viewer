@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 class DnaBaseView extends React.Component {
   render () {
+    if (this.props.ignore) return null;
     let {x, y, index, type} = this.props;
     var classes =  classNames('dna-base', 'dna-base-size', 'dna-base-' + type.toLowerCase(), {
                                 'dna-base-selected': this.props.hover,
@@ -25,11 +26,13 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   return (state) => {
     let animated = state.simulatedData.animated;
     let bases    = state.sequenceParser.getBases();
+    if (index >= animated.length) return {ignore: true};
+    if (index >= bases.length)    return {ignore: true};
     return {
       index: index,
-      x: (index < animated.length) ? animated[index].x.toFixed(2) : 0,
-      y: (index < animated.length) ? animated[index].y.toFixed(2) : 0,
-      type: (index < bases.length) ? bases[index].getType() : 'N',
+      x: animated[index].x.toFixed(2),
+      y: animated[index].y.toFixed(2),
+      type: bases[index].getType(),
       hover: state.hover === index,
       dragging: state.dragging === index
     };
