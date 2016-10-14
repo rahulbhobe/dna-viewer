@@ -67,7 +67,7 @@ class SimulationData extends React.Component {
       return {id, fx: x, fy: y};
     });
 
-    if (numOld > numBases) {
+    if (numOld >= numBases) {
       this.data.animated.length = numBases;
     } else {
       this.data.animated  = this.data.animated.concat(Array.from(Array(numBases-numOld).keys())
@@ -100,6 +100,9 @@ class SimulationData extends React.Component {
 
     //  simulation.velocityDecay(0.7);
 
+    if (this.props.mouseActionDataType === 'none') {
+      simulation.alpha(1);
+    }
     simulation.restart();
   };
 
@@ -138,7 +141,8 @@ var mapStateToProps = (state, ownProps) => {
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
     origin: state.origin,
-    dimensions: state.canvasDimensions
+    dimensions: state.canvasDimensions,
+    mouseActionDataType: state.mouseActionData.type
   };
 };
 
