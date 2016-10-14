@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
+import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class DnaBaseView extends React.Component {
   constructor (props) {
@@ -52,6 +53,7 @@ class DnaBaseView extends React.Component {
     if (!d3.event.active) simulation.alphaTarget(0.3).alphaDecay(0.03).restart();
     node.fx = node.x;
     node.fy = node.y;
+    this.props.actions.setDraggingNode(this.props.index);
   };
 
   dragProgress () {
@@ -66,6 +68,7 @@ class DnaBaseView extends React.Component {
     if (!d3.event.active) simulation.alphaTarget(0);
     node.fx = null;
     node.fy = null;
+    this.props.actions.resetDraggingNode();
   };
 };
 
@@ -90,4 +93,4 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToProps)(DnaBaseView);
+export default connect(mapStateToProps, mapDispatchToProps)(DnaBaseView);
