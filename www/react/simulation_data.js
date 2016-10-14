@@ -53,23 +53,14 @@ class SimulationData extends React.Component {
       return {id, fx: x, fy: y};
     });
 
-    this.data.animated = coordinates.map((point, ii) => {
-      let id     = 'animated_' + ii;
-      return {id};
-    });
+    this.data.animated = coordinates.map((point, ii) => Object.assign({id :'animated_'+ii}));
 
-    let linkAnchoredAnimated = coordinates.map((base, ii) => {
-      return {source: 'anchor_' + ii, target: 'animated_' + ii};
-    });
+    let linkAnchoredAnimated = coordinates.map((base, ii) => Object.assign({source: 'anchor_'+ii, target: 'animated_'+ii}));
 
-    let linkBackbone = coordinates.map((base, ii) => {
-      return {source: 'animated_' + ii, target: 'animated_' + (ii+1)};
-    });
+    let linkBackbone = coordinates.map((base, ii) => Object.assign({source: 'animated_'+ii, target: 'animated_'+(ii+1)}));
     linkBackbone.pop();
 
-    let linkPair = connections.map(connection => {
-      return {source: 'animated_' + connection.source, target: 'animated_' + connection.target};
-    });
+    let linkPair = connections.map(connection => Object.assign({source: 'animated_'+connection.source, target: 'animated_'+connection.target}));
 
     let simulation = this.data.simulation;
     let nodes = this.data.anchored.concat(this.data.animated);
