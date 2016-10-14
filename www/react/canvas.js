@@ -1,6 +1,5 @@
 import React from 'react';
 import DnaBaseView from './dna_base_view';
-import DnaDraggedNode from './dna_dragged_node';
 import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
 import AngleConverter from '../mathutils/angle_converter';
 import classNames from 'classnames';
@@ -100,7 +99,6 @@ class Canvas extends React.Component {
         <DnaAnnotation point={coordinates[0]} other1={coordinates[1]} other2={coordinates[coordinates.length-1]} text="5'"/>
         <DnaAnnotation point={coordinates[coordinates.length-1]} other1={coordinates[coordinates.length-2]} other2={coordinates[0]} text="3'"/>
 
-        <DnaDraggedNode bases={bases}/>
       </svg>);
   };
 
