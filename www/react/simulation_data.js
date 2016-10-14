@@ -29,12 +29,13 @@ class SimulationData extends React.Component {
   };
 
   resetData () {
-    if (this.data && this.data.simulation) this.data.simulation.stop();
+    this.data.simulation.stop();
     this.data = {simulation: null, anchored: [], animated: []};
     this.props.actions.resetSimulatedData();
   };
 
   componentWillMount () {
+    this.initData();
     this.generateSimulation();
   };
 
@@ -47,8 +48,8 @@ class SimulationData extends React.Component {
   };
 
   generateSimulation () {
-    this.resetData();
-    this.initData();
+    let simulation = this.data.simulation;
+    simulation.stop();
 
     let sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) {
@@ -58,6 +59,7 @@ class SimulationData extends React.Component {
     let coordinates = this.getCoordinatesForScreen();
     let connections = sequenceParser.getConnections();
     let numBases    = sequenceParser.getBases().length;
+    let numOld      = this.data.animated.length;
 
     this.data.anchored = coordinates.map((point, ii) => {
       let id     = 'anchor_' + ii;
@@ -65,7 +67,13 @@ class SimulationData extends React.Component {
       return {id, fx: x, fy: y};
     });
 
-    this.data.animated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({id :'animated_'+idx}));
+    if (numOld > numBases) {
+      this.data.animated.length = numBases;
+    } else {
+      this.data.animated  = this.data.animated.concat(Array.from(Array(numBases-numOld).keys())
+                                .map(idx => idx+numOld)
+                                .map((idx) => Object.assign({id :'animated_'+idx})));
+    }
 
     let linkAnchoredAnimated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({source: 'anchor_'+idx, target: 'animated_'+idx}));
 
@@ -73,7 +81,6 @@ class SimulationData extends React.Component {
 
     let linkPair = connections.map(connection => Object.assign({source: 'animated_'+connection.source, target: 'animated_'+connection.target}));
 
-    let simulation = this.data.simulation;
     let nodes = this.data.anchored.concat(this.data.animated);
     let links = linkAnchoredAnimated.concat(linkBackbone, linkPair);
 
