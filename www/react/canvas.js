@@ -1,5 +1,6 @@
 import React from 'react';
 import DnaBaseView from './dna_base_view';
+import DnaLineView from './dna_line_view';
 import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
 import AngleConverter from '../mathutils/angle_converter';
 import classNames from 'classnames';
@@ -8,22 +9,6 @@ import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 import SequenceParser from '../src/sequence_parser';
 import SequenceUtils from '../utils/sequence_utils';
-
-class DnaBackbone extends React.Component {
-  render () {
-    var {x: x1, y: y1} = this.props.point1.asObj();
-    var {x: x2, y: y2} = this.props.point2.asObj();
-    return (<line x1={x1} y1={y1} x2={x2} y2={y2} className="dna-backbone dna-base-backbone" />);
-  };
-};
-
-class DnaPair extends React.Component {
-  render () {
-    var {x: x1, y: y1} = this.props.source.asObj();
-    var {x: x2, y: y2} = this.props.target.asObj();
-    return (<line x1={x1} y1={y1} x2={x2} y2={y2} className="dna-pair dna-base-pair" />);
-  };
-};
 
 class DnaAnnotation extends React.Component {
   render () {
@@ -83,12 +68,11 @@ class Canvas extends React.Component {
             if (ii >= coordinates.length-1) {
               return;
             }
-            return (<DnaBackbone point1={point} point2={coordinates[ii+1]} key={"backbone" + ii}/>);
+            return (<DnaLineView key={'backbone' + ii} type='backbone' source={ii} target={ii+1}/>);
         })}
         {connections.map((connection, ii) => {
-            var source = coordinates[connection.source];
-            var target = coordinates[connection.target];
-            return (<DnaPair source={source} target={target} key={"pair" + ii}/>);
+            let {source, target} = connection;
+            return (<DnaLineView key={'pair' + ii} type='pair' source={source} target={target}/>);
         })}
 
         {coordinates.map((point, ii) => {
