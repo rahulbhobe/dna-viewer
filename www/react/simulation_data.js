@@ -39,13 +39,15 @@ class SimulationData extends React.Component {
   };
 
   generateSimulation () {
-    var sequenceParser = this.props.sequenceParser;
+    let sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) {
       return null;
     }
 
-    var coordinates = this.getCoordinatesForScreen();
-    var connections = sequenceParser.getConnections();
+    let coordinates = this.getCoordinatesForScreen();
+    let connections = sequenceParser.getConnections();
+    let numBases    = sequenceParser.getBases().length;
+
 
     this.data.anchored = coordinates.map((point, ii) => {
       let id     = 'anchor_' + ii;
@@ -53,12 +55,11 @@ class SimulationData extends React.Component {
       return {id, fx: x, fy: y};
     });
 
-    this.data.animated = coordinates.map((point, ii) => Object.assign({id :'animated_'+ii}));
+    this.data.animated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({id :'animated_'+idx}));
 
-    let linkAnchoredAnimated = coordinates.map((base, ii) => Object.assign({source: 'anchor_'+ii, target: 'animated_'+ii}));
+    let linkAnchoredAnimated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({source: 'anchor_'+idx, target: 'animated_'+idx}));
 
-    let linkBackbone = coordinates.map((base, ii) => Object.assign({source: 'animated_'+ii, target: 'animated_'+(ii+1)}));
-    linkBackbone.pop();
+    let linkBackbone = Array.from(Array(numBases-1).keys()).map((idx) => Object.assign({source: 'animated_'+idx, target: 'animated_'+(idx+1)}));
 
     let linkPair = connections.map(connection => Object.assign({source: 'animated_'+connection.source, target: 'animated_'+connection.target}));
 
