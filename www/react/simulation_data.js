@@ -97,12 +97,14 @@ class SimulationData extends React.Component {
     //  simulation.velocityDecay(0.7);
 
     if (this.props.mouseActionDataType === 'none') {
-      simulation.alpha(1);
+      simulation.alphaTarget(0.99);
+      setTimeout(() => simulation.alphaTarget(0), 1000);
     }
     simulation.restart();
   };
 
   onSimulationTicked () {
+    console.log('ticked');
     this.setCurrentData();
   };
 
