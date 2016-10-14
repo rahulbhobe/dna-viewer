@@ -14,7 +14,6 @@ class SimulationData extends React.Component {
   };
 
   render () {
-    this.generateSimulation();
     return null;
   };
 
@@ -29,17 +28,21 @@ class SimulationData extends React.Component {
   };
 
   resetData () {
+    if (this.simulation) this.simulation.stop();
     this.data = {simulation: null, anchored: [], animated: []};
     this.props.actions.resetSimulatedData();
   };
 
   componentWillMount () {
-    this.initData();
+    this.generateSimulation();
   };
 
   componentWillUnmount () {
-    this.simulation.stop();
     this.resetData();
+  };
+
+  componentDidUpdate () {
+    this.generateSimulation();
   };
 
   generateSimulation () {
