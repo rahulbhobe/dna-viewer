@@ -57,13 +57,7 @@
   r: 3px;
 }
 
-.dna-base-selected {
-  stroke-width: 3px;
-  stroke: #ff0000;
-}
-
-.dna-base-moving {
-  fill: #ffffff;
+.dna-base-highlighted {
   stroke-width: 3px;
   stroke: #ff0000;
 }
