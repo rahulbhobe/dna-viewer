@@ -21,15 +21,15 @@ class DnaBaseView extends React.Component {
 
 var mapStateToProps = (initialState, initialOwnProps) => {
   let index = initialOwnProps.index;
-  let base  = initialState.sequenceParser.getBases()[index];
 
   return (state) => {
     let animated = state.simulatedData.animated;
+    let bases    = state.sequenceParser.getBases();
     return {
       index: index,
       x: (index < animated.length) ? animated[index].x.toFixed(2) : 0,
       y: (index < animated.length) ? animated[index].y.toFixed(2) : 0,
-      type: base.getType(),
+      type: (index < bases.length) ? bases[index].getType() : 'N',
       hover: state.hover === index,
       dragging: state.dragging === index
     };

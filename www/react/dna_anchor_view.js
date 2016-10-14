@@ -15,15 +15,15 @@ class DnaAnchorView extends React.Component {
 
 var mapStateToProps = (initialState, initialOwnProps) => {
   let index = initialOwnProps.index;
-  let base  = initialState.sequenceParser.getBases()[index];
 
   return (state) => {
     let anchored = state.simulatedData.anchored;
+    let bases    = state.sequenceParser.getBases();
     return {
       index: index,
       x: (index < anchored.length) ? anchored[index].x.toFixed(2) : 0,
       y: (index < anchored.length) ? anchored[index].y.toFixed(2) : 0,
-      type: base.getType()
+      type: (index < bases.length) ? bases[index].getType() : 'N'
     };
   };
 };
