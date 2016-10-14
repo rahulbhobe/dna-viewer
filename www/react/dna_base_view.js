@@ -49,7 +49,7 @@ class DnaBaseView extends React.Component {
   dragStarted () {
     let simulation = this.props.simulation;
     let node       = this.props.node;
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    if (!d3.event.active) simulation.alphaTarget(0.3).alphaDecay(0.03).restart();
     node.fx = node.x;
     node.fy = node.y;
   };
