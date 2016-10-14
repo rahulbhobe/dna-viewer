@@ -102,11 +102,7 @@ class SimulationData extends React.Component {
 
   onSimulationEnded () {
     let coordinates = this.getCoordinatesForScreen();
-    this.data.animated = coordinates.map((point, ii) => {
-      let id     = 'animated_' + ii;
-      let {x, y} = point.asObj();
-      return {id, x, y};
-    });
+    this.data.animated = coordinates.map((point, ii) => Object.assign({id: 'animated_'+ii, ...point.asObj()}));
     this.setCurrentData();
   };
 
