@@ -29,7 +29,7 @@ class SimulationData extends React.Component {
   };
 
   resetData () {
-    if (this.simulation) this.simulation.stop();
+    if (this.data && this.data.simulation) this.data.simulation.stop();
     this.data = {simulation: null, anchored: [], animated: []};
     this.props.actions.resetSimulatedData();
   };
