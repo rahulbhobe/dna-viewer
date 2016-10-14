@@ -19,7 +19,7 @@ class SimulationData extends React.Component {
   };
 
   setCurrentData () {
-    this.props.actions.setSimulatedData(this.data);
+    this.props.actions.setSimulatedData({...this.data});
   };
 
   resetData () {
@@ -55,8 +55,7 @@ class SimulationData extends React.Component {
 
     this.data.animated = coordinates.map((point, ii) => {
       let id     = 'animated_' + ii;
-      let {x, y} = point.asObj();
-      return {id, x, y};
+      return {id};
     });
 
     let linkAnchoredAnimated = coordinates.map((base, ii) => {
