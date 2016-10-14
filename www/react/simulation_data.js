@@ -22,23 +22,30 @@ class SimulationData extends React.Component {
     this.props.actions.setSimulatedData({...this.data});
   };
 
+  initData () {
+    let simulation = d3.forceSimulation();
+    this.data      = {simulation, anchored: [], animated: []};
+    this.setCurrentData();
+  };
+
   resetData () {
     this.data = {simulation: null, anchored: [], animated: []};
     this.props.actions.resetSimulatedData();
   };
 
   componentWillMount () {
-    let simulation = d3.forceSimulation();
-    this.data       = {simulation, anchored: [], animated: []};
-    this.setCurrentData();
+    this.initData();
   };
 
   componentWillUnmount () {
     this.simulation.stop();
-    this.props.actions.resetSimulatedData();
+    this.resetData();
   };
 
   generateSimulation () {
+    this.resetData();
+    this.initData();
+
     let sequenceParser = this.props.sequenceParser;
     if (sequenceParser.hasErrors()) {
       return null;
