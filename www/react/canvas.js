@@ -37,18 +37,18 @@ class Canvas extends React.Component {
     var svgClass    = classNames('svg-class', 'svg-cursor-' + this.props.mouseActionDataType);
     var width       = this.getWindowWidth();
     var height      = this.getWindowHeight();
-    var bases       = sequenceParser.getBases();
-    var connections = sequenceParser.getConnections();
+    var bases       = sequenceParser.getBases().length;
+    var connections = sequenceParser.getConnections().length;
 
     return (
       <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
-        <g>{Array.from(Array(bases.length-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))}</g>
+        <g>{Array.from(Array(bases-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(connections.length).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))}</g>
+        <g>{Array.from(Array(connections).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(bases.length).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
+        <g>{Array.from(Array(bases).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(bases.length).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
+        <g>{Array.from(Array(bases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
 
         <DnaAnnotationView type='start'/>
         <DnaAnnotationView type='end'/>
