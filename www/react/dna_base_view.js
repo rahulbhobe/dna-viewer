@@ -8,6 +8,8 @@ class DnaBaseView extends React.Component {
   constructor (props) {
     super(props);
 
+    this.onMouseOver  = this.onMouseOver.bind(this);
+    this.onMouseOut   = this.onMouseOut.bind(this);
     this.dragStarted  = this.dragStarted.bind(this);
     this.dragProgress = this.dragProgress.bind(this);
     this.dragEnded    = this.dragEnded.bind(this);
@@ -30,14 +32,14 @@ class DnaBaseView extends React.Component {
   };
 
   componentDidMount () {
-    this.registerDragCallbacks();
+    this.registerCallbacks();
   };
 
   componentDidUpdate () {
-    this.registerDragCallbacks();
+    this.registerCallbacks();
   };
 
-  registerDragCallbacks () {
+  registerCallbacks () {
     let gnode = this.refs.gnode;
     if (!gnode) return;
 
@@ -45,6 +47,24 @@ class DnaBaseView extends React.Component {
                     .on('start', this.dragStarted)
                     .on('drag', this.dragProgress)
                     .on('end', this.dragEnded));
+    d3.select(gnode).on('mouseover', this.onMouseOver);
+    d3.select(gnode).on('mouseout',  this.onMouseOut);
+  };
+
+  onMouseOver () {
+    this.props.actions.setHoverNode(this.props.index);
+  };
+
+  onMouseOut () {
+    this.props.actions.resetHoverNode();
+  };
+
+  getOtherNodeIndexAtEvent () {
+    let canvas = this.props.canvas;
+    let {x, y} = d3.event;
+    let nodes  = canvas.getNodesAtLocation(x, y).filter(node => node!==this.props.index);
+    if (nodes.length===0) return -1;
+    return nodes[0];
   };
 
   dragStarted () {
@@ -53,13 +73,16 @@ class DnaBaseView extends React.Component {
     if (!d3.event.active) simulation.alphaTarget(0.3).alphaDecay(0.03).restart();
     node.fx = node.x;
     node.fy = node.y;
+    this.props.actions.resetHoverNode();
     this.props.actions.setDraggingNode(this.props.index);
   };
 
   dragProgress () {
-    let node       = this.props.node;
-    node.fx = d3.event.x;
-    node.fy = d3.event.y;
+    let node  = this.props.node;
+    node.fx   = d3.event.x;
+    node.fy   = d3.event.y;
+    let other = this.getOtherNodeIndexAtEvent()
+    this.props.actions.setHoverNode(other);
   };
 
   dragEnded () {
