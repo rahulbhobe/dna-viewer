@@ -8,11 +8,11 @@ class DnaBaseView extends React.Component {
   constructor (props) {
     super(props);
 
-    this.onMouseOver  = this.onMouseOver.bind(this);
-    this.onMouseOut   = this.onMouseOut.bind(this);
-    this.dragStarted  = this.dragStarted.bind(this);
-    this.dragProgress = this.dragProgress.bind(this);
-    this.dragEnded    = this.dragEnded.bind(this);
+    this.onMouseOver    = this.onMouseOver.bind(this);
+    this.onMouseOut     = this.onMouseOut.bind(this);
+    this.onDragStarted  = this.onDragStarted.bind(this);
+    this.onDragging     = this.onDragging.bind(this);
+    this.onDragEnded    = this.onDragEnded.bind(this);
   };
 
 
@@ -44,9 +44,9 @@ class DnaBaseView extends React.Component {
     if (!gnode) return;
 
     d3.select(gnode).call(d3.drag()
-                    .on('start', this.dragStarted)
-                    .on('drag', this.dragProgress)
-                    .on('end', this.dragEnded));
+                    .on('start', this.onDragStarted)
+                    .on('drag', this.onDragging)
+                    .on('end', this.onDragEnded));
     d3.select(gnode).on('mouseover', this.onMouseOver);
     d3.select(gnode).on('mouseout',  this.onMouseOut);
   };
@@ -67,7 +67,7 @@ class DnaBaseView extends React.Component {
     return nodes[0];
   };
 
-  dragStarted () {
+  onDragStarted () {
     let simulation = this.props.simulation;
     let node       = this.props.node;
     if (!d3.event.active) simulation.alphaTarget(0.3).alphaDecay(0.03).restart();
@@ -77,7 +77,7 @@ class DnaBaseView extends React.Component {
     this.props.actions.setDraggingNode(this.props.index);
   };
 
-  dragProgress () {
+  onDragging () {
     let node  = this.props.node;
     node.fx   = d3.event.x;
     node.fy   = d3.event.y;
@@ -85,7 +85,7 @@ class DnaBaseView extends React.Component {
     this.props.actions.setHoverNode(other);
   };
 
-  dragEnded () {
+  onDragEnded () {
     let simulation = this.props.simulation;
     let node       = this.props.node;
     if (!d3.event.active) simulation.alphaTarget(0);
