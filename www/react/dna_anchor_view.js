@@ -9,7 +9,7 @@ class DnaAnchorView extends React.Component {
     var classes =  classNames('dna-base-anchor', 'dna-base-' + type.toLowerCase());
 
     return (<g transform={'translate(' + x + ', ' + y + ')'}>
-              <circle className={classes} data-index={index} />
+              <circle className={classes} />
             </g>);
   };
 };
