@@ -48,7 +48,7 @@ class Canvas extends React.Component {
 
         <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
+        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} canvas={this} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
 
         <DnaAnnotationView type='start'/>
         <DnaAnnotationView type='end'/>
@@ -86,23 +86,26 @@ class Canvas extends React.Component {
     };
   };
 
-  getNodeAtEvent (event) {
-    var svg    = this.refs.svg;
-    var found  = -1;
-    var hitTestRect    = svg.createSVGRect();
-    var screenPosition = this.getPositionAtEvent(event);
+  getNodesAtLocation (x, y) {
+    var svg         = this.refs.svg;
+    var hitTestRect = svg.createSVGRect();
 
-    hitTestRect.x = screenPosition.x;
-    hitTestRect.y = screenPosition.y;
-    hitTestRect.width   = 1;
-    hitTestRect.height  = 1;
+    hitTestRect.x = x;
+    hitTestRect.y = y;
+    hitTestRect.width  = 1;
+    hitTestRect.height = 1;
 
-    svg.getIntersectionList(hitTestRect, null).forEach((elem) => {
+    return Array.from(svg.getIntersectionList(hitTestRect, null)).map((elem) => {
       if (elem.tagName !== 'circle') { return; }
-      if (found !== -1) { return };
-      found = parseInt(elem.getAttribute('data-index'));
-    });
-    return found;
+      return parseInt(elem.getAttribute('data-index'));
+    }).filter(Number);
+  };
+
+  getNodeAtEvent (event) {
+    var screenPosition = this.getPositionAtEvent(event);
+    var nodes = getNodesAtLocation(screenPosition.x, screenPosition.y);
+    if (nodes.length === 0) return -1;
+    return nodes[0];
   };
 
   onContextMenu (event) {
