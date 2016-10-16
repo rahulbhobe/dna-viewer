@@ -101,13 +101,6 @@ class Canvas extends React.Component {
     }).filter(Number);
   };
 
-  getNodeAtEvent (event) {
-    var screenPosition = this.getPositionAtEvent(event);
-    var nodes = getNodesAtLocation(screenPosition.x, screenPosition.y);
-    if (nodes.length === 0) return -1;
-    return nodes[0];
-  };
-
   onContextMenu (event) {
     event.preventDefault();
     return false;
@@ -119,13 +112,10 @@ class Canvas extends React.Component {
   };
 
   onMouseDown (event) {
-    var dragging = this.getNodeAtEvent(event);
     var dataType = 'none';
     var data     = {};
-    if (dragging!==-1) {
-      dataType = 'dragging';
-      this.props.actions.setDraggingNode(dragging);
-    } else if (!event.shiftKey) {
+
+    if (!event.shiftKey) {
       dataType = 'pan';
       data.origin = this.props.origin;
     } else {
@@ -138,8 +128,6 @@ class Canvas extends React.Component {
   };
 
   onMouseMove (event) {
-    var selected = this.getNodeAtEvent(event);
-    this.props.actions.setHoverNode(selected);
     this.props.actions.setCurrentMousePosition(this.getPositionAtEvent(event));
 
     var data = store.getState().mouseActionData;
