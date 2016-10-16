@@ -11,7 +11,6 @@ import store from '../store/store';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 import SequenceParser from '../src/sequence_parser';
-import SequenceUtils from '../utils/sequence_utils';
 
 class Canvas extends React.Component {
   constructor (props) {
@@ -139,7 +138,6 @@ class Canvas extends React.Component {
   };
 
   onMouseUp (event) {
-    var dragging = store.getState().dragging;
     var data     = store.getState().mouseActionData;
 
     if (data.type === 'pan') {
@@ -147,28 +145,10 @@ class Canvas extends React.Component {
     } else if (data.type === 'rotate') {
       this.handleRotate(event);
     }
-
-    this.props.actions.resetDraggingNode();
     this.props.actions.resetMouseActionData();
-
-    var found  = this.getNodeAtEvent(event);
-    if (found===-1) { return; }
-    if (dragging===-1) { return; }
-    if (found===dragging) return;
-
-
-    var sequenceParserNew = SequenceUtils.getJoinedSequence(this.props.sequenceParser, dragging, found);
-    if (!sequenceParserNew) {
-      return;
-    }
-
-    let {seq, dbn} = sequenceParserNew.getData();
-    this.props.actions.setSequenceParser(sequenceParserNew);
-    this.props.actions.setTempSequence(seq, dbn);
   };
 
   onMouseLeave () {
-    this.props.actions.resetDraggingNode();
     this.props.actions.resetMouseActionData();
   };
 
@@ -203,8 +183,6 @@ class Canvas extends React.Component {
     } else if (data.type === 'rotate') {
       this.cancelRotate();
     }
-
-    this.props.actions.resetDraggingNode();
     this.props.actions.resetMouseActionData();
   };
 

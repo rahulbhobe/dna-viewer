@@ -1,7 +1,8 @@
 import React from 'react';
 import * as d3 from 'd3';
-import {connect} from 'react-redux';
+import SequenceUtils from '../utils/sequence_utils';
 import classNames from 'classnames';
+import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class DnaBaseView extends React.Component {
@@ -92,6 +93,19 @@ class DnaBaseView extends React.Component {
     node.fx = null;
     node.fy = null;
     this.props.actions.resetDraggingNode();
+    this.props.actions.resetHoverNode();
+
+    var other  = this.getOtherNodeIndexAtEvent();
+    if (other===-1) { return; }
+
+    var sequenceParser = SequenceUtils.getJoinedSequence(this.props.sequenceParser, this.props.index, other);
+    if (!sequenceParser) {
+      return;
+    }
+
+    let {seq, dbn} = sequenceParser.getData();
+    this.props.actions.setSequenceParser(sequenceParser);
+    this.props.actions.setTempSequence(seq, dbn);
   };
 };
 
@@ -111,7 +125,8 @@ var mapStateToProps = (initialState, initialOwnProps) => {
       simulation: state.simulatedData.simulation,
       type: bases[index].getType(),
       hover: state.hover === index,
-      dragging: state.dragging === index
+      dragging: state.dragging === index,
+      sequenceParser: state.sequenceParser
     };
   };
 };
