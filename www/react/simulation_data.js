@@ -64,7 +64,7 @@ class SimulationData extends React.Component {
     let numOld      = this.data.animated.length;
 
     this.data.anchored = coordinates.map((point, ii) => {
-      let id     = 'anchor_' + ii;
+      let id     = 'anchored_' + ii;
       let {x, y} = point.asObj();
       return {id, fx: x, fy: y};
     });
@@ -79,7 +79,7 @@ class SimulationData extends React.Component {
 
     simulation.nodes(this.data.anchored.concat(this.data.animated));
 
-    let linkAnchoredAnimated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({source: 'anchor_'+idx, target: 'animated_'+idx}));
+    let linkAnchoredAnimated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({source: 'anchored_'+idx, target: 'animated_'+idx}));
 
     let linkBackbone = Array.from(Array(numBases-1).keys()).map((idx) => Object.assign({source: 'animated_'+idx, target: 'animated_'+(idx+1)}));
 
