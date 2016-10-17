@@ -38,15 +38,14 @@ class TopView extends React.Component {
       width: this.props.canvasDimensions.width
     };
 
-    var clsName1 = classNames('share-link-button');
-    var clsName2 = classNames('share-link-button', {'share-link-hidden': !this.props.url});
+    var clsName = classNames('top-view-button');
     return (<GridLayout properties={properties} layout={this.getLayout()}>
-              <input key='DocSave'        type="image" className={clsName2} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
-              <input key='DocAdd'         type="image" className={clsName1} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
-              <input key='DocDelete'      type="image" className={clsName2} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
-              <input key='RotateCCW'      type="image" className={clsName1} title={'Rotate by 90 deg in counter clock wise direction.'} src="/res/rotate_counterclockwise.png" alt="Submit" onClick={this.onRotateCounterClockwise}/>
-              <input key='RotateCW'       type="image" className={clsName1} title={'Rotate by 90 deg in clock wise direction.'} src="/res/rotate_clockwise.png" alt="Submit" onClick={this.onRotateClockwise}/>
-              <input key='FitToScreen'    type="image" className={clsName1} title={'Fit to screen.'} src="/res/fit_to_screen_icon.png" alt="Submit" onClick={this.onFitToScreen}/>
+              <input key='DocSave'        type="image" className={clsName} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
+              <input key='DocAdd'         type="image" className={clsName} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
+              <input key='DocDelete'      type="image" className={clsName} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
+              <input key='RotateCCW'      type="image" className={clsName} title={'Rotate by 90 deg in counter clock wise direction.'} src="/res/rotate_counterclockwise.png" alt="Submit" onClick={this.onRotateCounterClockwise}/>
+              <input key='RotateCW'       type="image" className={clsName} title={'Rotate by 90 deg in clock wise direction.'} src="/res/rotate_clockwise.png" alt="Submit" onClick={this.onRotateClockwise}/>
+              <input key='FitToScreen'    type="image" className={clsName} title={'Fit to screen.'} src="/res/fit_to_screen_icon.png" alt="Submit" onClick={this.onFitToScreen}/>
             </GridLayout>);
   };
 

@@ -164,11 +164,9 @@
   padding-left: 10px;
 }
 
-.share-link-button {
-  padding-left: 5px;
-}
-.share-link-hidden {
-  display: none;
+.top-view-button {
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 .preview-anim-appear {
