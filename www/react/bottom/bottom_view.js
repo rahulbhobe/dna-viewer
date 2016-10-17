@@ -2,19 +2,11 @@ import React from 'react';
 import GridLayout from '../main/grid_layout';
 import SequenceParser from '../../src/sequence_parser';
 import SequenceFormView from './sequence_form_view';
+import SequenceChanges from './sequence_changes';
 import classNames from 'classnames';
 import Dimensions from '../../utils/dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
-
-class SequenceChanges extends React.Component {
-    render () {
-      var clsNames = classNames('sequence-change-button', 'sequence-form-div');
-      return (<div>
-                <input type="image" className={clsNames} onClick={this.props.onClick} src={'/res/' + this.props.buttonText.toLowerCase() + '-button.png'}/>
-              </div>);
-  };
-};
 
 class BottomView extends React.Component {
   constructor (props) {
