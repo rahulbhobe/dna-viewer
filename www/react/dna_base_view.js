@@ -107,6 +107,18 @@ class DnaBaseView extends React.Component {
     this.props.actions.setSequenceParser(sequenceParser);
     this.props.actions.setTempSequence(seq, dbn);
   };
+
+  bannedCursorWhenMoving (other) {
+    let index = this.props.index;
+    let sequenceParser = this.props.sequenceParser;
+    let bases = sequenceParser.getBases();
+
+    if (other<0) return false;
+
+    let draggingBase = bases[dragging];
+    let thisBase = bases[index];
+    return !thisBase.canPairWith(draggingBase);
+  };
 };
 
 var mapStateToProps = (initialState, initialOwnProps) => {
