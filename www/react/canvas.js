@@ -34,13 +34,11 @@ class Canvas extends React.Component {
     }
 
     let svgClass         = classNames('svg-class', 'svg-cursor-' + this.props.mouseActionDataType);
-    let width            = this.getWindowWidth();
-    let height           = this.getWindowHeight();
     let {numBases}       = this.props;
     let {numConnections} = this.props;
 
     return (
-      <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
+      <svg className={svgClass} width={this.getWindowWidth()} height={this.getWindowHeight()} ref='svg' onContextMenu={this.onContextMenu} >
         <g> {Array.from(Array(numBases-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))} </g>
 
         <g> {Array.from(Array(numConnections).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))} </g>
