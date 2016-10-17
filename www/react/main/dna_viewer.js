@@ -1,13 +1,13 @@
 import React from 'react';
 import GridLayout from './grid_layout';
 import SimulationData from './simulation_data';
-import Canvas from './canvas';
-import SettingsView from './settings_view';
-import SequenceView from './sequence_view';
-import ShareLink from './share_link';
-import Dimensions from '../utils/dimensions';
+import Canvas from '../canvas/canvas';
+import SettingsView from '../side/settings_view';
+import SequenceView from '../bottom/sequence_view';
+import ShareLink from '../top/share_link';
+import Dimensions from '../../utils/dimensions';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_dispatcher';
+import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class DnaViewer extends React.Component {
   constructor (props) {

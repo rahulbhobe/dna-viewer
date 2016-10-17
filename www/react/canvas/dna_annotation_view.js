@@ -1,5 +1,5 @@
 import React from 'react';
-import {Vector} from '../mathutils/gl_matrix_wrapper';
+import {Vector} from '../../mathutils/gl_matrix_wrapper';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 

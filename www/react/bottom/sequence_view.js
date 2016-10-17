@@ -1,11 +1,11 @@
 import React from 'react';
-import GridLayout from './grid_layout';
-import SequenceParser from '../src/sequence_parser';
+import GridLayout from '../main/grid_layout';
+import SequenceParser from '../../src/sequence_parser';
 import SequenceFormView from './sequence_form_view';
 import classNames from 'classnames';
-import Dimensions from '../utils/dimensions';
+import Dimensions from '../../utils/dimensions';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_dispatcher';
+import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class SequenceChanges extends React.Component {
     render () {

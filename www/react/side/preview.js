@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import SequenceUtils from '../utils/sequence_utils';
+import SequenceUtils from '../../utils/sequence_utils';
 import ThumbnailView from './thumbnail_view';
-import Dimensions from '../utils/dimensions';
+import Dimensions from '../../utils/dimensions';
 import {connect} from 'react-redux';
 
 const PreviewWithAnimations = (props) => {

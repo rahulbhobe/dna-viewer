@@ -1,10 +1,10 @@
 import React from 'react';
 import Slick from 'react-slick';
 import ThumbnailView from './thumbnail_view';
-import RequestUtils from '../utils/request_utils'
-import SequenceParser from '../src/sequence_parser';
+import RequestUtils from '../../utils/request_utils'
+import SequenceParser from '../../src/sequence_parser';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_dispatcher';
+import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class SavedViews extends React.Component {
   constructor (props) {

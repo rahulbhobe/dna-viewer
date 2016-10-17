@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_dispatcher';
+import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class SequenceLetter extends React.Component {
   constructor (props) {

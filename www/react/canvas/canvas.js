@@ -4,13 +4,13 @@ import DnaAnchorView from './dna_anchor_view';
 import DnaBackboneView from './dna_backbone_view';
 import DnaPairView from './dna_pair_view';
 import DnaAnnotationView from './dna_annotation_view';
-import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
-import AngleConverter from '../mathutils/angle_converter';
+import {Vector, MatrixTransformations} from '../../mathutils/gl_matrix_wrapper';
+import AngleConverter from '../../mathutils/angle_converter';
 import classNames from 'classnames';
-import store from '../store/store';
+import store from '../../store/store';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_dispatcher';
-import SequenceParser from '../src/sequence_parser';
+import {mapDispatchToProps} from '../../store/action_dispatcher';
+import SequenceParser from '../../src/sequence_parser';
 
 class Canvas extends React.Component {
   constructor (props) {

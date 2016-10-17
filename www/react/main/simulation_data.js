@@ -1,10 +1,10 @@
 import React from 'react';
 import * as d3 from 'd3';
-import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
-import AngleConverter from '../mathutils/angle_converter';
-import store from '../store/store';
+import {Vector, MatrixTransformations} from '../../mathutils/gl_matrix_wrapper';
+import AngleConverter from '../../mathutils/angle_converter';
+import store from '../../store/store';
 import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../store/action_dispatcher';
+import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class SimulationData extends React.Component {
   constructor (props) {

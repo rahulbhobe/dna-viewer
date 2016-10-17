@@ -5,8 +5,8 @@ import FontSettings from './font_settings';
 import AppearanceSettings from './appearance_settings';
 import SavedViews from './saved_views';
 import Preview from './preview';
-import Dimensions from '../utils/dimensions';
-import GridLayout from './grid_layout';
+import Dimensions from '../../utils/dimensions';
+import GridLayout from '../main/grid_layout';
 
 class SettingsView extends React.Component {
   getLayout () {
