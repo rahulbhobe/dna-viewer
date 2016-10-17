@@ -47,7 +47,7 @@ class Canvas extends React.Component {
 
         <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
 
-        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} canvas={this} bannedCursorWhenMoving={this.bannedCursorWhenMoving(index)} />))}</g>
+        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} canvas={this} />))}</g>
 
         <DnaAnnotationView type='start'/>
         <DnaAnnotationView type='end'/>
@@ -228,19 +228,6 @@ class Canvas extends React.Component {
   getSvgRect () {
     var svg = this.refs.svg;
     return svg.getBoundingClientRect();
-  };
-
-  bannedCursorWhenMoving (index) {
-    var dragging = store.getState().dragging;
-    var sequenceParser = this.props.sequenceParser;
-    var bases = sequenceParser.getBases();
-
-    if (dragging<0) return false;
-    if (dragging === index) return false;
-
-    var draggingBase = bases[dragging];
-    var thisBase = bases[index];
-    return !thisBase.canPairWith(draggingBase);
   };
 
   getWindowWidth () {
