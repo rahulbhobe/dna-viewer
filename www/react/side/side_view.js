@@ -8,7 +8,7 @@ import Preview from './preview';
 import Dimensions from '../../utils/dimensions';
 import GridLayout from '../main/grid_layout';
 
-class SettingsView extends React.Component {
+class SideView extends React.Component {
   getLayout () {
     let notPickingColor  = this.props.notPickingColor;
     let th = this.props.canvasDimensions.height / Dimensions.DNA_VIEWER_ROW_HEIGHT;
@@ -52,4 +52,4 @@ var mapStateToProps = (state, ownProps) => {
   }
 };
 
-export default connect(mapStateToProps)(SettingsView);
+export default connect(mapStateToProps)(SideView);

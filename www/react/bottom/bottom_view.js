@@ -16,7 +16,7 @@ class SequenceChanges extends React.Component {
   };
 };
 
-class SequenceView extends React.Component {
+class BottomView extends React.Component {
   constructor (props) {
     super(props);
     this.onCancel = this.onCancel.bind(this);
@@ -85,4 +85,4 @@ var mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SequenceView);
+export default connect(mapStateToProps, mapDispatchToProps)(BottomView);

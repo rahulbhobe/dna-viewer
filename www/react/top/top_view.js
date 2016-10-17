@@ -6,7 +6,7 @@ import store from '../../store/store';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 import {connect} from 'react-redux';
 
-class ShareLink extends React.Component {
+class TopView extends React.Component {
   constructor (props) {
     super(props);
     this.onAdd                    = this.onAdd.bind(this);
@@ -105,4 +105,4 @@ var mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShareLink);
+export default connect(mapStateToProps, mapDispatchToProps)(TopView);
