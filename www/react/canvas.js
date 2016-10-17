@@ -41,16 +41,15 @@ class Canvas extends React.Component {
 
     return (
       <svg className={svgClass} width={width} height={height} ref='svg' onContextMenu={this.onContextMenu} >
-        <g>{Array.from(Array(numBases-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))}</g>
+        <g> {Array.from(Array(numBases-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))} </g>
 
-        <g>{Array.from(Array(numConnections).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))}</g>
+        <g> {Array.from(Array(numConnections).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))} </g>
 
-        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))}</g>
+        <g> {Array.from(Array(numBases).keys()).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))} </g>
 
-        <g>{Array.from(Array(numBases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} canvas={this} />))}</g>
+        <g> {Array.from(Array(numBases).keys()).map((index) => (<DnaBaseView key={'base' + index} index={index} canvas={this} />))} </g>
 
-        <DnaAnnotationView type='start'/>
-        <DnaAnnotationView type='end'/>
+        <g> <DnaAnnotationView type='start'/> <DnaAnnotationView type='end'/> </g>
 
       </svg>);
   };
