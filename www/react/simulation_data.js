@@ -80,13 +80,10 @@ class SimulationData extends React.Component {
     simulation.nodes(this.data.anchored.concat(this.data.animated));
 
     let linkAnchoredAnimated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({source: 'anchored_'+idx, target: 'animated_'+idx}));
-
     let linkBackbone = Array.from(Array(numBases-1).keys()).map((idx) => Object.assign({source: 'animated_'+idx, target: 'animated_'+(idx+1)}));
-
     let linkPair = connections.map(connection => Object.assign({source: 'animated_'+connection.source, target: 'animated_'+connection.target}));
 
     simulation.alphaDecay(0.14);
-    this.addNodesToSimulation();
     let distance    = coordinates[0].subtract(coordinates[1]).length();
     simulation.force('anchored_animated', d3.forceLink(linkAnchoredAnimated).id(n => n.id).distance(0).strength(2));
     simulation.force('dna_backbone', d3.forceLink(linkBackbone).id(n => n.id).distance(distance).strength(2));
@@ -99,10 +96,6 @@ class SimulationData extends React.Component {
       simulation.alphaDecay(0.99);
     }
     simulation.restart();
-  };
-
-  addNodesToSimulation () {
-    let simulation = this.data.simulation;
   };
 
   onSimulationTicked () {
