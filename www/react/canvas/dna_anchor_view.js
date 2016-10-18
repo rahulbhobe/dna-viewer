@@ -23,7 +23,6 @@ var mapStateToProps = (initialState, initialOwnProps) => {
     if (index >= anchored.length) return {ignore: true};
     if (index >= bases.length)    return {ignore: true};
     return {
-      index: index,
       x: anchored[index].x.toFixed(2),
       y: anchored[index].y.toFixed(2),
       type: bases[index].getType()

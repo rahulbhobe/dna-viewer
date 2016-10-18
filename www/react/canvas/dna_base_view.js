@@ -130,7 +130,6 @@ var mapStateToProps = (initialState, initialOwnProps) => {
     if (index >= animated.length) return {ignore: true};
     if (index >= bases.length)    return {ignore: true};
     return {
-      index: index,
       x: animated[index].x.toFixed(2),
       y: animated[index].y.toFixed(2),
       node: animated[index],
