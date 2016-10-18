@@ -1,6 +1,7 @@
 import React from 'react';
 import {SketchPicker as ColorPicker} from 'react-color';
 import jss from 'jss-browserify';
+import classNames from 'classnames';
 import Dimensions from '../../utils/dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
@@ -16,12 +17,11 @@ class ColorsButton extends React.Component {
   };
 
   render () {
-    var type = this.props.type;
-    return (<div className="settings-color-div" >
-              <div className={'dna-base-font'}>
-                {type}
-              </div>
-              <button type="button" className="settings-color-button" onClick={this.onClick} style={{backgroundColor:this.props.color}} />
+    let type    = this.props.type;
+    let clsName = classNames('settings-color-button', 'dna-base-font');
+
+    return (<div className='settings-color-div' >
+              <button type='button' className={clsName} onClick={this.onClick} style={{backgroundColor:this.props.color}}>{type}</button>
             </div>);
   };
 };
