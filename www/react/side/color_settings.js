@@ -18,10 +18,14 @@ class ColorsButton extends React.Component {
 
   render () {
     let type    = this.props.type;
-    let clsName = classNames('settings-color-button', 'dna-base-font');
+    let clsName = classNames('settings-color-button-div', 'dna-base-font');
 
     return (<div className='settings-color-div' >
-              <button type='button' className={clsName} onClick={this.onClick} style={{backgroundColor:this.props.color}}>{type}</button>
+              <button type='button' className='settings-color-button'onClick={this.onClick} style={{backgroundColor:this.props.color}}>
+                <div className={clsName}>
+                  {type}
+                </div>
+              </button>
             </div>);
   };
 };

@@ -151,7 +151,12 @@
 .settings-color-button {
   width: 40px;
   height: 40px;
+}
+
+.settings-color-button-div {
   font-size: 16px;
+  color: #ffffff;
+  mix-blend-mode: difference;
 }
 
 .settings-font-div {
