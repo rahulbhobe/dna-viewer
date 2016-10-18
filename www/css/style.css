@@ -2,6 +2,10 @@
   height: 100%;
   width: 100%;
   background: #d3d3d3;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .svg-cursor-none {
@@ -19,15 +23,7 @@
   cursor: url('/res/rotate_image.png'), auto;
 }
 
-.svg-class text {
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-}
-
-.svg-class text::selection {
-  background: none;
+.svg-class {
 }
 
 .svg-class-thumbnail {
