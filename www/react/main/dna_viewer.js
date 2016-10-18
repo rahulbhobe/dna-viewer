@@ -27,12 +27,14 @@ class DnaViewer extends React.Component {
     var cw = width;
     var tw = window.innerWidth;
     var sw = tw - cw;
+    var vb = !Dimensions.isHeightSmall() && !Dimensions.isWidthSmall();
+    var vs = !Dimensions.isWidthSmall();
 
     return [
-      {x:0,   y:0,    w:cw,  h:1,     v: true,                         i: 'TopView'},
-      {x:0,   y:1,    w:cw,  h:ch,    v: true,                         i: 'Canvas'},
-      {x:0,   y:ch+1, w:tw,  h:4,     v: !Dimensions.isHeightSmall(),  i: 'BottomView'},
-      {x:cw,  y:0,    w:sw,  h:ch+1,  v: !Dimensions.isWidthSmall(),   i: 'SideView'}
+      {x:0,   y:0,    w:cw,  h:1,     v: true,  i: 'TopView'},
+      {x:0,   y:1,    w:cw,  h:ch,    v: true,  i: 'Canvas'},
+      {x:0,   y:ch+1, w:tw,  h:4,     v: vb,    i: 'BottomView'},
+      {x:cw,  y:0,    w:sw,  h:ch+1,  v: vs,    i: 'SideView'}
     ];
   };
 

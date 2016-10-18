@@ -16,8 +16,8 @@ class Dimensions {
     var winH = window.innerHeight;
 
     return {
-      width:  this.isWidthSmall()  ? winW  : winW - this.SETTINGS_VIEW_WIDTH,
-      height: this.isHeightSmall() ? (winH - (this.DNA_VIEWER_ROW_HEIGHT * (1))) : winH - (this.DNA_VIEWER_ROW_HEIGHT * (1+4))
+      width:  this.isWidthSmall() ? winW  : winW - this.SETTINGS_VIEW_WIDTH,
+      height: this.isHeightSmall() || this.isWidthSmall() ? (winH - (this.DNA_VIEWER_ROW_HEIGHT * (1))) : winH - (this.DNA_VIEWER_ROW_HEIGHT * (1+4))
     };
   };
 
