@@ -15,7 +15,7 @@ class ThumbnailView extends React.Component {
     var bases       = sequenceParser.getBases();
     var width       = Dimensions.getThumbnailWidth();
     var height      = Dimensions.getThumbnailHeight();
-    var coordinates = sequenceParser.getCoordinates(width, height);
+    var coordinates = sequenceParser.getCoordinates(width-6, height-6);
 
     return (
         <svg key='svg' className='svg-class-thumbnail' width={width} height={height} onContextMenu={this.onContextMenu} >
