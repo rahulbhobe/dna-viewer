@@ -25,7 +25,7 @@ class SequenceFormView extends React.Component {
   };
 
   onChange (evt) {
-    var value = evt.target.value.toUpperCase();
+    var value = evt.target.value;
     var obj = {
       seq: this.props.seqTemp,
       dbn: this.props.dbnTemp
@@ -45,6 +45,11 @@ class SequenceFormView extends React.Component {
   onBlur () {
     ReactDOM.findDOMNode(this.refs.inp).value = this.getValueForView();
     this.setState({editMode: false});
+    var obj = {
+      seq: this.props.seqTemp.toUpperCase(),
+      dbn: this.props.dbnTemp.toUpperCase()
+    };
+    this.props.actions.setTempSequence(obj.seq, obj.dbn);
   };
 
   onClick () {
@@ -56,8 +61,8 @@ class SequenceFormView extends React.Component {
 
   render () {
     var formClass = classNames('dna-base-font', {'sequence-has-error': this.props.hasErrors});
-    var inpClass = classNames({'hidden': !this.state.editMode});
-    var divClass = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
+    var inpClass  = classNames('sequence-form-input', {'hidden': !this.state.editMode});
+    var divClass  = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
 
     var str = this.getValueForView();
     var letterDivs = [];

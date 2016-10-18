@@ -108,6 +108,10 @@
   border-style: groove;
 }
 
+.sequence-form-input {
+  text-transform: uppercase;
+}
+
 .sequence-form-div:hover {
   border-top-width: 5px;
   border-left-width: 5px;
