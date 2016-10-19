@@ -103,9 +103,8 @@ class SimulationData extends React.Component {
   };
 
   onSimulationEnded () {
-    let coordinates = this.getCoordinatesForScreen();
     this.data.animated.forEach((node, ii) => {
-      let {x, y} = coordinates[ii].asObj();
+      let {x, y} = this.data.anchored[ii];
       node.x = x;
       node.y = y;
     });
