@@ -35,7 +35,7 @@ class SavedViews extends React.Component {
               <Slick {...settings}>
                 {this.props.savedViews.map(({url, seq, dbn}) => {
                   return (<div key={url}>
-                            <button onClick={this.onClick(url)}>{url}</button>
+                            <button onClick={this.onClick(url)} title={'Open view "' + window.location.origin + '/' + url + '".'} >{url}</button>
                             <ThumbnailView seq={seq} dbn={dbn} />
                           </div>);
                 })}
