@@ -21,6 +21,14 @@ var DebugUtils = {};
 
 DebugUtils.debug_examples = [
   {
+    seq: 'GTTGCATACTATGCCATCGCAGCTGGTAACTACTACTCTGTCTATATGCAAACCTGCTGCAAGTATTGCCCATGCGTACATGA',
+    dbn: '.(((((((...........(((...............))))....))))))..(((...).)).......((((....)))).'
+  },
+  {
+    seq: 'TGCGGATTTAGCTCAGTTGGGAGAGCGCCAGACTGAAGATTTGGAGGTCCTGTGTTCGATCCACAGAATTCGCA',
+    dbn: '..(((((((.((((........)))).((((.........)))))....(((((.......)))))))))))..'
+  },
+  {
     seq: 'TTGGGGGGACTGGGGCTCCCATTCGTTGCCTTTATAAATCCTTGCAAGCCAATTAACAGGTTGGTGAGGGGCTTGGGTGAAAAGGTGCTTAAGACTCCGT',
     dbn: '...(((((.(...).)))))........(((((.....((..(.((((((..(((.((...)).)))..)))))).).)))))))...............'
   },
