@@ -59,6 +59,10 @@ class Vector {
     return r;
   };
 
+  distanceFrom (b) {
+    return Vec2.distance(this.v, b.v);
+  };
+
   angleFrom (b) {
     var c = Vec3.fromValues(0, 0, 0);
     Vec2.cross(c, this.v, b.v);
