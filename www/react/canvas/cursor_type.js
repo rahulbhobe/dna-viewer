@@ -31,10 +31,6 @@ class CursorType extends React.Component {
       this.props.actions.setCanvasCursor(dataType);
     }
   };
-
-  isBannedCursor () {
-    return !thisBase.canPairWith(draggingBase);
-  };
 };
 
 var mapStateToProps = (state, ownProps) => {
