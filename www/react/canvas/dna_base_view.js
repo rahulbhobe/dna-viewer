@@ -24,9 +24,8 @@ class DnaBaseView extends React.Component {
                                 'dna-base-highlighted': this.props.hover || this.props.dragging
                               });
     var textCls = classNames('dna-text', 'dna-base-font');
-    var clsName = classNames({'dna-base-banned-pairing': this.props.bannedCursorWhenMoving});
 
-    return (<g className={clsName} ref='gnode' transform={'translate(' + x + ', ' + y + ')'}>
+    return (<g ref='gnode' transform={'translate(' + x + ', ' + y + ')'}>
               <circle className={classes} data-index={index} />
               <text className={textCls} textAnchor='middle' dominantBaseline='central'>{type}</text>
             </g>);
@@ -106,18 +105,6 @@ class DnaBaseView extends React.Component {
     let {seq, dbn} = sequenceParser.getData();
     this.props.actions.setSequenceParser(sequenceParser);
     this.props.actions.setTempSequence(seq, dbn);
-  };
-
-  bannedCursorWhenMoving (other) {
-    let index = this.props.index;
-    let sequenceParser = this.props.sequenceParser;
-    let bases = sequenceParser.getBases();
-
-    if (other<0) return false;
-
-    let draggingBase = bases[dragging];
-    let thisBase = bases[index];
-    return !thisBase.canPairWith(draggingBase);
   };
 };
 
