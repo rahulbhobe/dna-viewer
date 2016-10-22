@@ -11,8 +11,16 @@
 .svg-cursor-none {
 }
 
-.svg-cursor-dragging {
+.svg-cursor-hover {
   cursor: -webkit-grab;
+}
+
+.svg-cursor-dragging {
+  cursor: -webkit-grabbing;
+}
+
+.svg-cursor-banned {
+  cursor: not-allowed;
 }
 
 .svg-cursor-pan {
@@ -40,7 +48,6 @@
 .dna-base {
   stroke: #000000;
   stroke-width: 0.3px;
-  cursor: -webkit-grab;
 }
 
 .dna-base-anchor {
@@ -56,14 +63,6 @@
 .dna-base-highlighted {
   stroke-width: 3px;
   stroke: #ff0000;
-}
-
-.dna-base-dragged-node {
-  cursor: -webkit-grabbing;
-}
-
-.dna-base-banned-pairing {
-  cursor: not-allowed;
 }
 
 .dna-text {

@@ -1,4 +1,5 @@
 import React from 'react';
+import CursorType from './cursor_type';
 import DnaBaseView from './dna_base_view';
 import DnaAnchorView from './dna_anchor_view';
 import DnaBackboneView from './dna_backbone_view';
@@ -33,12 +34,15 @@ class Canvas extends React.Component {
       return null;
     }
 
-    let svgClass         = classNames('svg-class', 'svg-cursor-' + this.props.mouseActionDataType);
+    let svgClass         = classNames('svg-class', 'svg-cursor-' + this.props.cursorType);
     let {numBases}       = this.props;
     let {numConnections} = this.props;
 
     return (
       <svg className={svgClass} width={this.getWindowWidth()} height={this.getWindowHeight()} ref='svg' onContextMenu={this.onContextMenu} >
+
+        <CursorType />
+
         <g> {Array.from(Array(numBases-1).keys()).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))} </g>
 
         <g> {Array.from(Array(numConnections).keys()).map((index) => (<DnaPairView key={'pair' + index} index={index} />))} </g>
@@ -244,7 +248,7 @@ var mapStateToProps = (state, ownProps) => {
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
     origin: state.origin,
-    mouseActionDataType: state.mouseActionData.type,
+    cursorType: state.canvasCursorType,
     dimensions: state.canvasDimensions
   };
 };
