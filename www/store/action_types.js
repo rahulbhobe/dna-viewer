@@ -24,4 +24,6 @@ export const RESET_ORIGIN                       = 'RESET_ORIGIN';
 export const SET_PICKING_COLOR                  = 'SET_PICKING_COLOR';
 export const RESET_PICKING_COLOR                = 'RESET_PICKING_COLOR';
 export const SET_CANVAS_DIMENSIONS              = 'SET_CANVAS_DIMENSIONS';
+export const SET_CANVAS_CURSOR_TYPE             = 'SET_CANVAS_CURSOR_TYPE';
+export const RESET_CANVAS_CURSOR_TYPE           = 'RESET_CANVAS_CURSOR_TYPE';
 export const SET_SAVED_VIEWS                    = 'SET_SAVED_VIEWS';

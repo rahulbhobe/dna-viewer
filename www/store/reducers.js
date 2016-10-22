@@ -123,6 +123,15 @@ var canvasDimensionsReducer = (state={width:-1, height:-1}, action) => {
   return state;
 };
 
+var canvasCursorTypeReducer = (state='none', action) => {
+  if (action.type === ActionTypes.SET_CANVAS_CURSOR_TYPE) {
+    return action.value;
+  } else if (action.type === ActionTypes.RESET_CANVAS_CURSOR_TYPE) {
+    return action.value;
+  }
+  return state;
+};
+
 var savedViewsReducer = (state=[], action) => {
   if (action.type === ActionTypes.SET_SAVED_VIEWS) {
     return action.value;
@@ -145,6 +154,7 @@ var reducers = combineReducers({
   origin: originReducer,
   pickingColor: pickingColorReducer,
   canvasDimensions: canvasDimensionsReducer,
+  canvasCursorType: canvasCursorTypeReducer,
   savedViews: savedViewsReducer
 });
 

@@ -104,6 +104,14 @@ export var setCanvasDimensions = (width, height) => {
   return { type: ActionTypes.SET_CANVAS_DIMENSIONS, value: {width, height} };
 };
 
+export var setCanvasCursor = (type) => {
+  return { type: ActionTypes.SET_CANVAS_CURSOR_TYPE, value: type };
+};
+
+export var resetCanvasCursor = () => {
+  return { type: ActionTypes.RESET_CANVAS_CURSOR_TYPE, value: 'none' };
+};
+
 export var setSavedViews = (views) => {
   return { type: ActionTypes.SET_SAVED_VIEWS, value: views };
 };
