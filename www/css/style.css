@@ -19,6 +19,10 @@
   cursor: -webkit-grabbing;
 }
 
+.svg-cursor-drop {
+  cursor: -webkit-grab;
+}
+
 .svg-cursor-banned {
   cursor: not-allowed;
 }

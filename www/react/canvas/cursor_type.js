@@ -1,4 +1,5 @@
 import React from 'react';
+import SequenceUtils from '../../utils/sequence_utils';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 
@@ -17,7 +18,11 @@ class CursorType extends React.Component {
     let dataType = this.props.mouseActionDataType;
 
     if ((dragging!==-1)&&(hover!==-1)) {
-      this.props.actions.setCanvasCursor('banned');
+      if (SequenceUtils.canJoinNodes(this.props.sequenceParser, dragging, hover)) {
+        this.props.actions.setCanvasCursor('drop');
+      } else {
+        this.props.actions.setCanvasCursor('banned');
+      }
     } else if (dragging!==-1) {
       this.props.actions.setCanvasCursor('dragging');
     } else if (hover!==-1) {
@@ -26,10 +31,15 @@ class CursorType extends React.Component {
       this.props.actions.setCanvasCursor(dataType);
     }
   };
+
+  isBannedCursor () {
+    return !thisBase.canPairWith(draggingBase);
+  };
 };
 
 var mapStateToProps = (state, ownProps) => {
   return {
+    sequenceParser: state.sequenceParser,
     dragging: state.dragging,
     hover: state.hover,
     mouseActionDataType: state.mouseActionData.type
