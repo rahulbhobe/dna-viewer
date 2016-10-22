@@ -24,7 +24,7 @@
 }
 
 .svg-cursor-pan {
-  cursor: url('/res/pan_image.png'), auto;
+  cursor: move;
 }
 
 .svg-cursor-rotate {
