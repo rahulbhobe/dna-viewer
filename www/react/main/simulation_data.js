@@ -1,6 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 import {Vector, MatrixTransformations} from '../../mathutils/gl_matrix_wrapper';
+import ArrayUtils from '../../utils/array_utils';
 import AngleConverter from '../../mathutils/angle_converter';
 import store from '../../store/store';
 import {connect} from 'react-redux';
@@ -72,15 +73,15 @@ class SimulationData extends React.Component {
     if (numOld >= numBases) {
       this.data.animated.length = numBases;
     } else {
-      this.data.animated  = this.data.animated.concat(Array.from(Array(numBases-numOld).keys())
-                                .map(idx => idx+numOld)
-                                .map((idx) => Object.assign({id :'animated_'+idx})));
+      this.data.animated  = this.data.animated.concat(ArrayUtils.range(numBases-numOld)
+                                                                .map(idx => idx+numOld)
+                                                                .map((idx) => Object.assign({id :'animated_'+idx})));
     }
 
     simulation.nodes(this.data.anchored.concat(this.data.animated));
 
-    let linkAnchoredAnimated = Array.from(Array(numBases).keys()).map((idx) => Object.assign({source: 'anchored_'+idx, target: 'animated_'+idx}));
-    let linkBackbone = Array.from(Array(numBases-1).keys()).map((idx) => Object.assign({source: 'animated_'+idx, target: 'animated_'+(idx+1)}));
+    let linkAnchoredAnimated = ArrayUtils.range(numBases).map((idx) => Object.assign({source: 'anchored_'+idx, target: 'animated_'+idx}));
+    let linkBackbone = ArrayUtils.range(numBases-1).map((idx) => Object.assign({source: 'animated_'+idx, target: 'animated_'+(idx+1)}));
     let linkPair = connections.map(connection => Object.assign({source: 'animated_'+connection.source, target: 'animated_'+connection.target}));
 
     simulation.alphaDecay(0.14);
