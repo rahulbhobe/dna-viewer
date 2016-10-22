@@ -50,7 +50,7 @@ class Canvas extends React.Component {
 
         <g> {ArrayUtils.range(numBases).map((index) => (<DnaAnchorView key={'anchor' + index} index={index} />))} </g>
 
-        <g> {ArrayUtils.range(numBases).map((index) => (<DnaBaseView key={'base' + index} index={index} canvas={this} />))} </g>
+        <g> {ArrayUtils.orderedRange(numBases, this.props.dragging).map((index) => (<DnaBaseView key={'base' + index} index={index} canvas={this} />))} </g>
 
         <g> <DnaAnnotationView type='start'/> <DnaAnnotationView type='end'/> </g>
 
@@ -244,6 +244,7 @@ class Canvas extends React.Component {
 var mapStateToProps = (state, ownProps) => {
   return {
     sequenceParser: state.sequenceParser,
+    dragging: state.dragging,
     numBases: state.sequenceParser.getBases().length,
     numConnections: state.sequenceParser.getConnections().length,
     zoomFactor: state.zoomFactor,
