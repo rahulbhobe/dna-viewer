@@ -124,13 +124,10 @@ class Canvas extends React.Component {
       data.angle = this.props.rotationAngle;
     }
 
-    this.props.actions.setCurrentMousePosition(this.getPositionAtEvent(event));
     this.props.actions.setMouseActionData(dataType, this.getPositionAtEvent(event), data);
   };
 
   onMouseMove (event) {
-    this.props.actions.setCurrentMousePosition(this.getPositionAtEvent(event));
-
     var data = store.getState().mouseActionData;
     if (data.type === 'pan') {
       this.handlePan(event);
@@ -141,7 +138,6 @@ class Canvas extends React.Component {
 
   onMouseUp (event) {
     var data     = store.getState().mouseActionData;
-
     if (data.type === 'pan') {
       this.handlePan(event);
     } else if (data.type === 'rotate') {

@@ -62,15 +62,6 @@ var draggingNodeReducer = (state=-1, action) => {
   return state;
 };
 
-var currentMousePositionReducer = (state={x:-1, y:-1}, action) => {
-  if (action.type === ActionTypes.SET_CURRENT_MOUSE_POSITION) {
-    return action.value;
-  } else if (action.type === ActionTypes.RESET_CURRENT_MOUSE_POSITION) {
-    return action.value;
-  }
-  return state;
-};
-
 var setMouseActionDataReducer = (state= {type: 'none', startData: null}, action) => {
   if (action.type === ActionTypes.SET_MOUSE_ACTION_DATA) {
     return action.value;
@@ -147,7 +138,6 @@ var reducers = combineReducers({
   simulatedData: simulatedDataReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
-  currentMousePosition: currentMousePositionReducer,
   mouseActionData: setMouseActionDataReducer,
   zoomFactor: zoomFactorReducer,
   rotationAngle: rotationAngleReducer,

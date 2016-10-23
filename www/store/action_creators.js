@@ -52,14 +52,6 @@ export var resetDraggingNode = () => {
   return { type: ActionTypes.RESET_DRAGGING_NODE, value: -1 };
 };
 
-export var setCurrentMousePosition = (position) => {
-  return { type: ActionTypes.SET_CURRENT_MOUSE_POSITION, value: position };
-};
-
-export var resetCurrentMousePosition = () => {
-  return { type: ActionTypes.RESET_CURRENT_MOUSE_POSITION, value: {x: -1, y: -1} };
-};
-
 export var setMouseActionData = (type, position, otherData = {}) => {
   return { type: ActionTypes.SET_MOUSE_ACTION_DATA, value: {type, startData: Object.assign(otherData, {position}) } };
 };
