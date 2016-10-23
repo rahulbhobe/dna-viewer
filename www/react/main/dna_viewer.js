@@ -6,6 +6,7 @@ import TopView from '../top/top_view';
 import SideView from '../side/side_view';
 import BottomView from '../bottom/bottom_view';
 import Dimensions from '../../utils/dimensions';
+import debounce from 'debounce';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 
@@ -18,7 +19,9 @@ class DnaViewer extends React.Component {
 
   setCanvasDimensions () {
     var {width, height}  = Dimensions.calculateCanvasDimensions();
+    this.props.actions.setMouseActionData('resize', {}, {});
     this.props.actions.setCanvasDimensions(width, height);
+    debounce(()=>this.props.actions.resetMouseActionData(), 200)();
   };
 
   getLayout () {
