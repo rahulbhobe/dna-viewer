@@ -6,7 +6,6 @@ import TopView from '../top/top_view';
 import SideView from '../side/side_view';
 import BottomView from '../bottom/bottom_view';
 import Dimensions from '../../utils/dimensions';
-import debounce from 'debounce';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 
