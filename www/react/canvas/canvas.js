@@ -6,8 +6,9 @@ import DnaBackboneView from './dna_backbone_view';
 import DnaPairView from './dna_pair_view';
 import DnaAnnotationView from './dna_annotation_view';
 import {Vector, MatrixTransformations} from '../../mathutils/gl_matrix_wrapper';
-import ArrayUtils from '../../utils/array_utils';
 import AngleConverter from '../../mathutils/angle_converter';
+import Dimensions from '../../utils/dimensions';
+import ArrayUtils from '../../utils/array_utils';
 import classNames from 'classnames';
 import store from '../../store/store';
 import debounce from 'debounce';
@@ -28,6 +29,8 @@ class Canvas extends React.Component {
     this.onKeydown = this.onKeydown.bind(this);
     this.onContextMenu = this.onContextMenu.bind(this);
     this.onMouseWheelDoc = this.onMouseWheelDoc.bind(this);
+    this.onResize = this.onResize.bind(this);
+    this.resetMouseActionDataDebounce = debounce(this.resetMouseActionDataDebounce.bind(this), 200);
   };
 
   render () {
@@ -65,6 +68,7 @@ class Canvas extends React.Component {
     svg.addEventListener('mousedown', this.onMouseDown, false);
     svg.addEventListener('mouseleave', this.onMouseLeave, false);
     svg.addEventListener('mousewheel', this.onMouseWheel, false);
+    window.addEventListener('resize', this.onResize);
     document.addEventListener('keydown', this.onKeydown, false);
     document.addEventListener('mousewheel', this.onMouseWheelDoc, false);
   };
@@ -76,8 +80,14 @@ class Canvas extends React.Component {
     svg.removeEventListener('mousedown', this.onMouseDown, false);
     svg.removeEventListener('mouseleave', this.onMouseLeave, false);
     svg.removeEventListener('mousewheel', this.onMouseWheel, false);
+    window.removeEventListener('resize', this.onResize);
     document.removeEventListener('keydown', this.onKeydown, false);
     document.removeEventListener('mousewheel', this.onMouseWheelDoc, false);
+  };
+
+  setCanvasDimensions () {
+    var {width, height}  = Dimensions.calculateCanvasDimensions();
+    this.props.actions.setCanvasDimensions(width, height);
   };
 
   getPositionAtEvent (event) {
@@ -176,8 +186,18 @@ class Canvas extends React.Component {
       this.props.actions.setMouseActionData(dataType, this.getPositionAtEvent(event), data);
       this.props.actions.setZoomFactor(zoomFactor);
     }
-    debounce(()=>this.props.actions.resetMouseActionData(), 200)();
+    this.resetMouseActionDataDebounce();
     return false;
+  };
+
+  resetMouseActionDataDebounce () {
+    this.props.actions.resetMouseActionData();
+  };
+
+  onResize (e) {
+    this.props.actions.setMouseActionData('resize', {x: -1, y: -1}, {canvasDimensions: this.props.canvasDimensions});
+    this.resetMouseActionDataDebounce();
+    this.setCanvasDimensions();
   };
 
   onKeydown (event) {

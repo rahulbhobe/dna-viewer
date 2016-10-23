@@ -11,19 +11,8 @@ import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class DnaViewer extends React.Component {
-  constructor (props) {
-    super(props);
-    this.handleResize = this.handleResize.bind(this);
-    this.setCanvasDimensions();
-  };
-
-  setCanvasDimensions () {
-    var {width, height}  = Dimensions.calculateCanvasDimensions();
-    this.props.actions.setCanvasDimensions(width, height);
-  };
-
   getLayout () {
-    var {width, height}  = Dimensions.calculateCanvasDimensions();
+    var {width, height}  = this.props.canvasDimensions;
     var ch = height/Dimensions.DNA_VIEWER_ROW_HEIGHT;
     var cw = width;
     var tw = window.innerWidth;
@@ -55,20 +44,6 @@ class DnaViewer extends React.Component {
                 <SideView     key='SideView' />
               </GridLayout>
             </div>);
-  };
-
-  handleResize (e) {
-    this.props.actions.setMouseActionData('resize', {x: -1, y: -1}, {canvasDimensions: this.props.canvasDimensions});
-    debounce(()=>this.props.actions.resetMouseActionData(), 200)();
-    this.setCanvasDimensions();
-  };
-
-  componentDidMount () {
-    window.addEventListener('resize', this.handleResize);
-  };
-
-  componentWillUnmount () {
-    window.removeEventListener('resize', this.handleResize);
   };
 };
 

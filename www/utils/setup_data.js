@@ -2,6 +2,7 @@ import DebugUtils from '../src/debug';
 import SequenceParser from '../src/sequence_parser';
 import RequestUtils from './request_utils';
 import PubNubUtils from './pubnub_utils';
+import Dimensions from './dimensions';
 import store from '../store/store';
 import * as actionCreators from '../store/action_creators';
 
@@ -29,9 +30,12 @@ class SetupData {
       return this.getDefaultData();
     }).then(({url, seq, dbn}) => {
       let sequenceParser = new SequenceParser(seq, dbn);
+      let {width, height}  = Dimensions.calculateCanvasDimensions();
       store.dispatch(actionCreators.setSequenceParser(sequenceParser));
       store.dispatch(actionCreators.setTempSequence(seq, dbn));
       store.dispatch(actionCreators.setCurrentUrl(url));
+      store.dispatch(actionCreators.setCurrentUrl(url));
+      store.dispatch(actionCreators.setCanvasDimensions(width, height));
       window.history.pushState("", "Title", "/" + url);
     });
   };
