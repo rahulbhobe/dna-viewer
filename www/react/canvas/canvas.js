@@ -10,6 +10,7 @@ import ArrayUtils from '../../utils/array_utils';
 import AngleConverter from '../../mathutils/angle_converter';
 import classNames from 'classnames';
 import store from '../../store/store';
+import debounce from 'debounce';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 import SequenceParser from '../../src/sequence_parser';
@@ -113,8 +114,8 @@ class Canvas extends React.Component {
   };
 
   onMouseDown (event) {
-    var dataType = 'none';
-    var data     = {};
+    let dataType = 'none';
+    let data     = {};
 
     if (!event.shiftKey) {
       dataType = 'pan';
@@ -153,16 +154,29 @@ class Canvas extends React.Component {
   onMouseWheel (event) {
     event.preventDefault();
 
-    var wheelDistance = Math.round(event.wheelDeltaY/30);
-    if (wheelDistance === 0) { return false; }
-    var zoomFactor    = this.props.zoomFactor + wheelDistance;
+    let dataType  = 'none';
+    let data      = {};
+    let wheelDistance = Math.round(event.wheelDeltaY/30);
+    let zoomFactor    = this.props.zoomFactor + wheelDistance;
     if (zoomFactor < 25) {
       zoomFactor = 25;
     } else if (zoomFactor > 200) {
       zoomFactor = 200;
     }
-    if (zoomFactor === this.props.zoomFactor) { return false; }
-    this.props.actions.setZoomFactor(zoomFactor);
+
+    if (wheelDistance > 0) {
+      dataType = 'zoomin';
+      data.zoomFactor = this.props.zoomFactor;
+    } else if (wheelDistance < 0) {
+      dataType = 'zoomout';
+      data.zoomFactor = this.props.zoomFactor;
+    }
+
+    if (zoomFactor !== this.props.zoomFactor) {
+      this.props.actions.setMouseActionData(dataType, this.getPositionAtEvent(event), data);
+      this.props.actions.setZoomFactor(zoomFactor);
+    }
+    debounce(()=>this.props.actions.resetMouseActionData(), 200)();
     return false;
   };
 
