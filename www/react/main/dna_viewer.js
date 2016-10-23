@@ -58,7 +58,7 @@ class DnaViewer extends React.Component {
   };
 
   handleResize (e) {
-    this.props.actions.setMouseActionData('resize', {}, {});
+    this.props.actions.setMouseActionData('resize', {x: -1, y: -1}, {canvasDimensions: this.props.canvasDimensions});
     debounce(()=>this.props.actions.resetMouseActionData(), 200)();
     this.setCanvasDimensions();
   };
