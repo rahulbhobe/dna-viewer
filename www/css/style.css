@@ -35,6 +35,14 @@
   cursor: url('/res/rotate_image.png'), auto;
 }
 
+.svg-cursor-zoomin {
+  cursor: zoom-in;
+}
+
+.svg-cursor-zoomout {
+  cursor: zoom-out;
+}
+
 .svg-class {
 }
 
