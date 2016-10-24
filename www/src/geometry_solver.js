@@ -60,9 +60,8 @@ var GeometrySolver = function (sequenceParser) {
     [diffW, diffH] = [diffH, diffW];
   }
 
-  points = points.map((point) => {
-    return matrixTransforms.transformPoint(point);
-  });
+  points  = points.map(point   => matrixTransforms.transformPoint(point));
+  centers = centers.map(center => matrixTransforms.transformPoint(center));
 
   return {
     getCoordinates : (width, height, modelTransforms) => {
