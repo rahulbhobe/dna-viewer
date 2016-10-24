@@ -20,7 +20,7 @@ class SimulationData extends React.Component {
   };
 
   setCurrentData () {
-    this.props.actions.setSimulatedData({...this.data});
+    this.props.actions.setSimulationData({...this.data});
   };
 
   initData () {
@@ -34,7 +34,7 @@ class SimulationData extends React.Component {
   resetData () {
     this.data.simulation.stop();
     this.data = {simulation: null, anchored: [], animated: [], centers: []};
-    this.props.actions.resetSimulatedData();
+    this.props.actions.resetSimulationData();
   };
 
   componentWillMount () {

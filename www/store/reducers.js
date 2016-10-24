@@ -35,10 +35,10 @@ var currentUrlReducer = (state="", action) => {
   return state;
 };
 
-var simulatedDataReducer = (state={simulation: null, anchored: [], animated: []}, action) => {
-  if (action.type === ActionTypes.SET_SIMULATED_DATA) {
+var simulationDataReducer = (state={simulation: null, anchored: [], animated: []}, action) => {
+  if (action.type === ActionTypes.SET_SIMULATION_DATA) {
     return action.value;
-  } else if (action.type === ActionTypes.RESET_SIMULATED_DATA) {
+  } else if (action.type === ActionTypes.RESET_SIMULATION_DATA) {
     return action.value;
   }
   return state;
@@ -135,7 +135,7 @@ var reducers = combineReducers({
   tempSequence: tempSequenceReducer,
   sequenceViewHasErrors: sequenceViewHasErrorsReducer,
   currentUrl: currentUrlReducer,
-  simulatedData: simulatedDataReducer,
+  simulationData: simulationDataReducer,
   hover:  hoverNodeReducer,
   dragging: draggingNodeReducer,
   mouseActionData: setMouseActionDataReducer,

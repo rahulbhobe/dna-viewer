@@ -18,7 +18,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   let index = initialOwnProps.index;
 
   return (state) => {
-    let anchored = state.simulatedData.anchored;
+    let anchored = state.simulationData.anchored;
     let bases    = state.sequenceParser.getBases();
     if (index >= anchored.length) return {ignore: true};
     if (index >= bases.length)    return {ignore: true};

@@ -112,7 +112,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   let index = initialOwnProps.index;
 
   return (state) => {
-    let animated = state.simulatedData.animated;
+    let animated = state.simulationData.animated;
     let bases    = state.sequenceParser.getBases();
     if (index >= animated.length) return {ignore: true};
     if (index >= bases.length)    return {ignore: true};
@@ -120,7 +120,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
       x: animated[index].x.toFixed(2),
       y: animated[index].y.toFixed(2),
       node: animated[index],
-      simulation: state.simulatedData.simulation,
+      simulation: state.simulationData.simulation,
       type: bases[index].getType(),
       hover: state.hover === index,
       dragging: state.dragging === index,

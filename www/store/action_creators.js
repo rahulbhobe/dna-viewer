@@ -28,12 +28,12 @@ export var resetCurrentUrl = () => {
   return { type: ActionTypes.RESET_CURRENT_URL, value: "" };
 };
 
-export var setSimulatedData = (data) => {
-  return { type: ActionTypes.SET_SIMULATED_DATA, value: data };
+export var setSimulationData = (data) => {
+  return { type: ActionTypes.SET_SIMULATION_DATA, value: data };
 };
 
-export var resetSimulatedData = () => {
-  return { type: ActionTypes.RESET_SIMULATED_DATA, value: {simulation: null, anchored: [], animated: []} };
+export var resetSimulationData = () => {
+  return { type: ActionTypes.RESET_SIMULATION_DATA, value: {simulation: null, anchored: [], animated: []} };
 };
 
 export var setHoverNode = (node) => {

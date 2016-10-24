@@ -15,7 +15,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   let index  = initialOwnProps.index;
 
   return (state) => {
-    let animated    = state.simulatedData.animated;
+    let animated    = state.simulationData.animated;
     let connections = state.sequenceParser.getConnections();
     if (index >= connections.length) return {ignore: true};
     let source      = connections[index].source;

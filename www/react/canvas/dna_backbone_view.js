@@ -15,7 +15,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   let index  = initialOwnProps.index;
 
   return (state) => {
-    let animated = state.simulatedData.animated;
+    let animated = state.simulationData.animated;
     let source = index;
     let target = index+1;
     if (source >= animated.length) return {ignore: true};

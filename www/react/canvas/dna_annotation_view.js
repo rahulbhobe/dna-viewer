@@ -18,8 +18,8 @@ var mapStateToProps = (initialState, initialOwnProps) => {
   let text   = (type==='start') ? "5'" : "3'";
 
   return (state) => {
-    let animated    = state.simulatedData.animated;
-    let centers     = state.simulatedData.centers;
+    let animated    = state.simulationData.animated;
+    let centers     = state.simulationData.centers;
     if (animated.length < 3) return {ignore: true};
     if (centers.length < 1)  return {ignore: true};
 
