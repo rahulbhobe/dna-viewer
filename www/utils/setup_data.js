@@ -1,4 +1,4 @@
-import DebugUtils from '../src/debug';
+import DebugUtils from './debug_utils';
 import SequenceParser from '../src/sequence_parser';
 import RequestUtils from './request_utils';
 import PubNubUtils from './pubnub_utils';
