@@ -6,25 +6,11 @@ import classNames from 'classnames';
 class DnaAnnotationView extends React.Component {
   render () {
     if (this.props.ignore) return null;
-    let text     = this.props.text;
-    let location = this.getLocation().asObj();
-    return (<g transform={"translate(" + location.x + ", " + location.y + ")"} >
+    let {text, x, y}   = this.props;
+    return (<g transform={"translate(" + x + ", " + y + ")"} >
               <text className={classNames('dna-text', 'dna-base-font')} textAnchor="middle" dominantBaseline="central">{text}</text>
             </g>);
   };
-
-  getLocation () {
-    let point   = Vector.create(this.props.x0, this.props.y0);
-    let other1  = Vector.create(this.props.xp, this.props.yp);
-    let other2  = Vector.create(this.props.xn, this.props.yn);
-    let vec1    = point.subtract(other1);
-    let vec2    = point.subtract(other2);
-    let bisect  = vec1.add(vec2);
-    let drawAt  = point.add(bisect.normalize().scale(20));
-
-    return drawAt;
-  };
-
 };
 
 var mapStateToProps = (initialState, initialOwnProps) => {
@@ -33,20 +19,21 @@ var mapStateToProps = (initialState, initialOwnProps) => {
 
   return (state) => {
     let animated    = state.simulatedData.animated;
-    let l           = animated.length;
-    if (l < 3) return {ignore: true};
-    let pointsStart = [animated[1],   animated[0],   animated[l-1]];
-    let pointsEnd   = [animated[l-2], animated[l-1], animated[0]];
-    let points      = (type==='start') ? pointsStart : pointsEnd;
+    let centers     = state.simulatedData.centers;
+    if (animated.length < 3) return {ignore: true};
+    if (centers.length < 1)  return {ignore: true};
+
+    let pointId  = (type==='start') ? 0 : animated.length-1;
+    let point    = Vector.create(animated[pointId].x, animated[pointId].y);
+    let center   = centers[0];
+    let vec      = point.subtract(center);
+    let location = point.add(vec.normalize().scale(25));
+    let {x, y}   = location.asObj();
 
     return {
       text: text,
-      xp: points[0].x,
-      yp: points[0].y,
-      x0: points[1].x,
-      y0: points[1].y,
-      xn: points[2].x,
-      yn: points[2].y
+      x: x.toFixed(2),
+      y: y.toFixed(2)
     };
   };
 };
