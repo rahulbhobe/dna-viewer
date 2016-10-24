@@ -1,4 +1,4 @@
-import DebugUtils from './debug_utils';
+import ExampleData from './example_data';
 import SequenceData from '../src/sequence_data';
 import RequestUtils from './request_utils';
 import PubNubUtils from './pubnub_utils';
@@ -14,7 +14,7 @@ class SetupData {
   };
 
   static getDefaultData () {
-    var {seq, dbn} = DebugUtils.debug_examples[0];
+    var {seq, dbn} = ExampleData.examples[0];
     return {url: "", seq, dbn};
   };
 

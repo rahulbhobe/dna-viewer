@@ -1,17 +1,5 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-  function assert(condition, message) {
-    if (!condition) {
-        message = message || "Assertion failed";
-        if (typeof Error !== "undefined") {
-            throw new Error(message);
-        }
-        throw message;
-    }
-  };
-});
-
-class DebugUtils {
-  static debug_examples = [
+class ExampleData {
+  static examples = [
     {
       seq: 'GTTGCATACTATGCCATCGCAGCTGGTAACTACTACTCTGTCTATATGCAAACCTGCTGCAAGTATTGCCCATGCGTACATGA',
       dbn: '.(((((((...........(((...............))))....))))))..(((...).)).......((((....)))).'
@@ -43,4 +31,4 @@ class DebugUtils {
   ];
 };
 
-export default DebugUtils;
+export default ExampleData;
