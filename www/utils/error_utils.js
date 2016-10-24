@@ -1,6 +1,6 @@
-var Utils = {};
+var ErrorUtils = {};
 
-Utils.assert = function (condition, message) {
+ErrorUtils.assert = function (condition, message) {
   if (!condition) {
     message = message || "Assertion failed";
 
@@ -11,7 +11,7 @@ Utils.assert = function (condition, message) {
   }
 };
 
-Utils.errorObject = function (msg, index) {
+ErrorUtils.errorObject = function (msg, index) {
   return {
     hasErrors: function() {
       return msg;
@@ -23,4 +23,4 @@ Utils.errorObject = function (msg, index) {
   };
 };
 
-export default Utils;
+export default ErrorUtils;

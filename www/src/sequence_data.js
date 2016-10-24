@@ -1,11 +1,11 @@
 import SecondaryStructure from './secondary_structure';
 import DnaBase from './dna_base';
 import GeometrySolver from './geometry_solver';
-import Utils from './utils';
+import ErrorUtils from '../utils/error_utils';
 
 var SequenceData = function(seq, dbn) {
 
-  Utils.assert(seq.length===dbn.length, "Sequence has invalid length");
+  ErrorUtils.assert(seq.length===dbn.length, "Sequence has invalid length");
 
   var errorMsg = null;
   var bases = [];
@@ -14,15 +14,15 @@ var SequenceData = function(seq, dbn) {
     var dnaType = seq.charAt(ii);
     var dbnType = dbn.charAt(ii);
 
-    Utils.assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
-    Utils.assert(['.', '(', ')'].indexOf(dbnType)!==-1);
+    ErrorUtils.assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
+    ErrorUtils.assert(['.', '(', ')'].indexOf(dbnType)!==-1);
 
     if (dbnType === '(') {
       secondary.onOpen(ii);
     } else if (dbnType === ')') {
       if (secondary.onStack()<=1) {
         // Error handling
-        return Utils.errorObject("Tried to close too early at index", ii);
+        return ErrorUtils.errorObject("Tried to close too early at index", ii);
       }
 
       secondary.onClose(ii);
@@ -36,7 +36,7 @@ var SequenceData = function(seq, dbn) {
   {
     // Error handling.
     if (secondary.onStack()!==1) {
-      return Utils.errorObject("Missing closing brackets ", secondary._curStructures[1].openedAt());
+      return ErrorUtils.errorObject("Missing closing brackets ", secondary._curStructures[1].openedAt());
     }
   }
 
