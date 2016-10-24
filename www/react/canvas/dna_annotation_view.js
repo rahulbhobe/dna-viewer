@@ -25,7 +25,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
 
     let pointId  = (type==='start') ? 0 : animated.length-1;
     let point    = Vector.create(animated[pointId].x, animated[pointId].y);
-    let center   = centers[0];
+    let center   = Vector.create(centers[0].x, centers[0].y);
     let vec      = point.subtract(center);
     let location = point.add(vec.normalize().scale(25));
     let {x, y}   = location.asObj();

@@ -79,7 +79,8 @@ class SimulationData extends React.Component {
                                                                 .map(idx => idx+numOld)
                                                                 .map((idx) => Object.assign({id :'animated_'+idx})));
     }
-    this.data.centers = centers;
+
+    this.data.centers = centers.map((center) => center.asObj());
 
     simulation.nodes(this.data.anchored.concat(this.data.animated));
 
