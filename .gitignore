@@ -35,5 +35,5 @@ www/bower_components
 Thumbs.db
 *.bak
 
-server/babel
-www/bundle/dna_viewer_bundle.js
+server/generated
+www/generated/dna_viewer_bundle.js
