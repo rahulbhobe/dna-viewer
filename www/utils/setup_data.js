@@ -1,5 +1,5 @@
 import ExampleData from './example_data';
-import SequenceData from '../src/sequence_data';
+import SequenceData from '../core/sequence_data';
 import RequestUtils from './request_utils';
 import PubNubUtils from './pubnub_utils';
 import Dimensions from './dimensions';

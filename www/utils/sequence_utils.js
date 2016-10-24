@@ -1,4 +1,4 @@
-import SequenceData from '../src/sequence_data';
+import SequenceData from '../core/sequence_data';
 
 class SequenceUtils {
   static canJoinNodes (sequenceData, node1, node2) {

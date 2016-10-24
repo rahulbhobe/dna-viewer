@@ -1,7 +1,7 @@
 import React from 'react';
 import {Vector} from '../../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
-import SequenceData from '../../src/sequence_data';
+import SequenceData from '../../core/sequence_data';
 import Dimensions from '../../utils/dimensions';
 
 class ThumbnailView extends React.Component {

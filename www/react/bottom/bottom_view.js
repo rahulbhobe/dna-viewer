@@ -1,6 +1,6 @@
 import React from 'react';
 import GridLayout from '../main/grid_layout';
-import SequenceData from '../../src/sequence_data';
+import SequenceData from '../../core/sequence_data';
 import SequenceFormView from './sequence_form_view';
 import SequenceChanges from './sequence_changes';
 import classNames from 'classnames';

@@ -2,7 +2,7 @@ import React from 'react';
 import Slick from 'react-slick';
 import ThumbnailView from './thumbnail_view';
 import RequestUtils from '../../utils/request_utils'
-import SequenceData from '../../src/sequence_data';
+import SequenceData from '../../core/sequence_data';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 
