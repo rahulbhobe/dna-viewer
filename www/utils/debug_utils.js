@@ -8,46 +8,39 @@ document.addEventListener("DOMContentLoaded", function(event) {
         throw message;
     }
   };
-
-  // _(debug_examples).each(function (pair) {
-  //   var sequenceParser = new SequenceParser(pair.seq, pair.dbn);
-  //   console.log('Bases', sequenceParser.getBases());
-  //   console.log('Connections', sequenceParser.getConnections());
-  //   console.log('Coordinates', sequenceParser.getCoordinates());
-  // });
 });
 
-var DebugUtils = {};
-
-DebugUtils.debug_examples = [
-  {
-    seq: 'GTTGCATACTATGCCATCGCAGCTGGTAACTACTACTCTGTCTATATGCAAACCTGCTGCAAGTATTGCCCATGCGTACATGA',
-    dbn: '.(((((((...........(((...............))))....))))))..(((...).)).......((((....)))).'
-  },
-  {
-    seq: 'TGCGGATTTAGCTCAGTTGGGAGAGCGCCAGACTGAAGATTTGGAGGTCCTGTGTTCGATCCACAGAATTCGCA',
-    dbn: '..(((((((.((((........)))).((((.........)))))....(((((.......)))))))))))..'
-  },
-  {
-    seq: 'TTGGGGGGACTGGGGCTCCCATTCGTTGCCTTTATAAATCCTTGCAAGCCAATTAACAGGTTGGTGAGGGGCTTGGGTGAAAAGGTGCTTAAGACTCCGT',
-    dbn: '...(((((.(...).)))))........(((((.....((..(.((((((..(((.((...)).)))..)))))).).)))))))...............'
-  },
-  {
-    seq: 'CAGCACGACACTAGCAGTCAGTGTCAGACTGCATACAGCACGACACTAGCAGTCAGTGTCAGACTGCATACAGCACGACACTAGCAGTCAGTGTCAGACTGCATA',
-    dbn: '..(((((...(((((...(((((...(((((.....)))))...))))).....(((((...(((((.....)))))...))))).....)))))...)))))..'
-  },
-  {
-    seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
-    dbn: '.((((((...))((...)))))).'
-  },
-  {
-    seq: 'TTGGGCTTGGGGAATTT',
-    dbn: '.((((((...)))))).'
-  },
-  {
-    seq: 'AAGGTTTCAAGGAACCGGGGGCCACGGGAAAAATTTTTTTTTAAAA',
-    dbn: '.(...((....(...(((.....)))..((((...)))))...)))'
-  }
-];
+class DebugUtils {
+  static debug_examples = [
+    {
+      seq: 'GTTGCATACTATGCCATCGCAGCTGGTAACTACTACTCTGTCTATATGCAAACCTGCTGCAAGTATTGCCCATGCGTACATGA',
+      dbn: '.(((((((...........(((...............))))....))))))..(((...).)).......((((....)))).'
+    },
+    {
+      seq: 'TGCGGATTTAGCTCAGTTGGGAGAGCGCCAGACTGAAGATTTGGAGGTCCTGTGTTCGATCCACAGAATTCGCA',
+      dbn: '..(((((((.((((........)))).((((.........)))))....(((((.......)))))))))))..'
+    },
+    {
+      seq: 'TTGGGGGGACTGGGGCTCCCATTCGTTGCCTTTATAAATCCTTGCAAGCCAATTAACAGGTTGGTGAGGGGCTTGGGTGAAAAGGTGCTTAAGACTCCGT',
+      dbn: '...(((((.(...).)))))........(((((.....((..(.((((((..(((.((...)).)))..)))))).).)))))))...............'
+    },
+    {
+      seq: 'CAGCACGACACTAGCAGTCAGTGTCAGACTGCATACAGCACGACACTAGCAGTCAGTGTCAGACTGCATACAGCACGACACTAGCAGTCAGTGTCAGACTGCATA',
+      dbn: '..(((((...(((((...(((((...(((((.....)))))...))))).....(((((...(((((.....)))))...))))).....)))))...)))))..'
+    },
+    {
+      seq: 'TTGGGCTTGGGGCTCCCAGAATTT',
+      dbn: '.((((((...))((...)))))).'
+    },
+    {
+      seq: 'TTGGGCTTGGGGAATTT',
+      dbn: '.((((((...)))))).'
+    },
+    {
+      seq: 'AAGGTTTCAAGGAACCGGGGGCCACGGGAAAAATTTTTTTTTAAAA',
+      dbn: '.(...((....(...(((.....)))..((((...)))))...)))'
+    }
+  ];
+};
 
 export default DebugUtils;
