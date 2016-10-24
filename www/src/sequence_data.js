@@ -3,7 +3,7 @@ import DnaBase from './dna_base';
 import GeometrySolver from './geometry_solver';
 import Utils from './utils';
 
-var SequenceParser = function(seq, dbn) {
+var SequenceData = function(seq, dbn) {
 
   Utils.assert(seq.length===dbn.length, "Sequence has invalid length");
 
@@ -78,4 +78,4 @@ var SequenceParser = function(seq, dbn) {
   };
 };
 
-export default SequenceParser;
+export default SequenceData;

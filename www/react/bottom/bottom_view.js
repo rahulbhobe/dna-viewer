@@ -1,6 +1,6 @@
 import React from 'react';
 import GridLayout from '../main/grid_layout';
-import SequenceParser from '../../src/sequence_parser';
+import SequenceData from '../../src/sequence_data';
 import SequenceFormView from './sequence_form_view';
 import SequenceChanges from './sequence_changes';
 import classNames from 'classnames';
@@ -31,12 +31,12 @@ class BottomView extends React.Component {
   };
 
   onApply () {
-    var sequenceParser = new SequenceParser(this.props.seqTemp, this.props.dbnTemp);
-    if (sequenceParser.hasErrors()) {
+    var sequenceData = new SequenceData(this.props.seqTemp, this.props.dbnTemp);
+    if (sequenceData.hasErrors()) {
       this.props.actions.setSequenceViewHasErrors(true);
       return;
     }
-    this.props.actions.setSequenceParser(sequenceParser);
+    this.props.actions.setSequenceData(sequenceData);
     this.props.actions.resetSequenceViewHasErrors();
   };
 
@@ -69,8 +69,8 @@ class BottomView extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    seqPerm: state.sequenceParser.getData().seq,
-    dbnPerm: state.sequenceParser.getData().dbn,
+    seqPerm: state.sequenceData.getData().seq,
+    dbnPerm: state.sequenceData.getData().dbn,
     seqTemp: state.tempSequence.seq,
     dbnTemp: state.tempSequence.dbn,
     canvasDimensions: state.canvasDimensions

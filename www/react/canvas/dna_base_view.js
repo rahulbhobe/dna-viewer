@@ -97,13 +97,13 @@ class DnaBaseView extends React.Component {
     var other  = this.getOtherNodeIndexAtEvent();
     if (other===-1) { return; }
 
-    var sequenceParser = SequenceUtils.getJoinedSequence(this.props.sequenceParser, this.props.index, other);
-    if (!sequenceParser) {
+    var sequenceData = SequenceUtils.getJoinedSequence(this.props.sequenceData, this.props.index, other);
+    if (!sequenceData) {
       return;
     }
 
-    let {seq, dbn} = sequenceParser.getData();
-    this.props.actions.setSequenceParser(sequenceParser);
+    let {seq, dbn} = sequenceData.getData();
+    this.props.actions.setSequenceData(sequenceData);
     this.props.actions.setTempSequence(seq, dbn);
   };
 };
@@ -113,7 +113,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
 
   return (state) => {
     let animated = state.simulationData.animated;
-    let bases    = state.sequenceParser.getBases();
+    let bases    = state.sequenceData.getBases();
     if (index >= animated.length) return {ignore: true};
     if (index >= bases.length)    return {ignore: true};
     return {
@@ -124,7 +124,7 @@ var mapStateToProps = (initialState, initialOwnProps) => {
       type: bases[index].getType(),
       hover: state.hover === index,
       dragging: state.dragging === index,
-      sequenceParser: state.sequenceParser
+      sequenceData: state.sequenceData
     };
   };
 };

@@ -14,7 +14,6 @@ import store from '../../store/store';
 import debounce from 'debounce';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
-import SequenceParser from '../../src/sequence_parser';
 
 class Canvas extends React.Component {
   constructor (props) {
@@ -34,8 +33,8 @@ class Canvas extends React.Component {
   };
 
   render () {
-    let sequenceParser = this.props.sequenceParser;
-    if (sequenceParser.hasErrors()) {
+    let sequenceData = this.props.sequenceData;
+    if (sequenceData.hasErrors()) {
       return null;
     }
 
@@ -273,10 +272,10 @@ class Canvas extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    sequenceParser: state.sequenceParser,
+    sequenceData: state.sequenceData,
     dragging: state.dragging,
-    numBases: state.sequenceParser.getBases().length,
-    numConnections: state.sequenceParser.getConnections().length,
+    numBases: state.sequenceData.getBases().length,
+    numConnections: state.sequenceData.getConnections().length,
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
     origin: state.origin,

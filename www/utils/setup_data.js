@@ -1,5 +1,5 @@
 import DebugUtils from './debug_utils';
-import SequenceParser from '../src/sequence_parser';
+import SequenceData from '../src/sequence_data';
 import RequestUtils from './request_utils';
 import PubNubUtils from './pubnub_utils';
 import Dimensions from './dimensions';
@@ -29,9 +29,9 @@ class SetupData {
       console.log(err);
       return this.getDefaultData();
     }).then(({url, seq, dbn}) => {
-      let sequenceParser = new SequenceParser(seq, dbn);
+      let sequenceData = new SequenceData(seq, dbn);
       let {width, height}  = Dimensions.calculateCanvasDimensions();
-      store.dispatch(actionCreators.setSequenceParser(sequenceParser));
+      store.dispatch(actionCreators.setSequenceData(sequenceData));
       store.dispatch(actionCreators.setTempSequence(seq, dbn));
       store.dispatch(actionCreators.setCurrentUrl(url));
       store.dispatch(actionCreators.setCurrentUrl(url));

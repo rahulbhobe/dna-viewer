@@ -1,11 +1,11 @@
 import * as ActionTypes from './action_types';
 
-export var setSequenceParser = (sequenceParser) => {
-  return { type: ActionTypes.SET_SEQUENCE_PARSER, value: sequenceParser };
+export var setSequenceData = (sequenceData) => {
+  return { type: ActionTypes.SET_SEQUENCE_DATA, value: sequenceData };
 };
 
-export var resetSequenceParser = () => {
-  return { type: ActionTypes.RESET_SEQUENCE_PARSER, value: null };
+export var resetSequenceData = () => {
+  return { type: ActionTypes.RESET_SEQUENCE_DATA, value: null };
 };
 
 export var setTempSequence = (seq, dbn) => {

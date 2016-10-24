@@ -2,7 +2,7 @@ import React from 'react';
 import Slick from 'react-slick';
 import ThumbnailView from './thumbnail_view';
 import RequestUtils from '../../utils/request_utils'
-import SequenceParser from '../../src/sequence_parser';
+import SequenceData from '../../src/sequence_data';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
 
@@ -46,8 +46,8 @@ class SavedViews extends React.Component {
   onClick(url) {
     return () => {
       RequestUtils.getSavedDataForUrl(url).then(({url, seq, dbn}) => {
-        var sequenceParser = new SequenceParser(seq, dbn);
-        this.props.actions.setSequenceParser(sequenceParser);
+        var sequenceData = new SequenceData(seq, dbn);
+        this.props.actions.setSequenceData(sequenceData);
         this.props.actions.setTempSequence(seq, dbn);
         this.props.actions.setCurrentUrl(url);
         window.history.pushState("", "Title", "/" + url);

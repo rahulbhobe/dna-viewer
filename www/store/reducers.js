@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import * as ActionTypes from './action_types';
 
-var sequenceParserReducer = (state=null, action) => {
-  if (action.type === ActionTypes.SET_SEQUENCE_PARSER) {
+var sequenceDataReducer = (state=null, action) => {
+  if (action.type === ActionTypes.SET_SEQUENCE_DATA) {
     return action.value;
-  } else if (action.type === ActionTypes.RESET_SEQUENCE_PARSER) {
+  } else if (action.type === ActionTypes.RESET_SEQUENCE_DATA) {
     return action.value;
   }
   return state;
@@ -131,7 +131,7 @@ var savedViewsReducer = (state=[], action) => {
 }
 
 var reducers = combineReducers({
-  sequenceParser: sequenceParserReducer,
+  sequenceData: sequenceDataReducer,
   tempSequence: tempSequenceReducer,
   sequenceViewHasErrors: sequenceViewHasErrorsReducer,
   currentUrl: currentUrlReducer,

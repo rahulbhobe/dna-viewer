@@ -18,7 +18,7 @@ class CursorType extends React.Component {
     let dataType = this.props.eventDataType;
 
     if ((dragging!==-1)&&(hover!==-1)) {
-      if (SequenceUtils.canJoinNodes(this.props.sequenceParser, dragging, hover)) {
+      if (SequenceUtils.canJoinNodes(this.props.sequenceData, dragging, hover)) {
         this.props.actions.setCanvasCursor('drop');
       } else {
         this.props.actions.setCanvasCursor('banned');
@@ -35,7 +35,7 @@ class CursorType extends React.Component {
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    sequenceParser: state.sequenceParser,
+    sequenceData: state.sequenceData,
     dragging: state.dragging,
     hover: state.hover,
     eventDataType: state.eventData.type

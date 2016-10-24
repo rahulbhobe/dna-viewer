@@ -54,16 +54,16 @@ class SimulationData extends React.Component {
     let simulation = this.data.simulation;
     simulation.stop();
 
-    let sequenceParser = this.props.sequenceParser;
-    if (sequenceParser.hasErrors()) {
+    let sequenceData = this.props.sequenceData;
+    if (sequenceData.hasErrors()) {
       return null;
     }
 
     let coordinates = this.getCoordinatesForScreen();
     let points      = coordinates.points;
     let centers     = coordinates.centers;
-    let connections = sequenceParser.getConnections();
-    let numBases    = sequenceParser.getBases().length;
+    let connections = sequenceData.getConnections();
+    let numBases    = sequenceData.getBases().length;
     let numOld      = this.data.animated.length;
 
     this.data.anchored = points.map((point, ii) => {
@@ -128,16 +128,16 @@ class SimulationData extends React.Component {
   };
 
   getCoordinatesForScreen () {
-    let sequenceParser = this.props.sequenceParser;
+    let sequenceData   = this.props.sequenceData;
     let width          = this.props.dimensions.width;
     let height         = this.props.dimensions.height;
-    return sequenceParser.getCoordinates(width, height, this.getModelTransformations());
+    return sequenceData.getCoordinates(width, height, this.getModelTransformations());
   };
 };
 
 var mapStateToProps = (state, ownProps) => {
   return {
-    sequenceParser: state.sequenceParser,
+    sequenceData: state.sequenceData,
     zoomFactor: state.zoomFactor,
     rotationAngle: state.rotationAngle,
     origin: state.origin,

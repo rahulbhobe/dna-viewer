@@ -16,8 +16,8 @@ const PreviewWithAnimations = (props) => {
 
 class Preview extends React.Component {
   render () {
-    let sequenceParser = this.getSequenceParserToRender();
-    let {seq, dbn} = sequenceParser.getData();
+    let sequenceData = this.getSequenceDataToRender();
+    let {seq, dbn} = sequenceData.getData();
 
     return (<div className='dna-base-font' style={{textAlign: 'center'}}>
               <div> Drag Preview: </div>
@@ -25,21 +25,21 @@ class Preview extends React.Component {
             </div>);
   };
 
-  getSequenceParserToRender () {
-    let sequenceParser    = this.props.sequenceParser;
+  getSequenceDataToRender () {
+    let sequenceData      = this.props.sequenceData;
     let {dragging, hover} = this.props;
-    if (dragging === -1)    return sequenceParser;
-    if (hover    === -1)    return sequenceParser;
-    if (dragging === hover) return sequenceParser;
-    let sequenceParserNew = SequenceUtils.getJoinedSequence(sequenceParser, this.props.dragging, this.props.hover);
-    if (!sequenceParserNew) return sequenceParser;
-    return sequenceParserNew;
+    if (dragging === -1)    return sequenceData;
+    if (hover    === -1)    return sequenceData;
+    if (dragging === hover) return sequenceData;
+    let sequenceDataNew = SequenceUtils.getJoinedSequence(sequenceData, this.props.dragging, this.props.hover);
+    if (!sequenceDataNew) return sequenceData;
+    return sequenceDataNew;
   };
 };
 
 var mapStateToProps = (state) => {
   return {
-    sequenceParser: state.sequenceParser,
+    sequenceData: state.sequenceData,
     hover: state.hover,
     dragging: state.dragging
   }

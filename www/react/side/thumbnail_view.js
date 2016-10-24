@@ -1,21 +1,21 @@
 import React from 'react';
 import {Vector} from '../../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
-import SequenceParser from '../../src/sequence_parser';
+import SequenceData from '../../src/sequence_data';
 import Dimensions from '../../utils/dimensions';
 
 class ThumbnailView extends React.Component {
   render () {
     let {seq, dbn} = this.props;
-    var sequenceParser = new SequenceParser(seq, dbn);
-    if (sequenceParser.hasErrors()) {
+    var sequenceData = new SequenceData(seq, dbn);
+    if (sequenceData.hasErrors()) {
       return null;
     }
 
-    var bases   = sequenceParser.getBases();
+    var bases   = sequenceData.getBases();
     var width   = Dimensions.getThumbnailWidth();
     var height  = Dimensions.getThumbnailHeight();
-    var points  = sequenceParser.getCoordinates(width-6, height-6).points;
+    var points  = sequenceData.getCoordinates(width-6, height-6).points;
 
     return (
         <svg key='svg' className='svg-class-thumbnail' width={width} height={height} onContextMenu={this.onContextMenu} >

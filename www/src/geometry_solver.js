@@ -1,14 +1,14 @@
 import {Vector, MatrixTransformations} from '../mathutils/gl_matrix_wrapper';
 import AngleConverter from '../mathutils/angle_converter';
 
-var GeometrySolver = function (sequenceParser) {
+var GeometrySolver = function (sequenceData) {
   let chordLength  = 100; // Distance between nodes. This is the common chord length on all circles.
                           // This is just a chosen base value. It will be normalized to screen coordinates
                           // when asked for it. We could not have pre guessed the structures size anyway.
 
   var points  = [];
   var centers = [];
-  let subStructures = sequenceParser.getSubStructures();
+  let subStructures = sequenceData.getSubStructures();
   subStructures.forEach((subStructure) => {
     let theta  = AngleConverter.toRad(360) / subStructure.getNumNodes(true);
     let radius = (chordLength/2) / Math.sin(theta/2);

@@ -98,8 +98,8 @@ class TopView extends React.Component {
 var mapStateToProps = (state, ownProps) => {
   return {
     url: state.currentUrl,
-    seq: state.sequenceParser.getData().seq,
-    dbn: state.sequenceParser.getData().dbn,
+    seq: state.sequenceData.getData().seq,
+    dbn: state.sequenceData.getData().dbn,
     canvasDimensions: state.canvasDimensions
   };
 };

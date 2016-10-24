@@ -1,5 +1,5 @@
-export const SET_SEQUENCE_PARSER                = 'SET_SEQUENCE_PARSER';
-export const RESET_SEQUENCE_PARSER              = 'RESET_SEQUENCE_PARSER';
+export const SET_SEQUENCE_DATA                  = 'SET_SEQUENCE_DATA';
+export const RESET_SEQUENCE_DATA                = 'RESET_SEQUENCE_DATA';
 export const SET_TEMP_SEQUENCE                  = 'SET_TEMP_SEQUENCE';
 export const SET_SEQUENCE_VIEW_HAS_ERRORS       = 'SET_SEQUENCE_VIEW_HAS_ERRORS';
 export const RESET_SEQUENCE_VIEW_HAS_ERRORS     = 'RESET_SEQUENCE_VIEW_HAS_ERRORS';
