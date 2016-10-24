@@ -30,7 +30,7 @@ class Canvas extends React.Component {
     this.onContextMenu = this.onContextMenu.bind(this);
     this.onMouseWheelDoc = this.onMouseWheelDoc.bind(this);
     this.onResize = this.onResize.bind(this);
-    this.resetMouseActionDataDebounce = debounce(this.resetMouseActionDataDebounce.bind(this), 200);
+    this.resetEventDataDebounce = debounce(this.resetEventDataDebounce.bind(this), 200);
   };
 
   render () {
@@ -135,11 +135,11 @@ class Canvas extends React.Component {
       data.angle = this.props.rotationAngle;
     }
 
-    this.props.actions.setMouseActionData(dataType, this.getPositionAtEvent(event), data);
+    this.props.actions.setEventData(dataType, this.getPositionAtEvent(event), data);
   };
 
   onMouseMove (event) {
-    var data = store.getState().mouseActionData;
+    var data = store.getState().eventData;
     if (data.type === 'pan') {
       this.handlePan(event);
     } else if (data.type === 'rotate') {
@@ -148,17 +148,17 @@ class Canvas extends React.Component {
   };
 
   onMouseUp (event) {
-    var data     = store.getState().mouseActionData;
+    var data     = store.getState().eventData;
     if (data.type === 'pan') {
       this.handlePan(event);
     } else if (data.type === 'rotate') {
       this.handleRotate(event);
     }
-    this.props.actions.resetMouseActionData();
+    this.props.actions.resetEventData();
   };
 
   onMouseLeave () {
-    this.props.actions.resetMouseActionData();
+    this.props.actions.resetEventData();
   };
 
   onMouseWheel (event) {
@@ -183,20 +183,20 @@ class Canvas extends React.Component {
     }
 
     if (zoomFactor !== this.props.zoomFactor) {
-      this.props.actions.setMouseActionData(dataType, this.getPositionAtEvent(event), data);
+      this.props.actions.setEventData(dataType, this.getPositionAtEvent(event), data);
       this.props.actions.setZoomFactor(zoomFactor);
     }
-    this.resetMouseActionDataDebounce();
+    this.resetEventDataDebounce();
     return false;
   };
 
-  resetMouseActionDataDebounce () {
-    this.props.actions.resetMouseActionData();
+  resetEventDataDebounce () {
+    this.props.actions.resetEventData();
   };
 
   onResize (e) {
-    this.props.actions.setMouseActionData('resize', {x: -1, y: -1}, {canvasDimensions: this.props.canvasDimensions});
-    this.resetMouseActionDataDebounce();
+    this.props.actions.setEventData('resize', {x: -1, y: -1}, {canvasDimensions: this.props.canvasDimensions});
+    this.resetEventDataDebounce();
     this.setCanvasDimensions();
   };
 
@@ -209,17 +209,17 @@ class Canvas extends React.Component {
       return;
     }
 
-    var data     = store.getState().mouseActionData;
+    var data     = store.getState().eventData;
     if (data.type === 'pan') {
       this.cancelPan();
     } else if (data.type === 'rotate') {
       this.cancelRotate();
     }
-    this.props.actions.resetMouseActionData();
+    this.props.actions.resetEventData();
   };
 
   handleRotate (event) {
-    var data            = store.getState().mouseActionData;
+    var data            = store.getState().eventData;
     var startAngle      = data.startData.angle;
     var startPosition   = data.startData.position;
     var currentPosition = this.getPositionAtEvent(event);
@@ -231,12 +231,12 @@ class Canvas extends React.Component {
   };
 
   cancelRotate () {
-    var data = store.getState().mouseActionData;
+    var data = store.getState().eventData;
     this.props.actions.setRotationAngle(data.startData.angle);
   };
 
   handlePan (event) {
-    var data            = store.getState().mouseActionData;
+    var data            = store.getState().eventData;
     var oldOrigin       = data.startData.origin;
     var startPosition   = data.startData.position;
     var currentPosition = this.getPositionAtEvent(event);
@@ -253,7 +253,7 @@ class Canvas extends React.Component {
   };
 
   cancelPan () {
-    var data = store.getState().mouseActionData;
+    var data = store.getState().eventData;
     this.props.actions.setOrigin(data.startData.origin);
   };
 

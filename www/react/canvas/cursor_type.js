@@ -15,7 +15,7 @@ class CursorType extends React.Component {
   setCursor () {
     let dragging = this.props.dragging;
     let hover    = this.props.hover;
-    let dataType = this.props.mouseActionDataType;
+    let dataType = this.props.eventDataType;
 
     if ((dragging!==-1)&&(hover!==-1)) {
       if (SequenceUtils.canJoinNodes(this.props.sequenceParser, dragging, hover)) {
@@ -38,7 +38,7 @@ var mapStateToProps = (state, ownProps) => {
     sequenceParser: state.sequenceParser,
     dragging: state.dragging,
     hover: state.hover,
-    mouseActionDataType: state.mouseActionData.type
+    eventDataType: state.eventData.type
   };
 };
 

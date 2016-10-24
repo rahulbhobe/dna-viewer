@@ -52,12 +52,12 @@ export var resetDraggingNode = () => {
   return { type: ActionTypes.RESET_DRAGGING_NODE, value: -1 };
 };
 
-export var setMouseActionData = (type, position, otherData = {}) => {
-  return { type: ActionTypes.SET_MOUSE_ACTION_DATA, value: {type, startData: Object.assign(otherData, {position}) } };
+export var setEventData = (type, position, otherData = {}) => {
+  return { type: ActionTypes.SET_EVENT_DATA, value: {type, startData: Object.assign(otherData, {position}) } };
 };
 
-export var resetMouseActionData = () => {
-  return { type: ActionTypes.RESET_MOUSE_ACTION_DATA, value: {type: 'none', startData: null} };
+export var resetEventData = () => {
+  return { type: ActionTypes.RESET_EVENT_DATA, value: {type: 'none', startData: null} };
 };
 
 export var setZoomFactor = (zoomFactor) => {

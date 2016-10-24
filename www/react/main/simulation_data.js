@@ -94,7 +94,7 @@ class SimulationData extends React.Component {
     simulation.force('dna_backbone', d3.forceLink(linkBackbone).id(n => n.id).distance(distance).strength(2));
     simulation.force('dna_pair', d3.forceLink(linkPair).id(n => n.id).distance(distance).strength(2));
 
-    if (store.getState().mouseActionData.type === 'none') {
+    if (store.getState().eventData.type === 'none') {
       simulation.alphaTarget(0.99);
       setTimeout(() => simulation.alphaTarget(0), 800);
     } else {
