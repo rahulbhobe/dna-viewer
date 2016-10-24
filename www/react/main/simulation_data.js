@@ -60,11 +60,12 @@ class SimulationData extends React.Component {
     }
 
     let coordinates = this.getCoordinatesForScreen();
+    let points      = coordinates.points;
     let connections = sequenceParser.getConnections();
     let numBases    = sequenceParser.getBases().length;
     let numOld      = this.data.animated.length;
 
-    this.data.anchored = coordinates.map((point, ii) => {
+    this.data.anchored = points.map((point, ii) => {
       let id     = 'anchored_' + ii;
       let {x, y} = point.asObj();
       return {id, fx: x, fy: y};
@@ -85,7 +86,7 @@ class SimulationData extends React.Component {
     let linkPair = connections.map(connection => Object.assign({source: 'animated_'+connection.source, target: 'animated_'+connection.target}));
 
     simulation.alphaDecay(0.14);
-    let distance = coordinates[0].distanceFrom(coordinates[1]);
+    let distance = points[0].distanceFrom(points[1]);
     simulation.force('anchored_animated', d3.forceLink(linkAnchoredAnimated).id(n => n.id).distance(0).strength(2));
     simulation.force('dna_backbone', d3.forceLink(linkBackbone).id(n => n.id).distance(distance).strength(2));
     simulation.force('dna_pair', d3.forceLink(linkPair).id(n => n.id).distance(distance).strength(2));

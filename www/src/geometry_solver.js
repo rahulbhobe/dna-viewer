@@ -6,14 +6,15 @@ var GeometrySolver = function (sequenceParser) {
                           // This is just a chosen base value. It will be normalized to screen coordinates
                           // when asked for it. We could not have pre guessed the structures size anyway.
 
-  var coordinates = [];
+  var points  = [];
+  var centers = [];
   let subStructures = sequenceParser.getSubStructures();
   subStructures.forEach((subStructure) => {
     let theta  = AngleConverter.toRad(360) / subStructure.getNumNodes(true);
     let radius = (chordLength/2) / Math.sin(theta/2);
     let center = Vector.create(0, 0);
 
-    let subCoordinates = subStructure.getNodes(true).map((node, idx) => {
+    let subPoints = subStructure.getNodes(true).map((node, idx) => {
       let matrixTransforms = MatrixTransformations.create();
       matrixTransforms.append(m => m.translate(Vector.create(radius, 0)));
       matrixTransforms.append(m => m.rotate((idx+0.5)*theta));
@@ -23,27 +24,29 @@ var GeometrySolver = function (sequenceParser) {
     let opened = subStructure.openedAt();
     let closed = subStructure.closedAt();
     if ((opened!==null) && (closed!==null)) {
-      let subOpened = subCoordinates[0];
-      let subClosed = subCoordinates[subCoordinates.length-1];
+      let subOpened = subPoints[0];
+      let subClosed = subPoints[subPoints.length-1];
 
       let matrixTransforms = MatrixTransformations.create();
-      matrixTransforms.append(m => m.translate(coordinates[opened].subtract(subOpened)));
+      matrixTransforms.append(m => m.translate(points[opened].subtract(subOpened)));
 
       subClosed = matrixTransforms.transformPoint(subClosed);
-      let angle =  subClosed.subtract(coordinates[opened]).angleFrom(coordinates[closed].subtract(coordinates[opened]));
-      matrixTransforms.append(m => m.translate(coordinates[opened].negate()));
+      let angle =  subClosed.subtract(points[opened]).angleFrom(points[closed].subtract(points[opened]));
+      matrixTransforms.append(m => m.translate(points[opened].negate()));
       matrixTransforms.append(m => m.rotate(angle));
-      matrixTransforms.append(m => m.translate(coordinates[opened]));
+      matrixTransforms.append(m => m.translate(points[opened]));
 
-      subCoordinates = subCoordinates.map(point => matrixTransforms.transformPoint(point));
+      subPoints = subPoints.map(point => matrixTransforms.transformPoint(point));
+      center    = matrixTransforms.transformPoint(center);
     }
     subStructure.getNodes(true).forEach((node, idx) => {
-      coordinates[node] = subCoordinates[idx];
+      points[node] = subPoints[idx];
     });
+    centers.push(center);
   });
 
-  let min = coordinates.reduce((min, vec) => min.min(vec), Vector.create(   Number.MAX_VALUE,    Number.MAX_VALUE));
-  let max = coordinates.reduce((max, vec) => max.max(vec), Vector.create(-1*Number.MAX_VALUE, -1*Number.MAX_VALUE));
+  let min = points.reduce((min, vec) => min.min(vec), Vector.create(   Number.MAX_VALUE,    Number.MAX_VALUE));
+  let max = points.reduce((max, vec) => max.max(vec), Vector.create(-1*Number.MAX_VALUE, -1*Number.MAX_VALUE));
 
   let matrixTransforms = MatrixTransformations.create();
 
@@ -57,7 +60,7 @@ var GeometrySolver = function (sequenceParser) {
     [diffW, diffH] = [diffH, diffW];
   }
 
-  coordinates = coordinates.map((point) => {
+  points = points.map((point) => {
     return matrixTransforms.transformPoint(point);
   });
 
@@ -76,9 +79,10 @@ var GeometrySolver = function (sequenceParser) {
       let scrMid = Vector.create(width, height).scale(0.5);
       matrixTransforms.append(m => m.translate(scrMid));
 
-      return coordinates.map((point) => {
-        return matrixTransforms.transformPoint(point);
-      });
+      return {
+        points:  points.map(point   => matrixTransforms.transformPoint(point)),
+        centers: centers.map(center => matrixTransforms.transformPoint(center))
+      };
     }
   };
 };

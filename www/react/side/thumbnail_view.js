@@ -12,14 +12,14 @@ class ThumbnailView extends React.Component {
       return null;
     }
 
-    var bases       = sequenceParser.getBases();
-    var width       = Dimensions.getThumbnailWidth();
-    var height      = Dimensions.getThumbnailHeight();
-    var coordinates = sequenceParser.getCoordinates(width-6, height-6);
+    var bases   = sequenceParser.getBases();
+    var width   = Dimensions.getThumbnailWidth();
+    var height  = Dimensions.getThumbnailHeight();
+    var points  = sequenceParser.getCoordinates(width-6, height-6).points;
 
     return (
         <svg key='svg' className='svg-class-thumbnail' width={width} height={height} onContextMenu={this.onContextMenu} >
-          {coordinates.map((point, ii) => {
+          {points.map((point, ii) => {
             var {x, y}  = point.asObj();
             var base    = bases[ii];
             var classes = classNames('dna-base-thumbnail', 'dna-base-' + base.getType().toLowerCase());
