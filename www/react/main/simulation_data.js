@@ -27,13 +27,13 @@ class SimulationData extends React.Component {
     let simulation = d3.forceSimulation();
     simulation.on('tick', this.onSimulationTicked);
     simulation.on('end', this.onSimulationEnded);
-    this.data      = {simulation, anchored: [], animated: []};
+    this.data      = {simulation, anchored: [], animated: [], centers: []};
     this.setCurrentData();
   };
 
   resetData () {
     this.data.simulation.stop();
-    this.data = {simulation: null, anchored: [], animated: []};
+    this.data = {simulation: null, anchored: [], animated: [], centers: []};
     this.props.actions.resetSimulatedData();
   };
 
@@ -61,6 +61,7 @@ class SimulationData extends React.Component {
 
     let coordinates = this.getCoordinatesForScreen();
     let points      = coordinates.points;
+    let centers     = coordinates.centers;
     let connections = sequenceParser.getConnections();
     let numBases    = sequenceParser.getBases().length;
     let numOld      = this.data.animated.length;
@@ -78,6 +79,7 @@ class SimulationData extends React.Component {
                                                                 .map(idx => idx+numOld)
                                                                 .map((idx) => Object.assign({id :'animated_'+idx})));
     }
+    this.data.centers = centers;
 
     simulation.nodes(this.data.anchored.concat(this.data.animated));
 
