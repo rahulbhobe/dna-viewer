@@ -12,49 +12,49 @@ class Vector {
   };
 
   clone () {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.copy(r.v, this.v);
     return r;
   };
 
   add (b) {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.add(r.v, this.v, b.v);
     return r;
   };
 
   subtract (b) {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.subtract(r.v, this.v, b.v);
     return r;
   };
 
   scale (val) {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.scale(r.v, this.v, val);
     return r;
   };
 
   negate () {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.negate(r.v, this.v);
     return r;
   };
 
   normalize () {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.normalize(r.v, this.v);
     return r;
   };
 
   min (b) {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.min(r.v, this.v, b.v);
     return r;
   };
 
   max (b) {
-    var r = Vector.create();
+    let r = Vector.create();
     Vec2.max(r.v, this.v, b.v);
     return r;
   };
@@ -64,10 +64,10 @@ class Vector {
   };
 
   angleFrom (b) {
-    var c = Vec3.fromValues(0, 0, 0);
+    let c = Vec3.fromValues(0, 0, 0);
     Vec2.cross(c, this.v, b.v);
-    var sign = c[2] > 0 ? 1 : -1;
-    var cos  = this.dot(b) / (this.length() * b.length());
+    let sign = c[2] > 0 ? 1 : -1;
+    let cos  = this.dot(b) / (this.length() * b.length());
     return sign * Math.acos(cos);
   };
 
@@ -104,31 +104,31 @@ class Matrix {
   };
 
   translate (point) {
-    var r = Matrix.create();
+    let r = Matrix.create();
     Mat2d.translate(r.m, this.m, point.v);
     return r;
   };
 
   rotate (rad) {
-    var r = Matrix.create();
+    let r = Matrix.create();
     Mat2d.rotate(r.m, this.m, rad);
     return r;
   };
 
   scale (val) {
-    var r = Matrix.create();
+    let r = Matrix.create();
     Mat2d.scale(r.m, this.m, Vec2.fromValues(val, val));
     return r;
   };
 
   invert () {
-    var r = Matrix.create();
+    let r = Matrix.create();
     Mat2d.invert(r.m, this.m);
     return r;
   };
 
   multiply (b) {
-    var r = Matrix.create();
+    let r = Matrix.create();
     Mat2d.multiply(r.m, this.m, b.m);
     return r;
   };
@@ -152,8 +152,8 @@ class MatrixTransformations {
   };
 
   transformPoint (point) {
-    var matrix = this.t.reduceRight((matrix, trf)=>trf(matrix), Matrix.create());
-    var r = Vector.create();
+    let matrix = this.t.reduceRight((matrix, trf)=>trf(matrix), Matrix.create());
+    let r = Vector.create();
     Vec2.transformMat2d(r.v, point.v, matrix.m);
     return r;
   };
