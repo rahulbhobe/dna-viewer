@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import * as ActionTypes from './action_types';
 
-var sequenceDataReducer = (state=null, action) => {
+let sequenceDataReducer = (state=null, action) => {
   if (action.type === ActionTypes.SET_SEQUENCE_DATA) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_SEQUENCE_DATA) {
@@ -10,14 +10,14 @@ var sequenceDataReducer = (state=null, action) => {
   return state;
 };
 
-var tempSequenceReducer = (state={seq: '', dbn: ''}, action) => {
+let tempSequenceReducer = (state={seq: '', dbn: ''}, action) => {
   if (action.type === ActionTypes.SET_TEMP_SEQUENCE) {
     return action.value;
   }
   return state;
 };
 
-var sequenceViewHasErrorsReducer = (state=false, action) => {
+let sequenceViewHasErrorsReducer = (state=false, action) => {
   if (action.type === ActionTypes.SET_SEQUENCE_VIEW_HAS_ERRORS) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_SEQUENCE_VIEW_HAS_ERRORS) {
@@ -26,7 +26,7 @@ var sequenceViewHasErrorsReducer = (state=false, action) => {
   return state;
 };
 
-var currentUrlReducer = (state="", action) => {
+let currentUrlReducer = (state="", action) => {
   if (action.type === ActionTypes.SET_CURRENT_URL) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_CURRENT_URL) {
@@ -35,7 +35,7 @@ var currentUrlReducer = (state="", action) => {
   return state;
 };
 
-var simulationDataReducer = (state={simulation: null, anchored: [], animated: []}, action) => {
+let simulationDataReducer = (state={simulation: null, anchored: [], animated: []}, action) => {
   if (action.type === ActionTypes.SET_SIMULATION_DATA) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_SIMULATION_DATA) {
@@ -44,7 +44,7 @@ var simulationDataReducer = (state={simulation: null, anchored: [], animated: []
   return state;
 };
 
-var hoverNodeReducer = (state=-1, action) => {
+let hoverNodeReducer = (state=-1, action) => {
   if (action.type === ActionTypes.SET_HOVER_NODE) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_HOVER_NODE) {
@@ -53,7 +53,7 @@ var hoverNodeReducer = (state=-1, action) => {
   return state;
 };
 
-var draggingNodeReducer = (state=-1, action) => {
+let draggingNodeReducer = (state=-1, action) => {
   if (action.type === ActionTypes.SET_DRAGGING_NODE) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_DRAGGING_NODE) {
@@ -62,7 +62,7 @@ var draggingNodeReducer = (state=-1, action) => {
   return state;
 };
 
-var setEventDataReducer = (state= {type: 'none', startData: null}, action) => {
+let setEventDataReducer = (state= {type: 'none', startData: null}, action) => {
   if (action.type === ActionTypes.SET_EVENT_DATA) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_EVENT_DATA) {
@@ -71,7 +71,7 @@ var setEventDataReducer = (state= {type: 'none', startData: null}, action) => {
   return state;
 };
 
-var zoomFactorReducer = (state=100, action) => {
+let zoomFactorReducer = (state=100, action) => {
   if (action.type === ActionTypes.SET_ZOOM_FACTOR) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_ZOOM_FACTOR) {
@@ -80,7 +80,7 @@ var zoomFactorReducer = (state=100, action) => {
   return state;
 };
 
-var rotationAngleReducer = (state=0, action) => {
+let rotationAngleReducer = (state=0, action) => {
   if (action.type === ActionTypes.SET_ROTATION_ANGLE) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_ROTATION_ANGLE) {
@@ -89,7 +89,7 @@ var rotationAngleReducer = (state=0, action) => {
   return state;
 };
 
-var originReducer = (state={x:0, y:0}, action) => {
+let originReducer = (state={x:0, y:0}, action) => {
   if (action.type === ActionTypes.SET_ORIGIN) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_ORIGIN) {
@@ -98,7 +98,7 @@ var originReducer = (state={x:0, y:0}, action) => {
   return state;
 };
 
-var pickingColorReducer = (state=null, action) => {
+let pickingColorReducer = (state=null, action) => {
   if (action.type === ActionTypes.SET_PICKING_COLOR) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_PICKING_COLOR) {
@@ -107,14 +107,14 @@ var pickingColorReducer = (state=null, action) => {
   return state;
 };
 
-var canvasDimensionsReducer = (state={width:-1, height:-1}, action) => {
+let canvasDimensionsReducer = (state={width:-1, height:-1}, action) => {
   if (action.type === ActionTypes.SET_CANVAS_DIMENSIONS) {
     return action.value;
   }
   return state;
 };
 
-var canvasCursorTypeReducer = (state='none', action) => {
+let canvasCursorTypeReducer = (state='none', action) => {
   if (action.type === ActionTypes.SET_CANVAS_CURSOR_TYPE) {
     return action.value;
   } else if (action.type === ActionTypes.RESET_CANVAS_CURSOR_TYPE) {
@@ -123,14 +123,14 @@ var canvasCursorTypeReducer = (state='none', action) => {
   return state;
 };
 
-var savedViewsReducer = (state=[], action) => {
+let savedViewsReducer = (state=[], action) => {
   if (action.type === ActionTypes.SET_SAVED_VIEWS) {
     return action.value;
   }
   return state;
 }
 
-var reducers = combineReducers({
+let reducers = combineReducers({
   sequenceData: sequenceDataReducer,
   tempSequence: tempSequenceReducer,
   sequenceViewHasErrors: sequenceViewHasErrorsReducer,
