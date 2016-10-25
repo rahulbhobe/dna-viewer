@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-var DbManager = () => {
-  var connected = false;
+let DbManager = () => {
+  let connected = false;
 
-  var getMongoURI = (includeCredentials) => {
+  let getMongoURI = (includeCredentials) => {
     return 'mongodb://' + (includeCredentials ? 'dna_user:dna_password@' : '')
                    + 'ds011755.mlab.com:11755/dna_viewer';
   };

@@ -6,7 +6,7 @@ import Data from './data';
 import PubNubServerUtils from './pubnub_server_utils';
 import shortid from 'shortid';
 
-var app         =  express();
+let app =  express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -29,7 +29,7 @@ app.post('/link', (req, res) => {
       });
     } else if (type === 'add') {
       let url = shortid.generate();
-      var newData = new Data({url, seq, dbn});
+      let newData = new Data({url, seq, dbn});
       return newData.save();
     } else if (type === 'delete') {
       return Data.remove({url}).exec()
@@ -47,7 +47,7 @@ app.post('/link', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  var url = req.path.substring(1);
+  let url = req.path.substring(1);
   if (!url) {
     res.render('index');
     return;
@@ -94,7 +94,7 @@ app.post('/data', (req, res) => {
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), () => {
+let server = app.listen(app.get('port'), () => {
   console.log('Server listening on port ' + server.address().port);
 });
 

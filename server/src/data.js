@@ -1,7 +1,7 @@
 import mongoose, {Schema} from 'mongoose';
 import DbManager from './db_manager';
 
-var dataSchema = new Schema({
+let dataSchema = new Schema({
   url:  String,
   date: { type: Date, default: Date.now },
   seq: String,
@@ -24,6 +24,6 @@ dataSchema.pre('findOne', (next) => {
   next();
 });
 
-var Data = mongoose.model('Data', dataSchema);
+let Data = mongoose.model('Data', dataSchema);
 
 export default Data;
