@@ -49,12 +49,7 @@ class SecondaryStructure {
 
   getConnections () {
     let structures = this.getStructures().slice(1); // Don't need root;
-    return structures.map((structure) => {
-      return {
-        source: structure.openedAt(),
-        target: structure.closedAt()
-      };
-    });
+    return structures.map((structure) => Object.assign({source: structure.openedAt(), target: structure.closedAt()}));
   };
 
   getSubStructureAtIndex (index) {
