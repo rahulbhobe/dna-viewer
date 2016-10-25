@@ -3,7 +3,6 @@ class DnaBase {
     this._index = index; // Index in the sequence. (This is like id. Everything is index based.)
     this._type = type.toUpperCase();
     this._dbnType = dbnType;
-    return this;
   };
 
   getIndex () {

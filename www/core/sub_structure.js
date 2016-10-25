@@ -1,48 +1,49 @@
-var SubStructure = function() {
-  this._openedAt  = null;
-  this._closedAt  = null;
-  this._contains  = []; // Indices of the nodes in the current level only.
-                        // Does not contain list of recursively nested ones.
-  return this;
-};
+class SubStructure {
+  constructor () {
+    this._openedAt  = null;
+    this._closedAt  = null;
+    this._contains  = []; // Indices of the nodes in the current level only.
+                          // Does not contain list of recursively nested ones.
+  };
 
-SubStructure.prototype.getNodes = function(includeEnds) {
-  var ret = this._contains.slice();
+  getNodes (includeEnds) {
+    let ret = this._contains.slice();
 
-  if (!includeEnds) {
+    if (!includeEnds) {
+      return ret;
+    }
+
+    if (this.openedAt() !== null) {
+      ret.unshift(this.openedAt())
+    }
+    if (this.closedAt() !== null) {
+      ret.push(this.closedAt())
+    }
+
     return ret;
-  }
+  };
 
-  if (this.openedAt() !== null) {
-    ret.unshift(this.openedAt())
-  }
-  if (this.closedAt() !== null) {
-    ret.push(this.closedAt())
-  }
+  getNumNodes (includeEnds) {
+    return this.getNodes(includeEnds).length;
+  };
 
-  return ret; 
-};
+  append (val) {
+    return this._contains.push(val);
+  };
 
-SubStructure.prototype.getNumNodes = function(includeEnds) {
-  return this.getNodes(includeEnds).length;
-};
+  openedAt (val) {
+    if (val !== undefined) {
+      this._openedAt = val;
+    }
+    return this._openedAt;
+  };
 
-SubStructure.prototype.append = function(val) {
-  return this._contains.push(val); 
-};
-
-SubStructure.prototype.openedAt = function(val) {
-  if (val !== undefined) {
-    this._openedAt = val;
-  }
-  return this._openedAt;
-};
-
-SubStructure.prototype.closedAt = function(val) {
-  if (val !== undefined) {
-    this._closedAt = val;
-  }
-  return this._closedAt;
+  closedAt (val) {
+    if (val !== undefined) {
+      this._closedAt = val;
+    }
+    return this._closedAt;
+  };
 };
 
 export default SubStructure;
