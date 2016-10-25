@@ -16,7 +16,7 @@ var GeometrySolver = function (sequenceData) {
 
     let subPoints = subStructure.getNodes(true).map((node, idx) => {
       let matrixTransforms = MatrixTransformations.create();
-      matrixTransforms.append(m => m.translate(Vector.create(radius, 0)));
+      matrixTransforms.append(m => m.translate(Vector.create(0, -1*radius)));
       matrixTransforms.append(m => m.rotate((idx+0.5)*theta));
       return matrixTransforms.transformPoint(center);
     });
@@ -53,18 +53,19 @@ var GeometrySolver = function (sequenceData) {
   let negMid = min.add(max).scale(0.5).negate();
   matrixTransforms.append(m => m.translate(negMid));
 
-  var {x: diffW, y: diffH} = max.subtract(min).asObj();
-  if (diffW < diffH) {
-    // Rotate by 90 deg if width is less than height. Most screens have larger width.
-    matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-90)));
-    [diffW, diffH] = [diffH, diffW];
-  }
+  // var {x: diffW, y: diffH} = max.subtract(min).asObj();
+  // if (diffW < diffH) {
+  //   // Rotate by 90 deg if width is less than height. Most screens have larger width.
+  //   matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-90)));
+  //   [diffW, diffH] = [diffH, diffW];
+  // }
 
   points  = points.map(point   => matrixTransforms.transformPoint(point));
   centers = centers.map(center => matrixTransforms.transformPoint(center));
 
   return {
     getCoordinates : (width, height, modelTransforms) => {
+      let {x: diffW, y: diffH} = max.subtract(min).asObj();
       let scaleW = width  / diffW;
       let scaleH = height / diffH;
       let scale  = scaleW < scaleH ? scaleW : scaleH;
