@@ -31,7 +31,7 @@ class BottomView extends React.Component {
   };
 
   onApply () {
-    var sequenceData = new SequenceData(this.props.seqTemp, this.props.dbnTemp);
+    let sequenceData = new SequenceData(this.props.seqTemp, this.props.dbnTemp);
     if (sequenceData.hasErrors()) {
       this.props.actions.setSequenceViewHasErrors(true);
       return;
@@ -50,7 +50,7 @@ class BottomView extends React.Component {
   };
 
   render () {
-    var properties = {
+    let properties = {
       cols: 29,
       rowHeight: Dimensions.DNA_VIEWER_ROW_HEIGHT,
       width: window.innerWidth
@@ -67,7 +67,7 @@ class BottomView extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     seqPerm: state.sequenceData.getData().seq,
     dbnPerm: state.sequenceData.getData().dbn,
