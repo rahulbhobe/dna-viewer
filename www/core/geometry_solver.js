@@ -3,12 +3,18 @@ import AngleConverter from '../mathutils/angle_converter';
 
 class GeometrySolver {
   constructor (sequenceData) {
+    this._points  = [];
+    this._centers = [];
+    this._min = null;
+    this._max = null;
+    this.solve(sequenceData);
+  };
+
+  solve (sequenceData) {
     let chordLength  = 100; // Distance between nodes. This is the common chord length on all circles.
                             // This is just a chosen base value. It will be normalized to screen coordinates
                             // when asked for it. We could not have pre guessed the structures size anyway.
 
-    this._points  = [];
-    this._centers = [];
     let subStructures = sequenceData.getSubStructures();
     subStructures.forEach((subStructure) => {
       let theta  = AngleConverter.toRad(360) / subStructure.getNumNodes(true);
@@ -54,7 +60,7 @@ class GeometrySolver {
     let negMid = this._min.add(this._max).scale(0.5).negate();
     matrixTransforms.append(m => m.translate(negMid));
 
-    // var {x: diffW, y: diffH} = max.subtract(min).asObj();
+    // let {x: diffW, y: diffH} = max.subtract(min).asObj();
     // if (diffW < diffH) {
     //   // Rotate by 90 deg if width is less than height. Most screens have larger width.
     //   matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-90)));
