@@ -19,14 +19,14 @@ class SequenceFormView extends React.Component {
 
   componentDidUpdate () {
     if (this.state.editMode) {
-      var inputBox = ReactDOM.findDOMNode(this.refs.inp);
+      let inputBox = ReactDOM.findDOMNode(this.refs.inp);
       inputBox.focus();
     }
   };
 
   onChange (evt) {
-    var value = evt.target.value;
-    var obj = {
+    let value = evt.target.value;
+    let obj = {
       seq: this.props.seqTemp,
       dbn: this.props.dbnTemp
     };
@@ -35,7 +35,7 @@ class SequenceFormView extends React.Component {
   };
 
   getValueForView () {
-    var obj = {
+    let obj = {
       seq: this.props.seqTemp,
       dbn: this.props.dbnTemp
     };
@@ -45,7 +45,7 @@ class SequenceFormView extends React.Component {
   onBlur () {
     ReactDOM.findDOMNode(this.refs.inp).value = this.getValueForView();
     this.setState({editMode: false});
-    var obj = {
+    let obj = {
       seq: this.props.seqTemp.toUpperCase(),
       dbn: this.props.dbnTemp.toUpperCase()
     };
@@ -54,19 +54,19 @@ class SequenceFormView extends React.Component {
 
   onClick () {
     this.setState({editMode: true});
-    var inputBox = ReactDOM.findDOMNode(this.refs.inp);
+    let inputBox = ReactDOM.findDOMNode(this.refs.inp);
     inputBox.focus();
     inputBox.select();
   };
 
   render () {
-    var formClass = classNames('dna-base-font', {'sequence-has-error': this.props.hasErrors});
-    var inpClass  = classNames('sequence-form-input', {'hidden': !this.state.editMode});
-    var divClass  = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
+    let formClass = classNames('dna-base-font', {'sequence-has-error': this.props.hasErrors});
+    let inpClass  = classNames('sequence-form-input', {'hidden': !this.state.editMode});
+    let divClass  = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
 
-    var str = this.getValueForView();
-    var letterDivs = [];
-    for (var ii=0; ii<str.length; ii++) {
+    let str = this.getValueForView();
+    let letterDivs = [];
+    for (let ii=0; ii<str.length; ii++) {
       letterDivs.push((<SequenceLetter letter={str[ii]} index={ii}
                         onSelected={this.props.onSelected}
                         key={"letter_" + ii}/>));
@@ -87,7 +87,7 @@ class SequenceFormView extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     seqTemp:   state.tempSequence.seq,
     dbnTemp:   state.tempSequence.dbn,
