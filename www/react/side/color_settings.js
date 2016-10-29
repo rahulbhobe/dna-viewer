@@ -39,8 +39,7 @@ class ColorSettings extends React.Component {
   };
 
   getColorForType (type) {
-    var type = type.toLowerCase();
-    var color = jss.get('.dna-base-' + type);
+    var color = jss.get('.dna-base-' + type.toLowerCase());
     return color.fill;
   };
 
