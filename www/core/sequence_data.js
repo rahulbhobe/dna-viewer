@@ -1,6 +1,7 @@
 import SecondaryStructure from './secondary_structure';
 import DnaBase from './dna_base';
 import GeometrySolver from './geometry_solver';
+import ArrayUtils from '../utils/array_utils';
 import ErrorUtils from '../utils/error_utils';
 
 class SequenceData {
@@ -16,31 +17,30 @@ class SequenceData {
 
   parse () {
     let secondary = new SecondaryStructure();
-    let bases = [];
     let {seq, dbn} = this._data;
-    for (var ii=0; ii<seq.length; ii++) {
-      let dnaType = seq.charAt(ii);
-      let dbnType = dbn.charAt(ii);
+    let bases = ArrayUtils.range(seq.length).map((idx) => {
+      let dnaType = seq.charAt(idx);
+      let dbnType = dbn.charAt(idx);
 
       ErrorUtils.assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
       ErrorUtils.assert(['.', '(', ')'].indexOf(dbnType)!==-1);
 
       if (dbnType === '(') {
-        secondary.onOpen(ii);
+        secondary.onOpen(idx);
       } else if (dbnType === ')') {
         if (secondary.onStack()<=1) {
           // Error handling
-          this._error = ErrorUtils.errorObject("Tried to close too early at index", ii);
+          this._error = ErrorUtils.errorObject("Tried to close too early at index", idx);
           return;
         }
 
-        secondary.onClose(ii);
+        secondary.onClose(idx);
       } else {
-        secondary.onVisitNode(ii);
+        secondary.onVisitNode(idx);
       }
 
-      bases.push(new DnaBase(ii, dnaType, dbnType));
-    }
+      return new DnaBase(idx, dnaType, dbnType);
+    });
 
     {
       // Error handling.
