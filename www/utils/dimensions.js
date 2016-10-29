@@ -12,8 +12,8 @@ class Dimensions {
   };
 
   static calculateCanvasDimensions () {
-    var winW = window.innerWidth;
-    var winH = window.innerHeight;
+    let winW = window.innerWidth;
+    let winH = window.innerHeight;
 
     return {
       width:  this.isWidthSmall() ? winW  : winW - this.SETTINGS_VIEW_WIDTH,

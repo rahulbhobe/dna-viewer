@@ -18,9 +18,9 @@ class TopView extends React.Component {
   };
 
   getLayout () {
-    var u  = !!this.props.url;
-    var cw = this.props.canvasDimensions.width;
-    var ww = 36;
+    let u  = !!this.props.url;
+    let cw = this.props.canvasDimensions.width;
+    let ww = 36;
     return [
       {x:0,          y:0,  w:ww,  h:1,  v: u,    i: 'DocSave'},
       {x:u?ww:0,     y:0,  w:ww,  h:1,  v: true, i: 'DocAdd'},
@@ -32,13 +32,13 @@ class TopView extends React.Component {
   };
 
   render () {
-    var properties = {
+    let properties = {
       cols: this.props.canvasDimensions.width,
       rowHeight: 32,
       width: this.props.canvasDimensions.width
     };
 
-    var clsName = classNames('top-view-button');
+    let clsName = classNames('top-view-button');
     return (<GridLayout properties={properties} layout={this.getLayout()}>
               <input key='DocSave'        type="image" className={clsName} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
               <input key='DocAdd'         type="image" className={clsName} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
@@ -95,7 +95,7 @@ class TopView extends React.Component {
 };
 
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     url: state.currentUrl,
     seq: state.sequenceData.getData().seq,

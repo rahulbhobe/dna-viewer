@@ -20,10 +20,10 @@ class DnaBaseView extends React.Component {
   render () {
     if (this.props.ignore) return null;
     let {x, y, index, type} = this.props;
-    var classes =  classNames('dna-base', 'dna-base-size', 'dna-base-' + type.toLowerCase(), {
+    let classes =  classNames('dna-base', 'dna-base-size', 'dna-base-' + type.toLowerCase(), {
                                 'dna-base-highlighted': this.props.hover || this.props.dragging
                               });
-    var textCls = classNames('dna-text', 'dna-base-font');
+    let textCls = classNames('dna-text', 'dna-base-font');
 
     return (<g ref='gnode' transform={'translate(' + x + ', ' + y + ')'}>
               <circle className={classes} data-index={index} />
@@ -94,10 +94,10 @@ class DnaBaseView extends React.Component {
     this.props.actions.resetDraggingNode();
     this.props.actions.resetHoverNode();
 
-    var other  = this.getOtherNodeIndexAtEvent();
+    let other  = this.getOtherNodeIndexAtEvent();
     if (other===-1) { return; }
 
-    var sequenceData = SequenceUtils.getJoinedSequence(this.props.sequenceData, this.props.index, other);
+    let sequenceData = SequenceUtils.getJoinedSequence(this.props.sequenceData, this.props.index, other);
     if (!sequenceData) {
       return;
     }
@@ -108,7 +108,7 @@ class DnaBaseView extends React.Component {
   };
 };
 
-var mapStateToProps = (initialState, initialOwnProps) => {
+let mapStateToProps = (initialState, initialOwnProps) => {
   let index = initialOwnProps.index;
 
   return (state) => {
