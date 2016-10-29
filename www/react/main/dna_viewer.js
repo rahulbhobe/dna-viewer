@@ -11,13 +11,13 @@ import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class DnaViewer extends React.Component {
   getLayout () {
-    var {width, height}  = this.props.canvasDimensions;
-    var ch = height/Dimensions.DNA_VIEWER_ROW_HEIGHT;
-    var cw = width;
-    var tw = window.innerWidth;
-    var sw = tw - cw;
-    var vb = !Dimensions.isHeightSmall() && !Dimensions.isWidthSmall();
-    var vs = !Dimensions.isWidthSmall();
+    let {width, height}  = this.props.canvasDimensions;
+    let ch = height/Dimensions.DNA_VIEWER_ROW_HEIGHT;
+    let cw = width;
+    let tw = window.innerWidth;
+    let sw = tw - cw;
+    let vb = !Dimensions.isHeightSmall() && !Dimensions.isWidthSmall();
+    let vs = !Dimensions.isWidthSmall();
 
     return [
       {x:0,   y:0,    w:cw,  h:1,     v: true,  i: 'TopView'},
@@ -28,7 +28,7 @@ class DnaViewer extends React.Component {
   };
 
   render () {
-    var properties = {
+    let properties = {
       cols: window.innerWidth,
       rowHeight: Dimensions.DNA_VIEWER_ROW_HEIGHT,
       width: window.innerWidth
@@ -46,7 +46,7 @@ class DnaViewer extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     canvasDimensions: state.canvasDimensions
   };
