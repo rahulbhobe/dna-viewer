@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SequenceLetter from './sequence_letter';
+import ArrayUtils from '../../utils/array_utils';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
@@ -63,14 +64,7 @@ class SequenceFormView extends React.Component {
     let formClass = classNames('dna-base-font', {'sequence-has-error': this.props.hasErrors});
     let inpClass  = classNames('sequence-form-input', {'hidden': !this.state.editMode});
     let divClass  = classNames({'hidden':  this.state.editMode}, 'sequence-form-div');
-
     let str = this.getValueForView();
-    let letterDivs = [];
-    for (let ii=0; ii<str.length; ii++) {
-      letterDivs.push((<SequenceLetter letter={str[ii]} index={ii}
-                        onSelected={this.props.onSelected}
-                        key={"letter_" + ii}/>));
-    }
 
     return (<div className='sequence-form'>
               <form className={formClass}>
@@ -80,7 +74,7 @@ class SequenceFormView extends React.Component {
                   style={{width: '100%'}} >
                 </input>
                 <div className={divClass} onClick={this.onClick} >
-                  {letterDivs}
+                  {ArrayUtils.range(str.length).map(idx => (<SequenceLetter letter={str[idx]} index={idx} onSelected={this.props.onSelected} key={"letter_" + idx}/>))}
                 </div>
               </form>
             </div>);
