@@ -6,7 +6,7 @@ class DnaAnchorView extends React.Component {
   render () {
     if (this.props.ignore) return null;
     let {x, y, index, type} = this.props;
-    var classes =  classNames('dna-base-anchor', 'dna-base-' + type.toLowerCase());
+    let classes =  classNames('dna-base-anchor', 'dna-base-' + type.toLowerCase());
 
     return (<g transform={'translate(' + x + ', ' + y + ')'}>
               <circle className={classes} />
@@ -14,7 +14,7 @@ class DnaAnchorView extends React.Component {
   };
 };
 
-var mapStateToProps = (initialState, initialOwnProps) => {
+let mapStateToProps = (initialState, initialOwnProps) => {
   let index = initialOwnProps.index;
 
   return (state) => {

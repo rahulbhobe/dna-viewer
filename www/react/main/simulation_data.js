@@ -117,9 +117,9 @@ class SimulationData extends React.Component {
   };
 
   getModelTransformations () {
-    var matrixTransforms = MatrixTransformations.create();
+    let matrixTransforms = MatrixTransformations.create();
 
-    var negOrg = Vector.create(this.props.origin.x, this.props.origin.y).negate();
+    let negOrg = Vector.create(this.props.origin.x, this.props.origin.y).negate();
     matrixTransforms.append(m => m.translate(negOrg));
     matrixTransforms.append(m => m.scale(this.props.zoomFactor*0.01));
     matrixTransforms.append(m => m.rotate(AngleConverter.toRad(-1 * this.props.rotationAngle)));
@@ -135,7 +135,7 @@ class SimulationData extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     sequenceData: state.sequenceData,
     zoomFactor: state.zoomFactor,

@@ -13,7 +13,7 @@ class DnaAnnotationView extends React.Component {
   };
 };
 
-var mapStateToProps = (initialState, initialOwnProps) => {
+let mapStateToProps = (initialState, initialOwnProps) => {
   let type   = initialOwnProps.type;
   let text   = (type==='start') ? "5'" : "3'";
 

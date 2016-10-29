@@ -1,7 +1,7 @@
 import jss from 'jss-browserify';
 
-var SettingsInit = () => {
-  var defaultColors = [
+let SettingsInit = () => {
+  let defaultColors = [
     {type: 'A', hex: '#63f33c'},
     {type: 'C', hex: '#3474cc'},
     {type: 'G', hex: '#fbb344'},
@@ -11,7 +11,7 @@ var SettingsInit = () => {
 
   // initialize jss:
   defaultColors.forEach(({type, hex}) => {
-    var clsName = '.dna-base-' + type.toLowerCase();
+    let clsName = '.dna-base-' + type.toLowerCase();
     jss.set(clsName, {fill: hex})
   });
   jss.set('.dna-base-font', {'font-family': 'Courier'});

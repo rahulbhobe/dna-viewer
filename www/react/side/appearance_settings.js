@@ -6,7 +6,7 @@ import jss from 'jss-browserify';
 class AppearanceConfig extends React.Component {
   constructor (props) {
     super(props);
-    var val = jss.get(this.props.jssCls);
+    let val = jss.get(this.props.jssCls);
     this.state = {
       value: parseInt(val[this.props.jssKey])
     };
@@ -26,18 +26,18 @@ class AppearanceConfig extends React.Component {
   };
 
   onChange (evt) {
-    var val = parseInt(evt.target.value);
+    let val = parseInt(evt.target.value);
     if (isNaN(val)) { return; }
     if (val<this.props.min) { return; }
     if (val>this.props.max) { return; }
 
-    var obj = {};
+    let obj = {};
     obj[this.props.jssKey] = JSON.stringify(val) + "px";
     jss.set(this.props.jssCls, obj);
   };
 
   onBlur () {
-    var val = jss.get(this.props.jssCls);
+    let val = jss.get(this.props.jssCls);
     ReactDOM.findDOMNode(this.refs.inp).value = JSON.stringify(parseInt(val[this.props.jssKey]));
   };
 };

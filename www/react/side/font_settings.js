@@ -9,7 +9,7 @@ class FontSettings extends React.Component {
   };
 
   render () {
-    var fonts = [ 'Andale Mono', 'Courier', 'Monaco', 'Courier New', 'Menlo', 'monospace'];
+    let fonts = [ 'Andale Mono', 'Courier', 'Monaco', 'Courier New', 'Menlo', 'monospace'];
 
     return (<div className={classNames('settings-font-div', 'dna-base-font')}>
               Font:
@@ -23,7 +23,7 @@ class FontSettings extends React.Component {
   };
 
   getSelected () {
-    var font = jss.get(".dna-base-font");
+    let font = jss.get(".dna-base-font");
     return font["font-family"];
   };
 
