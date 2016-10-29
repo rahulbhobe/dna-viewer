@@ -1,25 +1,25 @@
-var ErrorUtils = {};
+class ErrorUtils {
+  static assert (condition, message) {
+    if (!condition) {
+      message = message || "Assertion failed";
 
-ErrorUtils.assert = function (condition, message) {
-  if (!condition) {
-    message = message || "Assertion failed";
-
-    if (typeof Error !== "undefined") {
-      throw new Error(message);
+      if (typeof Error !== "undefined") {
+        throw new Error(message);
+      }
+      throw message;
     }
-    throw message;
-  }
-};
+  };
 
-ErrorUtils.errorObject = function (msg, index) {
-  return {
-    hasErrors: function() {
-      return msg;
-    },
+  static errorObject (msg, index) {
+    return {
+      hasErrors: () => {
+        return msg;
+      },
 
-    getErrorIndex: function() {
-      return index;
-    }
+      getErrorIndex: () => {
+        return index;
+      }
+    };
   };
 };
 
