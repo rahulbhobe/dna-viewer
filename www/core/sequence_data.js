@@ -10,38 +10,48 @@ class SequenceData {
     this._error = null;
     this._data = {seq, dbn};
     this._bases = [];
-    this._secondary = new SecondaryStructure();
+    this._secondary = null;
+    this.parse();
+  }
+
+  parse () {
+    let secondary = new SecondaryStructure();
+    let bases = [];
+    let {seq, dbn} = this._data;
     for (var ii=0; ii<seq.length; ii++) {
-      var dnaType = seq.charAt(ii);
-      var dbnType = dbn.charAt(ii);
+      let dnaType = seq.charAt(ii);
+      let dbnType = dbn.charAt(ii);
 
       ErrorUtils.assert(['A', 'C', 'G', 'T', 'N'].indexOf(dnaType.toUpperCase())!==-1);
       ErrorUtils.assert(['.', '(', ')'].indexOf(dbnType)!==-1);
 
       if (dbnType === '(') {
-        this._secondary.onOpen(ii);
+        secondary.onOpen(ii);
       } else if (dbnType === ')') {
-        if (this._secondary.onStack()<=1) {
+        if (secondary.onStack()<=1) {
           // Error handling
           this._error = ErrorUtils.errorObject("Tried to close too early at index", ii);
           return;
         }
 
-        this._secondary.onClose(ii);
+        secondary.onClose(ii);
       } else {
-        this._secondary.onVisitNode(ii);
+        secondary.onVisitNode(ii);
       }
 
-      this._bases.push(new DnaBase(ii, dnaType, dbnType));
+      bases.push(new DnaBase(ii, dnaType, dbnType));
     }
 
     {
       // Error handling.
-      if (this._secondary.onStack()!==1) {
-        this._error = ErrorUtils.errorObject("Missing closing brackets ", this._secondary._curStructures[1].openedAt());
+      if (secondary.onStack()!==1) {
+        this._error = ErrorUtils.errorObject("Missing closing brackets ", secondary._curStructures[1].openedAt());
         return;
       }
     }
+
+    this._bases = bases;
+    this._secondary = secondary;
   };
 
   getData () {
