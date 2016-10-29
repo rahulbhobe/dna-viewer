@@ -37,7 +37,7 @@ class Preview extends React.Component {
   };
 };
 
-var mapStateToProps = (state) => {
+let mapStateToProps = (state) => {
   return {
     sequenceData: state.sequenceData,
     hover: state.hover,

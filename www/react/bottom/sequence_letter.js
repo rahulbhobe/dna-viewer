@@ -10,7 +10,7 @@ class SequenceLetter extends React.Component {
   };
 
   render () {
-    var clsName = this.props.hover || this.props.dragging ? "higlight-sequence-text" : "";
+    let clsName = this.props.hover || this.props.dragging ? "higlight-sequence-text" : "";
     return (<span className={clsName} onMouseOver={this.onMouseOver} onMouseLeave={this.onMouseLeave}>
               {this.props.letter}
             </span>);
@@ -25,7 +25,7 @@ class SequenceLetter extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     hover: state.hover === ownProps.index,
     dragging: state.dragging === ownProps.index

@@ -6,12 +6,12 @@ class DnaBackboneView extends React.Component {
   render () {
     if (this.props.ignore) return null;
     let {x1, y1, x2, y2} = this.props;
-    var classes = classNames('dna-backbone', 'dna-base-backbone');
+    let classes = classNames('dna-backbone', 'dna-base-backbone');
     return (<line x1={x1} y1={y1} x2={x2} y2={y2} className={classes} />);
   };
 };
 
-var mapStateToProps = (initialState, initialOwnProps) => {
+let mapStateToProps = (initialState, initialOwnProps) => {
   let index  = initialOwnProps.index;
 
   return (state) => {

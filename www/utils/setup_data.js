@@ -14,7 +14,7 @@ class SetupData {
   };
 
   static getDefaultData () {
-    var {seq, dbn} = ExampleData.examples[0];
+    let {seq, dbn} = ExampleData.examples[0];
     return {url: "", seq, dbn};
   };
 

@@ -27,7 +27,7 @@ class SideView extends React.Component {
   };
 
   render () {
-    var properties = {
+    let properties = {
       cols: 2,
       rowHeight: Dimensions.DNA_VIEWER_ROW_HEIGHT,
       width: Dimensions.SETTINGS_VIEW_WIDTH
@@ -45,7 +45,7 @@ class SideView extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     notPickingColor: state.pickingColor === null,
     canvasDimensions: state.canvasDimensions

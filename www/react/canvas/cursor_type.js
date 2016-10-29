@@ -33,7 +33,7 @@ class CursorType extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     sequenceData: state.sequenceData,
     dragging: state.dragging,

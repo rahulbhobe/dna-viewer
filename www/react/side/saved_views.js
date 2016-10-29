@@ -13,7 +13,7 @@ class SavedViews extends React.Component {
   };
 
   render () {
-    var settings = {
+    let settings = {
       dots: false,
       infinite: false,
       speed: 500,
@@ -46,7 +46,7 @@ class SavedViews extends React.Component {
   onClick(url) {
     return () => {
       RequestUtils.getSavedDataForUrl(url).then(({url, seq, dbn}) => {
-        var sequenceData = new SequenceData(seq, dbn);
+        let sequenceData = new SequenceData(seq, dbn);
         this.props.actions.setSequenceData(sequenceData);
         this.props.actions.setTempSequence(seq, dbn);
         this.props.actions.setCurrentUrl(url);
@@ -58,7 +58,7 @@ class SavedViews extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     savedViews: state.savedViews,
   };
