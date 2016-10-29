@@ -39,7 +39,7 @@ class ColorSettings extends React.Component {
   };
 
   getColorForType (type) {
-    var color = jss.get('.dna-base-' + type.toLowerCase());
+    let color = jss.get('.dna-base-' + type.toLowerCase());
     return color.fill;
   };
 
@@ -56,7 +56,7 @@ class ColorSettings extends React.Component {
   };
 
   onChangeComplete (color) {
-    var type = this.props.pickingColor;
+    let type = this.props.pickingColor;
     this.setColorForType(type, color.hex)
     this.props.actions.resetPickingColor();
   };
@@ -65,7 +65,7 @@ class ColorSettings extends React.Component {
     if (!this.props.pickingColor) {
       return;
     }
-    var color = this.getColorForType(this.props.pickingColor);
+    let color = this.getColorForType(this.props.pickingColor);
     return (<ColorPicker type="sketch" width={Dimensions.SETTINGS_VIEW_WIDTH-20} onChangeComplete={this.onChangeComplete} color={color}/>);
   };
 
@@ -81,7 +81,7 @@ class ColorSettings extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     pickingColor: state.pickingColor
   };
