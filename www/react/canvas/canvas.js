@@ -61,7 +61,7 @@ class Canvas extends React.Component {
   };
 
   componentDidMount () {
-    var svg = this.refs.svg;
+    let svg = this.refs.svg;
     svg.addEventListener('mousemove', this.onMouseMove, false);
     svg.addEventListener('mouseup', this.onMouseUp, false);
     svg.addEventListener('mousedown', this.onMouseDown, false);
@@ -73,7 +73,7 @@ class Canvas extends React.Component {
   };
 
   componentWillUnmount () {
-    var svg = this.refs.svg;
+    let svg = this.refs.svg;
     svg.removeEventListener('mousemove', this.onMouseMove, false);
     svg.removeEventListener('mouseup', this.onMouseUp, false);
     svg.removeEventListener('mousedown', this.onMouseDown, false);
@@ -85,12 +85,12 @@ class Canvas extends React.Component {
   };
 
   setCanvasDimensions () {
-    var {width, height}  = Dimensions.calculateCanvasDimensions();
+    let {width, height}  = Dimensions.calculateCanvasDimensions();
     this.props.actions.setCanvasDimensions(width, height);
   };
 
   getPositionAtEvent (event) {
-    var boundingRect   = this.getSvgRect();
+    let boundingRect   = this.getSvgRect();
     return {
       x: event.clientX - boundingRect.left,
       y: event.clientY - boundingRect.top
@@ -98,8 +98,8 @@ class Canvas extends React.Component {
   };
 
   getNodesAtLocation (x, y) {
-    var svg         = this.refs.svg;
-    var hitTestRect = svg.createSVGRect();
+    let svg         = this.refs.svg;
+    let hitTestRect = svg.createSVGRect();
 
     hitTestRect.x = x;
     hitTestRect.y = y;
@@ -138,7 +138,7 @@ class Canvas extends React.Component {
   };
 
   onMouseMove (event) {
-    var data = store.getState().eventData;
+    let data = store.getState().eventData;
     if (data.type === 'pan') {
       this.handlePan(event);
     } else if (data.type === 'rotate') {
@@ -147,7 +147,7 @@ class Canvas extends React.Component {
   };
 
   onMouseUp (event) {
-    var data     = store.getState().eventData;
+    let data     = store.getState().eventData;
     if (data.type === 'pan') {
       this.handlePan(event);
     } else if (data.type === 'rotate') {
@@ -208,7 +208,7 @@ class Canvas extends React.Component {
       return;
     }
 
-    var data     = store.getState().eventData;
+    let data     = store.getState().eventData;
     if (data.type === 'pan') {
       this.cancelPan();
     } else if (data.type === 'rotate') {
@@ -218,46 +218,46 @@ class Canvas extends React.Component {
   };
 
   handleRotate (event) {
-    var data            = store.getState().eventData;
-    var startAngle      = data.startData.angle;
-    var startPosition   = data.startData.position;
-    var currentPosition = this.getPositionAtEvent(event);
-    var midPoint        = Vector.create(this.getWindowWidth()*0.5, this.getWindowHeight()*0.5);
-    var startVec        = Vector.create(startPosition.x, startPosition.y).subtract(midPoint);
-    var currentVec      = Vector.create(currentPosition.x, currentPosition.y).subtract(midPoint);
-    var angle           = AngleConverter.toDeg(currentVec.angleFrom(startVec));
+    let data            = store.getState().eventData;
+    let startAngle      = data.startData.angle;
+    let startPosition   = data.startData.position;
+    let currentPosition = this.getPositionAtEvent(event);
+    let midPoint        = Vector.create(this.getWindowWidth()*0.5, this.getWindowHeight()*0.5);
+    let startVec        = Vector.create(startPosition.x, startPosition.y).subtract(midPoint);
+    let currentVec      = Vector.create(currentPosition.x, currentPosition.y).subtract(midPoint);
+    let angle           = AngleConverter.toDeg(currentVec.angleFrom(startVec));
     this.props.actions.setRotationAngle(startAngle + angle);
   };
 
   cancelRotate () {
-    var data = store.getState().eventData;
+    let data = store.getState().eventData;
     this.props.actions.setRotationAngle(data.startData.angle);
   };
 
   handlePan (event) {
-    var data            = store.getState().eventData;
-    var oldOrigin       = data.startData.origin;
-    var startPosition   = data.startData.position;
-    var currentPosition = this.getPositionAtEvent(event);
-    var startPnt        = Vector.create(startPosition.x, startPosition.y);
-    var currentPnt      = Vector.create(currentPosition.x, currentPosition.y);
+    let data            = store.getState().eventData;
+    let oldOrigin       = data.startData.origin;
+    let startPosition   = data.startData.position;
+    let currentPosition = this.getPositionAtEvent(event);
+    let startPnt        = Vector.create(startPosition.x, startPosition.y);
+    let currentPnt      = Vector.create(currentPosition.x, currentPosition.y);
 
-    var matrixTrfs      = MatrixTransformations.create();
+    let matrixTrfs      = MatrixTransformations.create();
     matrixTrfs.append(m => m.rotate(AngleConverter.toRad(this.props.rotationAngle)));
     matrixTrfs.append(m => m.scale(1 / (this.props.zoomFactor*0.01)));
 
-    var moveVec = matrixTrfs.transformPoint(currentPnt.subtract(startPnt));
-    var org = Vector.create(oldOrigin.x, oldOrigin.y).subtract(moveVec);
+    let moveVec = matrixTrfs.transformPoint(currentPnt.subtract(startPnt));
+    let org = Vector.create(oldOrigin.x, oldOrigin.y).subtract(moveVec);
     this.props.actions.setOrigin(org.asObj());
   };
 
   cancelPan () {
-    var data = store.getState().eventData;
+    let data = store.getState().eventData;
     this.props.actions.setOrigin(data.startData.origin);
   };
 
   getSvgRect () {
-    var svg = this.refs.svg;
+    let svg = this.refs.svg;
     return svg.getBoundingClientRect();
   };
 
@@ -270,7 +270,7 @@ class Canvas extends React.Component {
   };
 };
 
-var mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state, ownProps) => {
   return {
     sequenceData: state.sequenceData,
     dragging: state.dragging,
