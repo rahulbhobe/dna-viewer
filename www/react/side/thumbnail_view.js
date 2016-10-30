@@ -35,9 +35,9 @@ class ThumbnailViewPlain extends React.Component {
 
 const ThumbnailView = (props) => {
   if (props.showEmpty) {
-    return (<div className='div-empty-preview' style={{width: Dimensions.getThumbnailWidth(), height: Dimensions.getThumbnailHeight()}} />);
+    return (<div className='div-empty-thumbnail' style={{width: Dimensions.getThumbnailWidth(), height: Dimensions.getThumbnailHeight()}} />);
   }
-  return (<ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
+  return (<ReactCSSTransitionGroup transitionName='thumbnail-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
             <ThumbnailViewPlain key='thumbnail' seq={props.seq} dbn={props.dbn} />
           </ReactCSSTransitionGroup>);
 };
