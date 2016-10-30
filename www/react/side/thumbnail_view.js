@@ -19,7 +19,7 @@ class ThumbnailViewPlain extends React.Component {
     let points  = sequenceData.getCoordinates(width-6, height-6).points;
 
     return (
-        <svg key='svg' className='svg-class-thumbnail' width={width} height={height} onContextMenu={this.onContextMenu} >
+        <svg key='svg' className='svg-class-thumbnail' width={width} height={height} >
           {points.map((point, ii) => {
             let {x, y}  = point.asObj();
             let base    = bases[ii];
@@ -35,7 +35,7 @@ class ThumbnailViewPlain extends React.Component {
 
 const ThumbnailView = (props) => {
   if (props.showEmpty) {
-    return (<div className='div-empty-thumbnail' style={{width: Dimensions.getThumbnailWidth(), height: Dimensions.getThumbnailHeight()}} />);
+    return (<svg key='svg' className='svg-class-empty-thumbnail' width={Dimensions.getThumbnailWidth()} height={Dimensions.getThumbnailHeight()} />);
   }
   return (<ReactCSSTransitionGroup transitionName='thumbnail-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
             <ThumbnailViewPlain key='thumbnail' seq={props.seq} dbn={props.dbn} />
