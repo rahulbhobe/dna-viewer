@@ -8,6 +8,10 @@
           user-select: none;
 }
 
+.dna-viewer-title {
+  font-size: 30px;
+}
+
 .svg-cursor-none {
 }
 

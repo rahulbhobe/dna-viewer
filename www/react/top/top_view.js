@@ -22,6 +22,7 @@ class TopView extends React.Component {
     let cw = this.props.canvasDimensions.width;
     let ww = 36;
     return [
+      {x:(cw/2)-100, y:0,  w:200, h:1,  v: true, i: 'Title'},
       {x:0,          y:0,  w:ww,  h:1,  v: u,    i: 'DocSave'},
       {x:u?ww:0,     y:0,  w:ww,  h:1,  v: true, i: 'DocAdd'},
       {x:2*ww,       y:0,  w:ww,  h:1,  v: u,    i: 'DocDelete'},
@@ -38,8 +39,10 @@ class TopView extends React.Component {
       width: this.props.canvasDimensions.width
     };
 
-    let clsName = classNames('top-view-button');
+    let clsName  = classNames('top-view-button');
+    let clsTitle = classNames('dna-viewer-title', 'dna-base-font');
     return (<GridLayout properties={properties} layout={this.getLayout()}>
+              <div key='Title' className={clsTitle}>Dna Viewer</div>
               <input key='DocSave'        type="image" className={clsName} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
               <input key='DocAdd'         type="image" className={clsName} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
               <input key='DocDelete'      type="image" className={clsName} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
