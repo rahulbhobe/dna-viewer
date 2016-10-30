@@ -1,10 +1,11 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Vector} from '../../mathutils/gl_matrix_wrapper';
 import classNames from 'classnames';
 import SequenceData from '../../core/sequence_data';
 import Dimensions from '../../utils/dimensions';
 
-class ThumbnailView extends React.Component {
+class ThumbnailViewPlain extends React.Component {
   render () {
     let {seq, dbn} = this.props;
     let sequenceData = new SequenceData(seq, dbn);
@@ -30,6 +31,15 @@ class ThumbnailView extends React.Component {
           })}
         </svg>);
   };
+};
+
+const ThumbnailView = (props) => {
+  if (props.showEmpty) {
+    return (<div className='div-empty-preview' style={{width: Dimensions.getThumbnailWidth(), height: Dimensions.getThumbnailHeight()}} />);
+  }
+  return (<ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
+            <ThumbnailViewPlain key='thumbnail' seq={props.seq} dbn={props.dbn} />
+          </ReactCSSTransitionGroup>);
 };
 
 export default ThumbnailView;

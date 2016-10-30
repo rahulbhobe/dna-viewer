@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Slick from 'react-slick';
 import ThumbnailView from './thumbnail_view';
 import RequestUtils from '../../utils/request_utils'
@@ -7,15 +6,6 @@ import SequenceData from '../../core/sequence_data';
 import Dimensions from '../../utils/dimensions';
 import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../store/action_dispatcher';
-
-const SavedViewWithAnimations = (props) => {
-  if (props.isDragging) {
-    return (<div className='div-empty-preview' style={{width: Dimensions.getThumbnailWidth(), height: Dimensions.getThumbnailHeight()}} />);
-  }
-  return (<ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
-            <ThumbnailView key='thumbnail' seq={props.seq} dbn={props.dbn} />
-          </ReactCSSTransitionGroup>);
-};
 
 class SavedViews extends React.Component {
   constructor (props) {
@@ -47,7 +37,7 @@ class SavedViews extends React.Component {
                 {this.props.savedViews.map(({url, seq, dbn}) => {
                   return (<div key={url}>
                             <button onClick={this.onClick(url)} title={'Open view "' + window.location.origin + '/' + url + '".'} >{url}</button>
-                            <SavedViewWithAnimations key='savedview' isDragging={this.props.dragging!==-1} seq={seq} dbn={dbn} />
+                            <ThumbnailView showEmpty={this.props.dragging!==-1} seq={seq} dbn={dbn} />
                           </div>);
                 })}
               </Slick>

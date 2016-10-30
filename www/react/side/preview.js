@@ -1,18 +1,8 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import SequenceUtils from '../../utils/sequence_utils';
 import ThumbnailView from './thumbnail_view';
 import Dimensions from '../../utils/dimensions';
 import {connect} from 'react-redux';
-
-const PreviewWithAnimations = (props) => {
-  if (!props.isDragging) {
-    return (<div className='div-empty-preview' style={{width: Dimensions.getThumbnailWidth(), height: Dimensions.getThumbnailHeight()}} />);
-  }
-  return (<ReactCSSTransitionGroup transitionName='preview-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
-            <ThumbnailView key='thumbnail' seq={props.seq} dbn={props.dbn} />
-          </ReactCSSTransitionGroup>);
-};
 
 class Preview extends React.Component {
   render () {
@@ -21,7 +11,7 @@ class Preview extends React.Component {
 
     return (<div className='dna-base-font' style={{textAlign: 'center'}}>
               <div> Drag Preview: </div>
-              <PreviewWithAnimations key='preview' isDragging={this.props.dragging!==-1} seq={seq} dbn={dbn} />
+              <ThumbnailView showEmpty={this.props.dragging===-1} seq={seq} dbn={dbn} />
             </div>);
   };
 
