@@ -14,7 +14,7 @@ class SavedViews extends React.Component {
 
   render () {
     let settings = {
-      dots: false,
+      dots: true,
       infinite: false,
       speed: 500,
       draggable: true,
