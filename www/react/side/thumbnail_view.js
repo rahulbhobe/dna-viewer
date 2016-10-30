@@ -5,32 +5,30 @@ import classNames from 'classnames';
 import SequenceData from '../../core/sequence_data';
 import Dimensions from '../../utils/dimensions';
 
-class ThumbnailViewPlain extends React.Component {
-  render () {
-    let {seq, dbn} = this.props;
-    let sequenceData = new SequenceData(seq, dbn);
-    if (sequenceData.hasErrors()) {
-      return null;
-    }
+const ThumbnailViewPlain = (props) => {
+  let {seq, dbn} = props;
+  let sequenceData = new SequenceData(seq, dbn);
+  if (sequenceData.hasErrors()) {
+    return null;
+  }
 
-    let bases   = sequenceData.getBases();
-    let width   = Dimensions.getThumbnailWidth();
-    let height  = Dimensions.getThumbnailHeight();
-    let points  = sequenceData.getCoordinates(width-6, height-6).points;
+  let bases   = sequenceData.getBases();
+  let width   = Dimensions.getThumbnailWidth();
+  let height  = Dimensions.getThumbnailHeight();
+  let points  = sequenceData.getCoordinates(width-6, height-6).points;
 
-    return (
-        <svg key='svg' className='svg-class-thumbnail' width={width} height={height} >
-          {points.map((point, ii) => {
-            let {x, y}  = point.asObj();
-            let base    = bases[ii];
-            let classes = classNames('dna-base-thumbnail', 'dna-base-' + base.getType().toLowerCase());
-            return (
-              <g transform={'translate(' + x + ', ' + y + ')'} key={'base_thumbnail_' + ii} >
-                <circle className={classes} />
-              </g>);
-          })}
-        </svg>);
-  };
+  return (
+      <svg key='svg' className='svg-class-thumbnail' width={width} height={height} >
+        {points.map((point, ii) => {
+          let {x, y}  = point.asObj();
+          let base    = bases[ii];
+          let classes = classNames('dna-base-thumbnail', 'dna-base-' + base.getType().toLowerCase());
+          return (
+            <g transform={'translate(' + x + ', ' + y + ')'} key={'base_thumbnail_' + ii} >
+              <circle className={classes} />
+            </g>);
+        })}
+      </svg>);
 };
 
 const ThumbnailView = (props) => {
