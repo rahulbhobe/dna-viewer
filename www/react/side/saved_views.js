@@ -14,8 +14,9 @@ class SavedViews extends React.Component {
   };
 
   render () {
+    let savedViews = this.props.savedViews;
     let settings = {
-      dots: true,
+      dots: savedViews.length <= 7,
       infinite: false,
       speed: 500,
       draggable: true,
@@ -29,12 +30,12 @@ class SavedViews extends React.Component {
       lazyLoad: true
     };
 
-    if (this.props.savedViews.length===0) {return null;}
+    if (savedViews.length===0) {return null;}
 
     return (<div className='dna-base-font' style={{textAlign: 'center'}}>
               <div> Saved Views: </div>
               <Slick {...settings}>
-                {this.props.savedViews.map(({url, seq, dbn}) => {
+                {savedViews.map(({url, seq, dbn}) => {
                   return (<div key={url}>
                             <button onClick={this.onClick(url)} title={'Open view "' + window.location.origin + '/' + url + '".'} >{url}</button>
                             <ThumbnailView showEmpty={this.props.dragging!==-1} seq={seq} dbn={dbn} />
