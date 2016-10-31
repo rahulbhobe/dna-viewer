@@ -34,7 +34,6 @@ class SetupData {
       store.dispatch(actionCreators.setSequenceData(sequenceData));
       store.dispatch(actionCreators.setTempSequence(seq, dbn));
       store.dispatch(actionCreators.setCurrentUrl(url));
-      store.dispatch(actionCreators.setCurrentUrl(url));
       store.dispatch(actionCreators.setCanvasDimensions(width, height));
       window.history.pushState("", "Title", "/" + url);
     });
