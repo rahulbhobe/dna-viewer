@@ -6,19 +6,17 @@ import jss from 'jss-browserify';
 class AppearanceConfig extends React.Component {
   constructor (props) {
     super(props);
-    let val = jss.get(this.props.jssCls);
-    this.state = {
-      value: parseInt(val[this.props.jssKey])
-    };
     this.onChange = this.onChange.bind(this);
     this.onBlur   = this.onBlur.bind(this);
   };
 
   render () {
+    let cls = jss.get(this.props.jssCls);
+    let val = parseInt(cls[this.props.jssKey]);
     return (<div>
               {this.props.name}
               <br/>
-              <input type="text" ref="inp" defaultValue={this.state.value} onChange={this.onChange} onBlur={this.onBlur} size="4"/>
+              <input type="text" ref="inp" defaultValue={val} onChange={this.onChange} onBlur={this.onBlur} size="4"/>
               <span style={{fontSize: "10px"}}>
                 {"(" + this.props.min + "-" + this.props.max + ")"}
               </span>
