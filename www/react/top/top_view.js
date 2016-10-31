@@ -42,7 +42,7 @@ class TopView extends React.Component {
     let clsName  = classNames('top-view-button');
     let clsTitle = classNames('dna-viewer-title', 'dna-base-font');
     return (<GridLayout properties={properties} layout={this.getLayout()}>
-              <div key='Title' className={clsTitle}>Dna Viewer</div>
+              <div key='Title' className={clsTitle}>DNA Viewer</div>
               <input key='DocSave'        type="image" className={clsName} title={'Save data at "'          + window.location.origin + '/' + this.props.url + '".'} src="/res/save_icon.png" alt="Submit" onClick={this.onSave}/>
               <input key='DocAdd'         type="image" className={clsName} title={'Save data to a new location.'} src="/res/save_add_icon.png" alt="Submit" onClick={this.onAdd}/>
               <input key='DocDelete'      type="image" className={clsName} title={'Remove data stored at "' + window.location.origin + '/' + this.props.url + '".'} src="/res/save_del_icon.png" alt="Submit" onClick={this.onDelete}/>
