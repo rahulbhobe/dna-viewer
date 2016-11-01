@@ -1,7 +1,7 @@
 import SequenceUtils from '../utils/sequence_utils';
 import ReduxUtils from '../utils/redux_utils';
 
-let mapStateToProps = (state, ownProps) => {
+let mapStateToProps = (state) => {
   return {
     sequenceData: state.sequenceData,
     dragging: state.dragging,
@@ -10,23 +10,23 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-let setCursor = (props, state) => {
+let setCursor = (actions, state) => {
   let dragging = state.dragging;
   let hover    = state.hover;
   let dataType = state.eventDataType;
 
   if ((dragging!==-1)&&(hover!==-1)) {
     if (SequenceUtils.canJoinNodes(state.sequenceData, dragging, hover)) {
-      props.actions.setCanvasCursor('drop');
+      actions.setCanvasCursor('drop');
     } else {
-      props.actions.setCanvasCursor('banned');
+      actions.setCanvasCursor('banned');
     }
   } else if (dragging!==-1) {
-    props.actions.setCanvasCursor('dragging');
+    actions.setCanvasCursor('dragging');
   } else if (hover!==-1) {
-    props.actions.setCanvasCursor('hover');
+    actions.setCanvasCursor('hover');
   } else {
-    props.actions.setCanvasCursor(dataType);
+    actions.setCanvasCursor(dataType);
   }
 };
 

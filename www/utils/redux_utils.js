@@ -14,11 +14,15 @@ class ReduxUtils {
     return { actions: bindActionCreators(ActionCreators, dispatch) };
   };
 
-  static registerObserver (mapStateToPropsFunc, observerFunc, options) {
-    let dispatchFunc = (dispatch, currentState, previousState) => {
-      observerFunc(this.mapDispatchToProps(dispatch), currentState, previousState);
+  static dispatchFunc (observerFunc) {
+    return (dispatch, currentState, previousState) => {
+      let {actions} = this.mapDispatchToProps(dispatch);
+      observerFunc(actions, currentState, previousState);
     };
-    this._observers.push(observer(mapStateToPropsFunc, dispatchFunc, options));
+  };
+
+  static registerObserver (mapStateToPropsFunc, observerFunc, options) {
+    this._observers.push(observer(mapStateToPropsFunc, this.dispatchFunc(observerFunc), options));
   };
 
   static observeChanges (store, options) {

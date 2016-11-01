@@ -6,10 +6,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const resetModelTransoformations = (props) => {
-  props.actions.resetZoomFactor();
-  props.actions.resetRotationAngle();
-  props.actions.resetOrigin();
+const resetModelTransoformations = (actions) => {
+  actions.resetZoomFactor();
+  actions.resetRotationAngle();
+  actions.resetOrigin();
 };
 
 ReduxUtils.registerObserver(mapStateToProps, resetModelTransoformations);
