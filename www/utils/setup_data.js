@@ -5,7 +5,7 @@ import PubNubUtils from './pubnub_utils';
 import Dimensions from './dimensions';
 import store from '../store/store';
 import ObserverUtils from './observer_utils';
-import * as actionCreators from '../store/action_creators';
+import * as ActionCreators from '../store/action_creators';
 
 class SetupData {
   static initialize () {
@@ -32,17 +32,17 @@ class SetupData {
     }).then(({url, seq, dbn}) => {
       let sequenceData = new SequenceData(seq, dbn);
       let {width, height}  = Dimensions.calculateCanvasDimensions();
-      store.dispatch(actionCreators.setSequenceData(sequenceData));
-      store.dispatch(actionCreators.setTempSequence(seq, dbn));
-      store.dispatch(actionCreators.setCurrentUrl(url));
-      store.dispatch(actionCreators.setCanvasDimensions(width, height));
+      store.dispatch(ActionCreators.setSequenceData(sequenceData));
+      store.dispatch(ActionCreators.setTempSequence(seq, dbn));
+      store.dispatch(ActionCreators.setCurrentUrl(url));
+      store.dispatch(ActionCreators.setCanvasDimensions(width, height));
       window.history.pushState("", "Title", "/" + url);
     });
   };
 
   static setupSavedViewsData () {
     return RequestUtils.getAllSavedData().then((data) => {
-      store.dispatch(actionCreators.setSavedViews(data));
+      store.dispatch(ActionCreators.setSavedViews(data));
     }).catch(err => {
       console.log(err);
     });
