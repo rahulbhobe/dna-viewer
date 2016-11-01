@@ -1,5 +1,4 @@
 import React from 'react';
-import CursorType from './cursor_type';
 import DnaBaseView from './dna_base_view';
 import DnaAnchorView from './dna_anchor_view';
 import DnaBackboneView from './dna_backbone_view';
@@ -44,8 +43,6 @@ class Canvas extends React.Component {
 
     return (
       <svg className={svgClass} width={this.getWindowWidth()} height={this.getWindowHeight()} ref='svg' onContextMenu={this.onContextMenu} >
-
-        <CursorType />
 
         <g> {ArrayUtils.range(numBases-1).map((index) => (<DnaBackboneView key={'backbone' + index} index={index} />))} </g>
 
