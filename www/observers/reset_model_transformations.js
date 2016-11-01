@@ -12,4 +12,4 @@ const urlChangeObserver = (props) => {
   props.actions.resetOrigin();
 };
 
-export default ObserverUtils.registerObserver(mapStateToProps, urlChangeObserver);
+ObserverUtils.registerObserver(mapStateToProps, urlChangeObserver);
