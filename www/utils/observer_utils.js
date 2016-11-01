@@ -1,5 +1,4 @@
 import {observer, observe} from 'redux-observers';
-import * as actionCreators from '../store/action_creators';
 import {mapDispatchToProps} from '../store/action_dispatcher';
 
 class ObserverUtils {
