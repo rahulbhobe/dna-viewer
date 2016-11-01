@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import SequenceLetter from './sequence_letter';
 import ArrayUtils from '../../utils/array_utils';
 import classNames from 'classnames';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
+import ReduxUtils from '../../utils/redux_utils';
 
 class SequenceFormView extends React.Component {
   constructor (props) {
@@ -89,4 +88,4 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SequenceFormView);
+export default ReduxUtils.connect(mapStateToProps, true)(SequenceFormView);

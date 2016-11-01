@@ -4,8 +4,7 @@ import ThumbnailView from './thumbnail_view';
 import RequestUtils from '../../utils/request_utils'
 import SequenceData from '../../core/sequence_data';
 import Dimensions from '../../utils/dimensions';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
+import ReduxUtils from '../../utils/redux_utils';
 
 class SavedViews extends React.Component {
   constructor (props) {
@@ -67,4 +66,4 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedViews);
+export default ReduxUtils.connect(mapStateToProps, true)(SavedViews);

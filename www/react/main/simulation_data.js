@@ -4,8 +4,7 @@ import {Vector, MatrixTransformations} from '../../mathutils/gl_matrix_wrapper';
 import ArrayUtils from '../../utils/array_utils';
 import AngleConverter from '../../mathutils/angle_converter';
 import store from '../../store/store';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
+import ReduxUtils from '../../utils/redux_utils';
 
 class SimulationData extends React.Component {
   constructor (props) {
@@ -145,4 +144,4 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SimulationData);
+export default ReduxUtils.connect(mapStateToProps, true)(SimulationData);

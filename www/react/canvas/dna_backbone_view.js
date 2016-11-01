@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import ReduxUtils from '../../utils/redux_utils';
 import classNames from 'classnames';
 
 class DnaBackboneView extends React.Component {
@@ -29,4 +29,4 @@ let mapStateToProps = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToProps)(DnaBackboneView);
+export default ReduxUtils.connect(mapStateToProps)(DnaBackboneView);

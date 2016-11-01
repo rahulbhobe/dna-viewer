@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import ReduxUtils from '../../utils/redux_utils';
 import classNames from 'classnames';
 
 class DnaAnchorView extends React.Component {
@@ -30,4 +30,4 @@ let mapStateToProps = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToProps)(DnaAnchorView);
+export default ReduxUtils.connect(mapStateToProps)(DnaAnchorView);

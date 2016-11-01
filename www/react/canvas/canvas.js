@@ -5,14 +5,13 @@ import DnaBackboneView from './dna_backbone_view';
 import DnaPairView from './dna_pair_view';
 import DnaAnnotationView from './dna_annotation_view';
 import {Vector, MatrixTransformations} from '../../mathutils/gl_matrix_wrapper';
+import ReduxUtils from '../../utils/redux_utils';
 import AngleConverter from '../../mathutils/angle_converter';
 import Dimensions from '../../utils/dimensions';
 import ArrayUtils from '../../utils/array_utils';
 import classNames from 'classnames';
 import store from '../../store/store';
 import debounce from 'debounce';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
 
 class Canvas extends React.Component {
   constructor (props) {
@@ -281,4 +280,4 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Canvas);
+export default ReduxUtils.connect(mapStateToProps, true)(Canvas);

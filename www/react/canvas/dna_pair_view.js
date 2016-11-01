@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import ReduxUtils from '../../utils/redux_utils';
 import classNames from 'classnames';
 
 class DnaPairView extends React.Component {
@@ -31,4 +31,4 @@ let mapStateToProps = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToProps)(DnaPairView);
+export default ReduxUtils.connect(mapStateToProps)(DnaPairView);

@@ -2,8 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import SequenceUtils from '../../utils/sequence_utils';
 import classNames from 'classnames';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
+import ReduxUtils from '../../utils/redux_utils';
 
 class DnaBaseView extends React.Component {
   constructor (props) {
@@ -129,4 +128,4 @@ let mapStateToProps = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DnaBaseView);
+export default ReduxUtils.connect(mapStateToProps, true)(DnaBaseView);

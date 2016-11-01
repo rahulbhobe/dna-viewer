@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import ColorSettings from './color_settings';
 import FontSettings from './font_settings';
 import AppearanceSettings from './appearance_settings';
@@ -7,6 +6,7 @@ import SavedViews from './saved_views';
 import Preview from './preview';
 import Dimensions from '../../utils/dimensions';
 import GridLayout from '../main/grid_layout';
+import ReduxUtils from '../../utils/redux_utils';
 
 class SideView extends React.Component {
   getLayout () {
@@ -53,4 +53,4 @@ let mapStateToProps = (state, ownProps) => {
   }
 };
 
-export default connect(mapStateToProps)(SideView);
+export default ReduxUtils.connect(mapStateToProps)(SideView);

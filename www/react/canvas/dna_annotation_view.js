@@ -1,6 +1,6 @@
 import React from 'react';
 import {Vector} from '../../mathutils/gl_matrix_wrapper';
-import {connect} from 'react-redux';
+import ReduxUtils from '../../utils/redux_utils';
 import classNames from 'classnames';
 
 class DnaAnnotationView extends React.Component {
@@ -38,4 +38,4 @@ let mapStateToProps = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToProps)(DnaAnnotationView);
+export default ReduxUtils.connect(mapStateToProps)(DnaAnnotationView);

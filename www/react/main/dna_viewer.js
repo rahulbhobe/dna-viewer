@@ -6,8 +6,7 @@ import TopView from '../top/top_view';
 import SideView from '../side/side_view';
 import BottomView from '../bottom/bottom_view';
 import Dimensions from '../../utils/dimensions';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
+import ReduxUtils from '../../utils/redux_utils';
 
 class DnaViewer extends React.Component {
   getLayout () {
@@ -52,4 +51,4 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DnaViewer);
+export default ReduxUtils.connect(mapStateToProps, true)(DnaViewer);

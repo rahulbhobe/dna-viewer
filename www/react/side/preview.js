@@ -2,7 +2,7 @@ import React from 'react';
 import SequenceUtils from '../../utils/sequence_utils';
 import ThumbnailView from './thumbnail_view';
 import Dimensions from '../../utils/dimensions';
-import {connect} from 'react-redux';
+import ReduxUtils from '../../utils/redux_utils';
 
 class Preview extends React.Component {
   render () {
@@ -35,4 +35,4 @@ let mapStateToProps = (state) => {
   }
 };
 
-export default connect(mapStateToProps)(Preview);
+export default ReduxUtils.connect(mapStateToProps)(Preview);

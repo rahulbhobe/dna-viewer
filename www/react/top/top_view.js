@@ -3,8 +3,7 @@ import GridLayout from '../main/grid_layout';
 import RequestUtils from '../../utils/request_utils'
 import classNames from 'classnames';
 import store from '../../store/store';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
-import {connect} from 'react-redux';
+import ReduxUtils from '../../utils/redux_utils';
 
 class TopView extends React.Component {
   constructor (props) {
@@ -107,4 +106,4 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopView);
+export default ReduxUtils.connect(mapStateToProps, true)(TopView);

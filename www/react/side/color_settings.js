@@ -3,8 +3,7 @@ import {SketchPicker as ColorPicker} from 'react-color';
 import jss from 'jss-browserify';
 import classNames from 'classnames';
 import Dimensions from '../../utils/dimensions';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
+import ReduxUtils from '../../utils/redux_utils';
 
 class ColorsButton extends React.Component {
   constructor (props) {
@@ -87,4 +86,4 @@ let mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ColorSettings);
+export default ReduxUtils.connect(mapStateToProps, true)(ColorSettings);

@@ -1,6 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {mapDispatchToProps} from '../../store/action_dispatcher';
+import ReduxUtils from '../../utils/redux_utils';
 
 class SequenceLetter extends React.Component {
   constructor (props) {
@@ -32,4 +31,4 @@ let mapStateToProps = (state, ownProps) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SequenceLetter);
+export default ReduxUtils.connect(mapStateToProps, true)(SequenceLetter);
