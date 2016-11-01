@@ -6,10 +6,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const urlChangeObserver = (props) => {
+const resetModelTransoformations = (props) => {
   props.actions.resetZoomFactor();
   props.actions.resetRotationAngle();
   props.actions.resetOrigin();
 };
 
-ObserverUtils.registerObserver(mapStateToProps, urlChangeObserver);
+ObserverUtils.registerObserver(mapStateToProps, resetModelTransoformations);
