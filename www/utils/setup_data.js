@@ -4,11 +4,12 @@ import RequestUtils from './request_utils';
 import PubNubUtils from './pubnub_utils';
 import Dimensions from './dimensions';
 import store from '../store/store';
+import ObserverUtils from './observer_utils';
 import * as actionCreators from '../store/action_creators';
 
 class SetupData {
   static initialize () {
-    return Promise.all([this.setupInitialData(), this.setupSavedViewsData(), this.setupNotificationsForDBUpdate()]).then(() => {
+    return Promise.all([this.setupInitialData(), this.setupSavedViewsData(), this.setupNotificationsForDBUpdate(), this.observe()]).then(() => {
       return null;
     });
   };
@@ -42,7 +43,7 @@ class SetupData {
   static setupSavedViewsData () {
     return RequestUtils.getAllSavedData().then((data) => {
       store.dispatch(actionCreators.setSavedViews(data));
-    }).catch((err) => {
+    }).catch(err => {
       console.log(err);
     });
   };
@@ -51,6 +52,10 @@ class SetupData {
     PubNubUtils.subscribe(() => {
       this.setupSavedViewsData();
     });
+  };
+
+  static observe () {
+    ObserverUtils.observeChanges(store);
   };
 };
 

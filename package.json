@@ -7,8 +7,8 @@
     "start": "node server/generated/main.js",
     "postinstall": "npm run build",
     "build": "npm run client-build && npm run server-build",
-    "client-build": "browserify            -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-class-properties transform-object-rest-spread ] ] www/react/*/* www/store/* www/core/* www/utils/* www/mathutils/* -o www/generated/dna_viewer_bundle.js",
-    "client-watch": "watchify   --debug -v -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-class-properties transform-object-rest-spread ] ] www/react/*/* www/store/* www/core/* www/utils/* www/mathutils/* -o www/generated/dna_viewer_bundle.js",
+    "client-build": "browserify            -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-class-properties transform-object-rest-spread ] ] www/react/*/* www/store/* www/core/* www/observers/* www/utils/* www/mathutils/* -o www/generated/dna_viewer_bundle.js",
+    "client-watch": "watchify   --debug -v -g browserify-css -t [ babelify --presets [ react es2015 ] --plugins [ transform-class-properties transform-object-rest-spread ] ] www/react/*/* www/store/* www/core/* www/observers/* www/utils/* www/mathutils/* -o www/generated/dna_viewer_bundle.js",
     "server-build": "babel         --presets es2015 --plugins transform-class-properties server/src --out-dir server/generated",
     "server-watch": "babel --watch --presets es2015 --plugins transform-class-properties server/src --out-dir server/generated",
     "db-import": "mongoimport -h ds011755.mlab.com:11755 -d dna_viewer -c datas -u dna_user -p dna_password --file  db/db.json",
@@ -42,6 +42,7 @@
     "react-redux": "4.4.5",
     "react-slick": "0.14.5",
     "redux": "3.6.0",
+    "redux-observers": "2.0.1",
     "request": "2.76.0",
     "serve-favicon": "2.3.0",
     "shortid": "2.2.6"
