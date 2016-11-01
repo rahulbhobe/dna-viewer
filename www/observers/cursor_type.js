@@ -1,5 +1,5 @@
 import SequenceUtils from '../utils/sequence_utils';
-import ObserverUtils from '../utils/observer_utils';
+import ReduxUtils from '../utils/redux_utils';
 
 let mapStateToProps = (state, ownProps) => {
   return {
@@ -30,4 +30,4 @@ let setCursor = (props, state) => {
   }
 };
 
-ObserverUtils.registerObserver(mapStateToProps, setCursor);
+ReduxUtils.registerObserver(mapStateToProps, setCursor);

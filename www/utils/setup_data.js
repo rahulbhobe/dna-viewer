@@ -4,7 +4,7 @@ import RequestUtils from './request_utils';
 import PubNubUtils from './pubnub_utils';
 import Dimensions from './dimensions';
 import store from '../store/store';
-import ObserverUtils from './observer_utils';
+import ReduxUtils from './redux_utils';
 import * as ActionCreators from '../store/action_creators';
 
 class SetupData {
@@ -55,7 +55,7 @@ class SetupData {
   };
 
   static observe () {
-    ObserverUtils.observeChanges(store);
+    ReduxUtils.observeChanges(store);
   };
 };
 

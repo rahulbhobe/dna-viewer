@@ -1,4 +1,4 @@
-import ObserverUtils from '../utils/observer_utils';
+import ReduxUtils from '../utils/redux_utils';
 
 const mapStateToProps = (state) => {
   return {
@@ -12,4 +12,4 @@ const resetModelTransoformations = (props) => {
   props.actions.resetOrigin();
 };
 
-ObserverUtils.registerObserver(mapStateToProps, resetModelTransoformations);
+ReduxUtils.registerObserver(mapStateToProps, resetModelTransoformations);
