@@ -3,9 +3,11 @@ import DbManager from './db_manager';
 
 let dataSchema = new Schema({
   url:  String,
-  date: { type: Date, default: Date.now },
   seq: String,
   dbn: String
+},
+{
+  timestamps: true
 });
 
 dataSchema.pre('save', (next) => {
