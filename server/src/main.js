@@ -76,7 +76,7 @@ app.post('/data', (req, res) => {
         res.send({url, seq, dbn});
       });
     } else if (type === 'all') {
-      return Data.find({}).sort('createdAt').exec().then((data) => {
+      return Data.find({}).sort({createdAt: -1}).exec().then((data) => {
         if (!data) throw Error("No data found");
         let arr = data.map(({url, seq, dbn}) => {
           return {url, seq, dbn}
