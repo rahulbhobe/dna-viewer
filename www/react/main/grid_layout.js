@@ -1,14 +1,8 @@
 import React from 'react';
-import PureRenderMixin from 'react/lib/ReactComponentWithPureRenderMixin';
 import ReactGridLayout from 'react-grid-layout';
 
 
 class GridLayout extends React.Component {
-  constructor (props) {
-    super(props);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-  };
-
   getVisibleLayout () {
     let filtered = this.props.layout.filter(({v}) => {
       return v === true;
