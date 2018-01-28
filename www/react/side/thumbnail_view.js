@@ -35,7 +35,7 @@ const ThumbnailView = (props) => {
   if (props.showEmpty) {
     return (<svg key='svg' className='svg-class-empty-thumbnail' width={Dimensions.getThumbnailWidth()} height={Dimensions.getThumbnailHeight()} />);
   }
-  return (<ReactCSSTransitionGroup transitionName='thumbnail-anim' transitionAppear={true} transitionAppearTimeout={900} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
+  return (<ReactCSSTransitionGroup transitionName='thumbnail-anim' transitionAppear={true} transitionEnterTimeout={900} transitionLeaveTimeout={900}>
             <ThumbnailViewPlain key='thumbnail' seq={props.seq} dbn={props.dbn} />
           </ReactCSSTransitionGroup>);
 };
