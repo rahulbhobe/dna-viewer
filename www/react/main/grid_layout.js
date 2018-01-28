@@ -36,7 +36,7 @@ class GridLayout extends React.Component {
       isDraggable: false,
       isResizable: false,
       margin: [0, 0],
-      verticalCompact: false,
+      compactType: null,
       ...this.props.properties
     };
 
